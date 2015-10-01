@@ -9,15 +9,15 @@ module.exports = (config, grunt, helpers) ->
     dev_static:
       files: [
         expand: true
-        src: "static/**/*"
-        cwd: paths.source + '/static/'
+        src: "**/*"
+        cwd: path.join paths.source, 'static'
         dest: paths.destination.dev
       ]
     dist_static:
       files: [
         expand: true
-        src: "static/**/*"
-        cwd: paths.source + '/static/'
+        src: "**/*"
+        cwd: path.join paths.source, 'static'
         dest: paths.destination.dist
       ]
 
@@ -44,6 +44,15 @@ module.exports = (config, grunt, helpers) ->
         lib.dest = if lib.dest? then "#{paths.destination.dist}/#{lib.dest}" else paths.destination.dist
         lib
       )).concat config.copy.static.map (obj) -> getStaticOptions name, obj, paths.destination.dist
+
+    copy[name + '_dev_js'] =
+      files: [
+        expand: true
+        src: recursiveFiles (n) -> "#{n}/scripts/**/*.js"
+        cwd: paths.source
+        dest: paths.destination.dev
+        rename: (dest, path) -> "#{dest}/#{path.replace /^([^\/]*)\/scripts/, 'scripts/$1'}"
+      ]
 
     copy[name + '_dev_static'] =
       files: devLibsFiles

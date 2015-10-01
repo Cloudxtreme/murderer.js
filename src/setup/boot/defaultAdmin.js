@@ -1,0 +1,69 @@
+"use strict";
+
+var _ = require("lodash");
+var Q = require("q");
+var bunyan = require("bunyan");
+
+var users = require("../../core/users/controller/users");
+var config = require("../../utils/config").main;
+var security = require("../../utils/security");
+
+var body = {
+  username: "root",
+  email: "admin@example.com",
+  admin: true,
+  activated: true,
+  password: security.generateRandom(6)
+};
+
+/**
+ * This Module creates a new admin-user if none is existent.
+ */
+module.exports = function () {
+  return users.findByModulePermission(config.modules.admin, function (err, admins) {
+    var log = bunyan.logger.app.child({boot: "default admin creation"}, null, true);
+
+    if (err != null) {
+      return log.error({err: err}, "admin-search failed");
+    }
+    if (admins.length) {
+      log.info({amount: admins.length}, "admins found");
+      return;
+    }
+
+    var conn = {
+      user: users.createAdmin(),
+      log: log
+    };
+
+    var defer = Q.defer();
+    var extend = _.extend(body, config.defaultAdmin);
+
+    users.findByUsername(conn, extend.username, function (err, user) {
+      if (err != null) {
+        return defer.reject(err);
+      }
+      if (user == null) {
+        return defer.resolve();
+      }
+      users.remove(conn, user, function (err) {
+        if (err == null) {
+          defer.resolve();
+        } else {
+          defer.reject();
+        }
+      });
+    });
+
+    return defer.promise.then(function () {
+      return users.create(conn, extend, function (err) {
+        if (err != null) {
+          return log.error({err: err}, "admin-creation failed");
+        }
+        log.info({user: extend}, "user created");
+      });
+    }, function (err) {
+      log.error({err: err}, "clean-up of user called \'admin\' failed");
+    });
+  });
+};

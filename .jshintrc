@@ -13,5 +13,8 @@
   "node": true,
   "newcap": true,
   "nonbsp": true,
-  "quotmark": "double"
+  "quotmark": "double",
+  "globals": [
+    "angular", "_", "moment"
+  ]
 }

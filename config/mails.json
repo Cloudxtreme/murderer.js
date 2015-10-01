@@ -1,0 +1,27 @@
+{
+  "dev": {
+    "account": {
+      "removed": {
+        "subject": "<% name %> Account deleted",
+        "message": "Hello <% username %>,\n\nyour <% name %> account (<% email %>) has just been deleted.",
+        "footer": "\n\n Best regards,\nThe <% name %> Team."
+      },
+      "passwordResetRequest": {
+        "subject": "<% name %> Password Reset",
+        "message": "Hello <% username %>,\n\nyou are receiving this email because a password-reset request has been made for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process:\n\n<% link %>\n\nIf you did not request this, please ignore this email and your password will remain unchanged.",
+        "footer": "\n\n Best regards,\nThe <% name %> Team."
+      },
+      "passwordReset": {
+        "subject": "Your <% name %> password has been changed",
+        "message": "Hello <% username %>,\n\nthe password-reset of your <% name %> account has been completed.",
+        "footer": "\n\n Best regards,\nThe <% name %> Team."
+      }
+    }
+  },
+  "dist": {
+    "_extend": "dev"
+  },
+  "test": {
+    "_extend": "dev"
+  }
+}
