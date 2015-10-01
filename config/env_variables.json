@@ -1,0 +1,18 @@
+{
+  "_noEnv": true,
+  "_key": true,
+  "mailer": {
+    "host": "",
+    "port": {
+      "_type": "number",
+      "_default": 465
+    },
+    "secure": {
+      "_type": "boolean",
+      "_default": true
+    },
+    "username": "",
+    "password": "",
+    "email": ""
+  }
+}

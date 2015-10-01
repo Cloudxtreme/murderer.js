@@ -1,0 +1,35 @@
+{
+  "dev": {
+    "session": {
+      "expires": 2592000000
+    },
+    "secret": "zfg+fvlR6en6EK0Iz1vUVVHRMYLt9hjk3FE0Um1qDwu8qjZs7stiv5ZvhvwbCpf+RYWFkBjwkMBtLC67Zn++Xw==",
+    "token": {
+      "bytes": 16,
+      "expires": {
+        "sessionAuth": 5000
+      }
+    },
+    "humanToken": {
+      "bytes": 16
+    }
+  },
+  "dist": {
+    "session": {
+      "expires": 2592000000
+    },
+    "secret": "1Q0dd49m22/WvsvR5sTbHvvyXhRkvM03t36SjJ21NohJv4oofzu5vK8mO5F23Fohz0amQA5u7HokysGnb5JQ5Q==",
+    "token": {
+      "bytes": 64,
+      "expires": {
+        "sessionAuth": 5000
+      }
+    },
+    "humanToken": {
+      "bytes": 16
+    }
+  },
+  "test": {
+    "_extend": "dev"
+  }
+}

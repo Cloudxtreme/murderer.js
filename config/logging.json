@@ -1,0 +1,229 @@
+{
+  "dev": {
+    "processArgs": ["--color"],
+    "details": [
+      {
+        "name": "app",
+        "streams": [
+          {
+            "type": "console",
+            "level": "debug"
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "warn",
+            "path": "log/dev/app.trace.log",
+            "limit": 50
+          }
+        ]
+      },
+      {
+        "name": "socket",
+        "streams": [
+          {
+            "type": "console",
+            "level": "info"
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "warn",
+            "path": "log/dev/socket.trace.log",
+            "limit": 15,
+            "replicate": 2
+          }
+        ]
+      },
+      {
+        "name": "http",
+        "streams": [
+          {
+            "type": "console",
+            "level": "info"
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "warn",
+            "path": "log/dev/http.trace.log",
+            "limit": 15,
+            "replicate": 2
+          }
+        ]
+      },
+      {
+        "name": "token",
+        "streams": [
+          {
+            "type": "console",
+            "level": "info"
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "warn",
+            "path": "log/dev/token.trace.log",
+            "limit": 5,
+            "replicate": true
+          }
+        ]
+      }
+    ]
+  },
+  "dist": {
+    "processArgs": ["--color"],
+    "details": [
+      {
+        "name": "bunyan",
+        "streams": [
+          {
+            "type": "file",
+            "level": "warn",
+            "path": "log/bunyan.log"
+          }
+        ]
+      },
+      {
+        "name": "app",
+        "streams": [
+          {
+            "type": "console",
+            "level": "info"
+          },
+          {
+            "type": "file",
+            "level": "warn",
+            "path": "log/app.warn.log"
+          },
+          {
+            "type": "rotating-file",
+            "level": "info",
+            "path": "log/app.log",
+            "period": "24h",
+            "count": 7
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "error",
+            "path": "log/app.trace.log",
+            "limit": 50,
+            "flush": true
+          }
+        ]
+      },
+      {
+        "name": "socket",
+        "streams": [
+          {
+            "type": "console",
+            "level": "warn"
+          },
+          {
+            "type": "file",
+            "level": "warn",
+            "path": "log/socket.warn.log"
+          },
+          {
+            "type": "rotating-file",
+            "level": "info",
+            "path": "log/socket.log",
+            "period": "8h",
+            "count": 6
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "error",
+            "path": "log/socket.trace.log",
+            "limit": 35,
+            "replicate": 2
+          }
+        ]
+      },
+      {
+        "name": "http",
+        "streams": [
+          {
+            "type": "console",
+            "level": "warn"
+          },
+          {
+            "type": "file",
+            "level": "warn",
+            "path": "log/http.warn.log"
+          },
+          {
+            "type": "rotating-file",
+            "level": "info",
+            "path": "log/http.log",
+            "period": "8h",
+            "count": 6
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "error",
+            "path": "log/http.trace.log",
+            "limit": 35,
+            "replicate": 1
+          }
+        ]
+      },
+      {
+        "name": "token",
+        "streams": [
+          {
+            "type": "console",
+            "level": "warn"
+          },
+          {
+            "type": "file",
+            "level": "warn",
+            "path": "log/token.warn.log"
+          },
+          {
+            "type": "rotating-file",
+            "level": "info",
+            "path": "log/token.log",
+            "period": "12h",
+            "count": 2
+          },
+          {
+            "type": "RingBuffer",
+            "level": "trace",
+            "threshold": "error",
+            "path": "log/token.trace.log",
+            "limit": 15,
+            "replicate": true
+          }
+        ]
+      }
+    ]
+  },
+  "test": {
+    "details": [
+      {
+        "name": "bunyan",
+        "streams": []
+      },
+      {
+        "name": "app",
+        "streams": []
+      },
+      {
+        "name": "socket",
+        "streams": []
+      },
+      {
+        "name": "http",
+        "streams": []
+      },
+      {
+        "name": "token",
+        "streams": []
+      }
+    ]
+  }
+}

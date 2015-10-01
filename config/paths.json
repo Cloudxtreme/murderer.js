@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "frontend": ".tmp"
+  },
+  "dist": {
+    "frontend": "dist"
+  },
+  "test": {
+    "_extend": "dev"
+  }
+}

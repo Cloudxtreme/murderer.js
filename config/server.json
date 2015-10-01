@@ -1,0 +1,19 @@
+{
+  "dev": {
+    "development": true,
+    "port": 8126,
+    "tls": null,
+    "url": "http://localhost:8126/"
+  },
+  "dist": {
+    "development": false,
+    "port": 8128,
+    "tls": null,
+    "url": "http://localhost:8128/"
+  },
+  "test": {
+    "_extend": "dev",
+    "port": 8127,
+    "url": "http://localhost:8127/"
+  }
+}

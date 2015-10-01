@@ -1,0 +1,14 @@
+{
+  "common": {
+    "deploy": false,
+    "dependencies": []
+  },
+  "open": {
+    "deploy": true,
+    "dependencies": ["common"]
+  },
+  "admin": {
+    "deploy": true,
+    "dependencies": ["common"]
+  }
+}

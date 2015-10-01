@@ -1,0 +1,8 @@
+{
+  "_noEnv": true,
+  "all": [
+    "open",
+    "admin"
+  ],
+  "admin": "admin"
+}

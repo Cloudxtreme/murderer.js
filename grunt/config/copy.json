@@ -1,0 +1,6 @@
+{
+  "static": [
+    "views",
+    "templates"
+  ]
+}

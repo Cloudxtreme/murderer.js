@@ -1,0 +1,32 @@
+{
+  "javascript": {
+    "common": {
+      "jquery/dist/jquery.js": true,
+      "angular/angular.js": true,
+      "lodash/lodash.js": true,
+      "socket.io-client/socket.io.js": false,
+      "moment/min/moment-with-locales.js": true,
+      "angular-translate/angular-translate.js": true,
+      "angular-route/angular-route.js": true,
+      "angular-translate-storage-cookie/angular-translate-storage-cookie.js": true,
+      "angular-translate-storage-local/angular-translate-storage-local.js": true,
+      "angular-cookies/angular-cookies.js": true,
+      "angular-smart-table/dist/smart-table.js": true
+    }
+  },
+  "files": {
+    "common": [
+      {
+        "cwd": "font-awesome/less",
+        "src": "**/*.less",
+        "dest": "styles/common/libs/font-awesome"
+      },
+      {
+        "cwd": "font-awesome/fonts",
+        "src": "*",
+        "dest": "fonts",
+        "deploy": true
+      }
+    ]
+  }
+}

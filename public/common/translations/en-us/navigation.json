@@ -1,0 +1,8 @@
+{
+  "navigation": {
+    "home": "Home",
+    "kill": "Kill",
+    "register": "Sign Up",
+    "stats": "Stats"
+  }
+}

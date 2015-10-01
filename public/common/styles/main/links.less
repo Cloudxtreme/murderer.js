@@ -1,0 +1,79 @@
+a {
+  &, &:visited, &:active {
+    color: @link-color;
+  }
+
+  &:active, &:focus {
+    text-decoration: none;
+    color: mix(@link-color-hover, @color-primary, 70%)
+  }
+
+  &:hover {
+    color: @link-color-hover;
+  }
+}
+
+a[ng-click]:not([href]):not(.btn), a.link-hover {
+  cursor: pointer;
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+
+*:not(li) > a[ng-click]:not([href]):not(.btn), a.link-hover {
+  color: @link-color;
+  &:hover {
+    text-decoration: underline;
+  }
+  &.disabled {
+    text-decoration: none;
+    color: @text-muted;
+  }
+}
+
+a.link-fa {
+  text-decoration: none !important;
+}
+
+a.text-muted {
+  cursor: not-allowed;
+  color: @text-muted;
+  text-decoration: none;
+}
+
+a[href^='http://'], a[href^='https://'], a[href^='//'] {
+  color: @link-external-color;
+  &.text-muted {
+    color: @text-muted;
+  }
+
+  .icon() when (@link-external-icon) {
+    &:after {
+      .fa-icon();
+      content: @fa-var-external-link;
+      margin-left: 1px;
+      vertical-align: 50%;
+      font-size: 6pt;
+      color: @link-external-icon-color;
+    }
+    &.text-muted:after {
+      color: @text-muted;
+    }
+  }
+  .icon();
+  &:hover {
+    color: @link-external-hover-color;
+    &.text-muted {
+      color: @text-muted;
+    }
+    .iconColor() when (@link-external-icon) {
+      &:after {
+        color: @link-external-hover-icon-color;
+      }
+      &.text-muted:after {
+        color: @text-muted;
+      }
+    }
+    .iconColor();
+  }
+}

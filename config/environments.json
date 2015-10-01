@@ -1,0 +1,18 @@
+{
+  "_noEnv": true,
+  "flags": {
+    "d": "dev",
+    "t": "test"
+  },
+  "env": {
+    "development": "dev",
+    "dev": "dev",
+    "test": "test"
+  },
+  "default": "dist",
+  "all": [
+    "dist",
+    "dev",
+    "test"
+  ]
+}

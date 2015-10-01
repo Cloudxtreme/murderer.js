@@ -1,0 +1,9 @@
+{
+  "source": "public",
+  "destination": {
+    "dev": ".tmp",
+    "dist": "dist"
+  },
+  "destinationLibs": "libs",
+  "serverConfig": "config"
+}
