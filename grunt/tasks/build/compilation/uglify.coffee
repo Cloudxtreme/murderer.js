@@ -26,7 +26,9 @@ module.exports = (config, grunt) ->
       options:
         banner: getBanner name
         preserveComments: 'some'
-        maxLineLen: 8000
+        maxLineLen: 5000
+        compress:
+          hoist_funs: false # Seemed to cause issues within libraries
       files: {}
     uglify[name].files["#{paths.destination.dist}/scripts/#{name}.min.js"] =
         config.__libs.jsMin[name].map(prefixBower)

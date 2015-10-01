@@ -19,6 +19,8 @@ function sendFile(p, res, cb) {
   });
 }
 
+function sendPlain(req, res) { sendFile(req.path, res, _.noop); }
+
 function sendFileOrIndex(req, res) {
   req.log.debug({fn: "sendFileOrIndex"});
   sendFile(req.path, res, function (bool) {
@@ -42,11 +44,6 @@ function sendIndex(req, res) {
       return true;
     }
   });
-}
-
-function sendImage(req, res) {
-  req.log.debug({fn: "sendImage"});
-  sendFile(path.join("img", req.path), res);
 }
 
 var dev = config.server.development;
@@ -85,7 +82,7 @@ module.exports.pre = function (app) {
 module.exports.post = function (app) {
   var router = express.Router();
 
-  router.get("/favicon.ico", sendImage);
+  router.get("/favicon.ico", sendPlain);
   router.get("/*.*", sendFileOrIndex);
   router.get("/*", sendIndex);
 
