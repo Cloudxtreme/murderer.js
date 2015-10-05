@@ -3,7 +3,7 @@
 var _ = require("lodash");
 var mailer = require("nodemailer");
 
-var users = require("../models/users");
+var model = require("../model/user");
 var security = require("../../../utils/security");
 var ctrlBase = require("../../../utils/controllerBase");
 var connections = require("../../../controller/connections");
@@ -20,7 +20,7 @@ var emailTransporter = mailer.createTransport({
   }
 });
 
-ctrlBase(users, module.exports);
+ctrlBase(model, module.exports);
 
 /*==================================================== Utilities  ====================================================*/
 
@@ -63,14 +63,14 @@ function applyPasswordVerificationToken(user) {
 
 /*------------------------------------------------- Model forwarding -------------------------------------------------*/
 
-module.exports.findByModule = users.findByModule;
-module.exports.findByModulePermission = users.findByModulePermission;
-module.exports.belongsToModule = users.belongsToModule;
-module.exports.isModulePermitted = users.isModulePermitted;
+module.exports.findByModule = model.findByModule;
+module.exports.findByModulePermission = model.findByModulePermission;
+module.exports.belongsToModule = model.belongsToModule;
+module.exports.isModulePermitted = model.isModulePermitted;
 
-module.exports.getTransportCopy = users.getTransportCopy;
-module.exports.createGuest = users.createGuest;
-module.exports.createAdmin = users.createAdmin;
+module.exports.getTransportCopy = model.getTransportCopy;
+module.exports.createGuest = model.createGuest;
+module.exports.createAdmin = model.createAdmin;
 
 /*---------------------------------------------------- Utilities  ----------------------------------------------------*/
 
@@ -85,7 +85,7 @@ module.exports.updateSelf = function (scope, data, cb) {
     if (err != null) {
       return cb(err);
     }
-    _.extend(user, _.omit(data, users.INTERNAL_VALUES));
+    _.extend(user, _.omit(data, model.INTERNAL_VALUES));
     saveUser({user: user, log: scope.log}, {msg: "user update failed"}, cb);
   });
 };

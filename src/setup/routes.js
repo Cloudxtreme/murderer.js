@@ -6,7 +6,7 @@ var path = require("path");
 var express = require("express");
 
 var config = require("../utils/config").main;
-var users = require("../core/users/controller/users");
+var userC = require("../core/user/controller/user");
 
 function sendFile(p, res, cb) {
   p = path.join(config.paths.frontend, p);
@@ -39,7 +39,7 @@ function sendIndex(req, res) {
   var user = getUser(req);
   // iterate over permission-ordered modules to fetch first allowed scope
   _.find(config.modules.all, function (name) {
-    if (users.belongsToModule(user, name)) {
+    if (userC.belongsToModule(user, name)) {
       sendFile("/" + name + ".html", res);
       return true;
     }
@@ -59,7 +59,7 @@ module.exports.pre = function (app) {
   var sendScopeFile = function (req, res) {
     var module = req.params.module;
     var user = getUser(req);
-    var permitted = users.isModulePermitted(user, module);
+    var permitted = userC.isModulePermitted(user, module);
     req.log.debug({fn: "sendScopeFile", permitted: permitted, user: user, module: module});
     if (permitted) {
       sendFile(req.path, res);

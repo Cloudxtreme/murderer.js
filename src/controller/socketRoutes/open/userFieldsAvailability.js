@@ -1,9 +1,9 @@
 "use strict";
 
-var users = require("../../../core/users/controller/users");
+var userC = require("../../../core/user/controller/user");
 
 module.exports = function (queryRoute) {
   queryRoute("username:available", function (data, cb) {
-    users.existsUsername(this, data, cb);
+    userC.existsUsername(this, data, cb);
   });
 };

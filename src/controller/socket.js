@@ -5,7 +5,7 @@ var io = require("socket.io");
 var bunyan = require("bunyan");
 
 var bus = require("../utils/bus").main;
-var users = require("../core/users/controller/users");
+var userC = require("../core/user/controller/user");
 var config = require("../utils/config").main;
 var connections = require("./connections");
 
@@ -57,7 +57,7 @@ _.each(config.modules.all, function (name) {
 bus.on("socket:authorized", function (socket, conn) {
   var user = conn.user;
   _.each(socketSetups, function (setup, name) {
-    if (users.isModulePermitted(user, name)) {
+    if (userC.isModulePermitted(user, name)) {
       setup.applyTo(socket, user, conn.log);
     }
   });

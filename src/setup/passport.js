@@ -4,7 +4,7 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 
 var security = require("../utils/security");
-var users = require("../core/users/models/users");
+var userModel = require("../core/user/model/user");
 
 module.exports = function (app) {
 
@@ -15,10 +15,10 @@ module.exports = function (app) {
     cb(null, user._id.toHexString());
   });
 
-  passport.deserializeUser(users.findById);
+  passport.deserializeUser(userModel.findById);
 
   passport.use(new passportLocal.Strategy(function (username, password, cb) {
-    users.findByUsername(username, function (err, user) {
+    userModel.findByUsername(username, function (err, user) {
       if (err != null) {
         cb(err);
       } else if (user == null || !security.checkPassword(password, user.hashedPassword)) {

@@ -4,7 +4,7 @@ var _ = require("lodash");
 var bunyan = require("bunyan");
 
 var bus = require("../utils/bus").main;
-var users = require("../core/users/controller/users");
+var userC = require("../core/user/controller/user");
 
 var connections;
 
@@ -56,13 +56,13 @@ module.exports.bySocket = function (socket) {
 
 module.exports.findByModule = function (name) {
   return _.filter(connections, function (conn) {
-    return users.belongsToModule(conn.user, name);
+    return userC.belongsToModule(conn.user, name);
   });
 };
 
 module.exports.findByModulePermission = function (name) {
   return _.filter(connections, function (conn) {
-    return users.isModulePermitted(conn.user, name);
+    return userC.isModulePermitted(conn.user, name);
   });
 };
 

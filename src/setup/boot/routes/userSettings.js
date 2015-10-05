@@ -2,7 +2,7 @@
 
 var express = require("express");
 
-var users = require("../../../core/users/controller/users");
+var userC = require("../../../core/user/controller/user");
 
 function loginAttempt(req, res, successRoute, failStatus) {
   return function (err) {
@@ -22,7 +22,7 @@ module.exports = function (app) {
     if (!req.body.password || req.body.password !== req.body.repeatPassword) {
       return res.status(400).send(new Error("No password specified or passwords don\"t match."));
     }
-    users.updatePasswordByToken(req, req.params.username, req.params.token, req.body.password, function (err, user) {
+    userC.updatePasswordByToken(req, req.params.username, req.params.token, req.body.password, function (err, user) {
       if (err != null) {
         if (typeof err === "string") {
           req.log.error({message: err}, "password reset failed");

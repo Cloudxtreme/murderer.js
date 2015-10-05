@@ -5,7 +5,7 @@ var bunyan = require("bunyan");
 var bus = require("../../../utils/bus").main;
 var connections = require("../../../controller/connections");
 var security = require("../../../utils/security");
-var users = require("../../../core/users/controller/users");
+var userC = require("../../../core/user/controller/user");
 var config = require("../../../utils/config").main;
 
 /*
@@ -34,10 +34,10 @@ bus.on("socket:connected", function (socket) {
         tUser = obj.transport;
       } else {
         obj.log.warn("rejected");
-        user = tUser = users.createGuest();
+        user = tUser = userC.createGuest();
       }
     } else {
-      user = tUser = users.createGuest();
+      user = tUser = userC.createGuest();
     }
 
     var conn = connections.add(user, socket);
@@ -58,7 +58,7 @@ function removeToken(userId) {
 }
 
 function createToken(req, res) {
-  var user = req.isAuthenticated() ? req.user : users.createGuest();
+  var user = req.isAuthenticated() ? req.user : userC.createGuest();
   if (tokens.hasOwnProperty(user._id)) {
     removeToken(user._id);
   }
@@ -66,7 +66,7 @@ function createToken(req, res) {
   var obj = tokens[user._id] = {
     token: token,
     user: user,
-    transport: users.getTransportCopy(user),
+    transport: userC.getTransportCopy(user),
     log: bunyan.logger.token.child({user: user, token: token, type: "socket authentication"})
   };
   obj.log.info("created");

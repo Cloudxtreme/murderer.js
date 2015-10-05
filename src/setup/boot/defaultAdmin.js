@@ -4,7 +4,7 @@ var _ = require("lodash");
 var Q = require("q");
 var bunyan = require("bunyan");
 
-var users = require("../../core/users/controller/users");
+var userC = require("../../core/user/controller/user");
 var config = require("../../utils/config").main;
 var security = require("../../utils/security");
 
@@ -20,7 +20,7 @@ var body = {
  * This Module creates a new admin-user if none is existent.
  */
 module.exports = function () {
-  return users.findByModulePermission(config.modules.admin, function (err, admins) {
+  return userC.findByModulePermission(config.modules.admin, function (err, admins) {
     var log = bunyan.logger.app.child({boot: "default admin creation"}, null, true);
 
     if (err != null) {
@@ -32,21 +32,21 @@ module.exports = function () {
     }
 
     var conn = {
-      user: users.createAdmin(),
+      user: userC.createAdmin(),
       log: log
     };
 
     var defer = Q.defer();
     var extend = _.extend(body, config.defaultAdmin);
 
-    users.findByUsername(conn, extend.username, function (err, user) {
+    userC.findByUsername(conn, extend.username, function (err, user) {
       if (err != null) {
         return defer.reject(err);
       }
       if (user == null) {
         return defer.resolve();
       }
-      users.remove(conn, user, function (err) {
+      userC.remove(conn, user, function (err) {
         if (err == null) {
           defer.resolve();
         } else {
@@ -56,7 +56,7 @@ module.exports = function () {
     });
 
     return defer.promise.then(function () {
-      return users.create(conn, extend, function (err) {
+      return userC.create(conn, extend, function (err) {
         if (err != null) {
           return log.error({err: err}, "admin-creation failed");
         }

@@ -3,7 +3,7 @@
 var express = require("express");
 var passport = require("passport");
 
-var users = require("../../../core/users/controller/users");
+var userC = require("../../../core/user/controller/user");
 
 function logout(req, res) {
   req.logOut();
@@ -11,7 +11,7 @@ function logout(req, res) {
 }
 
 function register(req, res) {
-  users.create(req, req.body, function (err, user) {
+  userC.create(req, req.body, function (err, user) {
     if (err != null) {
       res.redirect("/register/#" + err.message);
       return;
