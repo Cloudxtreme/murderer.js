@@ -42,7 +42,7 @@ bus.on("socket:connected", function (socket) {
 
     var conn = connections.add(user, socket);
     socket.emit("connection:authorized", tUser);
-    return bus.emit("socket:authorized", socket, conn);
+    return bus.emit("socket:authorized", {socket: socket, connection: conn});
   });
 });
 

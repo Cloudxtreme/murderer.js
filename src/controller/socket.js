@@ -54,11 +54,11 @@ _.each(config.modules.all, function (name) {
   };
 });
 
-bus.on("socket:authorized", function (socket, conn) {
-  var user = conn.user;
+bus.on("socket:authorized", function (data) {
+  var user = data.connection.user;
   _.each(socketSetups, function (setup, name) {
     if (userC.isModulePermitted(user, name)) {
-      setup.applyTo(socket, user, conn.log);
+      setup.applyTo(data.socket, user, data.connection.log);
     }
   });
 });
