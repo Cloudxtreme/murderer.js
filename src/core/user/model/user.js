@@ -78,7 +78,6 @@ module.exports.createGuest = function () {
   return {
     _id: "guest/" + id,
     guest: true,
-    activated: true,
     username: "guest/" + id
   };
 };
@@ -97,11 +96,14 @@ module.exports.createAdmin = function () {
 module.exports.findByModule = function (name, cb) {
   switch (name) {
     case "admin":
-      return model.find({activated: true, admin: true}, cb);
-    case "common":
-      return model.find({activated: true, admin: false}, cb);
-    case "open":
+      return model.find({admin: true, activated: true}, cb);
+    case "active":
+      return model.find({admin: false, activated: true}, cb);
+    case "closed":
       return model.find({activated: false}, cb);
+    case "common":
+    case "open":
+      return cb(null, []);
   }
   cb(new Error("Module unknown"));
 };
@@ -109,11 +111,14 @@ module.exports.findByModule = function (name, cb) {
 module.exports.findByModulePermission = function (name, cb) {
   switch (name) {
     case "admin":
-      return model.find({activated: true, admin: true}, cb);
+      return model.find({admin: true, activated: true}, cb);
+    case "active":
+      return model.find({activated: true}, cb);
+    case "closed":
     case "common":
       return model.find({}, cb);
     case "open":
-      return model.find({activated: false}, cb);
+      return cb(null, []);
   }
   cb(new Error("Module unknown"));
 };
@@ -121,23 +126,31 @@ module.exports.findByModulePermission = function (name, cb) {
 module.exports.belongsToModule = function (user, name) {
   switch (name) {
     case "admin":
-      return user.activated && user.admin;
+      return user.admin && user.activated;
+    case "active":
+      return !user.admin && user.activated;
+    case "closed":
+      return !user.activated && !user.guest;
     case "common":
-      return user.activated && !user.admin;
+      return false;
     case "open":
-      return user.guest && (!user.admin || !user.activated);
+      return user.guest;
   }
-  return false;
+  throw new Error("Module unknown");
 };
 
 module.exports.isModulePermitted = function (user, name) {
   switch (name) {
     case "admin":
-      return user.activated && user.admin;
+      return user.admin && user.activated;
+    case "active":
+      return !user.activated;
+    case "closed":
+      return !user.guest;
     case "common":
       return true;
     case "open":
-      return !user.admin || !user.activated;
+      return user.guest;
   }
-  return false;
+  throw new Error("Module unknown");
 };

@@ -7,8 +7,16 @@
     "deploy": true,
     "dependencies": ["common"]
   },
-  "admin": {
+  "closed": {
     "deploy": true,
     "dependencies": ["common"]
+  },
+  "active": {
+    "deploy": true,
+    "dependencies": ["closed"]
+  },
+  "admin": {
+    "deploy": true,
+    "dependencies": ["active"]
   }
 }

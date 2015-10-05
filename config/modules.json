@@ -2,6 +2,8 @@
   "_noEnv": true,
   "all": [
     "open",
+    "closed",
+    "active",
     "admin"
   ],
   "admin": "admin"
