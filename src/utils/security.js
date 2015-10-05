@@ -14,8 +14,8 @@ module.exports.checkPassword = function (candidate, hash) {
   return bcrypt.compareSync(candidate, hash);
 };
 
-module.exports.generateToken = function () {
-  return crypto.randomBytes(config.security.token.bytes).toString("hex");
+module.exports.generateToken = function (bytes) {
+  return crypto.randomBytes(bytes || config.security.token.bytes).toString("hex");
 };
 
 module.exports.generateRandom = function (bytes, encoding) {

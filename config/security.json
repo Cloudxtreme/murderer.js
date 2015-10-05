@@ -14,7 +14,7 @@
       }
     },
     "humanToken": {
-      "bytes": 16
+      "bytes": 4
     }
   },
   "dist": {
@@ -32,7 +32,7 @@
       }
     },
     "humanToken": {
-      "bytes": 16
+      "bytes": 4
     }
   },
   "test": {
