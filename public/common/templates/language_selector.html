@@ -1,0 +1,6 @@
+<ul>
+    <li ng-repeat="(l, name) in locales.all">
+        <a ng-if="l !== language" ng-click="setLanguage(l)">{{name}} - {{l}}</a>
+        <span class="text-muted" ng-if="l === language">{{name}} - {{l}}</span>
+    </li>
+</ul>
