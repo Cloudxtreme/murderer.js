@@ -81,6 +81,7 @@ module.exports = (config, grunt, helpers) ->
   helpers.registerTaskByPattern 'copy_dev', 'copy', copy, /(?:^|_)dev(?:_|$)/
   helpers.registerTaskByPattern 'copy_dist', 'copy', copy, /(?:^|_)dist(?:_|$)/
 
+  helpers.registerTaskByPattern 'copy_dev_js', 'copy', copy, /(?:^|_)dev_js/
   helpers.registerTaskByPattern 'copy_dev_less', 'copy', copy, /(?:^|_)dev_less/
   helpers.registerTaskByPattern 'copy_dev_static', 'copy', copy, /(?:^|_)dev_static/
   helpers.registerTaskByPattern 'copy_dist_static', 'copy', copy, /(?:^|_)dist_static/
