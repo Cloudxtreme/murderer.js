@@ -7,6 +7,12 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
   $routeProvider
       .when("/", {
         templateUrl: "/views/common/home.html"
+      })
+      .when("/game", {
+        templateUrl: "/views/common/game.html"
+      })
+      .when("/register", {
+        templateUrl: "/views/common/register.html"
       });
 
 });

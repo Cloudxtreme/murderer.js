@@ -1,0 +1,13 @@
+{
+  "register": {
+    "name": "Name",
+    "email": "E-Mail",
+    "message": "Nachricht",
+    "register": "Registrieren",
+    "pw": "Passwort",
+    "enterGame": "Einem Spiel beitreten",
+    "games": "Aktuelle Spiele",
+    "selectGame": "Wähle Spiel",
+    "selectGroup": "Wähle Gruppe"
+  }
+}

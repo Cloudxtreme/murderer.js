@@ -1,0 +1,14 @@
+{
+  "game": {
+    "news": "News",
+    "newKill": "Post new kill",
+    "code": "Killcode",
+    "message": "Message",
+    "post": "Post",
+    "stats": "Statistics",
+    "leave": "Leave Game",
+    "user": "Name",
+    "pw": "Password",
+    "suicide": "Commit Suicide"
+  }
+}

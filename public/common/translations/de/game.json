@@ -1,0 +1,14 @@
+{
+  "game": {
+    "news": "Neuigkeiten",
+    "newKill": "Einen Mord melden",
+    "code": "Mordcode",
+    "message": "Todesursache",
+    "post": "Abschicken",
+    "stats": "Statistik",
+    "leave": "Spiel verlassen",
+    "user": "Name",
+    "pw": "Passwort",
+    "suicide": "Selbsmord"
+  }
+}

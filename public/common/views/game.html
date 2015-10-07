@@ -1,0 +1,38 @@
+<h1>Spiel 1</h1>
+<div class="left">
+    <h3 translate>game.news</h3>
+    <!-- TODO newsticker -->
+    <ol class="noNumbers">
+        <li>
+            <div>Gurke42 hat Ente1337 getötet</div>
+            <div>Mit einem 1000 Tonnen Thunfisch erschlagen</div>
+        </li>
+    </ol>
+    <h3 translate>game.stats</h3>
+    <ol> <!-- TODO generate highscore list -->
+        <li>Gurke42 1 Morde</li>
+    </ol>
+    Insgesamt 3 Tote
+</div>
+<div class="right">
+    <h3 translate>game.newKill</h3>
+    <label class="input-group-addon" for="code" translate>game.code</label>
+    <input type="text" class="form-control" id="code" placeholder="" />
+    <label class="input-group-addon" for="message" translate>game.message</label>
+    <textarea class="form-control" id="message">Mit einem 1000 Tonnen Thunfisch erschlagen</textarea>
+    <label for="listIndex" translate>game.listIndex</label>
+    <!-- TODO get data from server -->
+    <select id="listIndex">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <button class="btn btn-default" translate>game.post</button>
+    <hr />
+    <h3 translate>game.leave</h3>
+    <label for="user" class="input-group-addon" translate>game.user</label>
+    <input type="text" class="form-control" id="user" />
+    <label for="pw" class="input-group-addon" translate>game.pw</label>
+    <input type="text" class="form-control" id="pw" />
+    <button class="" translate>game.suicide</button>
+</div>
