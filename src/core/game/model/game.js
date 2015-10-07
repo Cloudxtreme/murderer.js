@@ -31,6 +31,7 @@ var GameSchema = new Schema(
               entryDate: {type: Date, default: Date.now},
               murderer: {type: ObjectID, ref: "User"},
               victim: {type: ObjectID, ref: "User"},
+              message: String,
               token: String
             }], default: []
           }

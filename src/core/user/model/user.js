@@ -34,6 +34,7 @@ var UserSchema = new Schema(
       resetPasswordToken: {type: String, default: 0, trim: true},
       resetPasswordExpires: {type: Date, default: 0},
       // misc
+      profileMessage: {type: String, trim: true},
       avatarUrl: {type: String, trim: true, lowercase: true}
     }
 );
