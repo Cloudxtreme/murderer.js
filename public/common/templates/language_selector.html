@@ -1,6 +1,6 @@
-<ul>
-    <li ng-repeat="(l, name) in locales.all">
-        <a ng-if="l !== language" ng-click="setLanguage(l)">{{name}} - {{l}}</a>
-        <span class="text-muted" ng-if="l === language">{{name}} - {{l}}</span>
-    </li>
-</ul>
+<li ng-repeat="(l, name) in locales.all" ng-class="{active: l === language}">
+    <a ng-click="setLanguage(l)">
+        <i class="fa fa-fw fa-flag"></i>
+        <span class="text-mono" ng-bind="l"></span>- {{name}}
+    </a>
+</li>

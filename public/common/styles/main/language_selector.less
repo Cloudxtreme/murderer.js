@@ -1,0 +1,26 @@
+ul#language-selector {
+  float: right;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    border-bottom-left-radius: 5px;
+    &:not(.active):hover {
+      background: fade(@color-primary, 30%);
+    }
+    &.active {
+      a {
+        cursor: not-allowed;
+        color: mix(@text-muted, darkgreen, 70%);
+      }
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 3px 15px 3px 4px;
+    }
+  }
+}
