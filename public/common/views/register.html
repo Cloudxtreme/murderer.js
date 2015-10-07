@@ -16,16 +16,8 @@
     <input type="text" class="" id="name" placeholder="" />
     <!-- TODO get data from server-->
     <label for="group" translate>register.selectGroup</label>
-    <select id="group">
-        <option>Zsh</option>
-        <option>Perl</option>
-        <option>Lisp</option>
-        <option>Python</option>
-        <option>Haskell</option>
-        <option>Rust</option>
-        <option>COBOL</option>
-        <option>Java</option>
-        <option>Fortran</option>
+    <select id="group" data-ng-model="selectedGroup" ng-options="group.name for group in groups">
+        <option value="" translate>register.selectGroup</option>
     </select>
     <label for="email" translate>register.email</label>
     <input type="text" id="email" placeholder="" />

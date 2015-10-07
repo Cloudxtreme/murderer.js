@@ -1,11 +1,15 @@
 <h1>Spiel 1</h1>
 <div class="left">
-    <h3 translate>game.news</h3>
+    <h3 translate>game.news.title</h3>
     <!-- TODO newsticker -->
     <ol class="noNumbers">
-        <li>
-            <div>Gurke42 hat Ente1337 getötet</div>
-            <div>Mit einem 1000 Tonnen Thunfisch erschlagen</div>
+        <li ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}]" ng-switch="x.type">
+            <h3 ng-switch-when="KILL" data-translate-values="x.data" translate>game.news.kill</h3>
+            <div ng-if="x.data.message" class="news-message">
+                <i class="fa fa-fw fa-quote-left"></i>
+                <span class="text-italic" ng-bind="x.data.message"></span>
+                <i class="fa fa-fw fa-quote-right"></i>
+            </div>
         </li>
     </ol>
     <h3 translate>game.stats</h3>

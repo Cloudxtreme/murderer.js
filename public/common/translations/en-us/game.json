@@ -1,6 +1,9 @@
 {
   "game": {
-    "news": "News",
+    "news": {
+      "title": "News",
+      "kill": "{{murderer}} has killed {{victim}}."
+    },
     "newKill": "Post new kill",
     "code": "Killcode",
     "message": "Message",
