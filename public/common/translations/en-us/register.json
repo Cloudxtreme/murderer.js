@@ -1,10 +1,6 @@
 {
   "register": {
-    "name": "Name",
-    "email": "Email",
     "message": "Message",
-    "register": "Register",
-    "pw": "Password",
     "enterGame": "Enter a Game",
     "games": "Current Games",
     "selectGame": "Select Game",

@@ -6,24 +6,26 @@
         <li>Spiel 1</li>
     </ul>
 </div>
+<!-- TODO get data from server-->
 <div class="right">
     <h4 translate>register.enterGame</h4>
-    <label for="gameid" translate>register.selectGame</label>
-    <select id="gameid">
-        <option>Spiel 1</option>
-    </select>
-    <label class="" for="name" translate>register.name</label>
-    <input type="text" class="" id="name" placeholder="" />
-    <!-- TODO get data from server-->
-    <label for="group" translate>register.selectGroup</label>
-    <select id="group" data-ng-model="selectedGroup" ng-options="group.name for group in groups">
-        <option value="" translate>register.selectGroup</option>
-    </select>
-    <label for="email" translate>register.email</label>
-    <input type="text" id="email" placeholder="" />
-    <label for="pw" translate>register.pw</label>
-    <input type="text" id="pw" placeholder="Mb2.r5oHf-0t" />
-    <label for="text" translate>register.message</label>
-    <textarea id="text"></textarea>
-    <button translate>register.register</button>
+    <form name="registerForm" action="/register" method="post">
+        <label for="game-id" translate>register.selectGame</label>
+        <select id="game-id" name="gameId" required>
+            <option>Spiel 1</option>
+        </select>
+        <label class="" for="username" translate>credentials.username</label>
+        <input type="text" id="username" name="username" required />
+        <label for="group" translate>register.selectGroup</label>
+        <select id="group" data-ng-model="selectedGroup" ng-options="group.name for group in groups" name="group">
+            <option value="" translate>register.selectGroup</option>
+        </select>
+        <label for="email" translate>credentials.email</label>
+        <input type="text" id="email" required name="email" />
+        <label for="password" translate>credentials.password</label>
+        <input type="text" id="password" placeholder="Mb2.r5oHf-0t" name="password" />
+        <label for="message" translate>register.message</label>
+        <textarea id="message" name="message"></textarea>
+        <input type="submit" ng-value="'credentials.register' | translate" />
+    </form>
 </div>
