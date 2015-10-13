@@ -1,8 +1,21 @@
+<div id="identity">
+    <img ng-src="{{identity.avatarUrl}}"/>
+    <span ng-bind="identity.username"></span>
+    <a href="/logout" target="_self" title="{{'navigation.logout' | translate}}"><i class="fa fa-sign-out"></i></a>
+</div>
 <nav>
     <ul>
-        <li><a href="/" translate>navigation.home</a></li>
-        <li><a href="/game" translate>navigation.game</a></li>
-        <li><a href="/acp" translate>navigation.acp</a></li>
-        <li><a href="/logout" target="_self" translate>navigation.logout</a></li>
+        <li><a href="/">
+            <i class="fa fa-fw fa-home"></i>
+            {{'navigation.home' | translate}}
+        </a></li>
+        <li><a href="/game">
+            <i class="fa fa-fw fa-crosshairs"></i>
+            {{'navigation.game' | translate}}
+        </a></li>
+        <li><a href="/acp">
+            <i class="fa fa-fw fa-wrench"></i>
+            {{'navigation.acp' | translate}}
+        </a></li>
     </ul>
 </nav>
