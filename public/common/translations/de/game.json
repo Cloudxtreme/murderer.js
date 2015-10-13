@@ -1,14 +1,15 @@
 {
   "game": {
-    "news": "Neuigkeiten",
+    "news": {
+      "title": "News",
+      "kill": "{{murderer}} has killed {{victim}}."
+    },
     "newKill": "Einen Mord melden",
     "code": "Mordcode",
     "message": "Todesursache",
-    "post": "Abschicken",
+    "post": "Töten",
     "stats": "Statistik",
     "leave": "Spiel verlassen",
-    "user": "Name",
-    "pw": "Passwort",
     "suicide": "Selbsmord"
   }
 }

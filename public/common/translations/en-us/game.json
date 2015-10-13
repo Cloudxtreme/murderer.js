@@ -6,12 +6,10 @@
     },
     "newKill": "Post new kill",
     "code": "Killcode",
-    "message": "Message",
-    "post": "Post",
+    "message": "Cause of Death",
+    "post": "Kill",
     "stats": "Statistics",
     "leave": "Leave Game",
-    "user": "Name",
-    "pw": "Password",
     "suicide": "Commit Suicide"
   }
 }

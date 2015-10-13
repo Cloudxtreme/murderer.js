@@ -1,0 +1,17 @@
+<h3 translate>game.news.title</h3>
+<!-- TODO newsticker -->
+<ol class="noNumbers">
+    <li ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}]" ng-switch="x.type">
+        <h3 ng-switch-when="KILL" data-translate-values="x.data" translate>game.news.kill</h3>
+        <div ng-if="x.data.message" class="news-message">
+            <i class="fa fa-fw fa-quote-left"></i>
+            <span class="text-italic" ng-bind="x.data.message"></span>
+            <i class="fa fa-fw fa-quote-right"></i>
+        </div>
+    </li>
+</ol>
+<h3 translate>game.stats</h3>
+<ol> <!-- TODO generate highscore list -->
+    <li>Gurke42 1 Morde</li>
+</ol>
+Insgesamt 3 Tote

@@ -1,0 +1,19 @@
+<div class="left game-news"></div>
+<!-- TODO get data from server -->
+<div class="right">
+    <h3 translate>game.newKill</h3>
+    <form name="killForm" action="/game" method="post">
+        <label for="code" translate>game.code</label>
+        <input type="text" id="code" name="code" />
+        <label for="message" translate>game.message</label>
+        <textarea class="form-control" name="message" id="message" placeholder="Mit einem 1000 Tonnen Thunfisch erschlagen"></textarea>
+        <input type="submit" ng-value="'game.post' | translate"/>
+    </form>
+    <hr />
+    <h3 translate>game.leave</h3>
+    <form name="leaveForm" action="/game" method="post">
+        <label for="password" translate>credentials.password</label>
+        <input type="password" id="password" name="password" />
+        <input type="submit" ng-value="'game.suicide' | translate"/>
+    </form>
+</div>
