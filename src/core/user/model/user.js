@@ -145,7 +145,7 @@ module.exports.isModulePermitted = function (user, name) {
     case "admin":
       return user.admin && user.activated;
     case "active":
-      return !user.activated;
+      return user.activated;
     case "closed":
       return !user.guest;
     case "common":

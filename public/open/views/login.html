@@ -1,0 +1,11 @@
+<form name="loginForm" action="/login" method="post">
+    <label for="username" translate>credentials.username</label>
+    <input type="text" id="username" name="username"/>
+
+    <label for="password" translate>credentials.password</label>
+    <input type="password" id="password" name="password"/>
+
+    <input type="submit" ng-value="'credentials.login' | translate"/>
+
+    <div class="error-msg" ng-if="error" translate>credentials.loginFailed</div>
+</form>

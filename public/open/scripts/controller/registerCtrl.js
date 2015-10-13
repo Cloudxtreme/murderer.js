@@ -1,4 +1,4 @@
-angular.module("common").controller("registerCtrl", function ($scope) {
+angular.module("open").controller("registerCtrl", function ($scope) {
   "use strict";
 
   $scope.groups = [

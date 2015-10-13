@@ -1,7 +1,6 @@
 {
   "navigation": {
     "home": "Übersicht",
-    "game": "Spiel",
-    "register": "Mitspielen"
+    "game": "Spiel"
   }
 }

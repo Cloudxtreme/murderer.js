@@ -25,7 +25,7 @@ function register(req, res) {
 //noinspection JSUnresolvedFunction
 var login = passport.authenticate("local", {
   successRedirect: "/",
-  failureRedirect: "/register"
+  failureRedirect: "/login#failed"
 });
 
 module.exports = function (app) {

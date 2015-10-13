@@ -1,7 +1,6 @@
 {
   "navigation": {
     "home": "Home",
-    "game": "Game",
-    "register": "Sign Up"
+    "game": "Game"
   }
 }
