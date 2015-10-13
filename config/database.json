@@ -1,4 +1,4 @@
 {
-  "dev": "mongodb://localhost/murderer_dev",
-  "dist": "mongodb://localhost/murderer"
+  "dev": "mongodb://localhost/murdererjs_dev",
+  "dist": "mongodb://localhost/murdererjs"
 }
