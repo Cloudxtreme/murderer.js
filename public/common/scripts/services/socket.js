@@ -22,7 +22,7 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
       queryResolved(data.id);
     });
     connection.on("query:failed", function (data) {
-      console.error("query responded an error", queryMessageIds[data.id], data.reason);
+      console.error("query '" + queryMessageIds[data.id] + "' responded an error:", data.reason);
       queryDeferreds[data.id].reject(data.reason);
       queryResolved(data.id);
     });

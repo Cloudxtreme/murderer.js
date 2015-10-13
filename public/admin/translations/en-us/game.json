@@ -1,0 +1,14 @@
+{
+  "game": {
+    "participants": "Participants",
+    "inactive": "Inactive",
+    "ring": "Ring",
+    "mission": {
+      "remaining": "Missions remaining"
+    },
+    "create": {
+      "title": "New Game",
+      "submit": "Create Game"
+    }
+  }
+}

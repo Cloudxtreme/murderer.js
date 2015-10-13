@@ -1,23 +1,26 @@
-/*
-  TODO tolles styling
-*/
-input, select,textarea {
-  display:block;
-  width: 180px;
-  margin: 0px 0px 10px 0px;
-  padding: 1px;
-  &[type=submit] {
-    width:325px;
+form.form-horizontal {
+  input, select, textarea {
+    &.form-control {
+      display: block;
+      width: 180px;
+      margin: 0 0 10px 0;
+      padding: 1px;
+      &[type=submit] {
+        width:325px;
+      }
+    }
   }
-}
-label {
-  float: left;
-  display: block;
-  width: 140px;
-  margin: 0px 5px 10px 0px;
-}
-button {
-  display: block;
+
+  label.control-label {
+    float: left;
+    display: block;
+    width: 140px;
+    margin: 0 5px 10px 0;
+  }
+
+  button.form-btn {
+    display: block;
+  }
 }
 
 .error-msg {

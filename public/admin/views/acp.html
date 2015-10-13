@@ -1,0 +1,41 @@
+<form name="createForm" class="form-horizontal" ng-submit="createGame()">
+    <h3 translate>game.create.title</h3>
+
+    <label for="game-id" class="control-label" translate>game.name</label>
+    <input type="text" id="game-id" class="form-control" ng-model="newGame.name" required/>
+    <label for="rings" class="control-label" translate>game.rings</label>
+    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1"/>
+    <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate>
+</form>
+
+<hr/>
+
+<h3 translate>game.title.plural</h3>
+
+<ol class="list-group game-list">
+    <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
+        <h4 class="margin-top-0" ng-bind="game.name"></h4>
+
+        <div>
+            <input type="button" ng-click="toggleActive(game)" ng-value="'button.toggle' | translate"/>
+            <span class="text-mono" ng-bind="'game.' + (game.active ? 'active' : 'inactive') | translate"></span>
+        </div>
+        <div>
+            <span class="text-mono" ng-bind="game.participants.length"></span>
+            {{'game.participants' | translate}}
+        </div>
+        <hr/>
+        <div ng-repeat="ring in game.rings" class="game-ring">
+            <hr ng-if="!$first"/>
+            <b class="text-mono">{{'game.ring' | translate}} #{{$index}}</b>
+
+            <div>
+                <b class="text-mono" ng-bind="ring.active.length"></b>
+                {{'game.mission.remaining' | translate}}
+                <small ng-if="game.participants.length">({{Math.round(ring.active.length / game.participants.length *
+                    10000) / 100}}%)
+                </small>
+            </div>
+        </div>
+    </li>
+</ol>

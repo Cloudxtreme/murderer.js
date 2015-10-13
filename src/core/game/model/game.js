@@ -16,15 +16,16 @@ var GameSchema = new Schema(
       cdate: {type: Date, default: Date.now},
       mdate: {type: Date, default: Date.now},
       name: {type: String, required: true, unique: true, trim: true},
+      active: {type: Boolean, default: true},
 
-      participants: {type: [{type: ObjectID, ref: "User"}], required: true},
+      participants: {type: [{type: ObjectID, ref: "User"}], default: []},
       rings: {
         type: [{
           active: {
             type: [{
               user: {type: ObjectID, ref: "User"},
               token: String
-            }], required: true
+            }], default: []
           },
           kills: {
             type: [{
@@ -35,7 +36,7 @@ var GameSchema = new Schema(
               token: String
             }], default: []
           }
-        }], required: true
+        }], default: []
       },
       score: Mixed // {user.id: [user.id]}
     }

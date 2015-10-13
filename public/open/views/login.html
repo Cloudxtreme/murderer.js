@@ -1,11 +1,11 @@
-<form name="loginForm" action="/login" method="post">
-    <label for="username" translate>credentials.username</label>
-    <input type="text" id="username" name="username"/>
+<form name="loginForm" class="form-horizontal" action="/login" method="post">
+    <label for="username" class="control-label" translate>credentials.username</label>
+    <input type="text" class="form-control" id="username" name="username"/>
 
-    <label for="password" translate>credentials.password</label>
-    <input type="password" id="password" name="password"/>
+    <label for="password" class="control-label" translate>credentials.password</label>
+    <input type="password" class="form-control" id="password" name="password"/>
 
-    <input type="submit" ng-value="'credentials.login' | translate"/>
+    <input type="submit" class="form-btn" ng-value="'credentials.login' | translate"/>
 
     <div class="error-msg" ng-if="error" translate>credentials.loginFailed</div>
 </form>

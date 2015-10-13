@@ -1,0 +1,27 @@
+.list-group {
+  list-style: none;
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  > .list-group-item {
+    display: block;
+    border: 1px solid fade(@text-color, 20%);
+    background-color: fade(@text-color, 10%);
+    border-bottom-width: 0;
+    padding: 5px 7px;
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+    &:last-child {
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-bottom-width: 1px;
+    }
+
+    &.list-group-item-info {
+      background-color: fade(@color-info, 25%);
+    }
+  }
+}

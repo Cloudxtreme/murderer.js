@@ -4,6 +4,8 @@
       "title": "News",
       "kill": "{{murderer}} has killed {{victim}}."
     },
+    "name": "Name",
+    "active": "Active",
     "newKill": "Post new kill",
     "code": "Killcode",
     "message": "Cause of Death",

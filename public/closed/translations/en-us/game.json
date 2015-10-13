@@ -1,0 +1,9 @@
+{
+  "game": {
+    "title": {
+      "plural": "Games"
+    },
+    "name": "Name",
+    "rings": "Rings"
+  }
+}
