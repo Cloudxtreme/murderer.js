@@ -1,0 +1,30 @@
+#identity {
+  float: right;
+  height: 48px;
+  margin-right: 5px;
+
+  > span, > a {
+    margin-top: 17px;
+    margin-right: 7px;
+    float: left;
+    font-family: monospace;
+    color: fade(@text-color, 75%);
+  }
+
+  > a {
+    &:hover, &:active, &:focus {
+      color: mix(@text-color, @color-primary, 80%);
+    }
+  }
+
+  > img {
+    height: 100%;
+    width: 48px;
+    border: 1px solid fade(@text-color, 40%);
+    border-radius: 50%;
+    transition: border-radius 0.5s ease-in-out;
+    &:hover {
+      border-radius: 0;
+    }
+  }
+}

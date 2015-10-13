@@ -1,6 +1,5 @@
 {
   "register": {
-    "message": "Message",
     "enterGame": "Enter a Game",
     "games": "Current Games",
     "selectGroup": "Select Group"
