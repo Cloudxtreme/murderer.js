@@ -1,19 +1,47 @@
-<!-- TODO ng-repeat and get data -->
-<div class="dina4">
+<style type="text/css" media="print">
+    body {
+        background-color: white;
+    }
+
+    nav, #language-selector, #identity {
+        display: none;
+    }
+
+    #container {
+        padding: 0;
+    }
+</style>
+
+<div class="dina4" ng-repeat="ring in rings" data-ring-index="{{ring.ring}}">
     <div class="contract">
-        <h3>Toller Text murderer.js</h3>
+        <h3>murderer.js &ndash; Node.js implementation of M&ouml;rderspiel</h3>
 
-        <h1>WANTED</h1>
+        <h1 class="wanted">
+            <i class="fa fa-fw fa-crosshairs"></i>
+            WANTED
+            <i class="fa fa-fw fa-crosshairs"></i>
+        </h1>
 
-        <h2>opfer.name</h2>
+        <h2 data-user-id="{{ring.mission._id}}">
+            <span class="target" ng-bind="ring.mission.username"></span>
+        </h2>
         <img class="portrait" src="/img/pirate_draft.png" alt="image"/>
 
-        <div class="message">custom message</div>
+        <div class="message">
+            <div ng-if="ring.mission.profileMessage">
+                <i class="fa fa-fw fa-quote-left"></i>
+                {{ring.mission.profileMessage}}
+                <i class="fa fa-fw fa-quote-right"></i>
+            </div>
+            <div ng-if="!ring.mission.profileMessage">
+                <i class="fa fa-fw fa-ellipsis-h"></i>
+            </div>
+        </div>
         <div class="flexbox">
-            <div class="details">game.name - Kreis</div>
+            <div class="details text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</div>
             <div class="details">
                 Token für deinen Mörder:<br/>
-                <span class="text-mono text-bold">game.user.kreis.code</span>
+                &dagger;<span class="text-mono text-bold token" ng-bind="ring.token"></span>&dagger;
             </div>
         </div>
     </div>
@@ -22,8 +50,11 @@
             <div class="details">
                 <h3>Mordauftrag für</h3>
 
-                <h2>user.name</h2>
-                <h4>game.name - kreis</h4>
+                <h2>
+                    <span class="recipient" ng-bind="identity.username"></span>
+                </h2>
+                <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</h4>
+                <small class="text-mono">Spiel endet am 22.10.2015 ~14:00</small>
             </div>
             <div class="details">
                 <img src="/logo.svg" alt="murderer.js" class="cover"/>

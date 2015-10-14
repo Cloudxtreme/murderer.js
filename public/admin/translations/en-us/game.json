@@ -2,7 +2,6 @@
   "game": {
     "participants": "Participants",
     "inactive": "Inactive",
-    "ring": "Ring",
     "mission": {
       "remaining": "Missions remaining"
     },

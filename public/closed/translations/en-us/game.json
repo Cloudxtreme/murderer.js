@@ -23,6 +23,7 @@
       "success": "You no longer take part in this game."
     },
     "name": "Name",
+    "ring": "Ring",
     "rings": "Rings"
   }
 }

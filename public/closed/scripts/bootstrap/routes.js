@@ -10,7 +10,8 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
         controller: "gameCtrl"
       })
       .when("/contract", {
-        templateUrl: "/views/closed/contract.html"
+        templateUrl: "/views/closed/contract.html",
+        controller: "contractCtrl"
       });
 
 });

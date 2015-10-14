@@ -1,16 +1,34 @@
 .dina4 {
   height: 29.7cm;
   width: 21cm;
-  page-break-after: always;
   page-break-inside: avoid;
   text-align: center;
   overflow: hidden;
   background: #fff;
   color: #000;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+    page-break-after: always;
+  }
 
   .contract {
     height: 19.8cm;
-    border-bottom: 0.2cm ridge #000;
+    border-bottom: 0.05cm dashed fade(black, 15%);
+
+    .wanted {
+      font-family: serif;
+      color: black;
+      font-size: 29pt;
+    }
+
+    .target {
+      min-width: 50%;
+      padding: 0.05cm 0.4cm;
+      border: 0.1cm dotted fade(black, 25%);
+      background-color: fade(black, 8%);
+      display: inline-block;
+      text-transform: uppercase;
+    }
 
     .portrait {
       background-color: silver;
@@ -22,12 +40,30 @@
 
     .message {
       height: 3cm;
+      .fa {
+        opacity: 0.3;
+      }
     }
   }
 
   .details {
-     flex: 0.5;
-   }
+    flex: 0.5;
+
+    .recipient {
+      min-width: 50%;
+      padding: 0.05cm 0.4cm;
+      border: 0.1cm dotted fade(black, 25%);
+      background-color: fade(black, 8%);
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .token {
+      font-size: 1.2rem;
+      margin: 10px 20px;
+      display: inline-block;
+    }
+  }
 
   .public {
     padding-top: 1.5cm;
