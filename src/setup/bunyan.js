@@ -83,7 +83,7 @@ var _addStream = bunyan.prototype.addStream;
  */
 bunyan.prototype.addStream = function (s, defaultLevel) {
   var type = s.type = s.type.toLowerCase();
-  if (bunyan.additionalTypes.hasOwnProperty(type)) {
+  if (bunyan.additionalTypes.hasOwnProperty(type) && !s.stream) {
     bunyan.additionalTypes[type].call(this, s, defaultLevel, type);
   }
   _addStream.call(this, s, defaultLevel);

@@ -43,7 +43,7 @@ function RingBuffer(options, child, logger) {
     options = {};
   }
   this.logger = logger;
-  this._options = options;
+  this._options = _.omit(options, ["stream", "path"]);
   this.records = [];
   this.lost = 0;
 
@@ -76,6 +76,7 @@ function RingBuffer(options, child, logger) {
       bunyan.prototype.addStream.call(self, s, 0);
     });
   }
+  this._options.streams = this.streams;
   switch (typeof options.threshold) {
     case "number":
       this.trigger = options.threshold;
