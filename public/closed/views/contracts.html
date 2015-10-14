@@ -12,6 +12,9 @@
     }
 </style>
 
+<!-- TODO send all contracts to admin -->
+<!-- TODO feedback if no active contracts (incl. reason for this) -->
+
 <div class="dina4" ng-repeat="ring in rings" data-ring-index="{{ring.ring}}">
     <div class="contract">
         <h3>murderer.js &ndash; Node.js implementation of M&ouml;rderspiel</h3>
@@ -51,6 +54,7 @@
                 <h3>Mordauftrag für</h3>
 
                 <h2>
+                    <!-- TODO show the group of this user -->
                     <span class="recipient" ng-bind="identity.username"></span>
                 </h2>
                 <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</h4>

@@ -1,4 +1,4 @@
-angular.module("closed").controller("contractCtrl", function ($scope, socket) {
+angular.module("closed").controller("contractsCtrl", function ($scope, socket) {
   "use strict";
 
   $scope.game = null;

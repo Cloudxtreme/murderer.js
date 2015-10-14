@@ -212,6 +212,7 @@ module.exports.killSelf = function (scope, game, message) {
           ]).then(_.constant(predecessor));
         }))
         .then(function (predecessors) {
+          // TODO fix fdg got mission to kill fdg when second-last user commits suicide
           _.each(predecessors, function (predecessor) {
             userC.sendMailByKey(scope, "game.newMission", predecessor.user,
                 {
@@ -226,6 +227,7 @@ module.exports.killSelf = function (scope, game, message) {
         })
         .then(function (predecessors) {
           var message = _.map(predecessors, function (predecessor) {
+            // TODO replace with fdg is last alive if predecessor.missionId.equals(predecessor.userId)
             return "User '" + predecessor.user.username + "' (" + predecessor.userId + ") got the mission to kill '" +
                 predecessor.mission.username + "' (" + predecessor.missionId + ") in ring " + predecessor.ring +
                 " of game '" + game.name + "'.";

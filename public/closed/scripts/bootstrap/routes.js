@@ -9,9 +9,9 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
         templateUrl: "/views/closed/game.html",
         controller: "gameCtrl"
       })
-      .when("/contract", {
-        templateUrl: "/views/closed/contract.html",
-        controller: "contractCtrl"
+      .when("/contracts", {
+        templateUrl: "/views/closed/contracts.html",
+        controller: "contractsCtrl"
       });
 
 });

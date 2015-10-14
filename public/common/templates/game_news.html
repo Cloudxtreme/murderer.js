@@ -1,6 +1,5 @@
 <h2 translate>game.news.title</h2>
 <!-- TODO newsticker -->
-<!-- TODO delete translations in game.news -->
 <ol class="noNumbers news-list list-group list-group-striped">
     <li class="list-group-item" ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}, {type: 'SUICIDE', data: {victim: 'F@L0u1$', message: 'Ich bin noch nicht tot.'}}, {type: 'SERVER', data: {message: 'Kill yourself, Shutdown is coming!'}}, {type: 'ADMIN', data: {message: 'Servershutdown in 42 Minuten!'}}]" ng-switch="x.type">
         <h3 class="margin-top-0" ng-switch-when="KILL" data-translate-values="x.data" translate>news.kill</h3>
@@ -15,7 +14,8 @@
     </li>
 </ol>
 <h3 translate>game.stats</h3>
-<ol> <!-- TODO generate highscore list -->
+<ol>
+    <!-- TODO show highscore -->
     <li>Gurke42 1 Morde</li>
 </ol>
 Insgesamt 3 Tote
