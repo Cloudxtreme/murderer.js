@@ -7,6 +7,9 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
   $routeProvider
       .when("/game", {
         templateUrl: "/views/closed/game.html"
+      })
+      .when("/contract", {
+        templateUrl: "/views/closed/contract.html"
       });
 
 });
