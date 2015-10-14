@@ -24,6 +24,7 @@ var UserSchema = new Schema(
       mdate: {type: Date, default: Date.now},
       // credentials
       username: {type: String, required: true, unique: true, trim: true},
+      usernameLower: {type: String, required: true, unique: true, trim: true, lowercase: true},
       hashedPassword: {type: String, default: ""},
       // status-flags
       admin: {type: Boolean, default: false},
@@ -62,7 +63,8 @@ modelBase(model, module.exports, ["email", "username"]);
 module.exports.COLLECTION_NAME = COLLECTION_NAME;
 module.exports.INTERNAL_VALUES = INTERNAL_VALUES;
 
-var transportIgnore = ["hashedPassword", "email", "resetPasswordToken", "resetPasswordExpires", "__v", "log"];
+var transportIgnore = ["hashedPassword", "email", "resetPasswordToken", "usernameLower", "resetPasswordExpires", "__v",
+  "log"];
 
 module.exports.getTransportCopy = function (user) {
   if (user instanceof Array) {

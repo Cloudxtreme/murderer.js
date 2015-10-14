@@ -10,7 +10,8 @@ var security = require("../../utils/security");
 
 var body = {
   username: "root",
-  email: "admin@example.com",
+  usernameLower: "root",
+  email: "root@example.com",
   admin: true,
   activated: true,
   password: security.generateRandom(6)

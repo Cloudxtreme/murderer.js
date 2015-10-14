@@ -208,7 +208,7 @@ validate("create", function (next, body) {
   }
 
   if (!body.avatarUrl) {
-    body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon?s=50";
+    body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon&s=50";
   }
 
   next();

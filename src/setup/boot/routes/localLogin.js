@@ -11,6 +11,9 @@ function logout(req, res) {
 }
 
 function register(req, res) {
+  if (typeof req.body === "object" && typeof req.body.username === "string") {
+    req.body.usernameLowercase = req.body.username.toLowerCase();
+  }
   userC.create(req, req.body, function (err, user) {
     if (err != null) {
       res.redirect("/register/#" + err.message);
