@@ -203,6 +203,7 @@ var validate = module.exports.validate;
 // TODO except for admin-creation disable possibility to set various fields on create and save
 
 validate("create", function (next, body) {
+  body.usernameLower = body.username.toLowerCase();
   if (!body.email) {
     return next(new Error("Email required"));
   }

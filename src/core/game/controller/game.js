@@ -213,7 +213,8 @@ module.exports.killSelf = function (scope, game, message) {
         }))
         .then(function (predecessors) {
           _.each(predecessors, function (predecessor) {
-            userC.sendMailByKey(scope, "game.newMission", predecessor.user, _.pick(predecessor, ["user", "mission"]));
+            userC.sendMailByKey(scope, "game.newMission", predecessor.user,
+                _.extend({link: config.server.url + "/contract"}, _.pick(predecessor, ["user", "mission"])));
           });
           return predecessors;
         })
@@ -225,6 +226,7 @@ module.exports.killSelf = function (scope, game, message) {
           }).join("\n");
           userC.findByModulePermission("admin", function (err, admins) {
             _.each(admins, function (admin) {
+              // TODO send link to print especially those missions
               userC.sendMailByKey(scope, "game.admin.newMissions", admin, {info: message});
             });
           });
