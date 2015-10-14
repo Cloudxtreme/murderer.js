@@ -10,6 +10,9 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
       })
       .when("/game", {
         templateUrl: "/views/common/game.html"
+      })
+      .otherwise({
+        templateUrl: "/views/common/404.html"
       });
 
 });

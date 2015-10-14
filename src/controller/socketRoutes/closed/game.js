@@ -12,6 +12,9 @@ module.exports = function (queryRoute) {
       if (err != null) {
         return cb(err);
       }
+      if (game == null) {
+        return cb(new Error("No game found."));
+      }
       if (!_.some(game.participants, function (p) { return p.equals(userId); })) {
         return cb(new Error("Not participating."));
       }

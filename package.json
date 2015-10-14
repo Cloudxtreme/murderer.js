@@ -3,7 +3,7 @@
   "description": "Node.js implementation of Moerderspiel",
   "author": "Ole Reglitzki <ole@reglitzki.de> (https://github.com/frissdiegurke)",
   "license": "WTFPL",
-  "version": "0.0.1-alpha0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "dependencies": {
     "bcrypt": "^0.8.5",
