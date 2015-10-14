@@ -4,7 +4,7 @@ angular.module("admin").controller("gameDetailsCtrl", function ($scope, socket, 
   $scope.game = null;
   $scope.users = null;
 
-  socket.query("game:details", gameId).then(function (game) {
+  function initGame(game) {
     $scope.game = game;
     $scope.users = {};
     _.each(game.participants, function (p) { $scope.users[p._id] = p; });
@@ -36,5 +36,25 @@ angular.module("admin").controller("gameDetailsCtrl", function ($scope, socket, 
         ibu[key] = sorted;
       });
     });
-  });
+    return game;
+  }
+
+  function refreshGame() {
+    return socket.query("game:details", gameId).then(initGame);
+  }
+
+  refreshGame();
+
+  $scope.triggerActiveToken = function (token, active, idx) {
+    var murderer = active[(idx === 0 ? active.length : idx) - 1].user;
+    $scope.triggerToken(token, murderer);
+  };
+
+  $scope.triggerToken = function (token, murderer) {
+    socket.query("kill:admin.token", {token: token, murderer: murderer, game: $scope.game._id}).then(refreshGame);
+  };
+
+  $scope.triggerSuicide = function (userId) {
+    socket.query("kill:admin.suicide", {victim: userId, game: $scope.game._id}).then(refreshGame);
+  };
 });

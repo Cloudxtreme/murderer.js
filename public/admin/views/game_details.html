@@ -6,13 +6,15 @@
     <div class="game-ring-preview-active">
         <div ng-repeat="a in ring.active" ng-init="user = users[a.user]">
             <div class="active-user" data-user-id="{{user._id}}" data-email="{{user.email}}">
-                {{user.username}}<br/>
+                <a ng-click="triggerSuicide(user._id)"><i class="fa fa-fw fa-bomb"></i></a> {{user.username}}<br/>
+                <a ng-click="triggerActiveToken(a.token, ring.active, $index)"><i class="fa fa-fw fa-gavel"></i></a>
                 <span class="text-mono" ng-bind="a.token"></span>
             </div>
             <div class="inactive-user" ng-repeat="i in ring.inactiveByUser[user._id]"
                  ng-init="inactiveUser = users[i.victim]" data-user-id="{{inactiveUser._id}}"
                  data-email="{{inactiveUser.email}}">
                 {{inactiveUser.username}}<br/>
+                <a ng-click="triggerToken(i.token, i.murderer)"><i class="fa fa-fw fa-gavel"></i></a>
                 <span class="text-mono" ng-bind="i.token"></span>
             </div>
         </div>
