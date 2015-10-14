@@ -4,6 +4,12 @@
   margin: 0;
   padding: 0;
 
+  &.list-group-striped {
+    > .list-group-item:nth-child(2N) {
+      background-color: fade(@color-primary, 15%);
+    }
+  }
+
   > .list-group-item {
     display: block;
     border: 1px solid fade(@text-color, 20%);

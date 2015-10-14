@@ -1,9 +1,13 @@
-<h3 translate>game.news.title</h3>
+<h2 translate>game.news.title</h2>
 <!-- TODO newsticker -->
-<ol class="noNumbers">
-    <li ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}]" ng-switch="x.type">
-        <h3 ng-switch-when="KILL" data-translate-values="x.data" translate>game.news.kill</h3>
-        <div ng-if="x.data.message" class="news-message">
+<!-- TODO delete translations in game.news -->
+<ol class="noNumbers news-list list-group list-group-striped">
+    <li class="list-group-item" ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}, {type: 'SUICIDE', data: {victim: 'F@L0u1$', message: 'Ich bin noch nicht tot.'}}, {type: 'SERVER', data: {message: 'Kill yourself, Shutdown is coming!'}}, {type: 'ADMIN', data: {message: 'Servershutdown in 42 Minuten!'}}]" ng-switch="x.type">
+        <h3 class="margin-top-0" ng-switch-when="KILL" data-translate-values="x.data" translate>news.kill</h3>
+        <h3 class="margin-top-0" ng-switch-when="SUICIDE" data-translate-values="x.data" translate>news.suicide</h3>
+        <h3 class="margin-top-0" ng-switch-when="ADMIN" data-translate-values="x.data" translate>news.admin</h3>
+        <h3 class="margin-top-0" ng-switch-when="SERVER" data-translate-values="x.data" translate>news.server</h3>
+        <div ng-if="x.data.message" class="news-message" ng-class="'news-' + x.type.toLowerCase()">
             <i class="fa fa-fw fa-quote-left"></i>
             <span class="text-italic" ng-bind="x.data.message"></span>
             <i class="fa fa-fw fa-quote-right"></i>

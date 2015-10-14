@@ -1,0 +1,9 @@
+{
+  "news": {
+    "title": "News",
+    "kill": "{{murderer}} has killed {{victim}}.",
+    "suicide": "{{victim}} just died.",
+    "admin": "Message from Gamemaster:",
+    "server": "Servermessage:"
+  }
+}
