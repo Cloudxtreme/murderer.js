@@ -1,5 +1,10 @@
 {
   "game": {
+    "title": {
+      "plural": "Spiele"
+    },
+    "name": "Name",
+    "rings": "Kreise",
     "defaultMessage": "Mit einem 1000 Tonnen Thunfisch erschlagen"
   }
 }
