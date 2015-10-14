@@ -163,7 +163,7 @@ _.each(cfg.environments.env, function (e, env) {
 var envVar = cfg.environments.envVariable;
 if (envVar !== false) {
   // determine whether the environment-variable (defaults to PKGNAME_ENV) is set to any valid environment
-  envVar = typeof envVar === "string" ? envVar : pkg.name.toUpperCase() + "_ENV";
+  envVar = typeof envVar === "string" ? envVar : pkg.name.replace(/\W/, "").toUpperCase() + "_ENV";
   var envEnv = process.env[envVar];
   if (envEnv) {
     if (_.contains(cfg.environments.all, envEnv)) {
@@ -273,7 +273,7 @@ if (cfg.envVariables == null) {
   cfg.envVariables = {};
 }
 
-checkMapping(getEnvVariablePart("", cfg.envVariables, pkg.name), cfg.envVariables, cfg);
+checkMapping(getEnvVariablePart("", cfg.envVariables, pkg.name.replace(/\W/, "")), cfg.envVariables, cfg);
 
 /*------------------------------------------------ Tidy the config up ------------------------------------------------*/
 

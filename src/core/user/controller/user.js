@@ -79,13 +79,14 @@ module.exports.sendMail = function (ignored, email, body, cb) {
   sendMail(email, body, cb);
 };
 
-module.exports.sendMailByKey = function (ignored, key, user, data, cb) {
+module.exports.sendMailByKey = function (scope, key, user, data, cb) {
   var mail = _.get(config.mails, key);
   data = _.extend(getEmailData(user), data);
   sendMail(user.email, {
     subject: tpl(mail.subject, data) + "\n",
     text: tpl(mail.message, data) + "\n"
   }, cb);
+  scope.log.info({data: data, key: key, addressee: user}, "email sent");
 };
 
 /*------------------------------------------------ Self modifications ------------------------------------------------*/
@@ -203,6 +204,7 @@ var validate = module.exports.validate;
 // TODO except for admin-creation disable possibility to set various fields on create and save
 
 validate("create", function (next, body) {
+  body.usernameLower = body.username.toLowerCase();
   if (!body.email) {
     return next(new Error("Email required"));
   }

@@ -201,10 +201,14 @@ var stdSerializers = {
     var srv = cfg.server;
     return (srv.development ? "dev" : "dist") + "@" + (srv.tls ? "https" : "http") + "://localhost:" + srv.port;
   },
+  game: function (game) {
+    return game.name;
+  },
   user: function (user) {
     var obj = {
       _id: user._id,
-      username: user.username
+      username: user.username,
+      email: user.email
     };
     if (user.guest) {
       obj.guest = true;
@@ -247,6 +251,8 @@ var stdSerializers = {
 var querySerializer = {
   err: bunyan.stdSerializers.err,
   user: stdSerializers.user,
+  addressee: stdSerializers.user,
+  game: stdSerializers.game,
   model: stdSerializers.mongoDBModel,
   body: stdSerializers.modelBody,
   filter: stdSerializers.modelBody
@@ -256,6 +262,7 @@ var serializer = {
   app: { // used for application-borders, eg. server-creation, database-connection, etc.
     err: bunyan.stdSerializers.err,
     dbErr: stdSerializers.dbErr,
+    game: stdSerializers.game,
     model: stdSerializers.mongoDBModel,
     config: stdSerializers.serverConfig
   },

@@ -11,8 +11,8 @@ var security = require("../../../utils/security");
 var Schema = require("mongoose").Schema;
 
 var INTERNAL_VALUES = [
-  "cdate", "mdate", "username", "hashedPassword", "admin", "password", "activated", "email", "resetPasswordToken",
-  "resetPasswordExpires"
+  "cdate", "mdate", "username", "usernameLower", "hashedPassword", "admin", "password", "activated", "email",
+  "resetPasswordToken", "resetPasswordExpires"
 ];
 
 /*================================================ Schema Definition  ================================================*/
@@ -24,7 +24,7 @@ var UserSchema = new Schema(
       mdate: {type: Date, default: Date.now},
       // credentials
       username: {type: String, required: true, unique: true, trim: true},
-      usernameLower: {type: String, required: true, unique: true, trim: true, lowercase: true},
+      usernameLower: {type: String, required: true, unique: true, trim: true},
       hashedPassword: {type: String, default: ""},
       // status-flags
       admin: {type: Boolean, default: false},

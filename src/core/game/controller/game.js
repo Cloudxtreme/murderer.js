@@ -195,7 +195,7 @@ module.exports.killSelf = function (scope, game, message) {
         inactive.push({
           murderer: predecessor && predecessor.user,
           victim: userId,
-          nextVictim: getNextVictim(inactive, successor, userId),
+          nextVictim: getNextVictim(inactive, successor && successor.user, userId),
           token: obj.token
         });
         ring.kills.push(entry);
@@ -213,7 +213,14 @@ module.exports.killSelf = function (scope, game, message) {
         }))
         .then(function (predecessors) {
           _.each(predecessors, function (predecessor) {
-            userC.sendMailByKey(scope, "game.newMission", predecessor.user, _.pick(predecessor, ["user", "mission"]));
+            userC.sendMailByKey(scope, "game.newMission", predecessor.user,
+                {
+                  game: game.name,
+                  link: config.server.url + "contract",
+                  ring: predecessor.ring,
+                  user: predecessor.user._doc,
+                  mission: predecessor.mission._doc
+                });
           });
           return predecessors;
         })
@@ -225,6 +232,7 @@ module.exports.killSelf = function (scope, game, message) {
           }).join("\n");
           userC.findByModulePermission("admin", function (err, admins) {
             _.each(admins, function (admin) {
+              // TODO send link to print especially those missions
               userC.sendMailByKey(scope, "game.admin.newMissions", admin, {info: message});
             });
           });

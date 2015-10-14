@@ -3,18 +3,27 @@
     "account": {
       "removed": {
         "subject": "<% name %> Account deleted",
-        "message": "Hello <% username %>,\n\nyour <% name %> account (<% email %>) has just been deleted.",
-        "footer": "\n\n Best regards,\nThe <% name %> Team."
+        "message": "Hello <% username %>,\n\nyour <% name %> account (<% email %>) has just been deleted.\n\nBest regards,\nThe <% name %> Team."
       },
       "passwordResetRequest": {
         "subject": "<% name %> Password Reset",
-        "message": "Hello <% username %>,\n\nyou are receiving this email because a password-reset request has been made for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process:\n\n<% link %>\n\nIf you did not request this, please ignore this email and your password will remain unchanged.",
-        "footer": "\n\n Best regards,\nThe <% name %> Team."
+        "message": "Hello <% username %>,\n\nyou are receiving this email because a password-reset request has been made for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process:\n\n<% link %>\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n\nBest regards,\nThe <% name %> Team."
       },
       "passwordReset": {
         "subject": "Your <% name %> password has been changed",
-        "message": "Hello <% username %>,\n\nthe password-reset of your <% name %> account has been completed.",
-        "footer": "\n\n Best regards,\nThe <% name %> Team."
+        "message": "Hello <% username %>,\n\nthe password-reset of your <% name %> account has been completed.\n\nBest regards,\nThe <% name %> Team."
+      }
+    },
+    "game": {
+      "admin": {
+        "newMissions": {
+          "subject": "A user has committed suicide",
+          "message": "<% info %>"
+        }
+      },
+      "newMission": {
+        "subject": "One of your targets just committed suicide",
+        "message": "Hello <% username %>,\n\none of your targets in game '<% game %>' committed suicide.\nHence you've got assigned his target: <% mission.username %> in ring #<% ring %>\n\nVisit <% link %> for more information.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neins deiner Ziele im Spiel '<% game %>' hat das Zeitliche gesegnet.\nDaher wurde dir ein neues Ziel zugewiesen: <% mission.username %> in Ring #<% ring %>\n\nBesuche <% link %> für mehr Informationen.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
       }
     }
   },
