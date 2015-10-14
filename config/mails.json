@@ -23,7 +23,7 @@
       },
       "newMission": {
         "subject": "One of your targets just committed suicide",
-        "message": "Hello <% username %>,\n\none of your targets committed suicide.\nHence you've got assigned his target: <% mission.username %>\n\nVisit <% link %> for more information.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neins deiner Ziele hat das Zeitliche gesegnet.\nDaher wurde dir ein neues Ziel zugewiesen: <% mission.username %>\n\nBesuche <% link %> für mehr Informationen.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
+        "message": "Hello <% username %>,\n\none of your targets in game '<% game %>' committed suicide.\nHence you've got assigned his target: <% mission.username %> in ring #<% ring %>\n\nVisit <% link %> for more information.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neins deiner Ziele im Spiel '<% game %>' hat das Zeitliche gesegnet.\nDaher wurde dir ein neues Ziel zugewiesen: <% mission.username %> in Ring #<% ring %>\n\nBesuche <% link %> für mehr Informationen.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
       }
     }
   },

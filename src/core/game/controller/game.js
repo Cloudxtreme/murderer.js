@@ -195,7 +195,7 @@ module.exports.killSelf = function (scope, game, message) {
         inactive.push({
           murderer: predecessor && predecessor.user,
           victim: userId,
-          nextVictim: getNextVictim(inactive, successor, userId),
+          nextVictim: getNextVictim(inactive, successor && successor.user, userId),
           token: obj.token
         });
         ring.kills.push(entry);
@@ -214,7 +214,13 @@ module.exports.killSelf = function (scope, game, message) {
         .then(function (predecessors) {
           _.each(predecessors, function (predecessor) {
             userC.sendMailByKey(scope, "game.newMission", predecessor.user,
-                _.extend({link: config.server.url + "/contract"}, _.pick(predecessor, ["user", "mission"])));
+                {
+                  game: game.name,
+                  link: config.server.url + "contract",
+                  ring: predecessor.ring,
+                  user: predecessor.user._doc,
+                  mission: predecessor.mission._doc
+                });
           });
           return predecessors;
         })
