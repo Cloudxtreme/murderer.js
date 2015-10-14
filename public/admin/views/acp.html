@@ -32,8 +32,8 @@
             <div>
                 <b class="text-mono" ng-bind="ring.active.length"></b>
                 {{'game.mission.remaining' | translate}}
-                <small ng-if="game.participants.length">({{Math.round(ring.active.length / game.participants.length *
-                    10000) / 100}}%)
+                <small class="text-mono" ng-if="game.participants.length">({{(ring.active.length /
+                    game.participants.length * 10000 | math:'round') / 100}}%)
                 </small>
             </div>
         </div>

@@ -83,6 +83,9 @@ function setupQuery(socket, routes, user) {
         } else if (typeof response !== "undefined" || err == null) {
           socket.emit("query:response", {id: data.id, response: response});
         } else {
+          if (err instanceof Error) {
+            err = _.extend({error: true, message: err.message, name: err.name}, err);
+          }
           socket.emit("query:failed", {id: data.id, reason: err});
         }
       });
@@ -90,6 +93,9 @@ function setupQuery(socket, routes, user) {
         res.then(function (response) {
           socket.emit("query:response", {id: data.id, response: response});
         }, function (err) {
+          if (err instanceof Error) {
+            err = _.extend({error: true, message: err.message, name: err.name}, err);
+          }
           socket.emit("query:failed", {id: data.id, reason: err});
         }, function (progress) {
           socket.emit("query:progress", {id: data.id, progress: progress});

@@ -6,12 +6,6 @@
     },
     "name": "Name",
     "active": "Active",
-    "newKill": "Post new kill",
-    "code": "Killcode",
-    "message": "Cause of Death",
-    "post": "Kill",
-    "stats": "Statistics",
-    "leave": "Leave Game",
-    "suicide": "Commit Suicide"
+    "stats": "Statistics"
   }
 }

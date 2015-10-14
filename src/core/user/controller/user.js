@@ -44,6 +44,7 @@ function getEmailData(user) {
 }
 
 function sendMail(email, body, cb) {
+  cb = cb || _.noop;
   if (config.mailer.host) {
     emailTransporter.sendMail(_.extend(body, {
       to: email,
@@ -76,6 +77,15 @@ module.exports.createAdmin = model.createAdmin;
 
 module.exports.sendMail = function (ignored, email, body, cb) {
   sendMail(email, body, cb);
+};
+
+module.exports.sendMailByKey = function (ignored, key, user, data, cb) {
+  var mail = _.get(config.mails, key);
+  data = _.extend(getEmailData(user), data);
+  sendMail(user.email, {
+    subject: tpl(mail.subject, data) + "\n",
+    text: tpl(mail.message, data) + "\n"
+  }, cb);
 };
 
 /*------------------------------------------------ Self modifications ------------------------------------------------*/

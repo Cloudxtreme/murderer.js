@@ -62,13 +62,13 @@ modelBase(model, module.exports, ["email", "username"]);
 module.exports.COLLECTION_NAME = COLLECTION_NAME;
 module.exports.INTERNAL_VALUES = INTERNAL_VALUES;
 
-var transportIgnore = ["hashedPassword", "email", "__v", "log"];
+var transportIgnore = ["hashedPassword", "email", "resetPasswordToken", "resetPasswordExpires", "__v", "log"];
 
 module.exports.getTransportCopy = function (user) {
   if (user instanceof Array) {
     return _.map(user, module.exports.getTransportCopy);
   }
-  return _.omit(user, transportIgnore);
+  return _.omit(user._doc, transportIgnore);
 };
 
 /*---------------------------------------------- Sample user generation ----------------------------------------------*/

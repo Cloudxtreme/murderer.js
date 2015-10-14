@@ -3,6 +3,25 @@
     "title": {
       "plural": "Games"
     },
+    "mission": {
+      "attempt": "Attempt a murder",
+      "token": "Token",
+      "submit": "Track kill",
+      "message": "Cause of Death",
+      "defaultMessage": "Beat to death with a 1k ton tuna.",
+      "invalidToken": "Invalid token.",
+      "success": "May he/she rest in peace."
+    },
+    "suicide": {
+      "attempt": "Commit suicide",
+      "submit": "Commit suicide",
+      "message": "Last words",
+      "defaultMessage": "I'm out.",
+      "warning": "You won't be able to join back into the game anymore.",
+      "invalidPassword": "The password is not correct.",
+      "notActive": "You are not participating in this game.",
+      "success": "You no longer take part in this game."
+    },
     "name": "Name",
     "rings": "Rings"
   }

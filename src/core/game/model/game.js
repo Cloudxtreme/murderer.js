@@ -7,7 +7,6 @@ var modelBase = require("../../../utils/modelBase");
 
 var Schema = require("mongoose").Schema;
 var ObjectID = Schema.Types.ObjectId;
-var Mixed = Schema.Types.Mixed;
 
 /*================================================ Schema Definition  ================================================*/
 
@@ -27,6 +26,14 @@ var GameSchema = new Schema(
               token: String
             }], default: []
           },
+          inactive: { // those got removed from active by user-deletion. possible murderer may still use its code
+            type: [{
+              murderer: {type: ObjectID, ref: "User"},
+              victim: {type: ObjectID, ref: "User"},
+              nextVictim: {type: ObjectID, ref: "User"},
+              token: String
+            }], default: []
+          },
           kills: {
             type: [{
               entryDate: {type: Date, default: Date.now},
@@ -38,7 +45,16 @@ var GameSchema = new Schema(
           }
         }], default: []
       },
-      score: Mixed // {user.id: [user.id]}
+      kills: {
+        type: [{
+          entryDate: {type: Date, default: Date.now},
+          murderer: {type: ObjectID, ref: "User"},
+          victim: {type: ObjectID, ref: "User"},
+          message: String,
+          token: String,
+          ring: Number
+        }], default: []
+      }
     }
 );
 
