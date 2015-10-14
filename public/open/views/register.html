@@ -1,26 +1,28 @@
-<div class="left">
-    <h3>Du willst mitspielen?</h3>
-    Blaa mitspielen. Alle daten werden nach dem spiel wieder gelöscht. nianiania.
-    <h4 translate>register.games</h4>
-    <ul>
-        <li>Spiel 1</li>
-    </ul>
-</div>
-<!-- TODO get data from server-->
-<div class="right">
-    <h4 translate>register.enterGame</h4>
-    <form name="registerForm" class="form-horizontal" action="/register" method="post">
-        <label for="username" class="control-label" translate>credentials.username</label>
-        <input type="text" class="form-control" id="username" name="username" required />
-        <label for="group" class="control-label" translate>register.selectGroup</label>
-        <select id="group" name="group" class="form-control" data-ng-model="selectedGroup"
-                ng-options="group.name for group in groups">
-            <option value="" translate>register.selectGroup</option>
-        </select>
-        <label for="email" class="control-label" translate>credentials.email</label>
-        <input type="text" class="form-control" id="email" required name="email" />
-        <label for="password" class="control-label" translate>credentials.password</label>
-        <input type="password" class="form-control" id="password" placeholder="Mb2.r5oHf-0t" name="password" />
-        <input type="submit" class="form-btn" ng-value="'credentials.register' | translate" />
-    </form>
+<div class="flexbox">
+    <div class="left">
+        <h3>Du willst mitspielen?</h3>
+        Blaa mitspielen. Alle daten werden nach dem spiel wieder gelöscht. nianiania.
+        <h4 translate>register.games</h4>
+        <ul>
+            <li>Spiel 1</li>
+        </ul>
+    </div>
+    <!-- TODO get data from server-->
+    <div class="right">
+        <h4 translate>register.enterGame</h4>
+        <form name="registerForm" class="form-horizontal" action="/register" method="post">
+            <label for="username" class="control-label" translate>credentials.username</label>
+            <input type="text" class="form-control" id="username" name="username" required />
+            <label for="group" class="control-label" translate>register.selectGroup</label>
+            <select id="group" name="group" class="form-control" data-ng-model="selectedGroup"
+                    ng-options="group.name for group in groups">
+                <option value="" translate>register.selectGroup</option>
+            </select>
+            <label for="email" class="control-label" translate>credentials.email</label>
+            <input type="text" class="form-control" id="email" required name="email" />
+            <label for="password" class="control-label" translate>credentials.password</label>
+            <input type="password" class="form-control" id="password" placeholder="Mb2.r5oHf-0t" name="password" />
+            <input type="submit" class="form-btn" ng-value="'credentials.register' | translate" />
+        </form>
+    </div>
 </div>

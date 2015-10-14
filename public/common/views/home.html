@@ -1,63 +1,65 @@
-<div class="left">
-    <h2>Es ist alles nur ein Spiel</h2>
-    <h3>Qu'est-ce que c'est?</h3>
-    <p>
-        Très bien!
-        Willkommen bei der Node.js-Umsetzung des <a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">Mörderspiels</a>.<br />
-        Diese Seite bietet Unterstützung bei der Durchführung des Spieles indem es die Mordaufträge für alle registrierten Mörder<em class="gender">Innen</em> generiert und verwaltet.
-        Dazu melden sich alle die mitspielen wollen auf dieser Seite an und ein Admin startet das Spiel.
-        Jetzt können die Mordaufträge ausgedruckt werden und von allen abgeholt werden.
-        Nach erfolgreichem Morden können Mörder<em class="gender">Innen</em> einen Token auf dieser Seite abschicken,
-        wodurch der Spielserver den Mord registriert und eine Nachricht in den News sendet.
-    </p>
-    <h3 translate>home.rules</h3>
-    <p>
-        Die Regeln werden auf diversen Seiten (<a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">spielewiki.org</a>, <a href="https://kif.fsinf.de/wiki/M%C3%B6rderspiel">KIF-Wiki</a>, <a href="http://moerderspiel.org">moerderspiel.org</a>) ausführlich erklärt, weshalb hier auf eine genauere Regelerklärung verzichtet wird.
-        Trotzdem sind hier noch einige Details und Besonderheiten:<br />
-        Der Spielserver kann Spiele mit beliebig vielen, voneinander unabhängigen <b>Kreisen</b> erzeugen. Standardmäßig sind dies drei Kreise.
-        Alle Mörder<em class="gender">Innen</em> spielen automatisch in allen Kreisen mit.
-        Stirbt man in einem Kreis, so spielt man noch immer in den anderen Kreisen mit.
-        In jedem Kreis, in dem man gestorben ist, zählt man als tote Person.
-        Das heißt, dass man für Morde in diesem Kreis auch nicht mehr als Zeuge zählt.
-        Außerdem muss das Opfer den zum Kreis passenden Auftrag abgeben.
-        Ein Mörder<em class="gender">Innen</em> kann mit jedem Mord nur genau einen Mord begehen.
-        Sollten mehrere Aufträge das gleiche Opfer haben, so muss dieses auch mehrmals getötet werden.<br />
-        In <b>Mordfreien Zonen</b> sind alle Opfer vor dem Töten geschützt.
-        Zu Mordfreien Zonen zählen zum Beispiel Toiletten und Duschen.
-        Zusätzlich können sich alle  vorhandenen Mitspieler<em class="gender">Innen</em> gemeinsam dazu entscheiden, eine temporäre Mordfreie Zone zu definieren.
-        Das ist dann sinnvoll, wenn durch das Mörderspiel eine andere Tätigkeit behindert wird.
-        Hat man eine Mordfreie Zone definiert, muss es allen hinzukommenden Mitspielenden mitgeteilt werden.
-        Ansonsten gilt für sie die Mordfreie Zone nicht!
-    </p>
-    <h3>Umgang mit den Aufträgen</h3>
-    <p>
-        Auch wenn sich die Mordaufträge theoretisch jederzeit online einsehen lassen, sollten dennoch alle immer ihre Aufträge in Papierform dabei haben.
-        Schließlich ist auf ihnen der Token abgedruckt, um den Mord online eintragen zu können.
-        Außerdem muss der Auftrag weitergereicht werden wenn man stirbt.<br />
-        Sollte es einmal passieren, dass der Auftrag verloren geht, dann kann der Admin kontaktiert werden.
-        Mit etwas Aufwand ist er in der Lage den fehlenden Auftrag neu zu erstellen und auszuhändigen.
-    </p>
-    <h3>Selbstmord</h3>
-    <p>
-        Es ist möglich, in diesem Mörderspiel Selbstmord zu begehen.
-        Gemeint ist damit der Button mit entsprechender Aufschrift.
-        Selbstmord sollte begangen werden, falls man früher von der Veranstaltung gehen muss und somit nicht mehr mitspielen kann.
-        Damit keine Lücken in den Kreisen entstehen sollte der Spieladmin kontaktiert werden.
-        Die Nutzung des Buttons ist dafür in der Regel ausreichend.<br />
-    </p>
-</div>
-<div class="right">
-    <h3 translate>Empty Strings</h3>
-    <ul>
-        <li></li>
-        <li>\0</li>
-        <li>[]+[]</li>
-    </ul>
-    <hr />
-    <h4>h4</h4>
-    <div>
-        <i class="fa fa-github"></i> Code on <a href="https://github.com/frissdiegurke/murderer.js">github</a><br />
-        created by <span class="text-mono text-bold">Ole Reglitzki</span> and <span class="text-mono text-bold">Felix Schelle</span><br />
-        &copy; 2015<br />
+<div class="flexbox">
+    <div class="left">
+        <h2>Es ist alles nur ein Spiel</h2>
+        <h3>Qu'est-ce que c'est?</h3>
+        <p>
+            Très bien!
+            Willkommen bei der Node.js-Umsetzung des <a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">Mörderspiels</a>.<br />
+            Diese Seite bietet Unterstützung bei der Durchführung des Spieles indem es die Mordaufträge für alle registrierten Mörder<em class="gender">Innen</em> generiert und verwaltet.
+            Dazu melden sich alle die mitspielen wollen auf dieser Seite an und ein Admin startet das Spiel.
+            Jetzt können die Mordaufträge ausgedruckt werden und von allen abgeholt werden.
+            Nach erfolgreichem Morden können Mörder<em class="gender">Innen</em> einen Token auf dieser Seite abschicken,
+            wodurch der Spielserver den Mord registriert und eine Nachricht in den News sendet.
+        </p>
+        <h3 translate>home.rules</h3>
+        <p>
+            Die Regeln werden auf diversen Seiten (<a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">spielewiki.org</a>, <a href="https://kif.fsinf.de/wiki/M%C3%B6rderspiel">KIF-Wiki</a>, <a href="http://moerderspiel.org">moerderspiel.org</a>) ausführlich erklärt, weshalb hier auf eine genauere Regelerklärung verzichtet wird.
+            Trotzdem sind hier noch einige Details und Besonderheiten:<br />
+            Der Spielserver kann Spiele mit beliebig vielen, voneinander unabhängigen <b>Kreisen</b> erzeugen. Standardmäßig sind dies drei Kreise.
+            Alle Mörder<em class="gender">Innen</em> spielen automatisch in allen Kreisen mit.
+            Stirbt man in einem Kreis, so spielt man noch immer in den anderen Kreisen mit.
+            In jedem Kreis, in dem man gestorben ist, zählt man als tote Person.
+            Das heißt, dass man für Morde in diesem Kreis auch nicht mehr als Zeuge zählt.
+            Außerdem muss das Opfer den zum Kreis passenden Auftrag abgeben.
+            Ein Mörder<em class="gender">Innen</em> kann mit jedem Mord nur genau einen Mord begehen.
+            Sollten mehrere Aufträge das gleiche Opfer haben, so muss dieses auch mehrmals getötet werden.<br />
+            In <b>Mordfreien Zonen</b> sind alle Opfer vor dem Töten geschützt.
+            Zu Mordfreien Zonen zählen zum Beispiel Toiletten und Duschen.
+            Zusätzlich können sich alle  vorhandenen Mitspieler<em class="gender">Innen</em> gemeinsam dazu entscheiden, eine temporäre Mordfreie Zone zu definieren.
+            Das ist dann sinnvoll, wenn durch das Mörderspiel eine andere Tätigkeit behindert wird.
+            Hat man eine Mordfreie Zone definiert, muss es allen hinzukommenden Mitspielenden mitgeteilt werden.
+            Ansonsten gilt für sie die Mordfreie Zone nicht!
+        </p>
+        <h3>Umgang mit den Aufträgen</h3>
+        <p>
+            Auch wenn sich die Mordaufträge theoretisch jederzeit online einsehen lassen, sollten dennoch alle immer ihre Aufträge in Papierform dabei haben.
+            Schließlich ist auf ihnen der Token abgedruckt, um den Mord online eintragen zu können.
+            Außerdem muss der Auftrag weitergereicht werden wenn man stirbt.<br />
+            Sollte es einmal passieren, dass der Auftrag verloren geht, dann kann der Admin kontaktiert werden.
+            Mit etwas Aufwand ist er in der Lage den fehlenden Auftrag neu zu erstellen und auszuhändigen.
+        </p>
+        <h3>Selbstmord</h3>
+        <p>
+            Es ist möglich, in diesem Mörderspiel Selbstmord zu begehen.
+            Gemeint ist damit der Button mit entsprechender Aufschrift.
+            Selbstmord sollte begangen werden, falls man früher von der Veranstaltung gehen muss und somit nicht mehr mitspielen kann.
+            Damit keine Lücken in den Kreisen entstehen sollte der Spieladmin kontaktiert werden.
+            Die Nutzung des Buttons ist dafür in der Regel ausreichend.<br />
+        </p>
+    </div>
+    <div class="right">
+        <h3 translate>Empty Strings</h3>
+        <ul>
+            <li></li>
+            <li>\0</li>
+            <li>[]+[]</li>
+        </ul>
+        <hr />
+        <h4>h4</h4>
+        <div>
+            <i class="fa fa-github"></i> Code on <a href="https://github.com/frissdiegurke/murderer.js">github</a><br />
+            created by <span class="text-mono text-bold">Ole Reglitzki</span> and <span class="text-mono text-bold">Felix Schelle</span><br />
+            &copy; 2015<br />
+        </div>
     </div>
 </div>

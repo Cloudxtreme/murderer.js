@@ -1,49 +1,51 @@
-<div class="left game-news"></div>
+<div class="flexbox">
+    <div class="left game-news"></div>
+    
+    <div class="right">
+        <h3 translate>game.mission.attempt</h3>
 
-<div class="right">
-    <h3 translate>game.mission.attempt</h3>
+        <form name="killForm" class="form-horizontal" ng-submit="missionAttempt()">
+            <label for="token" class="control-label" translate>game.mission.token</label>
+            <input type="text" class="form-control" ng-model="mission.token" id="token" name="token" required
+                   ng-minlength="8" ng-maxlength="8"/>
+            <label for="message" class="control-label" translate>game.mission.message</label>
+            <textarea class="form-control" name="message" data-ng-model="mission.message" id="message"
+                      placeholder="{{'game.mission.defaultMessage' | translate}}" required></textarea>
+            <input type="submit" class="form-btn" ng-value="'game.mission.submit' | translate"
+                   ng-disabled="killForm.$invalid"/>
 
-    <form name="killForm" class="form-horizontal" ng-submit="missionAttempt()">
-        <label for="token" class="control-label" translate>game.mission.token</label>
-        <input type="text" class="form-control" ng-model="mission.token" id="token" name="token" required
-               ng-minlength="8" ng-maxlength="8"/>
-        <label for="message" class="control-label" translate>game.mission.message</label>
-        <textarea class="form-control" name="message" data-ng-model="mission.message" id="message"
-                  placeholder="{{'game.mission.defaultMessage' | translate}}" required></textarea>
-        <input type="submit" class="form-btn" ng-value="'game.mission.submit' | translate"
-               ng-disabled="killForm.$invalid"/>
+            <i class="fa fa-fw fa-spin fa-spinner" ng-if="missionLoading"></i>
 
-        <i class="fa fa-fw fa-spin fa-spinner" ng-if="missionLoading"></i>
-
-        <div ng-if="!missionLoading">
-            <div class="success-msg" ng-if="missionSuccess" translate>game.mission.success</div>
-            <div class="error-msg" ng-if="missionFailed === 'Invalid token.'" translate>game.mission.invalidToken</div>
-        </div>
-    </form>
-
-    <hr/>
-
-    <h3 translate>game.suicide.attempt</h3>
-
-    <form name="suicideForm" class="form-horizontal" ng-submit="suicideAttempt()">
-        <label for="password" class="control-label" translate>credentials.password</label>
-        <input type="password" class="form-control" ng-model="suicide.password" id="password" name="password" required/>
-        <label for="suicide-message" class="control-label" translate>game.suicide.message</label>
-        <textarea class="form-control" name="suicideMessage" data-ng-model="suicide.message" id="suicide-message"
-                  placeholder="{{'game.suicide.defaultMessage' | translate}}" required></textarea>
-
-        <div class="text-warning"><i class="fa fa-fw fa-warning"></i> {{'game.suicide.warning' | translate}}</div>
-
-        <input type="submit" class="form-btn" ng-value="'game.suicide.submit' | translate"/>
-
-        <i class="fa fa-fw fa-spin fa-spinner" ng-if="suicideLoading"></i>
-
-        <div ng-if="!suicideLoading">
-            <div class="success-msg" ng-if="suicideSuccess" translate>game.suicide.success</div>
-
-            <div class="error-msg" ng-if="suicideFailed === 'Invalid password.'" translate>game.suicide.invalidPassword
+            <div ng-if="!missionLoading">
+                <div class="success-msg" ng-if="missionSuccess" translate>game.mission.success</div>
+                <div class="error-msg" ng-if="missionFailed === 'Invalid token.'" translate>game.mission.invalidToken</div>
             </div>
-            <div class="error-msg" ng-if="suicideFailed === 'Not active.'" translate>game.suicide.notActive</div>
-        </div>
-    </form>
+        </form>
+
+        <hr/>
+
+        <h3 translate>game.suicide.attempt</h3>
+
+        <form name="suicideForm" class="form-horizontal" ng-submit="suicideAttempt()">
+            <label for="password" class="control-label" translate>credentials.password</label>
+            <input type="password" class="form-control" ng-model="suicide.password" id="password" name="password" required/>
+            <label for="suicide-message" class="control-label" translate>game.suicide.message</label>
+            <textarea class="form-control" name="suicideMessage" data-ng-model="suicide.message" id="suicide-message"
+                      placeholder="{{'game.suicide.defaultMessage' | translate}}" required></textarea>
+
+            <div class="text-warning"><i class="fa fa-fw fa-warning"></i> {{'game.suicide.warning' | translate}}</div>
+
+            <input type="submit" class="form-btn" ng-value="'game.suicide.submit' | translate"/>
+
+            <i class="fa fa-fw fa-spin fa-spinner" ng-if="suicideLoading"></i>
+
+            <div ng-if="!suicideLoading">
+                <div class="success-msg" ng-if="suicideSuccess" translate>game.suicide.success</div>
+
+                <div class="error-msg" ng-if="suicideFailed === 'Invalid password.'" translate>game.suicide.invalidPassword
+                </div>
+                <div class="error-msg" ng-if="suicideFailed === 'Not active.'" translate>game.suicide.notActive</div>
+            </div>
+        </form>
+    </div>
 </div>
