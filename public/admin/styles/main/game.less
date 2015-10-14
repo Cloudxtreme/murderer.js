@@ -1,3 +1,33 @@
 .game-list .game-ring {
   padding: 0 15px;
 }
+
+.ring-details {
+  .game-ring-preview-active {
+    > div {
+      float: left;
+      padding: 3px 15px;
+      text-transform: uppercase;
+
+      > div {
+        float: left;
+      }
+
+    }
+  }
+
+  .inactive-user {
+    color: fade(@text-color, 40%);
+    font-size: 0.9em;
+    padding: 3px 5px;
+  }
+
+  .game-ring-preview-kills {
+    > div {
+      float: left;
+      padding: 3px 15px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}
