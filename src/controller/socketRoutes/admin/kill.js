@@ -18,7 +18,7 @@ module.exports = function (queryRoute) {
         .then(function (result) {
           return gameC.killByToken(scope, result[0], result[1], data.token, "Triggered by " + scope.user._id);
         })
-        .done(function () { cb(); });
+        .done(function () { cb(); }, cb);
   });
 
   queryRoute("kill:admin.suicide", function (data, cb) {
@@ -30,6 +30,6 @@ module.exports = function (queryRoute) {
           qFindGameById(scope, data.game)
         ])
         .then(function (result) { return gameC.killSelf(scope, result[0], result[1], "Triggered by " + scope.user._id); })
-        .done(function () { cb(); });
+        .done(function () { cb(); }, cb);
   });
 };
