@@ -54,8 +54,7 @@
                 <h3>Mordauftrag für</h3>
 
                 <h2>
-                    <!-- TODO show the group of this user -->
-                    <span class="recipient" ng-bind="identity.username"></span>
+                    <span class="recipient">{{identity.group}} &ndash; <span ng-bind="identity.username"></span></span>
                 </h2>
                 <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</h4>
                 <small class="text-mono">Spiel endet am 22.10.2015 ~14:00</small>
