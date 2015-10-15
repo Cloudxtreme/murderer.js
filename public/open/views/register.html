@@ -15,7 +15,7 @@
             <input type="text" class="form-control" id="username" name="username" ng-model="credentials.username"
                    ng-minlength="3" ng-valid="usernameValid" required/>
 
-            <div class="error-msg">
+            <div class="error-msg form-info">
                 <div ng-if="registerForm.username.$error.minlength" data-translate-values="{min:4}"
                      translate>credentials.usernameMinLength
                 </div>
@@ -42,7 +42,7 @@
             <input type="submit" class="form-btn" ng-value="'credentials.register' | translate"
                    ng-disabled="registerForm.$invalid"/>
 
-            <div class="error-msg" ng-if="error && !registerForm.$dirty" ng-bind="error"></div>
+            <div class="error-msg form-info" ng-if="error && !registerForm.$dirty" ng-bind="error"></div>
         </form>
     </div>
 </div>

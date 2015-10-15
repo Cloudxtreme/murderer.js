@@ -1,6 +1,6 @@
 <div class="flexbox">
     <div class="left game-news"></div>
-    
+
     <div class="right">
         <h3 translate>game.mission.attempt</h3>
 
@@ -19,8 +19,10 @@
             <i class="fa fa-fw fa-spin fa-spinner" ng-if="missionLoading"></i>
 
             <div ng-if="!missionLoading">
-                <div class="success-msg" ng-if="missionSuccess" translate>game.mission.success</div>
-                <div class="error-msg" ng-if="missionFailed === 'Invalid token.'" translate>game.mission.invalidToken</div>
+                <div class="success-msg form-info" ng-if="missionSuccess" translate>game.mission.success</div>
+                <div class="error-msg form-info" ng-if="missionFailed === 'Invalid token.'" translate>
+                    game.mission.invalidToken
+                </div>
             </div>
         </form>
 
@@ -30,23 +32,29 @@
 
         <form name="suicideForm" class="form-horizontal" ng-submit="suicideAttempt()">
             <label for="password" class="control-label" translate>credentials.password</label>
-            <input type="password" class="form-control" ng-model="suicide.password" id="password" name="password" required/>
+            <input type="password" class="form-control" ng-model="suicide.password" id="password" name="password"
+                   required/>
             <label for="suicide-message" class="control-label" translate>game.suicide.message</label>
             <textarea class="form-control" name="suicideMessage" data-ng-model="suicide.message" id="suicide-message"
                       placeholder="{{'game.suicide.defaultMessage' | translate}}" required></textarea>
 
-            <div class="text-warning"><i class="fa fa-fw fa-warning"></i> {{'game.suicide.warning' | translate}}</div>
+            <div class="text-warning form-info">
+                <i class="fa fa-fw fa-warning"></i> {{'game.suicide.warning' | translate}}
+            </div>
 
             <input type="submit" class="form-btn" ng-value="'game.suicide.submit' | translate"/>
 
             <i class="fa fa-fw fa-spin fa-spinner" ng-if="suicideLoading"></i>
 
             <div ng-if="!suicideLoading">
-                <div class="success-msg" ng-if="suicideSuccess" translate>game.suicide.success</div>
+                <div class="success-msg form-info" ng-if="suicideSuccess" translate>game.suicide.success</div>
 
-                <div class="error-msg" ng-if="suicideFailed === 'Invalid password.'" translate>game.suicide.invalidPassword
+                <div class="error-msg form-info" ng-if="suicideFailed === 'Invalid password.'"
+                     translate>game.suicide.invalidPassword
                 </div>
-                <div class="error-msg" ng-if="suicideFailed === 'Not active.'" translate>game.suicide.notActive</div>
+                <div class="error-msg form-info" ng-if="suicideFailed === 'Not active.'"
+                     translate>game.suicide.notActive
+                </div>
             </div>
         </form>
     </div>
