@@ -4,7 +4,7 @@
     <label for="game-id" class="control-label" translate>game.name</label>
     <input type="text" id="game-id" class="form-control" ng-model="newGame.name" required/>
     <label for="rings" class="control-label" translate>game.rings</label>
-    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1"/>
+    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1" required/>
     <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate>
 </form>
 
