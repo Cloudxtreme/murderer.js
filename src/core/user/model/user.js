@@ -31,6 +31,8 @@ var UserSchema = new Schema(
       activated: {type: Boolean, default: true},
       // email
       email: {type: String, required: true, unique: true, trim: true, lowercase: true},
+      // group
+      group: {type: String, required: true, trim: true},
       // reset password
       resetPasswordToken: {type: String, default: 0, trim: true},
       resetPasswordExpires: {type: Date, default: 0},

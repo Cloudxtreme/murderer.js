@@ -211,6 +211,12 @@ validate("create", function (next, body) {
   if (!/^[a-z_ 0-9-]{3,}$/.test(body.usernameLower)) {
     return next(new Error("Username may not contain special characters."));
   }
+  if (body.profileMessage.length > 256) {
+    return next(new Error("Message too long."));
+  }
+  if (body.password.length < 4) {
+    return next(new Error("Password too short."));
+  }
 
   if (!body.avatarUrl) {
     body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon&s=50";
