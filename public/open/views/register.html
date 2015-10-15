@@ -22,7 +22,7 @@
                 <div ng-if="registerForm.username.$error.bool" translate>credentials.usernameRegEx</div>
             </div>
 
-            <label for="group" class="control-label" translate>register.selectGroup</label>
+            <label for="group" class="control-label" translate>credentials.group</label>
             <select id="group" name="group" class="form-control" data-ng-model="credentials.group"
                     ng-options="group.name as group.string for group in groups track by group.name" required>
                 <option value="" translate>register.selectGroup</option>
@@ -30,7 +30,7 @@
             <label for="email" class="control-label" translate>credentials.email</label>
             <input type="email" class="form-control" id="email" name="email" ng-model="credentials.email" required/>
             <label for="message" class="control-label" translate>credentials.message</label>
-            <textarea id="message" class="form-control" name="message" data-ng-model="credentials.profileMessage"
+            <textarea id="message" class="form-control" name="message" data-2ng-model="credentials.profileMessage"
                       ng-maxlength="256"></textarea>
             <label for="password" class="control-label" translate>credentials.password</label>
             <input type="password" class="form-control" id="password" placeholder="Mb2.r5oHf-0t" name="password"
