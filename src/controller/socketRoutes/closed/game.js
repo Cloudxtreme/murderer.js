@@ -24,7 +24,7 @@ module.exports = function (queryRoute) {
         var r = {ring: index};
         if (ring.active.length <= 1) {
           r.resolved = true;
-          r.lastSurvivor = ring.active.length ? _.pick(ring.active[0], ["_id", "username"]) : null;
+          r.lastSurvivor = ring.active.length ? _.pick(ring.active[0].user, ["_id", "username"]) : null;
           return r;
         }
         var idx = _.findIndex(ring.active, function (obj) { return obj.user._id.equals(userId); });
