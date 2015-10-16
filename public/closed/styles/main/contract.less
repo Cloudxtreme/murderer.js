@@ -1,19 +1,31 @@
-.dina4 {
-  height: 29.7cm;
-  width: 21cm;
-  page-break-inside: avoid;
+// TODO add print-paper-border-{top,bottom,left,right} variables and use within calculations
+
+.contract {
+  @cover-size: @print-paper-height / 3 - 2cm;
+
   text-align: center;
-  overflow: hidden;
-  background: #fff;
-  color: #000;
-  &:not(:last-child) {
-    margin-bottom: 20px;
-    page-break-after: always;
+  margin: 0 auto;
+  page-break-after: always;
+  width: @print-paper-width;
+
+  .contract-header {
+    margin: 0;
+    padding: 10px 0 10px 0;
+    background-color: fade(@color-info, 50%);
+    border-top: 4px solid fade(@color-info, 30%);
+    border-bottom: 4px solid fade(@color-info, 30%);
   }
 
-  .contract {
-    height: 19.8cm;
-    border-bottom: 0.05cm dashed fade(black, 15%);
+  .contract-footer {
+    background-color: fade(@color-info, 50%);
+    height: 4px;
+    border-top: 4px solid fade(@color-info, 30%);
+    margin-bottom: 20px;
+  }
+
+  .contract-target {
+    height: @print-paper-height * 2 / 3 + 0.5cm; // 0.5cm is static border-compensation
+    border-bottom: 0.08cm solid fade(black, 35%);
 
     .wanted {
       font-family: serif;
@@ -24,16 +36,16 @@
     .target {
       min-width: 50%;
       padding: 0.05cm 0.4cm;
-      border: 0.1cm dotted fade(black, 25%);
-      background-color: fade(black, 8%);
+      border: 0.1cm dotted fade(black, 45%);
+      background-color: fade(black, 35%);
       display: inline-block;
       text-transform: uppercase;
     }
 
     .portrait {
-      background-color: silver;
+      background-color: #6D6D6D;
       width: 6cm;
-      border: 0.5cm double #000;
+      border: 0.5cm double black;
       margin: 1cm auto;
       display: block;
     }
@@ -41,43 +53,96 @@
     .message {
       height: 3cm;
       .fa {
-        opacity: 0.3;
+        opacity: 0.55;
       }
     }
   }
 
-  .details {
-    flex: 0.5;
+  .recipient {
+    min-width: 50%;
+    padding: 0.05cm 0.4cm;
+    border: 0.1cm dotted fade(black, 45%);
+    background-color: fade(black, 35%);
+    display: inline-block;
 
-    .recipient {
-      min-width: 50%;
-      padding: 0.05cm 0.4cm;
-      border: 0.1cm dotted fade(black, 25%);
-      background-color: fade(black, 8%);
-      display: inline-block;
+    > span {
       text-transform: uppercase;
     }
-
-    .token {
-      font-size: 1.2rem;
-      margin: 10px 20px;
-      display: inline-block;
-    }
   }
 
-  .public {
-    padding-top: 1.5cm;
+  .token {
+    font-size: 1.2rem;
+    margin: 10px 20px;
+    display: inline-block;
+  }
 
-    .cover {
-      height: 7cm;
-      width: 7cm;
+  .contract-public {
+    height: @print-paper-height / 3 - 0.08cm - 0.5cm; // 0.5cm is static border-compensation
+
+    .flexbox-vertical {
+      height: 100%;
+      justify-content: center;
     }
 
-    .attributions {
-      font-size: small;
-      position: relative;
-      right: 1.33cm;
-      top: -2.55cm;
+    > .flexbox-vertical {
+      > div {
+        height: @cover-size;
+      }
+
+      .cover {
+        height: @cover-size;
+        width: @cover-size;
+      }
     }
   }
+}
+
+div:last-child > .contract {
+  page-break-after: inherit;
+
+  .contract-footer {
+    margin-bottom: 0;
+  }
+}
+
+.no-contract {
+  width: @print-paper-width;
+  margin: 20px auto;
+  text-align: center;
+
+  div {
+    padding: 25px 0;
+    &.dead {
+      background-color: fade(@color-danger, 45%);
+      border: 3px solid mix(@color-danger, black, 30%);
+
+      .fa {
+        color: @color-danger;
+      }
+    }
+    &.resolved {
+      background-color: fade(@color-warning, 60%);
+      border: 3px solid mix(@color-warning, black, 30%);
+
+      .fa, span:first-child, span:last-child {
+        color: @color-warning;
+      }
+    }
+    &.survived {
+      background-color: fade(@color-success, 45%);
+      border: 3px solid mix(@color-success, black, 30%);
+
+      .fa {
+        color: @color-success;
+      }
+    }
+  }
+}
+
+div[data-ring-index="0"] > .no-contract {
+  margin-top: 0;
+}
+
+div:last-child > .no-contract {
+  margin-bottom: 0;
 }

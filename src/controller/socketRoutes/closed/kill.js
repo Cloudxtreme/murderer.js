@@ -13,7 +13,7 @@ module.exports = function (queryRoute) {
       return cb(new Error("Invalid request."));
     }
     qFindOneGame(scope, {active: true})
-        .then(function (game) { return gameC.killByToken(scope, game, data.token, data.message); })
+        .then(function (game) { return gameC.killByToken(scope, scope.user, game, data.token, data.message); })
         .done(function () { cb(); }, cb);
   });
 
@@ -26,7 +26,7 @@ module.exports = function (queryRoute) {
       return cb(new Error("Invalid password."));
     }
     qFindOneGame(scope, {active: true})
-        .then(function (game) { return gameC.killSelf(scope, game, data.message); })
+        .then(function (game) { return gameC.killSelf(scope, scope.user, game, data.message); })
         .done(function () { cb(); }, cb);
   });
 };

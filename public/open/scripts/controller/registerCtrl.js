@@ -1,13 +1,29 @@
-angular.module("open").controller("registerCtrl", function ($scope) {
+angular.module("open").controller("registerCtrl", function ($scope, $location, socket) {
   "use strict";
 
-  $scope.groups = [
-    {id: 0, name: "Zsh"},
-    {id: 1, name: "Perl"},
-    {id: 2, name: "Lisp"},
-    {id: 3, name: "Python"}
-  ];
+  $scope.error = $location.hash();
 
-  $scope.selectedGroup = null;
+  $scope.credentials = {
+    username: null,
+    group: null,
+    email: null,
+    profileMessage: null,
+    password: null,
+    passwordConfirm: null
+  };
+
+  $scope.groups = null;
+
+  socket.query("groups:get").then(function (groups) {
+    $scope.groups = _.each(groups, function (g) { g.string = g.name + " (" + g.tutors + ")"; });
+  });
+
+  $scope.$watch("credentials.username", function (username) {
+    $scope.usernameValid = username ? /^[a-z_ 0-9-]{3,}$/i.test(username) : true;
+  });
+
+  $scope.$watchGroup(["credentials.password", "credentials.passwordConfirm"], function (data) {
+    $scope.passwordConfirmValid = data[0] === data[1];
+  });
 
 });

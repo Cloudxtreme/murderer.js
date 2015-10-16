@@ -3,6 +3,7 @@
 var _ = require("lodash");
 
 var gameC = require.main.require("./core/game/controller/game");
+var gameM = require.main.require("./core/game/model/game");
 
 module.exports = function (queryRoute) {
   queryRoute("game:create", function (data, cb) {
@@ -32,6 +33,10 @@ module.exports = function (queryRoute) {
       _.merge(game, _.omit(data, ["_id", "__v"]));
       game.save(function (err, game) { cb(err, game); });
     });
+  });
+
+  queryRoute("game:details", function (data, cb) {
+    gameM.findById(data).populate(["participants"]).exec(cb);
   });
 
   queryRoute("games:all", function (data, cb) { gameC.find(this, data, cb); });

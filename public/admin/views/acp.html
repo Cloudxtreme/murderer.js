@@ -4,7 +4,7 @@
     <label for="game-id" class="control-label" translate>game.name</label>
     <input type="text" id="game-id" class="form-control" ng-model="newGame.name" required/>
     <label for="rings" class="control-label" translate>game.rings</label>
-    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1"/>
+    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1" required/>
     <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate>
 </form>
 
@@ -14,7 +14,7 @@
 
 <ol class="list-group game-list">
     <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
-        <h4 class="margin-top-0" ng-bind="game.name"></h4>
+        <h4 class="margin-top-0"><a ng-href="/game/{{game._id}}" ng-bind="game.name"></a></h4>
 
         <div>
             <input type="button" ng-click="toggleActive(game)" ng-value="'button.toggle' | translate"/>
@@ -31,7 +31,7 @@
 
             <div>
                 <b class="text-mono" ng-bind="ring.active.length"></b>
-                {{'game.mission.remaining' | translate}}
+                {{'game.active.remaining' | translate}}
                 <small class="text-mono" ng-if="game.participants.length">({{(ring.active.length /
                     game.participants.length * 10000 | math:'round') / 100}}%)
                 </small>

@@ -3,4 +3,9 @@ angular.module("open").controller("loginCtrl", function ($scope, $location) {
 
   $scope.error = $location.hash() === "failed";
 
+  $scope.credentials = {
+    username: null,
+    password: null,
+  };
+
 });

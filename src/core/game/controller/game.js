@@ -43,12 +43,12 @@ function trackKill(game, ring, ringIdx, entry) {
   game.kills.push(_.extend({ring: ringIdx}, entry));
 }
 
-function performTokenKill(scope, game, ringIdx, activeIdx, message) {
+function performTokenKill(user, game, ringIdx, activeIdx, message) {
   var ring = game.rings[ringIdx], active = ring.active, obj = active[activeIdx];
   active.splice(activeIdx, 1);
   var entry = {
     entryDate: Date.now(),
-    murderer: scope.user._id,
+    murderer: user._id,
     victim: obj.user,
     message: message,
     token: obj.token
@@ -118,7 +118,7 @@ module.exports.addRings = function (game, amount) {
   return game;
 };
 
-module.exports.killByToken = function (scope, game, token, message) {
+module.exports.killByToken = function (scope, user, game, token, message) {
   var rings = game.rings, ring, active, inactive, obj, i, j;
   for (i = 0; i < rings.length; i++) {
     ring = rings[i];
@@ -126,16 +126,16 @@ module.exports.killByToken = function (scope, game, token, message) {
     if (active.length > 1) {
       for (j = 0; j < active.length; j++) {
         obj = active[j];
-        if (obj.token === token && active[(j === 0 ? active.length : j) - 1].user.equals(scope.user._id)) {
+        if (obj.token === token && active[(j === 0 ? active.length : j) - 1].user.equals(user._id)) {
           scope.log.info({token: token}, "valid token");
-          return Q.when(performTokenKill(scope, game, i, j, message)).then(qSave);
+          return Q.when(performTokenKill(user, game, i, j, message)).then(qSave);
         }
       }
     }
     inactive = ring.inactive;
     for (j = 0; j < inactive.length; j++) {
       obj = inactive[j];
-      if (obj.token === token && obj.murderer.equals(scope.user._id)) {
+      if (obj.token === token && obj.murderer.equals(user._id)) {
         return Q.when(performInactiveTokenKill(game, i, j, message)).then(qSave);
       }
     }
@@ -166,8 +166,8 @@ function getNextVictim(inactive, successor, victim) {
 
 var qFindUserById = Q.denodeify(userC.findById);
 
-module.exports.killSelf = function (scope, game, message) {
-  var userId = scope.user._id, rings = game.rings, ring, active, inactive, obj, predecessor, successor, i, j;
+module.exports.killSelf = function (scope, user, game, message) {
+  var userId = user._id, rings = game.rings, ring, active, inactive, obj, predecessor, successor, i, j;
   var wasActive = false;
   var predecessors = [];
   var entry = {

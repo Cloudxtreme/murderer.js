@@ -3,7 +3,7 @@
         background-color: white;
     }
 
-    nav, #language-selector, #identity {
+    nav, #language-selector, #identity, .hide-print {
         display: none;
     }
 
@@ -13,58 +13,32 @@
 </style>
 
 <!-- TODO send all contracts to admin -->
-<!-- TODO feedback if no active contracts (incl. reason for this) -->
+<!-- TODO allow admin to filter by game, ring, group, username -->
+<!-- FIXME empty contract (no target?) -->
 
-<div class="dina4" ng-repeat="ring in rings" data-ring-index="{{ring.ring}}">
-    <div class="contract">
-        <h3>murderer.js &ndash; Node.js implementation of M&ouml;rderspiel</h3>
-
-        <h1 class="wanted">
-            <i class="fa fa-fw fa-crosshairs"></i>
-            WANTED
-            <i class="fa fa-fw fa-crosshairs"></i>
-        </h1>
-
-        <h2 data-user-id="{{ring.mission._id}}">
-            <span class="target" ng-bind="ring.mission.username"></span>
-        </h2>
-        <img class="portrait" src="/img/pirate_draft.png" alt="image"/>
-
-        <div class="message">
-            <div ng-if="ring.mission.profileMessage">
-                <i class="fa fa-fw fa-quote-left"></i>
-                {{ring.mission.profileMessage}}
-                <i class="fa fa-fw fa-quote-right"></i>
-            </div>
-            <div ng-if="!ring.mission.profileMessage">
-                <i class="fa fa-fw fa-ellipsis-h"></i>
-            </div>
+<div ng-repeat="contract in rings" data-ring-index="{{contract.ring}}">
+    <div ng-if="contract.active" contract="contract" data-murderer="identity" data-game="game"></div>
+    <div ng-if="!contract.active" class="hide-print no-contract">
+        <div ng-if="contract.resolved && !contract.lastSurvivor" class="resolved">
+            <span>&dagger;</span>
+            <span ng-bind-html="'contract.allDead' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <span>&dagger;</span>
         </div>
-        <div class="flexbox">
-            <div class="details text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</div>
-            <div class="details">
-                Token für deinen Mörder:<br/>
-                &dagger;<span class="text-mono text-bold token" ng-bind="ring.token"></span>&dagger;
-            </div>
+        <div ng-if="contract.resolved && contract.lastSurvivor._id === identity._id" class="survived">
+            <i class="fa fa-fw fa-user"></i>
+            <span ng-bind-html="'contract.survived' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <i class="fa fa-fw fa-user"></i>
         </div>
-    </div>
-    <div class="public">
-        <div class="flexbox">
-            <div class="details">
-                <h3>Mordauftrag für</h3>
-
-                <h2>
-                    <!-- TODO show the group of this user -->
-                    <span class="recipient" ng-bind="identity.username"></span>
-                </h2>
-                <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{ring.ring}}</h4>
-                <small class="text-mono">Spiel endet am 22.10.2015 ~14:00</small>
-            </div>
-            <div class="details">
-                <img src="/logo.svg" alt="murderer.js" class="cover"/>
-
-                <div class="attributions text-mono">created by<br/>Ole Reglitzki<br/>and Felix Schelle</div>
-            </div>
+        <div ng-if="contract.resolved && contract.lastSurvivor && contract.lastSurvivor._id !== identity._id"
+             class="resolved">
+            <i class="fa fa-fw fa-user-secret"></i>
+            <span ng-bind-html="'contract.resolved' | translate:{ring:contract.ring, game:game.name, survivor:contract.lastSurvivor} | html"></span>
+            <i class="fa fa-fw fa-user-secret"></i>
+        </div>
+        <div ng-if="!contract.resolved" class="dead">
+            <i class="fa fa-fw fa-user-times"></i>
+            <span ng-bind-html="'contract.dead' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <i class="fa fa-fw fa-user-times"></i>
         </div>
     </div>
 </div>

@@ -7,7 +7,11 @@ angular.module("common").config(function ($translateProvider) {
 angular.module("common").run(function ($rootScope, $translate) {
   "use strict";
 
-  function refreshScope() { $rootScope.language = $translate.use(); }
+  function refreshScope() {
+    var language = $rootScope.language = $translate.use();
+    moment.locale(language);
+    $rootScope.$broadcast("language.update", language);
+  }
 
   $rootScope.setLanguage = function (language) { $translate.use(language); };
   $rootScope.$on("$translateChangeSuccess", refreshScope);

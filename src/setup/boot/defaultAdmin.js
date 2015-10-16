@@ -13,6 +13,7 @@ var body = {
   usernameLower: "root",
   email: "ole@reglitzki.de",
   admin: true,
+  group: "Zsh",
   activated: true,
   password: security.generateRandom(6)
 };

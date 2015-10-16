@@ -2,9 +2,8 @@
   "game": {
     "participants": "Teilnehmer",
     "inactive": "Inaktive",
-    "ring": "Kreis",
-    "mission": {
-      "remaining": "Übrige Missionen"
+    "active": {
+      "remaining": "Lebendige Teilnehmer"
     },
     "create": {
       "title": "Neues Spiel",

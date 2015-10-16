@@ -5,7 +5,19 @@ form.form-horizontal {
       width: 180px;
       margin: 0 0 10px 0;
       padding: 1px;
+      &.ng-invalid {
+        box-shadow: 0 0 4px 2px red;
+      }
     }
+  }
+
+  textarea.form-control {
+    width: 180px + 2px;
+    max-width: 331px - 4px;
+  }
+
+  select.form-control {
+    width: 180px + 6px;
   }
 
   label.control-label {
@@ -17,7 +29,7 @@ form.form-horizontal {
 
   .form-btn {
     display: block;
-    width:325px;
+    width: 331px;
     margin: 0 0 10px 0;
     padding: 1px;
   }
@@ -25,4 +37,8 @@ form.form-horizontal {
 
 .error-msg {
   color: @color-danger;
+}
+
+.form-info {
+  margin-bottom: 10px;
 }

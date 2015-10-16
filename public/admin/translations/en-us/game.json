@@ -2,8 +2,8 @@
   "game": {
     "participants": "Participants",
     "inactive": "Inactive",
-    "mission": {
-      "remaining": "Missions remaining"
+    "active": {
+      "remaining": "Users alive"
     },
     "create": {
       "title": "New Game",
