@@ -20,23 +20,22 @@ module.exports = function (queryRoute) {
       }
       var result = {};
       result.game = _.pick(game, ["name"]);
-      result.rings = _.compact(_.map(game.rings, function (ring, index) {
-        if (ring.active.length <= 1) {
-          return;
-        }
+      result.rings = _.map(game.rings, function (ring, index) {
         var r = {ring: index};
+        if (ring.active.length <= 1) {
+          r.resolved = true;
+          r.lastSurvivor = _.pick(ring.active[0], ["_id", "username"]);
+          return r;
+        }
         var idx = _.findIndex(ring.active, function (obj) { return obj.user._id.equals(userId); });
         if (~idx) {
-          var mission = ring.active[idx + 1 === ring.active.length ? 0 : idx + 1].user;
+          var mission = ring.active[idx + 1 < ring.active.length ? idx + 1 : 0].user;
           r.active = true;
           r.token = ring.active[idx].token;
           r.mission = _.pick(mission, ["_id", "username", "profileMessage"]);
         }
         return r;
-      }));
-      if (!result.rings.length) {
-        return cb(new Error("No active ring."));
-      }
+      });
       cb(null, result);
     });
   });

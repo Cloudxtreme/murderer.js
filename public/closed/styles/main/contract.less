@@ -2,16 +2,19 @@
   height: 29.7cm;
   width: 21cm;
   page-break-inside: avoid;
-  text-align: center;
   overflow: hidden;
-  background: #fff;
-  color: #000;
+  background: white;
+  color: black;
   &:not(:last-child) {
     margin-bottom: 20px;
     page-break-after: always;
   }
+}
 
-  .contract {
+.contract {
+  text-align: center;
+
+  .contract-target {
     height: 19.8cm;
     border-bottom: 0.08cm solid fade(black, 35%);
 
@@ -33,7 +36,7 @@
     .portrait {
       background-color: #6D6D6D;
       width: 6cm;
-      border: 0.5cm double #000;
+      border: 0.5cm double black;
       margin: 1cm auto;
       display: block;
     }
@@ -46,29 +49,25 @@
     }
   }
 
-  .details {
-    flex: 0.5;
+  .recipient {
+    min-width: 50%;
+    padding: 0.05cm 0.4cm;
+    border: 0.1cm dotted fade(black, 45%);
+    background-color: fade(black, 35%);
+    display: inline-block;
 
-    .recipient {
-      min-width: 50%;
-      padding: 0.05cm 0.4cm;
-      border: 0.1cm dotted fade(black, 45%);
-      background-color: fade(black, 35%);
-      display: inline-block;
-
-      > span {
-        text-transform: uppercase;
-      }
-    }
-
-    .token {
-      font-size: 1.2rem;
-      margin: 10px 20px;
-      display: inline-block;
+    > span {
+      text-transform: uppercase;
     }
   }
 
-  .public {
+  .token {
+    font-size: 1.2rem;
+    margin: 10px 20px;
+    display: inline-block;
+  }
+
+  .contract-public {
     padding-top: 1.8cm;
 
     .cover {

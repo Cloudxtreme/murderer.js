@@ -1,0 +1,9 @@
+{
+  "contract": {
+    "title": "<em>{{project}}</em> &ndash; Node.js Implementation des {{game}}s",
+    "wanted": "WANTED",
+    "token": "Token für deinen Mörder",
+    "recipient": "Mordauftrag für",
+    "end": "Das Spiel endet am"
+  }
+}
