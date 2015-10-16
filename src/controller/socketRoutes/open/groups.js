@@ -17,3 +17,5 @@ var GROUPS = _.sortBy([
 module.exports = function (queryRoute) {
   queryRoute("groups:get", function (data, cb) { cb(null, GROUPS); });
 };
+
+module.exports.GROUPS = GROUPS;

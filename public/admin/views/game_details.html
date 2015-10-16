@@ -1,5 +1,7 @@
 <h2 ng-bind="game.name"></h2>
 
+<a ng-href="/game/{{game._id}}/contracts" translate>game.contracts.list</a>
+
 <div ng-repeat="ring in game.rings" class="ring-details">
     <h3 class="text-mono">{{'game.ring' | translate}} #{{$index}}</h3>
 

@@ -2,6 +2,9 @@
   "game": {
     "participants": "Participants",
     "inactive": "Inactive",
+    "contracts": {
+      "list": "Show contracts list"
+    },
     "active": {
       "remaining": "Users alive"
     },

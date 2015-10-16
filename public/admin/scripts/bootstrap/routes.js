@@ -15,6 +15,13 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
         resolve: {
           gameId: function ($route) { return $route.current.params.id; }
         }
+      })
+      .when("/game/:id/contracts", {
+        templateUrl: "/views/admin/contracts.html",
+        controller: "gameContractsCtrl",
+        resolve: {
+          gameId: function ($route) { return $route.current.params.id; }
+        }
       });
 
 });

@@ -2,9 +2,9 @@
     <h3 translate>game.create.title</h3>
 
     <label for="game-id" class="control-label" translate>game.name</label>
-    <input type="text" id="game-id" class="form-control" ng-model="newGame.name" required/>
+    <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
     <label for="rings" class="control-label" translate>game.rings</label>
-    <input type="number" id="rings" class="form-control" ng-model="newGame.rings" min="1" required/>
+    <input type="number" id="rings" name="rings" class="form-control" ng-model="newGame.rings" min="1" required/>
     <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate>
 </form>
 
@@ -14,7 +14,13 @@
 
 <ol class="list-group game-list">
     <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
-        <h4 class="margin-top-0"><a ng-href="/game/{{game._id}}" ng-bind="game.name"></a></h4>
+        <h4 class="margin-top-0">
+            <a ng-href="/game/{{game._id}}" ng-bind="game.name"></a><br/>
+            <a ng-href="/game/{{game._id}}/contracts">
+                <i class="fa fa-fw fa-book"></i>
+                {{'game.contracts.list' | translate}}
+            </a>
+        </h4>
 
         <div>
             <input type="button" ng-click="toggleActive(game)" ng-value="'button.toggle' | translate"/>

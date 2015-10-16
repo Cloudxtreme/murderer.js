@@ -1,0 +1,13 @@
+{
+  "contract": {
+    "filter": {
+      "ring": "Filter by ring",
+      "noRing": "Any ring",
+      "group": "Filter by group",
+      "noGroup": "Any group",
+      "mission": "Filter by target",
+      "murderer": "Filter by murderer",
+      "noParticipant": "Any participant"
+    }
+  }
+}
