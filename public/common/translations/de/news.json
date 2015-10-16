@@ -1,0 +1,9 @@
+{
+  "news": {
+    "title": "Neuigkeiten",
+    "kill": "{{murderer}} hat {{victim}} getötet.",
+    "suicide": "{{victim}} ist gestorben.",
+    "admin": "Nachricht vom Spieladmin:",
+    "server": "Servernachricht:"
+  }
+}

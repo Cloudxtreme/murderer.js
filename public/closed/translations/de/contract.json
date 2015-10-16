@@ -1,9 +1,14 @@
 {
   "contract": {
+    "header": "{{game}} - Kreis #{{ring}}",
     "title": "<em>{{project}}</em> &ndash; Node.js Implementation des {{game}}s",
     "wanted": "WANTED",
     "token": "Token für deinen Mörder",
     "recipient": "Mordauftrag für",
-    "end": "Das Spiel endet am"
+    "end": "Das Spiel endet am",
+    "dead": "Du lebst nicht mehr in <b class=\"text-mono\">{{game}} - Kreis #{{ring}}</b>",
+    "allDead": "In <b class=\"text-mono\">{{game}} - Kreis #{{ring}}</b> sind alle tot.",
+    "resolved": "Der letzte Überlebende in <b class=\"text-mono\">{{game}} - Kreis #{{ring}}</b> ist <strong class=\"text-upper text-mono\" data-user-id=\"{{survivor._id}}\">{{survivor.username}}</strong>",
+    "survived": "Du bist der letzte Überlebende in <b class=\"text-mono\">{{game}} - Kreis #{{ring}}</b>. Glückwunsch!"
   }
 }

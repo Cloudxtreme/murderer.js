@@ -4,12 +4,8 @@
       "title": "News",
       "kill": "{{murderer}} has killed {{victim}}."
     },
-    "newKill": "Einen Mord melden",
-    "code": "Mordcode",
-    "message": "Todesursache",
-    "post": "Töten",
-    "stats": "Statistik",
-    "leave": "Spiel verlassen",
-    "suicide": "Selbsmord"
+    "name": "Name",
+    "active": "Aktiv",
+    "stats": "Statistiken"
   }
 }
