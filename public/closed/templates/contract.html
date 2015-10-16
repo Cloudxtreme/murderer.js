@@ -1,52 +1,67 @@
-<div class="contract-target">
-    <h3 ng-bind-html="'contract.title' | translate:{project: 'murderer.js', game: 'M&ouml;rderspiel'} | html"></h3>
+<h2 class="contract-header text-mono hide-print" data-translate-values="{ring:contract.ring, game:game.name}"
+    translate>contract.header</h2>
 
-    <h1 class="wanted">
-        <i class="fa fa-fw fa-crosshairs"></i> {{'contract.wanted' | translate}} <i class="fa fa-fw fa-crosshairs"></i>
-    </h1>
+<div class="print-page">
+    <div class="contract-target">
+        <h3 ng-bind-html="'contract.title' | translate:{project: 'murderer.js', game: 'M&ouml;rderspiel'} | html"></h3>
 
-    <h2 data-user-id="{{contract.mission._id}}"><span class="target" ng-bind="contract.mission.username"></span></h2>
-    <!--suppress HtmlUnknownTarget -->
-    <img class="portrait" src="/img/pirate_draft.png" alt="image"/>
+        <h1 class="wanted">
+            <i class="fa fa-fw fa-crosshairs"></i>
+            {{'contract.wanted' | translate}}
+            <i class="fa fa-fw fa-crosshairs"></i>
+        </h1>
 
-    <div class="message">
-        <div ng-if="contract.mission.profileMessage">
-            <i class="fa fa-fw fa-quote-left"></i>
-            {{contract.mission.profileMessage}}
-            <i class="fa fa-fw fa-quote-right"></i>
+        <h2 data-user-id="{{contract.mission._id}}">
+            <span class="target" ng-bind="contract.mission.username"></span>
+        </h2>
+        <!--suppress HtmlUnknownTarget -->
+        <img class="portrait" src="/img/pirate_draft.png" alt="image"/>
+
+        <div class="message">
+            <div ng-if="contract.mission.profileMessage">
+                <i class="fa fa-fw fa-quote-left"></i>
+                {{contract.mission.profileMessage}}
+                <i class="fa fa-fw fa-quote-right"></i>
+            </div>
+            <div ng-if="!contract.mission.profileMessage"><i class="fa fa-fw fa-ellipsis-h"></i></div>
         </div>
-        <div ng-if="!contract.mission.profileMessage"><i class="fa fa-fw fa-ellipsis-h"></i></div>
+
+        <div class="flexbox">
+            <div class="flex-50 text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
+
+            <div class="flex-50">
+                <label translate>contract.token</label><br/>
+                &dagger;<strong class="text-mono token" ng-bind="contract.token"></strong>&dagger;
+            </div>
+        </div>
     </div>
 
-    <div class="flexbox">
-        <div class="flex-50 text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
+    <div class="contract-public">
+        <div class="flexbox flexbox-vertical">
+            <div class="flexbox">
+                <div class="flex-50 flexbox flexbox-vertical">
+                    <div>
+                        <h3 translate>contract.recipient</h3>
 
-        <div class="flex-50">
-            <label translate>contract.token</label><br/>
-            &dagger;<strong class="text-mono token" ng-bind="contract.token"></strong>&dagger;
+                        <h2><span class="recipient">
+                            {{murderer.group}}
+                            &ndash;
+                            <span ng-bind="murderer.username"></span>
+                        </span></h2>
+
+                        <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</h4>
+
+                        <small class="text-mono">{{'contract.end' | translate}} <span moment="endDate"></span></small>
+                    </div>
+                </div>
+
+                <div class="flex-50">
+                    <!--suppress HtmlUnknownTarget -->
+                    <img src="/logo_credits.svg" alt="murderer.js" class="cover"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="contract-public">
-    <div class="flexbox">
-        <div class="flex-50">
-            <h3 translate>contract.recipient</h3>
-
-            <h2>
-                <span class="recipient">{{murderer.group}} &ndash; <span ng-bind="murderer.username"></span></span>
-            </h2>
-
-            <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</h4>
-
-            <small class="text-mono">{{'contract.end' | translate}} <span moment="endDate"></span></small>
-        </div>
-
-        <div class="flex-50">
-            <!--suppress HtmlUnknownTarget -->
-            <img src="/logo.svg" alt="murderer.js" class="cover"/>
-
-            <div class="attributions text-mono">created by<br/>Ole Reglitzki<br/>and Felix Schelle</div>
-        </div>
-    </div>
-</div>
+<div class="contract-footer hide-print"></div>

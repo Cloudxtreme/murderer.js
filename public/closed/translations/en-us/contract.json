@@ -1,9 +1,13 @@
 {
   "contract": {
+    "header": "{{game}} - Ring #{{ring}}",
     "title": "<em>{{project}}</em> &ndash; Node.js implementation of '{{game}}'",
     "wanted": "WANTED",
     "token": "Token to hand over your murderer",
     "recipient": "Contract for",
-    "end": "The game ends on"
+    "end": "The game ends on",
+    "dead": "You're not alive in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b>",
+    "resolved": "The sole survivor in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b> is <strong class=\"text-upper text-mono\" data-user-id=\"{{survivor._id}}\">{{survivor.username}}</strong>",
+    "survived": "You're the sole survivor in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b>. Congratulations!"
   }
 }

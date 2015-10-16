@@ -3,7 +3,7 @@
         background-color: white;
     }
 
-    nav, #language-selector, #identity {
+    nav, #language-selector, #identity, .hide-print {
         display: none;
     }
 
@@ -13,8 +13,26 @@
 </style>
 
 <!-- TODO send all contracts to admin -->
-<!-- TODO feedback if no active contracts (incl. reason for this) -->
+<!-- TODO allow admin to filter by game, ring, group, username -->
 <!-- FIXME empty contract (no target?) -->
 
-<div class="dina4" ng-repeat="ring in rings" data-ring-index="{{ring.ring}}" contract="ring" data-murderer="identity"
-     data-game="game"></div>
+<div ng-repeat="contract in rings" data-ring-index="{{contract.ring}}">
+    <div ng-if="contract.active" contract="contract" data-murderer="identity" data-game="game"></div>
+    <div ng-if="!contract.active" class="hide-print no-contract">
+        <div ng-if="contract.resolved && contract.lastSurvivor._id === identity._id" class="survived">
+            <i class="fa fa-fw fa-user"></i>
+            <span ng-bind-html="'contract.survived' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <i class="fa fa-fw fa-user"></i>
+        </div>
+        <div ng-if="contract.resolved && contract.lastSurvivor._id !== identity._id" class="resolved">
+            <i class="fa fa-fw fa-user-secret"></i>
+            <span ng-bind-html="'contract.resolved' | translate:{survivor:contract.lastSurvivor, ring:contract.ring, game:game.name} | html"></span>
+            <i class="fa fa-fw fa-user-secret"></i>
+        </div>
+        <div ng-if="!contract.resolved" class="dead">
+            <i class="fa fa-fw fa-user-times"></i>
+            <span ng-bind-html="'contract.dead' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <i class="fa fa-fw fa-user-times"></i>
+        </div>
+    </div>
+</div>
