@@ -19,14 +19,20 @@
 <div ng-repeat="contract in rings" data-ring-index="{{contract.ring}}">
     <div ng-if="contract.active" contract="contract" data-murderer="identity" data-game="game"></div>
     <div ng-if="!contract.active" class="hide-print no-contract">
+        <div ng-if="contract.resolved && !contract.lastSurvivor" class="resolved">
+            <span>&dagger;</span>
+            <span ng-bind-html="'contract.allDead' | translate:{ring:contract.ring, game:game.name} | html"></span>
+            <span>&dagger;</span>
+        </div>
         <div ng-if="contract.resolved && contract.lastSurvivor._id === identity._id" class="survived">
             <i class="fa fa-fw fa-user"></i>
             <span ng-bind-html="'contract.survived' | translate:{ring:contract.ring, game:game.name} | html"></span>
             <i class="fa fa-fw fa-user"></i>
         </div>
-        <div ng-if="contract.resolved && contract.lastSurvivor._id !== identity._id" class="resolved">
+        <div ng-if="contract.resolved && contract.lastSurvivor && contract.lastSurvivor._id !== identity._id"
+             class="resolved">
             <i class="fa fa-fw fa-user-secret"></i>
-            <span ng-bind-html="'contract.resolved' | translate:{survivor:contract.lastSurvivor, ring:contract.ring, game:game.name} | html"></span>
+            <span ng-bind-html="'contract.resolved' | translate:{ring:contract.ring, game:game.name, survivor:contract.lastSurvivor} | html"></span>
             <i class="fa fa-fw fa-user-secret"></i>
         </div>
         <div ng-if="!contract.resolved" class="dead">
