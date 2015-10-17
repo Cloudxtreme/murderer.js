@@ -4,7 +4,16 @@
     "active": "Active",
     "stats": {
       "kills": "Kills",
-      "suicides": "Suicides"
+      "suicides": "Suicides",
+      "lives": "{{amount}} {{amount === 1 ? 'life' : 'lives'}} left",
+      "groups": {
+        "kills": "Kills by group",
+        "active": "Lives left by group"
+      },
+      "rings": {
+        "active": "Alive users by ring",
+        "remaining": "Users by lives left"
+      }
     }
   }
 }

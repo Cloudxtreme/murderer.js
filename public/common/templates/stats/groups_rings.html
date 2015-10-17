@@ -1,0 +1,27 @@
+<div class="stats-container-50" ng-if="chartGroupsKills.data.length">
+    <h2 translate>game.stats.groups.kills</h2>
+
+    <canvas id="stats-groups-kills" class="chart chart-pie" data-chart-data="chartGroupsKills.data"
+            data-chart-labels="chartGroupsKills.labels" data-chart-legend="true"></canvas>
+</div>
+
+<div class="stats-container-50" ng-if="chartGroupsActive.data.length">
+    <h2 translate>game.stats.groups.active</h2>
+
+    <canvas id="stats-groups-active" class="chart chart-pie" data-chart-data="chartGroupsActive.data"
+            data-chart-labels="chartGroupsActive.labels" data-chart-legend="true"></canvas>
+</div>
+
+<div class="stats-container-50" ng-if="chartRings.data.length">
+    <h2 translate>game.stats.rings.active</h2>
+
+    <canvas id="stats-rings" class="chart chart-doughnut" data-chart-data="chartRings.data"
+            data-chart-labels="chartRings.labels" data-chart-legend="true"></canvas>
+</div>
+
+<div class="stats-container-50" ng-if="chartLives.data.length">
+    <h2 translate>game.stats.rings.remaining</h2>
+
+    <canvas id="stats-lives" class="chart chart-doughnut" data-chart-data="chartLives.data"
+            data-chart-labels="chartLives.labels" data-chart-legend="true"></canvas>
+</div>

@@ -3,6 +3,8 @@ angular.module("common").controller("newsCtrl", function ($q, $scope, $rootScope
 
   var LIMIT_GAME_NEWS = 10;
 
+  $scope.news = null;
+
   $q
       .all([
         socket.query("news:global"),

@@ -14,7 +14,6 @@ angular.module("common").directive("statsKillsSuicides", function ($rootScope, $
     link: function ($scope) {
       var chartDataPlain = null;
 
-      $scope.news = null;
       $scope.chartData = {};
       $scope.chartOptions = {
         scaleOverride: true,

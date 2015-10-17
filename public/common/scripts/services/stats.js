@@ -20,8 +20,14 @@ angular.module("common").factory("stats", function (socket) {
   }
 
   var service = {
+    getBlockLabel: function (data, hoursEachBlock) {
+      var from = getBlockMoment({entryDate: moment(data.date).subtract(hoursEachBlock, "h")}, hoursEachBlock).format("dd HH:00");
+      var to = data.date.format("dd HH:00");
+      return from + " - " + to;
+    },
+
     analyseDeaths: function (hoursEachBlock) {
-      return socket.query("news:game.deaths").then(function (data) {
+      return socket.query("stats:game.deaths").then(function (data) {
         var byDate = {};
         _.each(data.kills, function (kill) {
           var date = getBlockMoment(kill, hoursEachBlock), iso = date.toISOString();
@@ -52,10 +58,30 @@ angular.module("common").factory("stats", function (socket) {
       });
     },
 
-    getBlockLabel: function (data, hoursEachBlock) {
-      var from = getBlockMoment({entryDate: moment(data.date).subtract(hoursEachBlock, "h")}, hoursEachBlock).format("dd HH:00");
-      var to = data.date.format("dd HH:00");
-      return from + " - " + to;
+    analyseUsers: function () {
+      return socket.query("stats:game.users").then(function (data) {
+        data.usersByLives = _.times(data.rings, _.constant(0));
+        _.each(data.users, function (user) {
+          user.total = {active: 0, kills: 0};
+          _.each(user.active, function (val) {
+            if (val) {
+              user.total.active++;
+            }
+          });
+          data.usersByLives[user.total.active]++;
+          _.each(user.kills, function (ring) { user.total.kills += ring.length; });
+        });
+        data.rings = _.times(data.rings, function (idx) {
+          var ring = {active: 0};
+          _.each(data.users, function (user) {
+            if (user.active[idx] === true) {
+              ring.active++;
+            }
+          });
+          return ring;
+        });
+        return data;
+      });
     }
   };
 

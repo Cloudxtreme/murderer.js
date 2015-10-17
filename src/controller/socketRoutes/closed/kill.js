@@ -4,12 +4,7 @@ var Q = require("q");
 var gameC = require.main.require("./core/game/controller/game");
 var security = require.main.require("./utils/security");
 
-var qFindOneGame = Q.denodeify(gameC.findOne).then(function (game) {
-  if (game == null) {
-    throw new Error("Game not found.");
-  }
-  return game;
-});
+var qFindOneGame = Q.denodeify(gameC.findOne);
 
 module.exports = function (queryRoute) {
   queryRoute("kill:token", function (data, cb) {
@@ -18,6 +13,12 @@ module.exports = function (queryRoute) {
       return cb(new Error("Invalid request."));
     }
     qFindOneGame(scope, {active: true})
+        .then(function (game) {
+          if (game == null) {
+            throw new Error("Game not found.");
+          }
+          return game;
+        })
         .then(function (game) { return gameC.killByToken(scope, scope.user, game, data.token, data.message); })
         .done(function () { cb(); }, cb);
   });
@@ -31,6 +32,12 @@ module.exports = function (queryRoute) {
       return cb(new Error("Invalid password."));
     }
     qFindOneGame(scope, {active: true})
+        .then(function (game) {
+          if (game == null) {
+            throw new Error("Game not found.");
+          }
+          return game;
+        })
         .then(function (game) { return gameC.killSelf(scope, scope.user, game, data.message); })
         .done(function () { cb(); }, cb);
   });

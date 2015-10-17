@@ -4,7 +4,16 @@
     "active": "Aktiv",
     "stats": {
       "kills": "Morde",
-      "suicides": "Selbstmorde"
+      "suicides": "Selbstmorde",
+      "lives": "{{amount}} Leben verbleibend",
+      "groups": {
+        "kills": "Morde pro Gruppe",
+        "active": "Leben verbleibend pro Gruppe"
+      },
+      "rings": {
+        "active": "Überlebende pro Kreis",
+        "remaining": "Teilnehmer-Anzahl pro verbleibende Leben"
+      }
     }
   }
 }
