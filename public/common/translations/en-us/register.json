@@ -2,6 +2,8 @@
   "register": {
     "enterGame": "Enter a Game",
     "games": "Current Games",
-    "selectGroup": "Select Group"
+    "selectGroup": "Select Group",
+    "participate": "Wanna play with us?",
+    "information": "You just need to register in time. If you are registered in time you will automatically join the game when it starts. The Email is used to send you your contracts."
   }
 }

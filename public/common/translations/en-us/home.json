@@ -2,6 +2,9 @@
   "home": {
     "games": "Current Games",
     "register": "Register in a game",
-    "rules": "Rules"
+    "rules": "Rules",
+    "title": "It is just a game",
+    "welcome": "Welcome - This text is currently not yet available in english",
+    "sourcecode": "Sourcecode"
   }
 }

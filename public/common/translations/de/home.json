@@ -2,6 +2,9 @@
   "home": {
     "games": "Aktuelle Spiele",
     "register": "Für ein Spiel registrieren",
-    "rules": "Spielregeln"
+    "rules": "Spielregeln",
+    "title": "Es ist nur ein Spiel",
+    "welcome": "Willkommen",
+    "sourcecode": "Quelltext"
   }
 }
