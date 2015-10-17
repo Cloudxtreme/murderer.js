@@ -3,7 +3,6 @@
     "name": "Name",
     "active": "Active",
     "stats": {
-      "title": "Statistics",
       "kills": "Kills",
       "suicides": "Suicides"
     }

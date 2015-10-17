@@ -11,6 +11,9 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
       .when("/game", {
         templateUrl: "/views/common/game.html"
       })
+      .when("/statistics", {
+        templateUrl: "/views/common/stats.html"
+      })
       .otherwise({
         templateUrl: "/views/common/404.html"
       });
