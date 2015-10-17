@@ -3,6 +3,7 @@ angular.module("common").directive("gameNews", function () {
 
   return {
     restrict: "C",
-    templateUrl: "/templates/common/game_news.html"
+    templateUrl: "/templates/common/game_news.html",
+    controller: "newsCtrl"
   };
 });

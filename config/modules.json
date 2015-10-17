@@ -1,6 +1,7 @@
 {
   "_noEnv": true,
   "all": [
+    "common",
     "open",
     "closed",
     "active",

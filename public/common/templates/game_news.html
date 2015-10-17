@@ -1,19 +1,25 @@
 <h2 translate>game.news.title</h2>
-<!-- TODO newsticker -->
-<ol class="noNumbers news-list list-group list-group-striped">
-    <li class="list-group-item" ng-repeat="x in [{type: 'KILL', data: {murderer: 'Gurke42', victim: 'Ente1337', message: 'Mit einem 1000 Tonnen Thunfisch erschlagen'}}, {type: 'SUICIDE', data: {victim: 'F@L0u1$', message: 'Ich bin noch nicht tot.'}}, {type: 'SERVER', data: {message: 'Kill yourself, Shutdown is coming!'}}, {type: 'ADMIN', data: {message: 'Servershutdown in 42 Minuten!'}}]" ng-switch="x.type">
-        <h3 class="margin-top-0" ng-switch-when="KILL" data-translate-values="x.data" translate>news.kill</h3>
-        <h3 class="margin-top-0" ng-switch-when="SUICIDE" data-translate-values="x.data" translate>news.suicide</h3>
-        <h3 class="margin-top-0" ng-switch-when="ADMIN" data-translate-values="x.data" translate>news.admin</h3>
-        <h3 class="margin-top-0" ng-switch-when="SERVER" data-translate-values="x.data" translate>news.server</h3>
+
+<ol id="news-container" class="list-group list-group-spaced">
+    <li class="list-group-item" ng-repeat="x in news" ng-init="important = x.type === 'ADMIN' || x.type === 'SERVER'"
+        ng-class="{'list-group-item-danger': important, 'news-sticky': important}">
+        <div class="list-group-header news-header" ng-switch="x.type">
+            <div class="pull-right date" moment="x.date"></div>
+            <i ng-if="important" class="fa fa-fw fa-thumb-tack"></i>
+            <span ng-switch-when="KILL" ng-bind-html="'news.kill' | translate:x.data | html"></span>
+            <span ng-switch-when="SUICIDE" ng-bind-html="'news.suicide' | translate:x.data | html"></span>
+            <span ng-switch-when="ADMIN" ng-bind-html="'news.admin' | translate:x.data | html"></span>
+            <span ng-switch-when="SERVER" ng-bind-html="'news.server' | translate:x.data | html"></span>
+            <span ng-switch-default ng-bind="x.type"></span>
+        </div>
         <div ng-if="x.data.message" class="news-message" ng-class="'news-' + x.type.toLowerCase()">
-            <i class="fa fa-fw fa-quote-left"></i>
+            <i class="fa fa-fw fa-angle-double-right"></i>
             <span class="text-italic" ng-bind="x.data.message"></span>
-            <i class="fa fa-fw fa-quote-right"></i>
         </div>
     </li>
 </ol>
-<h3 translate>game.stats</h3>
+
+<h2 translate>game.stats</h2>
 <ol>
     <!-- TODO show highscore -->
     <li>Gurke42 1 Morde</li>

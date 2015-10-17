@@ -1,4 +1,4 @@
-angular.module("closed").directive("moment", function ($rootScope, $translate) {
+angular.module("common").directive("moment", function ($rootScope, $translate) {
   "use strict";
 
   var bodyTarget = {};

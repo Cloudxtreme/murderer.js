@@ -1,10 +1,39 @@
-.news-message {
-  .fa {
+#news-container {
+
+  .news-message .fa {
     opacity: 0.3;
   }
-}
 
-.news-admin, .news-server {
-  color: #f00;
-  font-weight: bold;
+  .news-header {
+    > .date {
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+
+    .fa {
+      color: black;
+      margin-left: -10px;
+    }
+  }
+
+  .news-sticky .news-header .fa {
+    transform: rotate(45deg);
+    color: @color-info;
+  }
+
+  .victim, .murderer {
+    text-transform: uppercase;
+    font-family: monospace;
+  }
+
+  .victim {
+    font-style: oblique;
+    font-size: 0.9em;
+    opacity: 0.75;
+  }
+
+  .murderer {
+    font-weight: bold;
+  }
+
 }
