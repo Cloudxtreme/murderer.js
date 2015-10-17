@@ -15,6 +15,6 @@
   "nonbsp": true,
   "quotmark": "double",
   "globals": [
-    "angular", "_", "io", "moment"
+    "angular", "_", "io", "moment", "Chart"
   ]
 }
