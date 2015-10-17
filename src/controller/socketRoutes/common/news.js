@@ -25,6 +25,9 @@ module.exports = function (queryRoute) {
       if (err != null) {
         return cb(err);
       }
+      if (game == null) {
+        return cb(new Error("Game not found."));
+      }
       newsM.find({game: game._id}).populate("author").exec(function (err, news) {
         if (err != null) {
           return cb(err);
@@ -45,6 +48,26 @@ module.exports = function (queryRoute) {
           })
         });
       });
+    });
+  });
+
+  queryRoute("news:game.deaths", function (data, cb) {
+    gameM.findOne({active: true}, {kills: 1}, function (err, game) {
+      if (err != null) {
+        return cb(err);
+      }
+      if (game == null) {
+        return cb(new Error("Game not found."));
+      }
+      var data = {kills: [], suicides: []};
+      _.each(game.kills, function (kill) {
+        if (kill.murderer == null) {
+          data.suicides.push(_.pick(kill._doc, ["_id", "entryDate"]));
+        } else {
+          data.kills.push(_.pick(kill._doc, ["_id", "entryDate", "ring"]));
+        }
+      });
+      cb(null, data);
     });
   });
 };

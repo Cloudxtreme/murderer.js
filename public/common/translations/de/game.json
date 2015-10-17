@@ -1,11 +1,11 @@
 {
   "game": {
-    "news": {
-      "title": "News",
-      "kill": "{{murderer}} has killed {{victim}}."
-    },
     "name": "Name",
     "active": "Aktiv",
-    "stats": "Statistiken"
+    "stats": {
+      "title": "Statistiken",
+      "kills": "Morde",
+      "suicides": "Selbstmorde"
+    }
   }
 }

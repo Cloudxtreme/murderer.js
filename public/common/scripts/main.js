@@ -4,5 +4,6 @@ angular.module("common", [
   "ngRoute",
   "ngCookies",
   "pascalprecht.translate",
-  "smart-table"
+  "smart-table",
+  "chart.js"
 ]);

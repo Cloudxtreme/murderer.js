@@ -1,4 +1,4 @@
-<h2 translate>game.news.title</h2>
+<h2 translate>news.title</h2>
 
 <ol id="news-container" class="list-group list-group-spaced">
     <li class="list-group-item" ng-repeat="x in news" ng-init="important = x.type === 'ADMIN' || x.type === 'SERVER'"
@@ -19,9 +19,14 @@
     </li>
 </ol>
 
-<h2 translate>game.stats</h2>
-<ol>
-    <!-- TODO show highscore -->
-    <li>Gurke42 1 Morde</li>
-</ol>
-Insgesamt 3 Tote
+<h2 translate>game.stats.title</h2>
+
+<div id="stats-container" ng-if="barChartData.data.length">
+    <canvas id="stats-chart" class="chart chart-bar" data-chart-data="barChartData.data"
+            data-chart-labels="barChartData.labels" data-chart-legend="true" data-chart-options="barChartOptions"
+            data-chart-colours="barChartColors" data-chart-series="barChartData.series"></canvas>
+</div>
+
+<!-- TODO add static text stats (total kills, contracts remaining, etc.) -->
+<!-- TODO add table of users sorted by kills -->
+<!-- TODO add doughnut chart for users amount categorized by # alive rings -->

@@ -43,6 +43,9 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:contracts.all", function (data, cb) {
     gameM.findOne({_id: data}).populate("rings.active.user participants").exec(function (err, game) {
+      if (game == null) {
+        return cb(new Error("Game not found."));
+      }
       var result = {
         game: _.extend(_.pick(game, ["name"]), {rings: game.rings.length}),
         participants: _.map(game.participants, function (p) { return _.pick(p, ["_id", "usernameLower", "group"]); }),
