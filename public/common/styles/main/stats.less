@@ -1,11 +1,26 @@
 .stats-container-100 {
   float: left;
   width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.stats-total > h2 {
+  span {
+    display: inline-block;
+    background-color: fade(@color-primary, 33%);
+    border: 1px solid fade(@color-primary, 50%);
+    border-radius: 20px 0;
+    padding: 5px 10px;
+    margin: 0 10px;
+  }
 }
 
 .stats-container-50 {
   float: left;
   width: 50%;
+  margin-bottom: 20px;
+  text-align: center;
 
   @media (max-width:768px) {
     width: 100%;

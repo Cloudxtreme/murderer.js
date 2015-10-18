@@ -13,6 +13,11 @@
       "rings": {
         "active": "Überlebende pro Kreis",
         "remaining": "Teilnehmer-Anzahl pro verbleibende Leben"
+      },
+      "users": {
+        "name": "Name",
+        "active": "Leben verbleibend",
+        "kills": "Abgeschlossene Auftragsmorde"
       }
     }
   }

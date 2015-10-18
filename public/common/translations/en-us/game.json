@@ -6,6 +6,10 @@
       "kills": "Kills",
       "suicides": "Suicides",
       "lives": "{{amount}} {{amount === 1 ? 'life' : 'lives'}} left",
+      "total": {
+        "active": "<strong class=\"text-mono\">{{active}}</strong> active {{active === 1 ? 'contract for murder is' : 'contracts for murder are'}} signed",
+        "kills": "<strong class=\"text-mono\">{{kills}}</strong> {{kills === 1 ? 'person has' : 'people have'}} been assassinated yet"
+      },
       "groups": {
         "kills": "Kills by group",
         "active": "Lives left by group"
@@ -13,6 +17,11 @@
       "rings": {
         "active": "Alive users by ring",
         "remaining": "Users by lives left"
+      },
+      "users": {
+        "name": "Name",
+        "active": "Lives remaining",
+        "kills": "Assassinations completed"
       }
     }
   }

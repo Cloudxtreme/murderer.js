@@ -1,0 +1,96 @@
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+
+  > thead > tr {
+    background-color: fade(@text-color, 15%);
+  }
+
+  &.table-striped {
+    > tbody > tr:nth-child(2N) {
+      background-color: fade(@text-color, 4%);
+
+      &:hover {
+        background-color: fade(@text-color, 10%);
+      }
+    }
+    > thead > tr > th, > tbody > tr > td {
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+
+  > thead > tr > th {
+    padding: 6px 10px;
+    border: 1px solid fade(@text-color, 15%);
+
+    &[st-sort] {
+      cursor: pointer;
+
+      &:hover {
+        background-color: fade(@text-color, 10%);
+      }
+
+      &:before {
+        .fa-icon();
+        width: (18em / 14);
+        content: @fa-var-sort;
+        opacity: 0.3;
+      }
+
+      &.st-sort-ascent:before {
+        content: @fa-var-sort-asc;
+        opacity: 1;
+      }
+
+      &.st-sort-descent:before {
+        content: @fa-var-sort-desc;
+        opacity: 1;
+      }
+    }
+  }
+
+  > tbody > tr:hover {
+    background-color: fade(@text-color, 10%);
+  }
+
+  > tbody > tr > td {
+    padding: 4px 7px;
+    border: 1px solid fade(@text-color, 15%);
+  }
+
+  tfoot ul.pagination {
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      display: inline-block;
+      margin: 4px 0;
+
+      &.active {
+        > a, > a:hover {
+          background-color: fade(mix(@color-info, @text-color, 70%), 40%);
+          cursor: default;
+        }
+      }
+
+      > a {
+        font-family: monospace;
+        font-size: 1.2em;
+        background-color: fade(@text-color, 20%);
+        border-right: 1px solid fade(@text-color, 10%);
+        padding: 3px 5px;
+
+        &:hover {
+          background-color: fade(@text-color, 30%);
+        }
+      }
+      &:first-child > a {
+        border-left: 1px solid fade(@text-color, 10%);
+      }
+    }
+  }
+}

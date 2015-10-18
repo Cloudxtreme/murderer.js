@@ -1,4 +1,4 @@
-angular.module("common").factory("stats", function (socket) {
+angular.module("common").factory("stats", function ($q, socket) {
   "use strict";
 
   function getBlockMoment(kill, hoursEachBlock) {
@@ -20,6 +20,11 @@ angular.module("common").factory("stats", function (socket) {
   }
 
   var service = {
+    deathsCache: null,
+    usersCache: null,
+
+    clearCache: function () { service.deathsCache = service.usersCache = null; },
+
     getBlockLabel: function (data, hoursEachBlock) {
       var from = getBlockMoment({entryDate: moment(data.date).subtract(hoursEachBlock, "h")}, hoursEachBlock).format("dd HH:00");
       var to = data.date.format("dd HH:00");
@@ -27,7 +32,8 @@ angular.module("common").factory("stats", function (socket) {
     },
 
     analyseDeaths: function (hoursEachBlock) {
-      return socket.query("stats:game.deaths").then(function (data) {
+      var promise = service.deathsCache = service.deathsCache || socket.query("stats:game.deaths");
+      return promise.then(function (data) {
         var byDate = {};
         _.each(data.kills, function (kill) {
           var date = getBlockMoment(kill, hoursEachBlock), iso = date.toISOString();
@@ -59,7 +65,10 @@ angular.module("common").factory("stats", function (socket) {
     },
 
     analyseUsers: function () {
-      return socket.query("stats:game.users").then(function (data) {
+      if (service.usersCache) {
+        return service.usersCache;
+      }
+      return service.usersCache = socket.query("stats:game.users").then(function (data) {
         data.usersByLives = _.times(data.rings, _.constant(0));
         _.each(data.users, function (user) {
           user.total = {active: 0, kills: 0};
@@ -81,6 +90,22 @@ angular.module("common").factory("stats", function (socket) {
           return ring;
         });
         return data;
+      });
+    },
+
+    analyseTotal: function (hoursEachBlock) {
+      return $q.all([
+        service.analyseUsers().then(function (data) {
+          return _.sum(data.rings, function (ring) { return ring.active <= 1 ? 0 : ring.active; });
+        }),
+        service.analyseDeaths(hoursEachBlock).then(function (data) {
+          return _.sum(_.pluck(data, "kills"), function (arr) { return arr.length; });
+        })
+      ]).then(function (data) {
+        return {
+          active: data[0],
+          kills: data[1]
+        };
       });
     }
   };

@@ -1,0 +1,25 @@
+<div ng-show="users.length">
+    <table st-table="displayedUsers" st-safe-src="users" class="table table-striped">
+        <thead>
+        <tr>
+            <th st-sort="username" translate>game.stats.users.name</th>
+            <th st-sort="total.active" translate>game.stats.users.active</th>
+            <th st-sort="total.kills" translate>game.stats.users.kills</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in displayedUsers">
+            <td class="text-upper text-center" ng-bind="user.username"></td>
+            <td class="text-mono text-right" ng-bind="user.total.active"></td>
+            <td class="text-mono text-right" ng-bind="user.total.kills"></td>
+        </tr>
+        </tbody>
+        <tfoot ng-show="users.length > 10">
+        <tr>
+            <td colspan="3" class="text-center">
+                <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

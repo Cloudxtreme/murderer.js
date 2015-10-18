@@ -1,7 +1,5 @@
-angular.module("common").directive("statsKillsSuicides", function ($rootScope, $translate, stats) {
+angular.module("common").directive("statsKillsSuicides", function (BAR_CHART_INTERVAL_SIZE, $rootScope, $translate, stats) {
   "use strict";
-
-  var INTERVAL_HOURS = 6;
 
   var languageListeners = [];
 
@@ -29,7 +27,7 @@ angular.module("common").directive("statsKillsSuicides", function ($rootScope, $
 
       function updateChartSchema() {
         if (chartDataPlain != null) {
-          $scope.chartData.labels = _.map(chartDataPlain, _.partial(stats.getBlockLabel, _, INTERVAL_HOURS));
+          $scope.chartData.labels = _.map(chartDataPlain, _.partial(stats.getBlockLabel, _, BAR_CHART_INTERVAL_SIZE));
           $scope.chartData.series = [$translate.instant("game.stats.kills"), $translate.instant("game.stats.suicides")];
           $scope.chartData.generators = [getKillData, getSuicideData];
         }
@@ -49,7 +47,7 @@ angular.module("common").directive("statsKillsSuicides", function ($rootScope, $
         }
       }
 
-      stats.analyseDeaths(INTERVAL_HOURS).then(function (data) {
+      stats.analyseDeaths(BAR_CHART_INTERVAL_SIZE).then(function (data) {
         chartDataPlain = data;
         updateChartSchema();
         updateChartEntries();
