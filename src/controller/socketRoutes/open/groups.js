@@ -12,7 +12,9 @@ var GROUPS = _.sortBy([
   {name: "COBOL", tutors: "Laura"},
   {name: "Java", tutors: "Simon, Jannes"},
   {name: "Fortran", tutors: "Nils, Torsten"}
-], "name");
+], "name").concat([
+  {name: "No group"}
+]);
 
 module.exports = function (queryRoute) {
   queryRoute("groups:get", function (data, cb) { cb(null, GROUPS); });

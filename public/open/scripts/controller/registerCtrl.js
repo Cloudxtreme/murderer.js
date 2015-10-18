@@ -15,7 +15,7 @@ angular.module("open").controller("registerCtrl", function ($scope, $location, s
   $scope.groups = null;
 
   socket.query("groups:get").then(function (groups) {
-    $scope.groups = _.each(groups, function (g) { g.string = g.name + " (" + g.tutors + ")"; });
+    $scope.groups = _.each(groups, function (g) { g.string = g.name + (g.tutors ? " (" + g.tutors + ")" : ""); });
   });
 
   $scope.$watch("credentials.username", function (username) {
