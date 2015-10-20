@@ -6,6 +6,10 @@
       "kills": "Morde",
       "suicides": "Selbstmorde",
       "lives": "{{amount}} Leben verbleibend",
+      "total": {
+        "active": "<strong class=\"text-mono\">{{active}}</strong> {{active === 1 ? 'aktiver Mordauftrag wurde' : 'aktive Mordaufträge wurden'}} unterzeichnet",
+        "kills": "<strong class=\"text-mono\">{{kills}}</strong> {{kills === 1 ? 'Person wurde' : 'Personen wurden'}} bereits gemeuchelt"
+      },
       "groups": {
         "kills": "Morde pro Gruppe",
         "active": "Leben verbleibend pro Gruppe"
