@@ -16,7 +16,7 @@ module.exports = function (queryRoute) {
           qFindGameById(scope, data.game)
         ])
         .then(function (result) {
-          return gameC.killByToken(scope, result[0], result[1], data.token, "Triggered by " + scope.user.username);
+          return gameC.killByToken(scope, result[0]._doc, result[1], data.token, "Triggered by " + scope.user.username);
         })
         .done(function () { cb(); }, cb);
   });
@@ -30,7 +30,7 @@ module.exports = function (queryRoute) {
           qFindGameById(scope, data.game)
         ])
         .then(function (result) {
-          return gameC.killSelf(scope, result[0], result[1], "Triggered by " + scope.user.username);
+          return gameC.killSelf(scope, result[0]._doc, result[1], "Triggered by " + scope.user.username);
         })
         .done(function () { cb(); }, cb);
   });

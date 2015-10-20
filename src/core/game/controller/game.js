@@ -4,6 +4,7 @@ var _ = require("lodash");
 var Q = require("q");
 
 var model = require("../model/game");
+var socket = require.main.require("./controller/socket");
 var ctrlBase = require("../../../utils/controllerBase");
 var security = require.main.require("./utils/security");
 var config = require.main.require("./utils/config").main;
@@ -118,8 +119,32 @@ module.exports.addRings = function (game, amount) {
   return game;
 };
 
+function aaa(entry, game) {
+  socket.broadcastCommonPermitted("news:update.game", entry);
+  return game;
+}
+
+function aba(scope, entry, game) {
+  var defer = Q.defer();
+  userC.findById(scope, entry.victim, function (err, v) {
+    if (err == null) {
+      entry.victim = v != null ? _.pick(v._doc, ["_id", "username"]) : null;
+      defer.resolve(aaa(entry, game));
+    } else {
+      defer.reject(err);
+    }
+  });
+  return defer.promise;
+}
+
 module.exports.killByToken = function (scope, user, game, token, message) {
   var rings = game.rings, ring, active, inactive, obj, i, j;
+  var newsObj = {
+    entryDate: new Date(),
+    message: message,
+    token: token,
+    murderer: _.pick(user, ["_id", "username"])
+  };
   for (i = 0; i < rings.length; i++) {
     ring = rings[i];
     active = ring.active;
@@ -128,7 +153,10 @@ module.exports.killByToken = function (scope, user, game, token, message) {
         obj = active[j];
         if (obj.token === token && active[(j === 0 ? active.length : j) - 1].user.equals(user._id)) {
           scope.log.info({token: token}, "valid token");
-          return Q.when(performTokenKill(user, game, i, j, message)).then(qSave);
+          return Q
+              .when(performTokenKill(user, game, i, j, message))
+              .then(qSave)
+              .then(_.partial(aba, scope, _.extend(newsObj, {ring: i, victim: obj.user})));
         }
       }
     }
@@ -136,7 +164,10 @@ module.exports.killByToken = function (scope, user, game, token, message) {
     for (j = 0; j < inactive.length; j++) {
       obj = inactive[j];
       if (obj.token === token && obj.murderer.equals(user._id)) {
-        return Q.when(performInactiveTokenKill(game, i, j, message)).then(qSave);
+        return Q
+            .when(performInactiveTokenKill(game, i, j, message))
+            .then(qSave)
+            .then(_.partial(aba, scope, _.extend(newsObj, {ring: i, victim: obj.user})));
       }
     }
   }
@@ -240,7 +271,13 @@ module.exports.killSelf = function (scope, user, game, message) {
           });
         });
     game.kills.push(_.extend({ring: null}, entry));
-    return qSave(game).then(function (game) {
+    return qSave(game).then(_.partial(aaa, {
+      entryDate: new Date(),
+      message: message,
+      token: null,
+      murderer: null,
+      victim: _.pick(user, ["_id", "username"])
+    })).then(function (game) {
       scope.log.warn({game: game}, "committed suicide");
       return game;
     });
