@@ -22,7 +22,7 @@ angular.module("common").directive("statsGroupsRings", function ($rootScope, $tr
           var ringLabels = _.map(chartDataPlain.rings, function (ignored, idx) {
             return $translate.instant("game.ring") + " #" + idx;
           });
-          var livesLabels = _.times(chartDataPlain.rings.length, function (i) {
+          var livesLabels = _.times(chartDataPlain.rings.length + 1, function (i) {
             return $translate.instant("game.stats.lives", {amount: i});
           });
 

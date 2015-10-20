@@ -69,7 +69,7 @@ angular.module("common").factory("stats", function ($q, socket) {
         return service.usersCache;
       }
       return service.usersCache = socket.query("stats:game.users").then(function (data) {
-        data.usersByLives = _.times(data.rings, _.constant(0));
+        data.usersByLives = _.times(data.rings + 1, _.constant(0));
         _.each(data.users, function (user) {
           user.total = {active: 0, kills: 0};
           _.each(user.active, function (val) {
