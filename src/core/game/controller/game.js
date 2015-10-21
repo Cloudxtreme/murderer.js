@@ -248,7 +248,7 @@ module.exports.killSelf = function (scope, user, game, message) {
             userC.sendMailByKey(scope, "game.newMission", predecessor.user,
                 {
                   game: game.name,
-                  link: config.server.url + "contract",
+                  link: config.server.url + "contracts",
                   ring: predecessor.ring,
                   user: predecessor.user._doc,
                   mission: predecessor.mission._doc
