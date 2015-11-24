@@ -1,6 +1,7 @@
 <div class="flexbox">
     <div class="left">
         <h3 translate>register.participate</h3>
+
         <p translate>register.information</p>
     </div>
     <div class="right">
@@ -25,9 +26,9 @@
             </select>
             <label for="email" class="control-label" translate>credentials.email</label>
             <input type="email" class="form-control" id="email" name="email" ng-model="credentials.email" required/>
-            <label for="message" class="control-label" translate>credentials.message</label>
-            <textarea id="message" class="form-control" name="message" data-2ng-model="credentials.profileMessage"
-                      ng-maxlength="256"></textarea>
+            <label for="profileMessage" class="control-label" translate>credentials.message</label>
+            <textarea id="profileMessage" class="form-control" name="profileMessage"
+                      data-ng-model="credentials.profileMessage" ng-maxlength="256"></textarea>
             <label for="password" class="control-label" translate>credentials.password</label>
             <input type="password" class="form-control" id="password" placeholder="Mb2.r5oHf-0t" name="password"
                    ng-model="credentials.password" ng-minlength="4" required/>
