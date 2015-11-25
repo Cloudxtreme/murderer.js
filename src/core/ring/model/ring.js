@@ -1,6 +1,6 @@
 "use strict";
 
-var COLLECTION_NAME = "Game";
+var COLLECTION_NAME = "Ring";
 
 var mongoose = require("mongoose");
 var modelBase = require("../../../utils/modelBase");
@@ -13,18 +13,15 @@ var ObjectID = Schema.Types.ObjectId;
 var GameSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
-      name: {type: String, required: true, unique: true, trim: true},
+      active: {type: Boolean, default: false},
 
-      // TODO date triggered start + inactive-periods/-deadline
-      started: {type: Boolean, default: false}, // if started, don't accept new registrations
-      active: {type: Boolean, default: false}, // if started but not active, still show stats
-      groups: {
-        type: [{
-          group: {type: ObjectID, ref: "Group"},
-          users: {type: [{type: ObjectID, ref: "User"}], default: []}
-        }], default: []
-      },
-      rings: {type: [{type: ObjectID, ref: "Ring"}], default: []}
+      chain: [{
+        user: {type: ObjectID, ref: "User"},
+        token: {type: String, required: true},
+        murder: {type: ObjectID, ref: "Murder"},
+        target: {type: Boolean, default: true} // [A,B,C] Needed because if B commits suicide, A may still kill B (in
+                                               // real life the kill might have happened before the suicide).
+      }]
     }
 );
 
