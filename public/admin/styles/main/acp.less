@@ -3,8 +3,10 @@ ul#acp-main {
   padding: 0;
 
   > li {
-    width: 33%;
+    width: 33.3333%;
     display: inline-block;
+    float: left;
+
     > a {
       text-decoration: none;
       display: block;
@@ -12,6 +14,7 @@ ul#acp-main {
       padding: 10px 0;
       text-align: center;
       background-color: fade(@text-color, 2%);
+      border-right: 1px solid fade(@text-color, 6%);
       &:hover {
         background-color: fade(mix(@text-color, @color-primary, 80%), 7%);
       }
@@ -19,6 +22,9 @@ ul#acp-main {
       > div {
         font-size: 2em;
       }
+    }
+    &:last-child > a {
+      border-right: none;
     }
   }
 }
