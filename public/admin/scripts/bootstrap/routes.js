@@ -1,4 +1,4 @@
-angular.module("common").config(function ($routeProvider, $locationProvider) {
+angular.module("admin").config(function ($routeProvider, $locationProvider) {
   "use strict";
 
   $locationProvider.html5Mode(true);
@@ -6,8 +6,11 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
   // @ngInject
   $routeProvider
       .when("/acp", {
-        templateUrl: "/views/admin/acp.html",
-        controller: "acpCtrl"
+        templateUrl: "/views/admin/acp/main.html"
+      })
+      .when("/acp/games", {
+        templateUrl: "/views/admin/acp/games.html",
+        controller: "gamesCtrl"
       })
       .when("/game/:id", {
         templateUrl: "/views/admin/game_details.html",

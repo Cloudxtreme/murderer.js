@@ -1,5 +1,6 @@
 {
   "game": {
+    "titlePlural": "Games",
     "participants": "Participants",
     "inactive": "Inactive",
     "contracts": {

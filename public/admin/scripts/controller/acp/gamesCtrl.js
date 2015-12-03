@@ -1,4 +1,4 @@
-angular.module("admin").controller("acpCtrl", function ($scope, $timeout, socket) {
+angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, socket) {
   "use strict";
 
   $scope.games = null;

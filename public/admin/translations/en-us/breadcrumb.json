@@ -1,0 +1,11 @@
+{
+  "breadcrumb": "Home",
+  "breadcrumb/": {
+    "acp": "Admin CP",
+    "acp/": {
+      "games": "Games",
+      "groups": "Groups",
+      "users": "Users"
+    }
+  }
+}
