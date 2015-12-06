@@ -25,6 +25,7 @@ function getModelCallbackWrapper(validation, model, key) {
     var waiting = validation.length;
     if (waiting === 0) {
       // no validation required, forward directly
+      scope.log.debug("db-request no validation");
       modelFn.apply(model, args);
       return;
     }
@@ -40,6 +41,7 @@ function getModelCallbackWrapper(validation, model, key) {
         return;
       }
       if (--waiting === 0) {
+        scope.log.debug("db-request validated");
         modelFn.apply(model, args);
       }
     };

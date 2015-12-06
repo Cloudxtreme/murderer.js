@@ -4,6 +4,7 @@ var _ = require("lodash");
 
 var MODEL_FUNCTIONS_EXTEND = [
   "count",
+  "create",
   "find",
   "findById", "findOne",
   "findByIdAndRemove", "findOneAndRemove",
@@ -51,12 +52,6 @@ function getQueryByKey(key) {
  */
 module.exports = function (model, target, uniques, keys) {
   var methods = target._methods = [];
-
-  target.create = function (body, cb) {
-    var serviceObj = new model(body); // jshint ignore:line
-    serviceObj.save(cb);
-  };
-  methods.push("create");
 
   _.each(MODEL_FUNCTIONS_EXTEND, function (key) {
     target[key] = function () {
