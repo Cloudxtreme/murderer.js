@@ -1,0 +1,20 @@
+<table class="users-list-table">
+    <thead>
+    <tr>
+        <th translate>user.name</th>
+        <th translate>user.email</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users" data-user-id="{{user._id}}" ng-class="{admin: user.admin}">
+        <td class="user-name" ng-bind="user.username"></td>
+        <td class="user-email" ng-bind="user.email"></td>
+        <td class="user-actions">
+            <a class="fa fa-fw" ng-class="user.admin ? 'fa-user-secret' : 'fa-user'" ng-click="toggleAdmin(user)"
+               ng-if="!isSelf(user)"></a>
+            <a class="fa fa-fw fa-trash-o" ng-click="removeUser(user)"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>

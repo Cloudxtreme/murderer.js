@@ -1,0 +1,23 @@
+.users-list-table {
+  min-width: 600px;
+  border-collapse: collapse;
+
+  td, th {
+    border: 1px solid fade(@text-color, 20%);
+  }
+
+  tr.admin {
+    background-color: fade(@color-primary, 15%);
+  }
+
+  .user-name {
+    width: 40%;
+  }
+  .user-email {
+    width: 40%;
+  }
+  .user-actions {
+    width: 20%;
+    text-align: right;
+  }
+}

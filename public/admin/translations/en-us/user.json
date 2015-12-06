@@ -1,5 +1,9 @@
 {
   "user": {
-    "titlePlural": "Users"
+    "titlePlural": "Users",
+    "name": "Name",
+    "email": "Email",
+    "active": "Active",
+    "inactive": "Inactive"
   }
 }

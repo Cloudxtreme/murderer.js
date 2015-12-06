@@ -30,7 +30,7 @@ angular.module("admin").controller("groupsCtrl", function ($scope, $timeout, gro
   function removeGroup(group) {
     group.saving = true;
     groups
-        .remove(_.pick(group, groupKeys))
+        .remove(group._id)
         .then(function () {
           var idx = _.indexOf($scope.groups, group);
           if (~idx) { $scope.groups.splice(idx, 1); }
