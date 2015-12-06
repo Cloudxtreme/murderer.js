@@ -27,7 +27,6 @@ angular.module("common").factory("news", function ($q, $timeout, socket) {
         break;
       }
     }
-    console.log(list, i, entry);
     list.splice(i, 0, entry);
   }
 

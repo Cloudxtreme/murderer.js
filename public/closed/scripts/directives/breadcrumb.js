@@ -1,4 +1,4 @@
-angular.module("admin").directive("breadcrumb", function ($rootScope, $location, $translate) {
+angular.module("closed").directive("breadcrumb", function ($rootScope, $location, $translate) {
   "use strict";
 
   var listener = [];
@@ -6,10 +6,11 @@ angular.module("admin").directive("breadcrumb", function ($rootScope, $location,
   function callListeners() { _.each(listener, function (fn) { fn(); }); }
 
   $rootScope.$on("language.update", callListeners);
+  $rootScope.$on("$routeChangeSuccess", callListeners);
 
   return {
     restrict: "C",
-    templateUrl: "/templates/admin/breadcrumb.html",
+    templateUrl: "/templates/closed/breadcrumb.html",
     link: function ($scope) {
       $scope.items = [];
 

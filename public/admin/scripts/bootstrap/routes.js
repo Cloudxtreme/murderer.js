@@ -6,25 +6,37 @@ angular.module("admin").config(function ($routeProvider, $locationProvider) {
   // @ngInject
   $routeProvider
       .when("/acp", {
-        templateUrl: "/views/admin/acp/main.html"
+        templateUrl: "/views/admin/acp.html"
       })
+
       .when("/acp/games", {
-        templateUrl: "/views/admin/acp/games.html",
+        templateUrl: "/views/admin/games.html",
         controller: "gamesCtrl"
       })
-      .when("/game/:id", {
-        templateUrl: "/views/admin/game_details.html",
+
+      .when("/acp/games/:id", {
+        templateUrl: "/views/admin/game/details.html",
         controller: "gameDetailsCtrl",
         resolve: {
           gameId: function ($route) { return $route.current.params.id; }
         }
       })
-      .when("/game/:id/contracts", {
-        templateUrl: "/views/admin/contracts.html",
+      .when("/acp/games/:id/contracts", {
+        templateUrl: "/views/admin/game/contracts.html",
         controller: "gameContractsCtrl",
         resolve: {
           gameId: function ($route) { return $route.current.params.id; }
         }
+      })
+
+      .when("/acp/groups", {
+        templateUrl: "/views/admin/groups.html",
+        controller: "groupsCtrl"
+      })
+
+      .when("/acp/users", {
+        templateUrl: "/views/admin/users.html",
+        controller: "usersCtrl"
       });
 
 });

@@ -1,5 +1,3 @@
-<ol class="breadcrumb"></ol>
-
 <form name="createForm" class="form-horizontal" ng-submit="createGame()">
     <h3 translate>game.create.title</h3>
 
@@ -16,23 +14,20 @@
 
 <ol class="list-group game-list">
     <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
-        <h4 class="margin-top-0">
-            <a ng-href="/game/{{game._id}}" ng-bind="game.name"></a><br/>
-            <a ng-href="/game/{{game._id}}/contracts">
-                <i class="fa fa-fw fa-book"></i>
-                {{'game.contracts.list' | translate}}
-            </a>
-        </h4>
+        <div class="game-active">
+            <label>
+                <input type="checkbox" ng-model="game.active" ng-click="toggleActive(game)"/>
+                <span class="text-mono" translate>game.active</span>
+            </label>
+        </div>
+        <div class="game-name"><a ng-href="/acp/games/{{game._id}}" ng-bind="game.name"></a><br/></div>
+        <div class="game-participants">
+            {{'game.participants' | translate}}: <span class="text-mono" ng-bind="game.participants.length"></span>
+        </div>
+        <div class="clearfix"></div>
 
-        <div>
-            <input type="button" ng-click="toggleActive(game)" ng-value="'button.toggle' | translate"/>
-            <span class="text-mono" ng-bind="'game.' + (game.active ? 'active' : 'inactive') | translate"></span>
-        </div>
-        <div>
-            <span class="text-mono" ng-bind="game.participants.length"></span>
-            {{'game.participants' | translate}}
-        </div>
         <hr/>
+
         <div ng-repeat="ring in game.rings" class="game-ring">
             <hr ng-if="!$first"/>
             <b class="text-mono">{{'game.ring' | translate}} #{{$index}}</b>

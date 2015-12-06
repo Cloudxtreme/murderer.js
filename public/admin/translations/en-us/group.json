@@ -1,5 +1,11 @@
 {
   "group": {
-    "titlePlural": "Groups"
+    "titlePlural": "Groups",
+    "name": "Name",
+    "description": "Description",
+    "create": {
+      "title": "New Group",
+      "submit": "Create group"
+    }
   }
 }

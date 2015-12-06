@@ -1,0 +1,4 @@
+<li ng-repeat="item in items" ng-class="{active: $last}">
+    <a ng-href="{{item.link}}" ng-if="item.link !== false" ng-bind-html="item.text | html"></a>
+    <span ng-if="item.link === false" ng-bind-html="item.text | html"></span>
+</li>

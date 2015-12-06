@@ -1,9 +1,14 @@
 {
-  "breadcrumb": "Home",
   "breadcrumb/": {
     "acp": "Admin CP",
     "acp/": {
       "games": "Games",
+      "games/": {
+        "*": "<span class=\"text-mono\">{{part.substring(part.length-8).toUpperCase()}}</span>",
+        "*/": {
+          "contracts": "Contracts"
+        }
+      },
       "groups": "Groups",
       "users": "Users"
     }

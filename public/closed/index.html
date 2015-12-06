@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- build:process -->
+    <title><%= title %></title>
+    <meta property="og:site_name" content="<%= pkg.name %>"/>
+    <!-- /build -->
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+
+    <!-- build:process -->
+    <%= livereload %>
+    <%= styles %>
+    <!-- /build -->
+
+    <!-- build:script main -->
+    <!-- /build -->
+</head>
+
+<!-- build:process -->
+<body ng-app="<%= app %>">
+<!-- /build -->
+
+<ul id="language-selector" language-selector></ul>
+
+<!-- build:section navigation -->
+<!-- /build -->
+
+<div id="container">
+    <ol class="breadcrumb"></ol>
+    <div id="view" ng-view></div>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,27 @@
-.game-list .game-ring {
-  padding: 0 15px;
+.game-list {
+  .game-active, .game-name, .game-participants {
+    float: left;
+  }
+  .game-active {
+    width: 10%;
+    input {
+      position: relative;
+      top: 2px;
+    }
+  }
+  .game-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 45%;
+  }
+  .game-participants {
+    text-align: right;
+    width: 45%;
+  }
+
+  .game-ring {
+    padding: 0 15px;
+  }
 }
 
 .ring-details {
@@ -12,7 +34,6 @@
       > div {
         float: left;
       }
-
     }
   }
 
