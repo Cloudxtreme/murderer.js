@@ -8,13 +8,13 @@ var gameC = require.main.require("./core/game/controller/game");
 var gameM = require.main.require("./core/game/model/game");
 
 module.exports = function (queryRoute) {
-  queryRoute("games:all", function (data, cb) { gameC.find(this, data, cb); });
+  queryRoute("games:all", function (data) { gameC.qFind(this, data); });
 
-  queryRoute("game:create", function (data, cb) { gameC.create(this, data, cb); });
+  queryRoute("game:create", function (data) { gameC.qCreate(this, data); });
 
   queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
 
-  queryRoute("game:update", function (data, cb) { gameC.findByIdAndUpdate(this, {_id: data._id}, data, cb); });
+  queryRoute("game:update", function (data) { gameC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
 
   queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
 
