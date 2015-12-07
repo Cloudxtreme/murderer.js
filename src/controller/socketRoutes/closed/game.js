@@ -5,7 +5,7 @@ var _ = require("lodash");
 var gameM = require.main.require("./core/game/model/game");
 
 module.exports = function (queryRoute) {
-  queryRoute("game:contracts", function (data, cb) {
+  queryRoute("game:contracts", function (data, cb) { // TODO move logic into game controller, q-based
     var scope = this;
     var userId = scope.user._id;
     gameM.findOne({active: true}).populate("rings.active.user").exec(function (err, game) {

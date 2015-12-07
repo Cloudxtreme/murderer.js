@@ -10,7 +10,7 @@ var cTrue = _.constant(true);
 var arrayGen = function () { return []; };
 
 module.exports = function (queryRoute) {
-  queryRoute("stats:game.deaths", function (data, cb) {
+  queryRoute("stats:game.deaths", function (data, cb) { // TODO move logic into controller, q-based
     gameM.findOne({active: true}, {kills: 1}, function (err, game) {
       if (err != null) {
         return cb(err);
@@ -30,7 +30,7 @@ module.exports = function (queryRoute) {
     });
   });
 
-  queryRoute("stats:game.users", function (data, cb) {
+  queryRoute("stats:game.users", function (data, cb) { // TODO move logic into controller, q-based
     gameM.findOne({active: true}).populate("participants").exec(function (err, game) {
       if (err != null) {
         return cb(err);

@@ -3,11 +3,11 @@
 var groupC = require("../../../core/group/controller/group");
 
 module.exports = function (queryRoute) {
-  queryRoute("groups:all", function (data, cb) { groupC.find(this, data, cb); });
+  queryRoute("groups:all", function (data) { return groupC.qFind(this, data); });
 
-  queryRoute("group:remove", function (data, cb) { groupC.removeById(this, data, cb); });
+  queryRoute("group:remove", function (data) { return groupC.qRemoveById(this, data); });
 
-  queryRoute("group:create", function (data, cb) { groupC.create(this, data, cb); });
+  queryRoute("group:create", function (data) { return groupC.qCreate(this, data); });
 
-  queryRoute("group:update", function (data, cb) { groupC.findByIdAndUpdate(this, {_id: data._id}, data, cb); });
+  queryRoute("group:update", function (data) { return groupC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
 };

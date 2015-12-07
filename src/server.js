@@ -128,6 +128,9 @@ module.exports = function () {
     // attach log to mongoose and emit event
     (mongoose.log = dbLog).info("database connected");
     // load all models
+    // TODO create core/*/services to get logic out of controllers
+    // TODO change core/*/controller/*.js to core/*/controller.js
+    // TODO change core/*/model/*.js to core/*/model.js
     requireRecursive(coreDir, "model", "model", dbLog);
     bus.emit("database:connected", mongoose);
     // initialize sockets

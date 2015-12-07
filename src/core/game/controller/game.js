@@ -9,8 +9,26 @@ var ctrlBase = require("../../../utils/controllerBase");
 var security = require.main.require("./utils/security");
 var config = require.main.require("./utils/config").main;
 var userC = require.main.require("./core/user/controller/user");
+var ringC = require.main.require("./core/ring/controller/ring");
+
+var POPULATE_DETAILS = [];
 
 ctrlBase(model, module.exports);
+
+module.exports.qPopulated = function (scope, id) {
+  return Q.nfcall(model.findById({_id: id}).populate(POPULATE_DETAILS).exec);
+};
+
+module.exports.qGenerateRings = function (scope, id, amount) {
+  return module.exports.qFindById(scope, {_id: id}).then(function (game) {
+    var promise = game.rings.length ? ringC.qRemove(scope, {_id: {$in: game.rings}}) : Q.when();
+    return promise.then(function () {
+      // TODO generate {amount} rings
+    });
+  });
+};
+
+/////////// TODO overwork
 
 function isTokenInUse(game, token) {
   return _.any(game.rings, function (ring) {

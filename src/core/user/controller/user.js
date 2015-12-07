@@ -10,6 +10,8 @@ var connections = require("../../../controller/connections");
 var config = require("../../../utils/config").main;
 var tpl = require("../../../utils/templates");
 
+var USERNAME_REGEX = /^[a-z_ 0-9-]{3,}$/;
+
 var emailTransporter = mailer.createTransport({
   host: config.mailer.host,
   port: config.mailer.port,
@@ -203,74 +205,52 @@ var validate = module.exports.validate;
 
 // TODO except for admin-creation disable possibility to set various fields on create and save
 
-validate("create", function (next, body) {
+validate("create", function (body) {
   body.usernameLower = body.username.toLowerCase();
-  if (!body.email) {
-    return next(new Error("Email required"));
-  }
-  if (!/^[a-z_ 0-9-]{3,}$/.test(body.usernameLower)) {
-    return next(new Error("Username may not contain special characters."));
-  }
-  if (body.profileMessage && body.profileMessage.length > 256) {
-    return next(new Error("Message too long."));
-  }
-  if (body.password.length < 4) {
-    return next(new Error("Password too short."));
-  }
+  if (!body.email) { throw new Error("Email required"); }
+  if (!USERNAME_REGEX.test(body.usernameLower)) { throw new Error("Username may not contain special characters."); }
+  if (body.profileMessage && body.profileMessage.length > 256) { throw new Error("Message too long."); }
+  if (body.password.length < 4) { throw new Error("Password too short."); }
 
   if (!body.avatarUrl) {
     body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon&s=50";
   }
-
-  next();
 });
 
 validate("remove", function (next, filter) {
   if (filter == null || !filter.hasOwnProperty("_id") || typeof filter._id !== "string") {
-    return next(new Error("User remove only allowed by ID"));
+    throw new Error("User remove only allowed by ID");
   }
-
   var id = filter._id;
-  if (id !== this.user._id && !this.user.admin) {
-    return next(new Error("You are not allowed to remove this user"));
-  }
-
-  next();
+  if (id !== this.user._id && !this.user.admin) { throw new Error("You are not allowed to remove this user"); }
 });
 
 /*---------------------------------------------------- Pre-Hooks  ----------------------------------------------------*/
 
-var pre = module.exports.pre;
-
-pre("save", function (next) {
+module.exports.pre("save", function (user) {
   // disallow password-/email-change except for updatePassword-/updateEmail
-  if (!this.isNew) {
-    if (this.changedPassword && this.changedPassword !== config.security.secret) {
-      return next("No permission to change password");
+  if (!user.isNew) {
+    if (user.changedPassword && user.changedPassword !== config.security.secret) {
+      throw new Error("No permission to change password");
     } else {
-      delete this.hashedPassword;
+      delete user.hashedPassword;
     }
-    if (this.changedEmail && this.changedEmail !== config.security.secret) {
-      return next("No permission to change email");
+    if (user.changedEmail && user.changedEmail !== config.security.secret) {
+      throw new Error("No permission to change email");
     } else {
-      delete this.email;
+      delete user.email;
     }
   }
-  delete this.changedPassword;
-  delete this.changedEmail;
-  this.bio = this.bio != null ? this.bio.substring(0, 256) : "";
-  next();
+  delete user.changedPassword;
+  delete user.changedEmail;
+  user.bio = user.bio != null ? user.bio.substring(0, 256) : "";
 });
 
 /*---------------------------------------------------- Post-Hooks ----------------------------------------------------*/
 
-var post = module.exports.post;
+module.exports.post("save", function (user) { connections.updateUser(user); });
 
-post("save", function (user) {
-  connections.updateUser(user);
-});
-
-post("remove", function (user) {
+module.exports.post("remove", function (user) {
   // remove user from active connections
   connections.removeUser(user._id);
   // Send confirmation email to the user

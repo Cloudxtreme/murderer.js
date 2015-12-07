@@ -6,7 +6,7 @@ var gameM = require.main.require("./core/game/model/game");
 var newsM = require.main.require("./core/news/model/news");
 
 module.exports = function (queryRoute) {
-  queryRoute("news:global", function (data, cb) {
+  queryRoute("news:global", function (data, cb) { // TODO move logic into controller, q-based
     newsM.find({game: null}).populate("author game").exec(function (err, news) {
       if (err != null) {
         return cb(err);
@@ -20,7 +20,7 @@ module.exports = function (queryRoute) {
     });
   });
 
-  queryRoute("news:game", function (data, cb) {
+  queryRoute("news:game", function (data, cb) { // TODO move logic into controller, q-based
     gameM.findOne({active: true}, {kills: 1}).populate("kills.murderer kills.victim").exec(function (err, game) {
       if (err != null) {
         return cb(err);
