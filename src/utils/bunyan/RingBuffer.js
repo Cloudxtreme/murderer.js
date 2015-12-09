@@ -4,7 +4,7 @@ var _ = require("lodash");
 var os = require("os");
 var bunyan = require("bunyan");
 
-var config = require("../config").main;
+var config = require.main.require("./utils/config").main;
 
 var DEFAULT_LIMIT = 50;
 var NOTICE_LEVEL = bunyan.TRACE;

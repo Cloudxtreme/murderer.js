@@ -1,6 +1,6 @@
 "use strict";
 
-var userC = require("../../../core/user/controller/user");
+var userC = require.main.require("./core/user/controller");
 
 module.exports = function (queryRoute) {
   var projection = {username: 1, admin: 1, email: 1};

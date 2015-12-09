@@ -1,6 +1,6 @@
 "use strict";
 
-var groupC = require("../../../core/group/controller/group");
+var groupC = require.main.require("./core/group/controller");
 
 module.exports = function (queryRoute) {
   queryRoute("groups:all", function (data) { return groupC.qFind(this, data); });

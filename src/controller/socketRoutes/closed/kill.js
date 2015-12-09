@@ -1,7 +1,7 @@
 "use strict";
 
 var Q = require("q");
-var gameC = require.main.require("./core/game/controller/game");
+var gameC = require.main.require("./core/game/controller");
 var security = require.main.require("./utils/security");
 
 module.exports = function (queryRoute) {

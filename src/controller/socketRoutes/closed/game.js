@@ -2,7 +2,7 @@
 
 var _ = require("lodash");
 
-var gameM = require.main.require("./core/game/model/game");
+var gameM = require.main.require("./core/game/model");
 
 module.exports = function (queryRoute) {
   queryRoute("game:contracts", function (data, cb) { // TODO move logic into game controller, q-based

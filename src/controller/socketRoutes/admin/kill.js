@@ -1,8 +1,8 @@
 "use strict";
 
 var Q = require("q");
-var gameC = require.main.require("./core/game/controller/game");
-var userC = require.main.require("./core/user/controller/user");
+var gameC = require.main.require("./core/game/controller");
+var userC = require.main.require("./core/user/controller");
 
 module.exports = function (queryRoute) {
   queryRoute("kill:admin.token", function (data) {

@@ -1,6 +1,6 @@
 "use strict";
 
-var RingBuffer = require("../../utils/bunyan/RingBuffer");
+var RingBuffer = require.main.require("./utils/bunyan/RingBuffer");
 
 module.exports = function (ignored, log) {
   process.on("SIGINT", function () {

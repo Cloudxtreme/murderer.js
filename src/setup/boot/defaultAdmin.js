@@ -4,9 +4,9 @@ var _ = require("lodash");
 var Q = require("q");
 var bunyan = require("bunyan");
 
-var userC = require("../../core/user/controller/user");
-var config = require("../../utils/config").main;
-var security = require("../../utils/security");
+var userC = require.main.require("./core/user/controller");
+var config = require.main.require("./utils/config").main;
+var security = require.main.require("./utils/security");
 
 var body = {
   username: "root",

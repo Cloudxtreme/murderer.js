@@ -4,9 +4,9 @@ var _ = require("lodash");
 var io = require("socket.io");
 var bunyan = require("bunyan");
 
-var bus = require("../utils/bus").main;
-var userC = require("../core/user/controller/user");
-var config = require("../utils/config").main;
+var bus = require.main.require("./utils/bus").main;
+var userC = require.main.require("./core/user/controller");
+var config = require.main.require("./utils/config").main;
 var connections = require("./connections");
 
 var listeners = {};

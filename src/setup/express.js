@@ -8,7 +8,7 @@ var session = require("express-session");
 var bunyan = require("bunyan");
 var mongoStore = require("connect-mongo")(session);
 
-var config = require("../utils/config").main;
+var config = require.main.require("./utils/config").main;
 
 module.exports = function (app) {
   // Compression

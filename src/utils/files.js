@@ -33,16 +33,17 @@ exports.eachFileWithinDirsRecursive = function (dir, dirname, cb) {
   });
 };
 
-exports.matchingFilesRecursive = function (base, regex, cb) {
+exports.matchingFilesRecursive = function (base, tester, cb) {
+  if (tester instanceof RegExp) {
+    var regex = tester;
+    tester = function (filename) { return regex.test(filename); };
+  } else if (typeof tester === "string") {
+    var str = tester;
+    tester = function (filename) { return str === path.basename(filename); };
+  }
   fs.exists(base, function (bool) {
-    if (!bool) {
-      return cb(new Error("No such directory: " + base));
-    }
-    exports.eachFileRecursive(base, function (filename) {
-      if (regex.test(filename)) {
-        cb(filename);
-      }
-    });
+    if (!bool) { return cb(new Error("No such directory: " + base)); }
+    exports.eachFileRecursive(base, function (filename) { if (tester(filename)) { cb(filename); } });
   });
 };
 

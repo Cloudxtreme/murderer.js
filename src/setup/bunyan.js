@@ -6,9 +6,9 @@ var wrench = require("wrench");
 var bunyan = require("bunyan");
 var childProcess = require("child_process");
 
-var config = require("../utils/config").main;
-var files = require("../utils/files");
-var RingBuffer = require("../utils/bunyan/RingBuffer");
+var config = require.main.require("./utils/config").main;
+var files = require.main.require("./utils/files");
+var RingBuffer = require.main.require("./utils/bunyan/RingBuffer");
 
 /*============================================ Modify bunyan to our needs ============================================*/
 

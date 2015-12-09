@@ -2,11 +2,11 @@
 
 var bunyan = require("bunyan");
 
-var bus = require("../../../utils/bus").main;
-var connections = require("../../../controller/connections");
-var security = require("../../../utils/security");
-var userC = require("../../../core/user/controller/user");
-var config = require("../../../utils/config").main;
+var bus = require.main.require("./utils/bus").main;
+var connections = require.main.require("./controller/connections");
+var security = require.main.require("./utils/security");
+var userC = require.main.require("./core/user/controller");
+var config = require.main.require("./utils/config").main;
 
 /*
  This controller allows socket connections to get authenticated.

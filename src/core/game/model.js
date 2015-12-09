@@ -3,7 +3,7 @@
 var COLLECTION_NAME = "Game";
 
 var mongoose = require("mongoose");
-var modelBase = require("../../../utils/modelBase");
+var modelBase = require.main.require("./utils/modelBase");
 
 var Schema = require("mongoose").Schema;
 var ObjectID = Schema.Types.ObjectId;

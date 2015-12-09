@@ -3,59 +3,31 @@
 var _ = require("lodash");
 var Q = require("q");
 
-var model = require("../model/game");
+var model = require("./model");
 var socket = require.main.require("./controller/socket");
-var ctrlBase = require("../../../utils/controllerBase");
-var security = require.main.require("./utils/security");
+var ctrlBase = require.main.require("./utils/controllerBase");
 var config = require.main.require("./utils/config").main;
-var userC = require.main.require("./core/user/controller/user");
-var ringC = require.main.require("./core/ring/controller/ring");
+var userC = require.main.require("./core/user/controller");
+var generation = require("./services/generation");
 
 var POPULATE_DETAILS = [];
 
-ctrlBase(model, module.exports);
+ctrlBase(model, exports);
 
-module.exports.qPopulated = function (scope, id) {
+exports.qPopulated = function (scope, id) {
   return Q.nfcall(model.findById({_id: id}).populate(POPULATE_DETAILS).exec);
 };
 
-module.exports.qGenerateRings = function (scope, id, amount) {
-  return module.exports.qFindById(scope, {_id: id}).then(function (game) {
-    var promise = game.rings.length ? ringC.qRemove(scope, {_id: {$in: game.rings}}) : Q.when();
-    return promise.then(function () {
-      // TODO generate {amount} rings
-    });
-  });
+exports.qGenerateRings = function (scope, id, amount) {
+  return module.exports
+      .qFindById(scope, {_id: id})
+      .then(function (game) { return generation.generateRings(scope, game, amount); })
+      .then(function (game) { return qSave(game); }); // TODO move attach q-methods within modelBase
 };
 
-/////////// TODO overwork
+function qSave(game) { return Q.nbind(game.save, game)(); }
 
-function isTokenInUse(game, token) {
-  return _.any(game.rings, function (ring) {
-    var tokens = _.pluck(ring.active, "token");
-    return _.contains(tokens, token);
-  });
-}
-
-function getRingInstance(game, user) {
-  var token;
-  do {
-    token = security.generateToken(config.security.humanToken.bytes).toUpperCase();
-  } while (isTokenInUse(game, token));
-  return {user: user, token: token};
-}
-
-function qSave(game) {
-  var defer = Q.defer();
-  game.save(function (err, data) {
-    if (err == null) {
-      defer.resolve(data);
-    } else {
-      defer.reject(err);
-    }
-  });
-  return defer.promise;
-}
+/////////// TODO overwork, move into services
 
 function trackKill(game, ring, ringIdx, entry) {
   ring.kills.push(entry);
@@ -126,16 +98,6 @@ function tidyInactive(inactive, murderer, victim) {
     }
   }
 }
-
-module.exports.addRings = function (game, amount) {
-  if (!(game.rings instanceof Array)) {
-    game.rings = [];
-  }
-  while (amount--) {
-    game.rings.push({active: _.map(_.shuffle(game.participants), _.partial(getRingInstance, game))});
-  }
-  return game;
-};
 
 function aaa(entry, game) {
   socket.broadcastCommonPermitted("news:update.game", entry);

@@ -2,8 +2,8 @@
 
 var _ = require("lodash");
 
-var gameM = require.main.require("./core/game/model/game");
-var newsM = require.main.require("./core/news/model/news");
+var gameM = require.main.require("./core/game/model");
+var newsM = require.main.require("./core/news/model");
 
 module.exports = function (queryRoute) {
   queryRoute("news:global", function (data, cb) { // TODO move logic into controller, q-based

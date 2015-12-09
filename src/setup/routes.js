@@ -5,8 +5,8 @@ var fs = require("fs");
 var path = require("path");
 var express = require("express");
 
-var config = require("../utils/config").main;
-var userC = require("../core/user/controller/user");
+var config = require.main.require("./utils/config").main;
+var userC = require.main.require("./core/user/controller");
 
 function sendFile(p, res, cb) {
   p = path.join(config.paths.frontend, p);

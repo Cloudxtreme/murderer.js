@@ -3,8 +3,8 @@
 var passport = require("passport");
 var passportLocal = require("passport-local");
 
-var security = require("../utils/security");
-var userModel = require("../core/user/model/user");
+var security = require.main.require("./utils/security");
+var userModel = require.main.require("./core/user/model");
 
 module.exports = function (app) {
 

@@ -3,8 +3,8 @@
 var _ = require("lodash");
 var bunyan = require("bunyan");
 
-var bus = require("../utils/bus").main;
-var userC = require("../core/user/controller/user");
+var bus = require.main.require("./utils/bus").main;
+var userC = require.main.require("./core/user/controller");
 
 var connections;
 

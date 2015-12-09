@@ -5,8 +5,8 @@ var COLLECTION_NAME = "User";
 var _ = require("lodash");
 var mongoose = require("mongoose");
 
-var modelBase = require("../../../utils/modelBase");
-var security = require("../../../utils/security");
+var modelBase = require.main.require("./utils/modelBase");
+var security = require.main.require("./utils/security");
 
 var Schema = require("mongoose").Schema;
 

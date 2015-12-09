@@ -2,7 +2,7 @@
 
 var express = require("express");
 
-var userC = require("../../../core/user/controller/user");
+var userC = require.main.require("./core/user/controller");
 
 function loginAttempt(req, res, successRoute, failStatus) {
   return function (err) {

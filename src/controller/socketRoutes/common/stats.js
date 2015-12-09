@@ -2,9 +2,9 @@
 
 var _ = require("lodash");
 
-var GROUPS = require.main.require("./controller/socketRoutes/open/groups").GROUPS;
+var GROUPS = []; // TODO rework with db-groups
 
-var gameM = require.main.require("./core/game/model/game");
+var gameM = require.main.require("./core/game/model");
 
 var cTrue = _.constant(true);
 var arrayGen = function () { return []; };

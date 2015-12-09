@@ -3,12 +3,12 @@
 var _ = require("lodash");
 var mailer = require("nodemailer");
 
-var model = require("../model/user");
-var security = require("../../../utils/security");
-var ctrlBase = require("../../../utils/controllerBase");
-var connections = require("../../../controller/connections");
-var config = require("../../../utils/config").main;
-var tpl = require("../../../utils/templates");
+var model = require("./model");
+var security = require.main.require("./utils/security");
+var ctrlBase = require.main.require("./utils/controllerBase");
+var connections = require.main.require("./controller/connections");
+var config = require.main.require("./utils/config").main;
+var tpl = require.main.require("./utils/templates");
 
 var USERNAME_REGEX = /^[a-z_ 0-9-]{3,}$/;
 

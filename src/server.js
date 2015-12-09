@@ -69,19 +69,21 @@ function createServer(log) {
   });
 }
 
-function requireRecursive(cwd, dirs, name, log) {
-  files.eachFileWithinDirsRecursive(cwd, dirs, function (filename) {
-    if (files.isJavaScriptFile(filename)) {
-      try {
-        require(filename);
-        log.info({file: filename, type: name}, "initialized");
-      } catch (e) {
-        log.error({err: e, file: filename, type: name}, "init failed");
-      }
-    } else {
-      log.warn({file: filename, type: name}, "file-extension seems not to be javascript");
+function requireRecursive(cwd, dirs, type, log) {
+  files.eachFileWithinDirsRecursive(cwd, dirs, _.partial(requireFile, _, type, log));
+}
+
+function requireFile(filename, type, log) {
+  if (files.isJavaScriptFile(filename)) {
+    try {
+      require(filename);
+      log.info({file: filename, type: type}, "initialized");
+    } catch (e) {
+      log.error({err: e, file: filename, type: type}, "init failed");
     }
-  });
+  } else {
+    log.warn({file: filename, type: type}, "file-extension seems not to be javascript");
+  }
 }
 
 function initSockets(log) {
@@ -127,11 +129,8 @@ module.exports = function () {
     });
     // attach log to mongoose and emit event
     (mongoose.log = dbLog).info("database connected");
-    // load all models
-    // TODO create core/*/services to get logic out of controllers
-    // TODO change core/*/controller/*.js to core/*/controller.js
-    // TODO change core/*/model/*.js to core/*/model.js
-    requireRecursive(coreDir, "model", "model", dbLog);
+    // load all models (core/**/model.js)
+    files.matchingFilesRecursive(coreDir, "model.js", _.partial(requireFile, _, "model", dbLog));
     bus.emit("database:connected", mongoose);
     // initialize sockets
     initSockets(log);

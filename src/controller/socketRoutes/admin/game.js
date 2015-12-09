@@ -2,33 +2,23 @@
 
 var _ = require("lodash");
 
-var GROUPS = require.main.require("./controller/socketRoutes/open/groups").GROUPS;
+var GROUPS = []; // TODO rework with db-groups
 
-var gameC = require.main.require("./core/game/controller/game");
-var gameM = require.main.require("./core/game/model/game");
+var gameC = require.main.require("./core/game/controller");
+var gameM = require.main.require("./core/game/model");
 
 module.exports = function (queryRoute) {
-  queryRoute("games:all", function (data) { gameC.qFind(this, data); });
+  queryRoute("games:all", function (data) { return gameC.qFind(this, data); });
 
-  queryRoute("game:create", function (data) { gameC.qCreate(this, data); });
+  queryRoute("game:create", function (data) { return gameC.qCreate(this, data); });
 
   queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
 
-  queryRoute("game:update", function (data) { gameC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
+  queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
 
   queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
 
   /////////// TODO overwork
-
-  queryRoute("game:rings.replace", function (data, cb) {
-    gameC.findById(this, data.id, function (err, game) {
-      if (err != null) {
-        return cb(err);
-      }
-      delete game.rings;
-      gameC.addRings(game, data.rings || 0).save(cb);
-    });
-  });
 
   queryRoute("game:contracts.all", function (data, cb) {
     gameM.findOne({_id: data}).populate("rings.active.user participants").exec(function (err, game) {

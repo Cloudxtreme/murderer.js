@@ -1,9 +1,9 @@
 "use strict";
 
-var COLLECTION_NAME = "Ring";
+var COLLECTION_NAME = "Murder";
 
 var mongoose = require("mongoose");
-var modelBase = require("../../../utils/modelBase");
+var modelBase = require.main.require("./utils/modelBase");
 
 var Schema = require("mongoose").Schema;
 var ObjectID = Schema.Types.ObjectId;
@@ -13,21 +13,18 @@ var ObjectID = Schema.Types.ObjectId;
 var GameSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
-      active: {type: Boolean, default: false},
+      message: String,
 
-      chain: [{
-        user: {type: ObjectID, ref: "User"},
-        token: {type: String, required: true},
-        murder: {type: ObjectID, ref: "Murder"},
-        target: {type: Boolean, default: true} // [A,B,C] Needed because if B commits suicide, A may still kill B (in
-                                               // real life the kill might have happened before the suicide).
-      }]
+      murderer: {type: ObjectID, ref: "User"},
+      victim: {type: ObjectID, ref: "User"},
+
+      ring: {type: ObjectID, ref: "Ring"}
     }
 );
 
 /*===================================================== Exports  =====================================================*/
 
 var model = mongoose.model(COLLECTION_NAME, GameSchema);
-modelBase(model, module.exports, ["name"]);
+modelBase(model, module.exports);
 
 module.exports.COLLECTION_NAME = COLLECTION_NAME;
