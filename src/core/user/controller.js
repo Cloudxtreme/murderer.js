@@ -22,7 +22,7 @@ var emailTransporter = mailer.createTransport({
   }
 });
 
-ctrlBase(model, module.exports);
+ctrlBase(model, exports);
 
 /*==================================================== Utilities  ====================================================*/
 
@@ -66,22 +66,22 @@ function applyPasswordVerificationToken(user) {
 
 /*------------------------------------------------- Model forwarding -------------------------------------------------*/
 
-module.exports.findByModule = model.findByModule;
-module.exports.findByModulePermission = model.findByModulePermission;
-module.exports.belongsToModule = model.belongsToModule;
-module.exports.isModulePermitted = model.isModulePermitted;
+exports.findByModule = model.findByModule;
+exports.findByModulePermission = model.findByModulePermission;
+exports.belongsToModule = model.belongsToModule;
+exports.isModulePermitted = model.isModulePermitted;
 
-module.exports.getTransportCopy = model.getTransportCopy;
-module.exports.createGuest = model.createGuest;
-module.exports.createAdmin = model.createAdmin;
+exports.getTransportCopy = model.getTransportCopy;
+exports.createGuest = model.createGuest;
+exports.createAdmin = model.createAdmin;
 
 /*---------------------------------------------------- Utilities  ----------------------------------------------------*/
 
-module.exports.sendMail = function (ignored, email, body, cb) {
+exports.sendMail = function (ignored, email, body, cb) {
   sendMail(email, body, cb);
 };
 
-module.exports.sendMailByKey = function (scope, key, user, data, cb) {
+exports.sendMailByKey = function (scope, key, user, data, cb) {
   var mail = _.get(config.mails, key);
   data = _.extend(getEmailData(user), data);
   sendMail(user.email, {
@@ -93,8 +93,8 @@ module.exports.sendMailByKey = function (scope, key, user, data, cb) {
 
 /*------------------------------------------------ Self modifications ------------------------------------------------*/
 
-module.exports.updateSelf = function (scope, data, cb) {
-  module.exports.findById(scope, scope.user._id, function (err, user) {
+exports.updateSelf = function (scope, data, cb) {
+  exports.findById(scope, scope.user._id, function (err, user) {
     if (err != null) {
       return cb(err);
     }
@@ -103,7 +103,7 @@ module.exports.updateSelf = function (scope, data, cb) {
   });
 };
 
-module.exports.updatePassword = function (scope, password, newPassword, cb) {
+exports.updatePassword = function (scope, password, newPassword, cb) {
   var user = scope.user;
   if (!security.checkPassword(password, user.hashedPassword)) {
     return cb("Wrong Password");
@@ -114,14 +114,14 @@ module.exports.updatePassword = function (scope, password, newPassword, cb) {
   saveUser({user: user, log: scope.log}, {msg: "user password-update failed"}, cb);
 };
 
-module.exports.removeSelf = function (scope, cb) {
-  module.exports.findByIdAndRemove(scope, scope.user._id, cb);
+exports.removeSelf = function (scope, cb) {
+  exports.findByIdAndRemove(scope, scope.user._id, cb);
 };
 
 /*------------------------------------------------- update password  -------------------------------------------------*/
 
-module.exports.requestPasswordToken = function (scope, email, cb) {
-  module.exports.findByEmail(scope, email, function (err, user) {
+exports.requestPasswordToken = function (scope, email, cb) {
+  exports.findByEmail(scope, email, function (err, user) {
     if (err != null || user == null) {
       return cb(err);
     }
@@ -144,9 +144,9 @@ module.exports.requestPasswordToken = function (scope, email, cb) {
   });
 };
 
-module.exports.updatePasswordByToken = function (scope, username, token, newPassword, cb) {
+exports.updatePasswordByToken = function (scope, username, token, newPassword, cb) {
   var now = _.now();
-  module.exports.findByUsername(scope, username, function (err, user) {
+  exports.findByUsername(scope, username, function (err, user) {
     if (err != null) {
       return cb(err);
     }
@@ -189,7 +189,7 @@ module.exports.updatePasswordByToken = function (scope, username, token, newPass
 
 /*----------------------------------------------- update email-address -----------------------------------------------*/
 
-module.exports.updateEmail = function (scope, newEmail, cb) {
+exports.updateEmail = function (scope, newEmail, cb) {
   // Generate a new token for the email verification
   var user = scope.user;
   user.email = newEmail;
@@ -201,7 +201,7 @@ module.exports.updateEmail = function (scope, newEmail, cb) {
 
 /*---------------------------------------------------- Validation ----------------------------------------------------*/
 
-var validate = module.exports.validate;
+var validate = exports.validate;
 
 // TODO except for admin-creation disable possibility to set various fields on create and save
 
@@ -227,7 +227,7 @@ validate("remove", function (next, filter) {
 
 /*---------------------------------------------------- Pre-Hooks  ----------------------------------------------------*/
 
-module.exports.pre("save", function (user) {
+exports.pre("save", function (user) {
   // disallow password-/email-change except for updatePassword-/updateEmail
   if (!user.isNew) {
     if (user.changedPassword && user.changedPassword !== config.security.secret) {
@@ -248,9 +248,9 @@ module.exports.pre("save", function (user) {
 
 /*---------------------------------------------------- Post-Hooks ----------------------------------------------------*/
 
-module.exports.post("save", function (user) { connections.updateUser(user); });
+exports.post("save", function (user) { connections.updateUser(user); });
 
-module.exports.post("remove", function (user) {
+exports.post("remove", function (user) {
   // remove user from active connections
   connections.removeUser(user._id);
   // Send confirmation email to the user

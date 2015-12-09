@@ -28,6 +28,6 @@ var GameSchema = new Schema(
 /*===================================================== Exports  =====================================================*/
 
 var model = mongoose.model(COLLECTION_NAME, GameSchema);
-modelBase(model, module.exports, ["name"]);
+modelBase(model, exports, ["name"]);
 
-module.exports.COLLECTION_NAME = COLLECTION_NAME;
+exports.COLLECTION_NAME = COLLECTION_NAME;

@@ -19,7 +19,7 @@ exports.qPopulated = function (scope, id) {
 };
 
 exports.qGenerateRings = function (scope, id, amount) {
-  return module.exports
+  return exports
       .qFindById(scope, {_id: id})
       .then(function (game) { return generation.generateRings(scope, game, amount); })
       .then(function (game) { return qSave(game); }); // TODO move attach q-methods within modelBase
@@ -117,7 +117,7 @@ function aba(scope, entry, game) {
   return defer.promise;
 }
 
-module.exports.killByToken = function (scope, user, game, token, message) {
+exports.killByToken = function (scope, user, game, token, message) {
   var rings = game.rings, ring, active, inactive, obj, i, j;
   var newsObj = {
     entryDate: new Date(),
@@ -177,7 +177,7 @@ function getNextVictim(inactive, successor, victim) {
 
 var qFindUserById = Q.denodeify(userC.findById);
 
-module.exports.killSelf = function (scope, user, game, message) {
+exports.killSelf = function (scope, user, game, message) {
   var userId = user._id, rings = game.rings, ring, active, inactive, obj, predecessor, successor, i, j;
   var wasActive = false;
   var predecessors = [];

@@ -58,17 +58,17 @@ UserSchema.methods.setAdmin = function (admin, cb) {
 /*===================================================== Exports  =====================================================*/
 
 var model = mongoose.model(COLLECTION_NAME, UserSchema);
-modelBase(model, module.exports, ["email", "username"]);
+modelBase(model, exports, ["email", "username"]);
 
-module.exports.COLLECTION_NAME = COLLECTION_NAME;
-module.exports.INTERNAL_VALUES = INTERNAL_VALUES;
+exports.COLLECTION_NAME = COLLECTION_NAME;
+exports.INTERNAL_VALUES = INTERNAL_VALUES;
 
 var transportIgnore = ["hashedPassword", "email", "resetPasswordToken", "usernameLower", "resetPasswordExpires", "__v",
   "log"];
 
-module.exports.getTransportCopy = function (user) {
+exports.getTransportCopy = function (user) {
   if (user instanceof Array) {
-    return _.map(user, module.exports.getTransportCopy);
+    return _.map(user, exports.getTransportCopy);
   }
   return _.omit(user._doc, transportIgnore);
 };
@@ -76,7 +76,7 @@ module.exports.getTransportCopy = function (user) {
 /*---------------------------------------------- Sample user generation ----------------------------------------------*/
 
 var tmpCount = 0;
-module.exports.createGuest = function () {
+exports.createGuest = function () {
   var id = tmpCount++;
   return {
     _id: "guest/" + id,
@@ -84,7 +84,7 @@ module.exports.createGuest = function () {
     username: "guest/" + id
   };
 };
-module.exports.createAdmin = function () {
+exports.createAdmin = function () {
   var id = tmpCount++;
   return {
     _id: "admin/" + id,
@@ -96,7 +96,7 @@ module.exports.createAdmin = function () {
 
 /*---------------------------------------------- Module classification  ----------------------------------------------*/
 
-module.exports.findByModule = function (name, cb) {
+exports.findByModule = function (name, cb) {
   switch (name) {
     case "admin":
       return model.find({admin: true, activated: true}, cb);
@@ -111,7 +111,7 @@ module.exports.findByModule = function (name, cb) {
   cb(new Error("Module unknown"));
 };
 
-module.exports.findByModulePermission = function (name, cb) {
+exports.findByModulePermission = function (name, cb) {
   switch (name) {
     case "admin":
       return model.find({admin: true, activated: true}, cb);
@@ -126,7 +126,7 @@ module.exports.findByModulePermission = function (name, cb) {
   cb(new Error("Module unknown"));
 };
 
-module.exports.belongsToModule = function (user, name) {
+exports.belongsToModule = function (user, name) {
   switch (name) {
     case "admin":
       return user.admin && user.activated;
@@ -142,7 +142,7 @@ module.exports.belongsToModule = function (user, name) {
   throw new Error("Module unknown");
 };
 
-module.exports.isModulePermitted = function (user, name) {
+exports.isModulePermitted = function (user, name) {
   switch (name) {
     case "admin":
       return user.admin && user.activated;
