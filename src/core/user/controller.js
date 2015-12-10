@@ -1,263 +1,52 @@
 "use strict";
 
 var _ = require("lodash");
-var mailer = require("nodemailer");
-
+var Q = require("q");
 var model = require("./model");
-var security = require.main.require("./utils/security");
 var ctrlBase = require.main.require("./utils/controllerBase");
-var connections = require.main.require("./controller/connections");
-var config = require.main.require("./utils/config").main;
-var tpl = require.main.require("./utils/templates");
 
-var USERNAME_REGEX = /^[a-z_ 0-9-]{3,}$/;
+var email = require("./services/email");
+var sample = require("./services/sample");
+var transport = require("./services/transport");
+var permission = require("./services/permission");
+var emailUpdate = require("./services/emailUpdate");
+var passwordUpdate = require("./services/passwordUpdate");
 
-var emailTransporter = mailer.createTransport({
-  host: config.mailer.host,
-  port: config.mailer.port,
-  secure: config.mailer.secure,
-  auth: {
-    user: config.mailer.username,
-    pass: config.mailer.password
-  }
-});
+/*===================================================== Exports  =====================================================*/
 
 ctrlBase(model, exports);
 
-/*==================================================== Utilities  ====================================================*/
+exports.findByModule = permission.findByModule;
+exports.findByModulePermission = permission.findByModulePermission;
+exports.belongsToModule = permission.belongsToModule;
+exports.isModulePermitted = permission.isModulePermitted;
 
-function saveUser(scope, errData, cb) {
-  return scope.user.save(function (err) {
-    if (err != null) {
-      errData.err = err;
-      scope.log.error(errData);
-    }
-    cb.apply(this, arguments);
-  });
-}
+exports.createGuest = sample.createGuest;
+exports.createAdmin = sample.createAdmin;
 
-function getEmailData(user) {
-  return {
-    name: config.pkg.name, // TODO pass whole config.pkg, adjust templates to accept nesting
-    id: user._id,
-    username: user.username,
-    email: user.email
-  };
-}
+exports.createTransport = transport.createTransport;
 
-function sendMail(email, body, cb) {
-  cb = cb || _.noop;
-  if (config.mailer.host) {
-    emailTransporter.sendMail(_.extend(body, {
-      to: email,
-      from: config.mailer.email
-    }), cb);
-  } else {
-    cb();
-  }
-}
+exports.qSendMailByKey = email.sendTemplateByKey;
 
-function applyPasswordVerificationToken(user) {
-  user.resetPasswordExpires = _.now() + (config.security.token.expires.passwordReset || 3600000 /* 1h */);
-  return user.resetPasswordToken = security.generateToken();
-}
+exports.qRequestPasswordToken = passwordUpdate.requestPasswordToken;
+exports.qUpdatePasswordByToken = passwordUpdate.updatePasswordByToken;
 
-/*================================================ Additional Exports ================================================*/
+exports.qUpdateEmail = emailUpdate.trigger;
 
-/*------------------------------------------------- Model forwarding -------------------------------------------------*/
+exports.qRemoveSelf = function (scope) { return exports.qFindByIdAndRemove(scope, scope.user._id); };
+exports.qUpdateSelf = qUpdateSelf;
 
-exports.findByModule = model.findByModule;
-exports.findByModulePermission = model.findByModulePermission;
-exports.belongsToModule = model.belongsToModule;
-exports.isModulePermitted = model.isModulePermitted;
+/*==================================================== Functions  ====================================================*/
 
-exports.getTransportCopy = model.getTransportCopy;
-exports.createGuest = model.createGuest;
-exports.createAdmin = model.createAdmin;
+function qSave(user) { return Q.nbind(user.save, user)(); } // TODO attach q-methods within modelBase
 
-/*---------------------------------------------------- Utilities  ----------------------------------------------------*/
-
-exports.sendMail = function (ignored, email, body, cb) {
-  sendMail(email, body, cb);
-};
-
-exports.sendMailByKey = function (scope, key, user, data, cb) {
-  var mail = _.get(config.mails, key);
-  data = _.extend(getEmailData(user), data);
-  sendMail(user.email, {
-    subject: tpl(mail.subject, data) + "\n",
-    text: tpl(mail.message, data) + "\n"
-  }, cb);
-  scope.log.info({data: data, key: key, addressee: user}, "email sent");
-};
-
-/*------------------------------------------------ Self modifications ------------------------------------------------*/
-
-exports.updateSelf = function (scope, data, cb) {
-  exports.findById(scope, scope.user._id, function (err, user) {
-    if (err != null) {
-      return cb(err);
-    }
-    _.extend(user, _.omit(data, model.INTERNAL_VALUES));
-    saveUser({user: user, log: scope.log}, {msg: "user update failed"}, cb);
-  });
-};
-
-exports.updatePassword = function (scope, password, newPassword, cb) {
-  var user = scope.user;
-  if (!security.checkPassword(password, user.hashedPassword)) {
-    return cb("Wrong Password");
-  }
-
-  user.changedPassword = config.security.secret; // TODO maybe insecure?
-  user.password = newPassword;
-  saveUser({user: user, log: scope.log}, {msg: "user password-update failed"}, cb);
-};
-
-exports.removeSelf = function (scope, cb) {
-  exports.findByIdAndRemove(scope, scope.user._id, cb);
-};
-
-/*------------------------------------------------- update password  -------------------------------------------------*/
-
-exports.requestPasswordToken = function (scope, email, cb) {
-  exports.findByEmail(scope, email, function (err, user) {
-    if (err != null || user == null) {
-      return cb(err);
-    }
-    var token = applyPasswordVerificationToken(user);
-
-    saveUser({user: user, log: scope.log}, {email: email, msg: "user password-reset request failed"}, function (err) {
-      if (err != null) {
-        return cb(err);
-      }
-      // Send the reset email to the user
-      var mail = config.mails.account.passwordResetRequest;
-      var data = _.extend(getEmailData(user), {
-        link: config.server.url + "reset-password/" + user.username + "/" + token
+function qUpdateSelf(scope, data) {
+  exports
+      .qFindById(scope, scope.user._id)
+      .then(function (user) { return _.extend(user, _.omit(data, model.LOCKED_FIELDS));})
+      .then(qSave)
+      .fail(function (err) {
+        scope.log.error({err: err}, "user update failed");
+        return Q.reject(err);
       });
-      sendMail(user.email, {
-        subject: tpl(mail.subject, data) + "\n",
-        text: tpl(mail.message, data) + "\n"
-      }, cb);
-    });
-  });
-};
-
-exports.updatePasswordByToken = function (scope, username, token, newPassword, cb) {
-  var now = _.now();
-  exports.findByUsername(scope, username, function (err, user) {
-    if (err != null) {
-      return cb(err);
-    }
-    if (!user || user.resetPasswordToken !== token || !(user.resetPasswordExpires >= now)) { // jshint ignore:line
-      return cb("Invalid token or username");
-    }
-
-    user.changedPassword = config.security.secret; // TODO maybe insecure?
-    user.password = newPassword;
-    applyPasswordVerificationToken(user);
-
-    saveUser({user: user, log: scope.log}, {
-      username: username,
-      token: token,
-      msg: "user password-update failed"
-    }, function (err) {
-      if (err != null) {
-        return cb(err);
-      }
-      var args = arguments;
-      // Send the reset email to the user
-      var mail = config.mails.account.passwordReset;
-      if (mail) {
-        var data = getEmailData(user);
-        sendMail(user.email, {
-          subject: tpl(mail.subject, data) + "\n",
-          text: tpl(mail.message, data) + "\n"
-        }, function (err) {
-          if (err != null) {
-            return cb(err);
-          }
-          cb.apply(this, args);
-        });
-      } else {
-        cb.apply(this, args);
-      }
-    });
-  });
-};
-
-/*----------------------------------------------- update email-address -----------------------------------------------*/
-
-exports.updateEmail = function (scope, newEmail, cb) {
-  // Generate a new token for the email verification
-  var user = scope.user;
-  user.email = newEmail;
-
-  saveUser({user: user, log: scope.log}, {email: newEmail, msg: "user email update failed"}, cb);
-};
-
-/*============================================ Validation and Middleware  ============================================*/
-
-/*---------------------------------------------------- Validation ----------------------------------------------------*/
-
-var validate = exports.validate;
-
-// TODO except for admin-creation disable possibility to set various fields on create and save
-
-validate("create", function (body) {
-  body.usernameLower = body.username.toLowerCase();
-  if (!body.email) { throw new Error("Email required"); }
-  if (!USERNAME_REGEX.test(body.usernameLower)) { throw new Error("Username may not contain special characters."); }
-  if (body.profileMessage && body.profileMessage.length > 256) { throw new Error("Message too long."); }
-  if (body.password.length < 4) { throw new Error("Password too short."); }
-
-  if (!body.avatarUrl) {
-    body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon&s=50";
-  }
-});
-
-validate("remove", function (next, filter) {
-  if (filter == null || !filter.hasOwnProperty("_id") || typeof filter._id !== "string") {
-    throw new Error("User remove only allowed by ID");
-  }
-  var id = filter._id;
-  if (id !== this.user._id && !this.user.admin) { throw new Error("You are not allowed to remove this user"); }
-});
-
-/*---------------------------------------------------- Pre-Hooks  ----------------------------------------------------*/
-
-exports.pre("save", function (user) {
-  // disallow password-/email-change except for updatePassword-/updateEmail
-  if (!user.isNew) {
-    if (user.changedPassword && user.changedPassword !== config.security.secret) {
-      throw new Error("No permission to change password");
-    } else {
-      delete user.hashedPassword;
-    }
-    if (user.changedEmail && user.changedEmail !== config.security.secret) {
-      throw new Error("No permission to change email");
-    } else {
-      delete user.email;
-    }
-  }
-  delete user.changedPassword;
-  delete user.changedEmail;
-  user.bio = user.bio != null ? user.bio.substring(0, 256) : "";
-});
-
-/*---------------------------------------------------- Post-Hooks ----------------------------------------------------*/
-
-exports.post("save", function (user) { connections.updateUser(user); });
-
-exports.post("remove", function (user) {
-  // remove user from active connections
-  connections.removeUser(user._id);
-  // Send confirmation email to the user
-  var mail = config.mails.account.removed;
-  var data = getEmailData(user);
-  sendMail(user.email, {
-    subject: tpl(mail.subject, data) + "\n",
-    text: tpl(mail.message, data) + "\n"
-  }, _.noop);
-});
+}

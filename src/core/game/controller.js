@@ -23,7 +23,7 @@ exports.qSuicide = suicide.commit;
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(game) { return Q.nbind(game.save, game)(); } // TODO move attach q-methods within modelBase
+function qSave(game) { return Q.nbind(game.save, game)(); } // TODO attach q-methods within modelBase
 
 /**
  * Returns Promise for populated game model with specified ID.

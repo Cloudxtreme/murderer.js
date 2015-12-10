@@ -59,14 +59,12 @@ function removeToken(userId) {
 
 function createToken(req, res) {
   var user = req.isAuthenticated() ? req.user : userC.createGuest();
-  if (tokens.hasOwnProperty(user._id)) {
-    removeToken(user._id);
-  }
+  if (tokens.hasOwnProperty(user._id)) { removeToken(user._id); }
   var token = security.generateToken();
   var obj = tokens[user._id] = {
     token: token,
     user: user,
-    transport: userC.getTransportCopy(user),
+    transport: userC.createTransport(user),
     log: bunyan.logger.token.child({user: user, token: token, type: "socket authentication"})
   };
   obj.log.info("created");

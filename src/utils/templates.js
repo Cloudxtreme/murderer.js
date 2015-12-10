@@ -3,9 +3,9 @@
 var _ = require("lodash");
 
 module.exports = function (string, data) {
-  if (typeof string !== "string") {
-    return "";
-  }
+  if (typeof string !== "string") { return ""; }
+  if (data == null) { return string; }
+
   var check = function (val, key) {
     if (typeof val === "function") {
       string = string.replace(new RegExp("<%\\s*" + key + "(\\([^)]*\\))\\s*%>", "gi"), val);
@@ -16,6 +16,8 @@ module.exports = function (string, data) {
       }
     }
   };
+
   _.each(data, check);
+
   return string;
 };

@@ -49,7 +49,7 @@ exports.commit = function (scope, user, game, token, message) {
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(game) { return Q.nbind(game.save, game)(); } // TODO move attach q-methods within modelBase
+function qSave(game) { return Q.nbind(game.save, game)(); } // TODO attach q-methods within modelBase
 
 function trackKill(game, ring, ringIdx, entry) {
   ring.kills.push(entry);

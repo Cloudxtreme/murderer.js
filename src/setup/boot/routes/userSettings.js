@@ -22,19 +22,17 @@ module.exports = function (app) {
     if (!req.body.password || req.body.password !== req.body.repeatPassword) {
       return res.status(400).send(new Error("No password specified or passwords don\"t match."));
     }
-    userC.updatePasswordByToken(req, req.params.username, req.params.token, req.body.password, function (err, user) {
-      if (err != null) {
-        if (typeof err === "string") {
-          req.log.error({message: err}, "password reset failed");
-          res.redirect("/401");
-        } else {
-          req.log.error({err: err});
-          res.send(err);
-        }
-      } else {
-        req.logIn(user, loginAttempt(req, res));
-      }
-    });
+    userC
+        .qUpdatePasswordByToken(req, req.params.username, req.params.token, req.body.password)
+        .then(function (user) { req.logIn(user, loginAttempt(req, res)); }, function (err) {
+          if (typeof err === "string") {
+            req.log.error({message: err}, "password reset failed");
+            res.redirect("/401");
+          } else {
+            req.log.error({err: err});
+            res.send(err);
+          }
+        });
   });
 
   app.use("/settings", router);

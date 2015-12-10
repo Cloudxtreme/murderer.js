@@ -2,7 +2,6 @@
 
 var COLLECTION_NAME = "User";
 
-var _ = require("lodash");
 var mongoose = require("mongoose");
 
 var modelBase = require.main.require("./utils/modelBase");
@@ -10,14 +9,13 @@ var security = require.main.require("./utils/security");
 
 var Schema = require("mongoose").Schema;
 
-var INTERNAL_VALUES = [
+var LOCKED_FIELDS = [
   "cdate", "mdate", "username", "usernameLower", "hashedPassword", "admin", "password", "activated", "email",
   "resetPasswordToken", "resetPasswordExpires"
 ];
 
 /*================================================ Schema Definition  ================================================*/
 
-// TODO somehow disallow filter by pw
 var UserSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
@@ -46,11 +44,9 @@ UserSchema
       this._pw = password;
       this.hashedPassword = security.encryptPassword(password);
     })
-    .get(function () {
-      return this._pw;
-    });
+    .get(function () { return this._pw; });
 
-UserSchema.methods.setAdmin = function (admin, cb) {
+UserSchema.methods.setAdmin = function (admin, cb) { // TODO check for usage
   this.admin = admin;
   this.save(cb);
 };
@@ -61,99 +57,4 @@ var model = mongoose.model(COLLECTION_NAME, UserSchema);
 modelBase(model, exports, ["email", "username"]);
 
 exports.COLLECTION_NAME = COLLECTION_NAME;
-exports.INTERNAL_VALUES = INTERNAL_VALUES;
-
-var transportIgnore = ["hashedPassword", "email", "resetPasswordToken", "usernameLower", "resetPasswordExpires", "__v",
-  "log"];
-
-exports.getTransportCopy = function (user) {
-  if (user instanceof Array) {
-    return _.map(user, exports.getTransportCopy);
-  }
-  return _.omit(user._doc, transportIgnore);
-};
-
-/*---------------------------------------------- Sample user generation ----------------------------------------------*/
-
-var tmpCount = 0;
-exports.createGuest = function () {
-  var id = tmpCount++;
-  return {
-    _id: "guest/" + id,
-    guest: true,
-    username: "guest/" + id
-  };
-};
-exports.createAdmin = function () {
-  var id = tmpCount++;
-  return {
-    _id: "admin/" + id,
-    admin: true,
-    activated: true,
-    username: "admin/" + id
-  };
-};
-
-/*---------------------------------------------- Module classification  ----------------------------------------------*/
-
-exports.findByModule = function (name, cb) {
-  switch (name) {
-    case "admin":
-      return model.find({admin: true, activated: true}, cb);
-    case "active":
-      return model.find({admin: false, activated: true}, cb);
-    case "closed":
-      return model.find({activated: false}, cb);
-    case "common":
-    case "open":
-      return cb(null, []);
-  }
-  cb(new Error("Module unknown"));
-};
-
-exports.findByModulePermission = function (name, cb) {
-  switch (name) {
-    case "admin":
-      return model.find({admin: true, activated: true}, cb);
-    case "active":
-      return model.find({activated: true}, cb);
-    case "closed":
-    case "common":
-      return model.find({}, cb);
-    case "open":
-      return cb(null, []);
-  }
-  cb(new Error("Module unknown"));
-};
-
-exports.belongsToModule = function (user, name) {
-  switch (name) {
-    case "admin":
-      return user.admin && user.activated;
-    case "active":
-      return !user.admin && user.activated;
-    case "closed":
-      return !user.activated && !user.guest;
-    case "common":
-      return false;
-    case "open":
-      return user.guest;
-  }
-  throw new Error("Module unknown");
-};
-
-exports.isModulePermitted = function (user, name) {
-  switch (name) {
-    case "admin":
-      return user.admin && user.activated;
-    case "active":
-      return user.activated;
-    case "closed":
-      return !user.guest;
-    case "common":
-      return true;
-    case "open":
-      return user.guest;
-  }
-  throw new Error("Module unknown");
-};
+exports.LOCKED_FIELDS = LOCKED_FIELDS;

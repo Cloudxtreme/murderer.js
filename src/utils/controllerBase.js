@@ -113,7 +113,7 @@ module.exports = function (model, target) {
       });
     });
   };
-  target.post = schema.post.bind(schema);
+  target.post = schema.post.bind(schema); // TODO pass scope object as context
 
   /**
    * Allows the controller to register verifier that get called with a logger "log" and the calling user within "this".

@@ -58,7 +58,7 @@ exports.commit = function (scope, user, game, message) {
         .then(function (predecessors) {
           // TODO fix fdg got mission to kill fdg when second-last user commits suicide
           _.each(predecessors, function (predecessor) {
-            userC.sendMailByKey(scope, "game.newMission", predecessor.user,
+            userC.qSendMailByKey(scope, predecessor.user, "game.newMission",
                 {
                   game: game.name,
                   link: config.server.url + "contracts",
@@ -79,7 +79,7 @@ exports.commit = function (scope, user, game, message) {
           userC.findByModulePermission("admin", function (err, admins) {
             _.each(admins, function (admin) {
               // TODO send link to print especially those missions
-              userC.sendMailByKey(scope, "game.admin.newMissions", admin, {info: message});
+              userC.qSendMailByKey(scope, admin, "game.admin.newMissions", {info: message});
             });
           });
         });
@@ -100,7 +100,7 @@ exports.commit = function (scope, user, game, message) {
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(game) { return Q.nbind(game.save, game)(); } // TODO move attach q-methods within modelBase
+function qSave(game) { return Q.nbind(game.save, game)(); } // TODO attach q-methods within modelBase
 
 /**
  * Updates the inactive list so the murderer extends the victims victims.
