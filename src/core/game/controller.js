@@ -4,8 +4,8 @@ var Q = require("q");
 var model = require("./model");
 var ctrlBase = require.main.require("./utils/controllerBase");
 
-var kills = require("./services/kills");
-var suicides = require("./services/suicides");
+var kill = require("./services/kill");
+var suicide = require("./services/suicide");
 var generation = require("./services/generation");
 
 var POPULATE_DETAILS = [];
@@ -18,8 +18,8 @@ ctrlBase(model, exports);
 exports.qPopulated = findByIdPopulated;
 // update
 exports.qGenerateRings = generateRings;
-exports.qKillByToken = kills.commit;
-exports.qKillSelf = suicides.commit;
+exports.qKillByToken = kill.commit;
+exports.qSuicide = suicide.commit;
 
 /*==================================================== Functions  ====================================================*/
 
@@ -32,7 +32,8 @@ function qSave(game) { return Q.nbind(game.save, game)(); } // TODO move attach 
  */
 function findByIdPopulated(scope, id) {
   scope.log.debug({gameId: id}, "fetching populated game instance");
-  return Q.nfcall(model.findById(id).populate(POPULATE_DETAILS).exec);
+  var query = model.findById(id).populate(POPULATE_DETAILS);
+  return Q.nbind(query.exec, query)();
 }
 
 function generateRings(scope, id, amount) {

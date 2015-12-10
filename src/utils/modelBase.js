@@ -14,6 +14,15 @@ var MODEL_FUNCTIONS_EXTEND = [
   "update" // to be used with care, no mongoose-validation/-middleware
 ];
 
+//var MODEL_METHODS_EXTEND = [ TODO
+//    "save",
+//    "populate",
+//    "validate",
+//    "remove",
+//    "update" // to be used with care, no mongoose-validation/-middleware
+//];
+// TODO create qExec on Aggregation and Queries of mongoose
+
 var UNIQUE_FUNCTIONS = [
   {prefix: "findBy", fn: "findOne"},
   {prefix: "findBy", suffix: "AndRemove", fn: "findOneAndRemove"},

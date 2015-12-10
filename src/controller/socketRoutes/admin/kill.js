@@ -19,7 +19,7 @@ module.exports = function (queryRoute) {
     return Q
         .all([userC.qFindById(scope, data.victim), gameC.qFindById(scope, data.game)])
         .then(function (result) {
-          return gameC.qKillSelf(scope, result[0]._doc, result[1], "Triggered by " + scope.user.username);
+          return gameC.qSuicide(scope, result[0]._doc, result[1], "Triggered by " + scope.user.username);
         });
   });
 };

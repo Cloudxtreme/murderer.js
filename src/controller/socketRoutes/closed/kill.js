@@ -35,6 +35,6 @@ module.exports = function (queryRoute) {
           }
           return game;
         })
-        .then(function (game) { return gameC.qKillSelf(scope, scope.user, game, data.message); });
+        .then(function (game) { return gameC.qSuicide(scope, scope.user, game, data.message); });
   });
 };
