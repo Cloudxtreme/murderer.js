@@ -4,8 +4,7 @@ var Q = require("q");
 var model = require("./model");
 var ctrlBase = require.main.require("./utils/controllerBase");
 
-var kill = require("./services/kill");
-var suicide = require("./services/suicide");
+var murder = require("./services/murder");
 var generation = require("./services/generation");
 
 var POPULATE_DETAILS = [];
@@ -18,8 +17,8 @@ ctrlBase(model, exports);
 exports.qPopulated = findByIdPopulated;
 // update
 exports.qGenerateRings = generateRings;
-exports.qKillByToken = kill.commit;
-exports.qSuicide = suicide.commit;
+exports.qKillByToken = murder.byKill;
+exports.qSuicide = murder.bySuicide;
 
 /*==================================================== Functions  ====================================================*/
 

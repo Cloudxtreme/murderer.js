@@ -21,9 +21,13 @@
           "message": "<% info %>"
         }
       },
-      "newMission": {
+      "newMissions": {
         "subject": "One of your targets just committed suicide",
-        "message": "Hello <% username %>,\n\none of your targets in game '<% game %>' committed suicide.\nHence you've got assigned his target: <% mission.username %> in ring #<% ring %>\n\nVisit <% link %> for more information.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neins deiner Ziele im Spiel '<% game %>' hat das Zeitliche gesegnet.\nDaher wurde dir ein neues Ziel zugewiesen: <% mission.username %> in Ring #<% ring %>\n\nBesuche <% link %> für mehr Informationen.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
+        "message": "Hello <% username %>,\n\none of your targets in game '<% game %>' committed suicide.\nHence you've got assigned his target in the following ring(s):\n<% listing %>\n\nVisit <% link %> for your updated contracts.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neines deiner Ziele im Spiel '<% game %>' hat das Zeitliche gesegnet.\nDaher wurde dir sein Ziel in folgenden Ringen zugewiesen:\n<% listing %>\n\nBesuche <% link %> für aktualisierte Auftragsansicht.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
+      },
+      "survived": {
+        "subject": "The last target within a ring just committed suicide",
+        "message": "Hello <% username %>,\n\none of your targets in game '<% game %>' committed suicide.\nCongratulations for being the last survivor in ring(s) <% listing %>!\n\nVisit <% link %> for your remaining contracts.\n\nBest regards,\nThe <% name %> Team.\n\n\n-------------------------\n\nHallo <% username %>,\n\neines deiner Ziele im Spiel '<% game %>' hat das Zeitliche gesegnet.\nHerzlichen Glückwunsch, du bist der letzte Überlebende in Ring(en) <% listing %>!\n\nBesuche <% link %> für verbleibende Auftragsansicht.\n\nMit freundlichen Grüßen,\nDas <% name %> Team."
       }
     }
   },

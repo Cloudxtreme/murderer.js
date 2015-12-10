@@ -15,11 +15,11 @@ var GameSchema = new Schema(
       cdate: {type: Date, default: Date.now},
       message: String,
 
-      murderer: {type: ObjectID, ref: "User"},
+      murderer: {type: ObjectID, ref: "User", required: true},
       victim: {type: ObjectID, ref: "User"},
 
       ring: {type: ObjectID, ref: "Ring"},
-      game: {type: ObjectID, ref: "Game"}
+      game: {type: ObjectID, ref: "Game", required: true}
     }
 );
 
