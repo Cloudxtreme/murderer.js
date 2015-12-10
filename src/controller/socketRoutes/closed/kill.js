@@ -17,7 +17,7 @@ module.exports = function (queryRoute) {
           }
           return game;
         })
-        .then(function (game) { return gameC.killByToken(scope, scope.user, game, data.token, data.message); });
+        .then(function (game) { return gameC.qKillByToken(scope, scope.user, game, data.token, data.message); });
   });
 
   queryRoute("kill:self", function (data) {
@@ -35,6 +35,6 @@ module.exports = function (queryRoute) {
           }
           return game;
         })
-        .then(function (game) { return gameC.killSelf(scope, scope.user, game, data.message); });
+        .then(function (game) { return gameC.qKillSelf(scope, scope.user, game, data.message); });
   });
 };

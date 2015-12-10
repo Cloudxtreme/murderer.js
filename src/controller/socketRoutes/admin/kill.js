@@ -10,7 +10,7 @@ module.exports = function (queryRoute) {
     return Q
         .all([userC.qFindById(scope, data.murderer), gameC.qFindById(scope, data.game)])
         .then(function (result) {
-          return gameC.killByToken(scope, result[0]._doc, result[1], data.token, "Triggered by " + scope.user.username);
+          return gameC.qKillByToken(scope, result[0]._doc, result[1], data.token, "Triggered by " + scope.user.username);
         });
   });
 
@@ -19,7 +19,7 @@ module.exports = function (queryRoute) {
     return Q
         .all([userC.qFindById(scope, data.victim), gameC.qFindById(scope, data.game)])
         .then(function (result) {
-          return gameC.killSelf(scope, result[0]._doc, result[1], "Triggered by " + scope.user.username);
+          return gameC.qKillSelf(scope, result[0]._doc, result[1], "Triggered by " + scope.user.username);
         });
   });
 };

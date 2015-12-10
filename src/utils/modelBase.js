@@ -30,9 +30,7 @@ var GENERAL_FUNCTIONS = [
   {prefix: "updateBy", fn: "update"}
 ];
 
-function upper(str) {
-  return str[0].toUpperCase() + str.substring(1);
-}
+function capitalize(str) { return str[0].toUpperCase() + str.substring(1); }
 
 function getQueryByKey(key) {
   return function (value) {
@@ -54,9 +52,7 @@ module.exports = function (model, target, uniques, keys) {
   var methods = target._methods = [];
 
   _.each(MODEL_FUNCTIONS_EXTEND, function (key) {
-    target[key] = function () {
-      return model[key].apply(model, arguments);
-    };
+    target[key] = function () { return model[key].apply(model, arguments); };
   });
   methods.push.apply(methods, MODEL_FUNCTIONS_EXTEND);
 
@@ -64,13 +60,13 @@ module.exports = function (model, target, uniques, keys) {
     var lowerKey, upperKey, getQuery;
     if (typeof key === "string") {
       lowerKey = key;
-      upperKey = upper(key);
+      upperKey = capitalize(key);
       getQuery = getQueryByKey(key);
     } else {
       var k = Object.keys(key)[0];
       getQuery = getQueryByKey(k);
       lowerKey = key[k];
-      upperKey = upper(key[k]);
+      upperKey = capitalize(key[k]);
     }
     return function (data) {
       var modelFn = model[data.fn];
@@ -86,12 +82,8 @@ module.exports = function (model, target, uniques, keys) {
   };
 
   _.each(UNIQUE_FUNCTIONS, applyFunctionByData({_id: "id"}));
-  _.each(uniques, function (key) {
-    _.each(UNIQUE_FUNCTIONS, applyFunctionByData(key));
-  });
-  _.each(keys, function (key) {
-    _.each(GENERAL_FUNCTIONS, applyFunctionByData(key));
-  });
+  _.each(uniques, function (key) { _.each(UNIQUE_FUNCTIONS, applyFunctionByData(key)); });
+  _.each(keys, function (key) { _.each(GENERAL_FUNCTIONS, applyFunctionByData(key)); });
 
   target.model = model;
   return target;

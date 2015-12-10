@@ -14,16 +14,17 @@ exports.generateRings = function (scope, game, amount) {
   return promise.then(function () {
     var rings = game.rings = [];
     var tokens = [];
-    return Q
-        .all(_.times(amount, function () {
-          return ringC
-              .qCreate({
-                active: game.active,
-                chain: _.map(_.shuffle(users), _.partial(getChainEntry, tokens))
-              })
-              .then(function (ring) { rings.push(ring._id); });
-        }))
-        .then(_.constant(game));
+    return Q.all(_.times(amount, function () {
+      return ringC
+          .qCreate({
+            active: game.active,
+            chain: _.map(_.shuffle(users), _.partial(getChainEntry, tokens))
+          })
+          .then(function (ring) {
+            rings.push(ring._id);
+            return ring;
+          });
+    }));
   });
 };
 

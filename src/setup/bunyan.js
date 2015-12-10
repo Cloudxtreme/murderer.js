@@ -3,7 +3,7 @@
 var _ = require("lodash");
 var path = require("path");
 var wrench = require("wrench");
-var bunyan = require("bunyan");
+var Bunyan = require("bunyan");
 var childProcess = require("child_process");
 
 var config = require.main.require("./utils/config").main;
@@ -12,21 +12,21 @@ var RingBuffer = require.main.require("./utils/bunyan/RingBuffer");
 
 /*============================================ Modify bunyan to our needs ============================================*/
 
-bunyan.logger = {};
-bunyan.process = null;
-bunyan.ExtendedRingBuffer = RingBuffer;
-bunyan.additionalTypes = {};
+Bunyan.logger = {};
+Bunyan.process = null;
+Bunyan.ExtendedRingBuffer = RingBuffer;
+Bunyan.additionalTypes = {};
 
-var getBunyanProcess = bunyan.getProcess = function () {
-  if (bunyan.process == null) {
+var getBunyanProcess = Bunyan.getProcess = function () {
+  if (Bunyan.process == null) {
     var args = __slice.call(arguments).concat(config.logging.processArgs || []);
-    bunyan.process = childProcess.spawn(bunyanBinPath, args, {stdio: ["pipe", process.stdout]});
+    Bunyan.process = childProcess.spawn(bunyanBinPath, args, {stdio: ["pipe", process.stdout]});
     cliSetup();
   }
-  return bunyan.process;
+  return Bunyan.process;
 };
 
-var types = bunyan.additionalTypes;
+var types = Bunyan.additionalTypes;
 types.ringbuffer = function (s) {
   s.type = "raw";
   s.stream = new RingBuffer(s, false, this);
@@ -45,7 +45,7 @@ types.stdout = types.stderr = function (s, ignored, type) {
 
 // end: logger has ended, end associated RingBuffers
 
-bunyan.prototype.end = function () {
+Bunyan.prototype.end = function () {
   _.each(this.streams, function (stream) {
     if (stream.stream instanceof RingBuffer) {
       stream.stream.done();
@@ -55,7 +55,7 @@ bunyan.prototype.end = function () {
 
 // shutdown: server is going down, close all streams
 
-bunyan.prototype.shutdown = function () {
+Bunyan.prototype.shutdown = function () {
   _.each(this.streams, function (stream) {
     if (typeof stream.stream.end === "function") {
       stream.stream.end();
@@ -63,28 +63,28 @@ bunyan.prototype.shutdown = function () {
   });
 };
 
-bunyan.shutdown = function () {
+Bunyan.shutdown = function () {
   RingBuffer.shutdown({reason: "process terminates"});
-  _.each(bunyan.logger, function (log) {
+  _.each(Bunyan.logger, function (log) {
     log.shutdown();
   });
 };
 
 /*------------------------------------------ Apply addStream-function hook  ------------------------------------------*/
 
-var _addStream = bunyan.prototype.addStream;
+var _addStream = Bunyan.prototype.addStream;
 
 /**
  * Enables a few more stream-types as aliases before forwarding to bunyan/Logger.prototype.addStream.
  * @param s The stream-object to add.
  * @param defaultLevel The default-value for stream-level.
- * @see bunyan.prototype.addStream
+ * @see Bunyan.prototype.addStream
  * @returns {Object} The stream-object that got added (copy of given one).
  */
-bunyan.prototype.addStream = function (s, defaultLevel) {
+Bunyan.prototype.addStream = function (s, defaultLevel) {
   var type = s.type = s.type.toLowerCase();
-  if (bunyan.additionalTypes.hasOwnProperty(type) && !s.stream) {
-    bunyan.additionalTypes[type].call(this, s, defaultLevel, type);
+  if (Bunyan.additionalTypes.hasOwnProperty(type) && !s.stream) {
+    Bunyan.additionalTypes[type].call(this, s, defaultLevel, type);
   }
   _addStream.call(this, s, defaultLevel);
   return _.last(this.streams);
@@ -92,7 +92,7 @@ bunyan.prototype.addStream = function (s, defaultLevel) {
 
 /*-------------------------------------------- Apply child-function hook  --------------------------------------------*/
 
-var _child = bunyan.prototype.child;
+var _child = Bunyan.prototype.child;
 
 /**
  * After creating a child-logger (see bunyan/Logger.prototype.child) it's streams get post-processed.
@@ -102,10 +102,10 @@ var _child = bunyan.prototype.child;
  * @param {Boolean} [simple]
  * @param {Boolean} [skip] if true the post-processing of the child gets skipped. Set to true if no logger-shutdown may
  * happen to prevent wasted memory.
- * @see bunyan.prototype.child
+ * @see Bunyan.prototype.child
  * @returns {Logger} The child-logger.
  */
-bunyan.prototype.child = function (options, simple, skip) {
+Bunyan.prototype.child = function (options, simple, skip) {
   var c = _child.call(this, options, simple);
   c.needsChildHook = this.needsChildHook && !skip;
   if (c.needsChildHook) {
@@ -126,8 +126,8 @@ var __slice = Array.prototype.slice;
 var bunyanBinPath = path.resolve(require.resolve("bunyan"), "../../bin/bunyan");
 
 function cliSetup() {
-  if (bunyan.logger.bunyan != null && bunyan.process != null) {
-    bunyan.logger.bunyan.info({process: bunyan.process}, "bunyan-process spawned");
+  if (Bunyan.logger.bunyan != null && Bunyan.process != null) {
+    Bunyan.logger.bunyan.info({process: Bunyan.process}, "bunyan-process spawned");
   }
 }
 
@@ -193,7 +193,7 @@ var dbErrorValues = ["name", "message", "kind", "path", "value"];
 
 var stdSerializers = {
   req: function (req) {
-    var obj = bunyan.stdSerializers.req(req);
+    var obj = Bunyan.stdSerializers.req(req);
     obj.id = req.id;
     return obj;
   },
@@ -202,7 +202,10 @@ var stdSerializers = {
     return (srv.development ? "dev" : "dist") + "@" + (srv.tls ? "https" : "http") + "://localhost:" + srv.port;
   },
   game: function (game) {
-    return game.name;
+    return {
+      _id: game._id,
+      name: game.name
+    };
   },
   user: function (user) {
     var obj = {
@@ -239,7 +242,7 @@ var stdSerializers = {
     return p.pid;
   },
   dbErr: function (err) {
-    var obj = bunyan.stdSerializers.err(err);
+    var obj = Bunyan.stdSerializers.err(err);
     obj.errors = _.reduce(err.errors, function (res, err, key) {
       res[key] = _.pick(err, dbErrorValues);
       return res;
@@ -249,7 +252,7 @@ var stdSerializers = {
 };
 
 var querySerializer = {
-  err: bunyan.stdSerializers.err,
+  err: Bunyan.stdSerializers.err,
   user: stdSerializers.user,
   addressee: stdSerializers.user,
   game: stdSerializers.game,
@@ -260,14 +263,14 @@ var querySerializer = {
 
 var serializer = {
   app: { // used for application-borders, eg. server-creation, database-connection, etc.
-    err: bunyan.stdSerializers.err,
+    err: Bunyan.stdSerializers.err,
     dbErr: stdSerializers.dbErr,
     game: stdSerializers.game,
     model: stdSerializers.mongoDBModel,
     config: stdSerializers.serverConfig
   },
   token: { // used for tokens, eg. authentication-tokens
-    err: bunyan.stdSerializers.err,
+    err: Bunyan.stdSerializers.err,
     user: stdSerializers.user
   },
   socket: _.extend({}, querySerializer, { // used for websocket-connections
@@ -277,14 +280,14 @@ var serializer = {
     req: stdSerializers.req
   }),
   bunyan: { // used for logger-related logging
-    err: bunyan.stdSerializers.err,
+    err: Bunyan.stdSerializers.err,
     process: stdSerializers.process,
     logger: stdSerializers.logger
   }
 };
 
 var defSerializer = {
-  err: bunyan.stdSerializers.err
+  err: Bunyan.stdSerializers.err
 };
 
 /*-------------------------------------------------- Default bodies --------------------------------------------------*/
@@ -301,12 +304,12 @@ function createLogger(value) {
     if (serializer.hasOwnProperty(value.name)) {
       value.serializers = serializer[value.name];
     } else {
-      bunyan.logger.bunyan.warn({logger: value}, "no serializers associated. using default serializers");
+      Bunyan.logger.bunyan.warn({logger: value}, "no serializers associated. using default serializers");
       value.serializers = defSerializer;
     }
 
     // create logger
-    var log = logger[value.name] = bunyan.createLogger(value);
+    var log = logger[value.name] = Bunyan.createLogger(value);
 
     // attach bodies as defined above
     if (bodies.hasOwnProperty(value.name) && !_.isEmpty(bodies[value.name])) {
@@ -314,11 +317,11 @@ function createLogger(value) {
     }
 
     // make logger available by attaching to bunyan.logger
-    bunyan.logger[value.name] = log;
+    Bunyan.logger[value.name] = log;
     if (value.name === "bunyan") {
       cliSetup();
     }
-    bunyan.logger.bunyan.debug({logger: value}, "application logger created");
+    Bunyan.logger.bunyan.debug({logger: value}, "application logger created");
   }
 }
 
@@ -343,5 +346,5 @@ module.exports = function () {
 
   _.each(lgs, createLogger);
 
-  return bunyan;
+  return Bunyan;
 };
