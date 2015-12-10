@@ -46,11 +46,6 @@ UserSchema
     })
     .get(function () { return this._pw; });
 
-UserSchema.methods.setAdmin = function (admin, cb) { // TODO check for usage
-  this.admin = admin;
-  this.save(cb);
-};
-
 /*===================================================== Exports  =====================================================*/
 
 var model = mongoose.model(COLLECTION_NAME, UserSchema);
