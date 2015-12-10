@@ -19,7 +19,6 @@ var LOCKED_FIELDS = [
 var UserSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
-      mdate: {type: Date, default: Date.now},
       // credentials
       username: {type: String, required: true, unique: true, trim: true},
       usernameLower: {type: String, required: true, unique: true, trim: true},

@@ -18,7 +18,8 @@ var GameSchema = new Schema(
       murderer: {type: ObjectID, ref: "User"},
       victim: {type: ObjectID, ref: "User"},
 
-      ring: {type: ObjectID, ref: "Ring"}
+      ring: {type: ObjectID, ref: "Ring"},
+      game: {type: ObjectID, ref: "Game"}
     }
 );
 

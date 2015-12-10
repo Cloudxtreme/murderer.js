@@ -4,137 +4,137 @@ var _ = require("lodash");
 var Q = require("q");
 var socket = require.main.require("./controller/socket");
 var userC = require.main.require("./core/user/controller");
+var ringC = require.main.require("./core/ring/controller");
+var murderC = require.main.require("./core/murder/controller");
 
-// TODO adapt to new structure
+var controller = require("../controller");
 
 /*===================================================== Exports  =====================================================*/
 
-exports.commit = function (scope, user, game, token, message) {
-  var rings = game.rings, ring, active, inactive, obj, i, j;
-  var newsObj = {
-    entryDate: new Date(),
-    message: message,
-    token: token,
-    murderer: _.pick(user, ["_id", "username"])
-  };
-  for (i = 0; i < rings.length; i++) {
-    ring = rings[i];
-    active = ring.active;
-    if (active.length > 1) {
-      for (j = 0; j < active.length; j++) {
-        obj = active[j];
-        if (obj.token === token && active[(j === 0 ? active.length : j) - 1].user.equals(user._id)) {
-          scope.log.info({token: token}, "valid token");
-          return Q
-              .when(performTokenKill(user, game, i, j, message))
-              .then(qSave)
-              .then(_.partial(aba, scope, _.extend(newsObj, {ring: i, victim: obj.user})));
-        }
-      }
-    }
-    inactive = ring.inactive;
-    for (j = 0; j < inactive.length; j++) {
-      obj = inactive[j];
-      if (obj.token === token && obj.murderer.equals(user._id)) {
-        return Q
-            .when(performInactiveTokenKill(game, i, j, message))
-            .then(qSave)
-            .then(_.partial(aba, scope, _.extend(newsObj, {ring: i, victim: obj.user})));
-      }
-    }
-  }
-  scope.log.warn({token: token}, "invalid token");
-  return Q.reject(new Error("Invalid token."));
-};
+exports.commit = kill;
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(game) { return Q.nbind(game.save, game)(); } // TODO attach q-methods within modelBase
+// TODO test all functions
 
-function trackKill(game, ring, ringIdx, entry) {
-  ring.kills.push(entry);
-  game.kills.push(_.extend({ring: ringIdx}, entry));
+function kill(scope, userId, gameId, token, message) {
+  return controller
+      .qFindById(scope, gameId)
+      .then(function (game) {
+        var data = {murderer: userId, game: game, token: token, message: message};
+        return _.extend(data, {scope: _.extend({}, scope, {log: scope.log.child(data)})});
+      })
+      .then(populateRings)
+      .then(findCrimeScene)
+      .then(createMurder)
+      .then(applyMurderToRing)
+      .then(broadcast);
 }
 
-function performTokenKill(user, game, ringIdx, activeIdx, message) {
-  var ring = game.rings[ringIdx], active = ring.active, obj = active[activeIdx];
-  active.splice(activeIdx, 1);
-  var entry = {
-    entryDate: Date.now(),
-    murderer: user._id,
-    victim: obj.user,
-    message: message,
-    token: obj.token
-  };
-  trackKill(game, ring, ringIdx, entry);
-  tidyInactive(ring.inactive, entry.murderer, entry.victim);
-  updateInactive(ring.inactive, entry.murderer, entry.victim);
-  return game;
-}
+function isAlive(chainItem) { return chainItem.murder == null; }
 
-function performInactiveTokenKill(game, ringIdx, inactiveIdx, message) {
-  var ring = game.rings[ringIdx], inactive = ring.inactive, obj = inactive[inactiveIdx];
-  inactive.splice(inactiveIdx, 1);
-  var entry = {
-    entryDate: Date.now(),
-    murderer: obj.murderer,
-    victim: obj.victim,
-    message: message,
-    token: obj.token
-  };
-  trackKill(game, ring, ringIdx, entry);
-  tidyInactive(inactive, entry.murderer, entry.victim);
-  return game;
-}
-
-function broadcastUpdate(entry, game) {
-  socket.broadcastCommonPermitted("news:update.game", entry);
-  return game;
-}
-
-function aba(scope, entry, game) {
-  var defer = Q.defer();
-  userC.findById(scope, entry.victim, function (err, v) {
-    if (err == null) {
-      entry.victim = v != null ? _.pick(v._doc, ["_id", "username"]) : null;
-      defer.resolve(broadcastUpdate(entry, game));
-    } else {
-      defer.reject(err);
-    }
-  });
-  return defer.promise;
-}
-
-/**
- * Removes all entries from inactive the murderer was only allowed to kill before the given victim.
- * @param inactive The inactive list (game.rings[].inactive).
- * @param murderer The murderer who may missed to kill inactive users.
- * @param victim The victim who just got killed.
- */
-function tidyInactive(inactive, murderer, victim) {
-  var obj;
-  var max = inactive.length;
-  for (var i = 0; i < max; i++) {
-    obj = inactive[i];
-    if (obj.murderer.equals(murderer) && obj.nextVictim.equals(victim)) {
-      inactive.splice(i, 1);
-      max--;
-      i = 0;
-      victim = obj.victim;
-    }
+function passFirst(array, fn) {
+  var result;
+  for (var i = 0; i < array.length; i++) {
+    result = fn(array, i);
+    if (result != null) { return result === false ? null : result; }
   }
+  return null;
 }
 
-/**
- * Updates the inactive list so the murderer extends the victims victims.
- * @param inactive The inactive list (game.rings[].inactive).
- * @param murderer The murderer who may needs to extend new inactive victims.
- * @param victim The victim who just got killed.
- */
-function updateInactive(inactive, murderer, victim) {
-  _.each(inactive, function (obj) {
-    if (obj.murderer.equals(victim)) {
-      obj.murderer = murderer;
-    }
+function populateRings(data) {
+  if (!data.game.active) { throw new Error("Game is not active."); }
+  return controller
+      .qPopulate(data.game, "rings")
+      .fail(function (err) {
+        data.scope.log.error({err: err}, "failed to populate game rings");
+        return Q.reject("Internal error.");
+      })
+      .then(_.constant(data));
+}
+
+function findCrimeScene(data) {
+  var rings = data.game.rings;
+  data = passFirst(rings, function (ring, ringIdx) {
+    if (ring.active < 2) { return; }
+
+    var mItemIdx = _.findLastIndex(ring.chain, isAlive), potentialVictim = ring.chain[mItemIdx].user === data.murderer;
+    var skippedVictims = [];
+    return passFirst(ring.chain, function (item, idx) {
+      if (item.vulnerable) {
+        if (potentialVictim) {
+          if (data.token === item.token) { // victim found and verified
+            return _.extend(data, {
+              ring: ring,
+              ringIndex: ringIdx,
+              index: idx,
+              victim: item.user,
+              skippedVictims: skippedVictims
+            });
+          } else if (isAlive(item)) { // stop looking for any other victim in this ring
+            return false;
+          }
+          skippedVictims.push(idx);
+        } else if (isAlive(item)) { // item is next potential murderer
+          potentialVictim = ring.chain[mItemIdx = idx].user === data.murderer;
+        }
+      }
+    });
   });
+  return data || Q.reject("Token invalid.");
+}
+
+function createMurder(data) {
+  data.scope.log = data.scope.log.child(data);
+  data.scope.log.info("valid kill");
+  return murderC
+      .qCreate({
+        message: data.message,
+        murderer: data.murderer,
+        victim: data.victim,
+        ring: data.ring._id,
+        game: data.game._id
+      })
+      .then(function (murder) { return _.extend(data, {murder: murder}); })
+      .fail(function (err) {
+        data.scope.log.error({err: err}, "failed to create murder entry");
+        return Q.reject("Internal error.");
+      });
+}
+
+function applyMurderToRing(data) {
+  data.scope.log = data.scope.log.child({murder: data.murder});
+  var $set = {};
+  _.each(data.skippedVictims, function (i) { $set["chain." + i + ".vulnerable"] = false; });
+  $set["chain." + data.index + ".vulnerable"] = false;
+  $set["chain." + data.index + ".murder"] = data.murder._id;
+  return ringC
+      .qUpdate(data.ring._id, {
+        $set: $set,
+        $inc: {active: -data.skippedVictims.length - 1}
+      })
+      .then(_.constant(data))
+      .fail(function (err) {
+        data.scope.log.error({err: err}, "failed to update ring with murder");
+        data.scope.log.info("attempt to revert murder");
+        return murderC
+            .qRemoveById(data.murder._id)
+            .then(function () { data.scope.log.info("revert successful"); },
+                function (err) { data.scope.log.fatal({err: err, data: data}, "revert failed"); })
+            .then(_.constant(Q.reject("Token invalid")));
+      });
+}
+
+function broadcast(data) {
+  Q
+      .spread([userC.qFindById(data.murderer), userC.qFindById(data.victim)],
+          function (murderer, victim) {
+            socket.broadcastCommonPermitted("game:kill.committed", _.extend(_.omit(data.murder._doc, ["ring"]), {
+              murderer: murderer,
+              victim: victim,
+              game: _.pick(data.game._doc, ["_id", "name"])
+            }));
+          }, function (err) { data.scope.log.error({err: err}, ""); })
+      .done();
+  return data;
 }

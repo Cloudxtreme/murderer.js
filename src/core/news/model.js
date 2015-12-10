@@ -13,14 +13,12 @@ var ObjectID = Schema.Types.ObjectId;
 var GameSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
-      mdate: {type: Date, default: Date.now},
 
       server: {type: Boolean, default: false},
-      entryDate: {type: Date, default: Date.now},
       author: {type: ObjectID, ref: "User"},
       message: {type: String, required: true},
       game: {type: ObjectID, ref: "Game"},
-      ring: Number
+      ring: {type: ObjectID, ref: "Ring"}
     }
 );
 

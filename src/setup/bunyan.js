@@ -207,6 +207,8 @@ var stdSerializers = {
       name: game.name
     };
   },
+  ring: function (ring) { return ring._id; },
+  murder: function (murder) { return murder._id; },
   user: function (user) {
     var obj = {
       _id: user._id,
@@ -223,24 +225,12 @@ var stdSerializers = {
     }
     return obj;
   },
-  socket: function (socket) {
-    return socket.id;
-  },
-  mongoDBModel: function (model) {
-    return model.modelName;
-  },
-  modelBody: function (body) {
-    return limitObjectDepth(body, 2);
-  },
-  filter: function (body) {
-    return limitObjectDepth(body, 2);
-  },
-  logger: function (logger) {
-    return logger.name;
-  },
-  process: function (p) {
-    return p.pid;
-  },
+  socket: function (socket) { return socket.id; },
+  mongoDBModel: function (model) { return model.modelName; },
+  modelBody: function (body) { return limitObjectDepth(body, 2); },
+  filter: function (body) { return limitObjectDepth(body, 2); },
+  logger: function (logger) { return logger.name; },
+  process: function (p) { return p.pid; },
   dbErr: function (err) {
     var obj = Bunyan.stdSerializers.err(err);
     obj.errors = _.reduce(err.errors, function (res, err, key) {
@@ -256,6 +246,8 @@ var querySerializer = {
   user: stdSerializers.user,
   addressee: stdSerializers.user,
   game: stdSerializers.game,
+  ring: stdSerializers.ring,
+  murder: stdSerializers.murder,
   model: stdSerializers.mongoDBModel,
   body: stdSerializers.modelBody,
   filter: stdSerializers.modelBody

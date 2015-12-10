@@ -10,6 +10,7 @@ var config = require.main.require("./utils/config").main;
 
 exports.generateRings = function (scope, game, amount) {
   var users = _.flatten(_.pluck(game.groups, "users"));
+  if (users.length < 2) { return Q.reject("To few users."); }
   var promise = game.rings.length ? ringC.qRemove(scope, {_id: {$in: game.rings}}) : Q.when();
   return promise.then(function () {
     var rings = game.rings = [];
@@ -17,7 +18,7 @@ exports.generateRings = function (scope, game, amount) {
     return Q.all(_.times(amount, function () {
       return ringC
           .qCreate({
-            active: game.active,
+            active: users.length,
             chain: _.map(_.shuffle(users), _.partial(getChainEntry, tokens))
           })
           .then(function (ring) {
