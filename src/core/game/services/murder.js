@@ -18,61 +18,16 @@ exports.bySuicide = suicide;
 
 /*==================================================== Functions  ====================================================*/
 
-/*------------------------------------------- shared by kills and suicides -------------------------------------------*/
-
-function findGameData(scope, gameId, data) {
-  return controller
-      .qFindById(scope, gameId)
-      .then(function (game) {
-        return _.extend(data, {
-          game: game,
-          scope: _.extend({}, scope, {log: scope.log.child(data)})
-        });
-      })
-      .then(populateRings);
-}
-
-function populateRings(data) {
-  if (!data.game.active) { throw new Error("Game is not active."); }
-  return controller
-      .qPopulate(data.game, "rings")
-      .fail(function (err) {
-        data.scope.log.error({err: err}, "failed to populate game rings");
-        return Q.reject("Internal error.");
-      })
-      .then(_.constant(data));
-}
-
-function createMurder(data) {
-  data.scope.log = data.scope.log.child(data);
-  data.scope.log.info("valid " + (data.suicide ? "suicide" : "kill"));
-  return murderC
-      .qCreate({
-        message: data.message,
-        murderer: data.murderer,
-        victim: data.victim,
-        ring: data.suicide ? null : data.ring._id,
-        game: data.game._id
-      })
-      .then(function (murder) {
-        data.scope.log = data.scope.log.child({murder: data.murder});
-        return _.extend(data, {murder: murder});
-      })
-      .fail(function (err) {
-        data.scope.log.error({err: err}, "failed to create murder entry");
-        return Q.reject("Internal error.");
-      });
-}
-
-function broadcast(data) {
-  murderC.qNewsBroadcast(data.scope, data.murder, null, null, data.game).done();
-  return data;
-}
-
 /*--------------------------------------------- relevant for kills only  ---------------------------------------------*/
 
-function kill(scope, userId, gameId, token, message) {
-  return findGameData(scope, gameId, {murderer: userId, token: token, message: message, suicide: false})
+function kill(scope, userId, gameId, token, message, triggered) {
+  return findGameData(scope, gameId, {
+    murderer: userId,
+    token: token,
+    message: message,
+    triggered: triggered,
+    suicide: false
+  })
       .then(findCrimeScene)
       .then(createMurder)
       .then(applyMurderToRing)
@@ -142,8 +97,13 @@ function applyMurderToRing(data) {
 
 /*-------------------------------------------- relevant for suicides only --------------------------------------------*/
 
-function suicide(scope, userId, gameId, message) {
-  return findGameData(scope, gameId, {murderer: userId, message: message, suicide: true})
+function suicide(scope, userId, gameId, message, triggered) {
+  return findGameData(scope, gameId, {
+    murderer: userId,
+    message: message,
+    triggered: triggered,
+    suicide: true
+  })
       .then(findSuicideIndices)
       .then(createMurder)
       .then(applySuicideToRing)
@@ -237,4 +197,56 @@ function sendSuicideEmail(scope, addressee, game, target, survived) {
           game: game.name
         });
       });
+}
+
+/*------------------------------------------- shared by kills and suicides -------------------------------------------*/
+
+function findGameData(scope, gameId, data) {
+  return controller
+      .qFindById(scope, gameId)
+      .then(function (game) {
+        return _.extend(data, {
+          game: game,
+          scope: _.extend({}, scope, {log: scope.log.child(data)})
+        });
+      })
+      .then(populateRings);
+}
+
+function populateRings(data) {
+  if (!data.game.active) { throw new Error("Game is not active."); }
+  return controller
+      .qPopulate(data.game, "rings")
+      .fail(function (err) {
+        data.scope.log.error({err: err}, "failed to populate game rings");
+        return Q.reject("Internal error.");
+      })
+      .then(_.constant(data));
+}
+
+function createMurder(data) {
+  data.scope.log = data.scope.log.child(data);
+  data.scope.log.info("valid " + (data.suicide ? "suicide" : "kill"));
+  return murderC
+      .qCreate({
+        message: data.message,
+        murderer: data.murderer,
+        victim: data.victim,
+        ring: data.suicide ? null : data.ring._id,
+        game: data.game._id,
+        trigger: data.triggered ? data.scope.user._id : null
+      })
+      .then(function (murder) {
+        data.scope.log = data.scope.log.child({murder: data.murder});
+        return _.extend(data, {murder: murder});
+      })
+      .fail(function (err) {
+        data.scope.log.error({err: err}, "failed to create murder entry");
+        return Q.reject("Internal error.");
+      });
+}
+
+function broadcast(data) {
+  murderC.qNewsBroadcast(data.scope, data.murder, null, null, data.game).done();
+  return data;
 }

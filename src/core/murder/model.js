@@ -19,7 +19,8 @@ var GameSchema = new Schema(
       victim: {type: ObjectID, ref: "User"},
 
       ring: {type: ObjectID, ref: "Ring"},
-      game: {type: ObjectID, ref: "Game", required: true}
+      game: {type: ObjectID, ref: "Game", required: true},
+      trigger: {type: ObjectID, ref: "User"} // if an admin triggers a murder he's going to be referenced here
     }
 );
 
