@@ -1,6 +1,6 @@
 "use strict";
 
-var COLLECTION_NAME = "News";
+var COLLECTION_NAME = "Message";
 
 var mongoose = require("mongoose");
 var modelBase = require.main.require("./utils/modelBase");
