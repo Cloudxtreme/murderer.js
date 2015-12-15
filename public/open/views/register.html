@@ -35,7 +35,12 @@
             <label for="password-confirm" class="control-label" translate>credentials.passwordConfirm</label>
             <input type="password" class="form-control" id="password-confirm" placeholder="Mb2.r5oHf-0t"
                    name="passwordConfirm" ng-model="credentials.passwordConfirm" ng-valid="passwordConfirmValid"
-                   required/>
+                   required/><br/>
+            <label>
+                <input type="checkbox" ng-model="credentials.terms" required/>
+                <span ng-bind-html="'register.terms' | translate | html"></span>
+            </label>
+
             <input type="submit" class="form-btn" ng-value="'credentials.register' | translate"
                    ng-disabled="registerForm.$invalid"/>
 

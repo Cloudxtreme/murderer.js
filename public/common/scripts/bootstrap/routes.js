@@ -13,7 +13,7 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
         templateUrl: "/views/common/terms.html"
       })
       .when("/policy", {
-        templateUrl: "/views/common/policy.html"
+        templateUrl: "/views/common/privacypolicy.html"
       })
       .when("/disclaimer", {
         templateUrl: "/views/common/disclaimer.html"
