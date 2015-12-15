@@ -6,4 +6,9 @@ angular.module("common").run(function ($rootScope, $timeout, socket) {
     $rootScope.identity = user;
     $rootScope.connected = true;
   });
+  $rootScope.avatar = function (size) {
+    if (!$rootScope.connected) { return null; }
+    var url = $rootScope.identity.avatarUrl;
+    return url && url + (~url.indexOf("?") ? "&" : "?") + "s=" + size || null;
+  };
 });

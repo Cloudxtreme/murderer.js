@@ -21,7 +21,7 @@ controller.validate("create", function (body) {
 
   if (!body.avatarUrl) {
     // set default avatar
-    body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon&s=50";
+    body.avatarUrl = "//www.gravatar.com/avatar/" + security.md5(body.email.toLowerCase()) + "?d=identicon";
   }
 });
 
