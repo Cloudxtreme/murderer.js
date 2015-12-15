@@ -1,29 +1,31 @@
-ol.breadcrumb {
+div.breadcrumb {
   display: block;
-  list-style: none;
   background-color: fade(@text-color, 10%);
-  padding: 5px 7px;
-  margin-top: 0;
+  border-bottom: 2px solid fade(@text-color, 10%);
 
-  > li {
-    display: inline-block;
-    padding: 0;
+  > ol {
+    padding: 5px 7px;
+    list-style: none;
+    > li {
+      display: inline-block;
+      padding: 0;
 
-    &:before {
-      content: "/";
-      margin: 0 5px 0 8px;
-      color: fade(@text-color, 45%);
-    }
-    &:first-child:before {
-      display: none;
-    }
+      &:before {
+        content: "/";
+        margin: 0 5px 0 8px;
+        color: fade(@text-color, 45%);
+      }
+      &:first-child:before {
+        display: none;
+      }
 
-    &.active {
-      color: fade(mix(@text-color, @color-primary, 85%), 80%);
-    }
+      &.active {
+        color: fade(mix(@text-color, @color-primary, 85%), 80%);
+      }
 
-    > a {
-      text-decoration: none;
+      > a {
+        text-decoration: none;
+      }
     }
   }
 }

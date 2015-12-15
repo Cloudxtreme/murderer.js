@@ -1,31 +1,71 @@
 nav.navigation {
-  border-bottom: 2px dashed #808080;
+  @item-border-color: fade(mix(@text-color, @color-primary, 60%), 20%);
 
-  > ul {
-    margin: 0;
-    vertical-align: middle;
-    padding: 0;
+  border-bottom: @navigation-border-bottom-height solid fade(@color-primary, 17%);
+  background: fade(@color-primary, 12%);
+  width: 100%;
 
-    > li {
-      display: inline-block;
-      width: 150px;
-      height: 50px;
-      text-align: center;
-      margin-right: -20px;
-      border-bottom-right-radius: 20px;
-      &:not(.active):hover {
-        background-color: fade(@color-primary, 40%);
-      }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-      > a {
-        text-decoration: none;
-        display: inline-block;
-        width: 100%;
-        height: 100%;
+    > ul, > div > ul {
+      padding: 0;
+      margin: 0;
+      display: block;
 
-        span {
-          padding-top: 16px;
-          display: inline-block;
+      > li {
+        display: block;
+        text-align: center;
+        float: left;
+        height: @navigation-height - @navigation-border-bottom-height;
+
+        img {
+          display: block;
+          max-height: 100%;
+        }
+
+        > a {
+          background-color: fade(@text-color, 5%);
+          padding: (@navigation-height - @navigation-border-bottom-height - @line-height-computed) / 2;
+          text-decoration: none;
+          display: block;
+          border-right: 1px solid @item-border-color;
+          border-left: 1px solid @item-border-color;
+          height: @line-height-computed;
+          line-height: @line-height-computed;
+
+          &:hover, &:focus, &:active {
+            background-color: fade(@text-color, 15%);
+          }
+
+          .fa {
+            font-size: @line-height-computed;
+          }
+        }
+
+        &.active > a {
+          background-color: fade(@color-primary, 5%);
+          cursor: default;
+          &, &:active {
+            color: fade(@text-color, 80%);
+          }
+        }
+
+        &:last-child > a {
+          border-right: 2px solid @item-border-color;
+        }
+
+        &:first-child > a {
+          border-left: 2px solid @item-border-color;
+        }
+
+        &.branding {
+          > a {
+            padding: @navigation-padding ((@navigation-height - @navigation-border-bottom-height - @line-height-computed) / 2);
+            height: @navigation-height - @navigation-border-bottom-height - @navigation-padding * 2;
+          }
         }
       }
     }

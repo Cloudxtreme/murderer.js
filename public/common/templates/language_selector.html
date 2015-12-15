@@ -1,6 +1,8 @@
 <li ng-repeat="(l, name) in locales.all" ng-class="{active: l === language}">
-    <a ng-click="setLanguage(l)">
-        <i class="fa fa-fw fa-flag"></i>
-        <span class="text-mono" ng-bind="l"></span>- {{name}}
+    <a ng-click="setLanguage(l)" href="javascript:void 0;" ng-if="l !== language">
+        <span class="text-mono" ng-bind="l"></span>
+    </a>
+    <a ng-if="l === language">
+        <span class="text-mono" ng-bind="l"></span>
     </a>
 </li>

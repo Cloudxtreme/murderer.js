@@ -1,24 +1,32 @@
 <nav class="navigation">
-    <ul>
-        <li><a href="/"><span>
-            <i class="fa fa-fw fa-home"></i>
-            {{'navigation.home' | translate}}
-        </span></a></li>
-        <li><a href="/game"><span>
-            <i class="fa fa-fw fa-crosshairs"></i>
-            {{'navigation.game' | translate}}
-        </span></a></li>
-        <li><a href="/statistics"><span>
-            <i class="fa fa-fw fa-list-ol"></i>
-            {{'navigation.statistics' | translate}}
-        </span></a></li>
-        <li><a href="/register"><span>
-            <i class="fa fa-fw fa-plug"></i>
-            {{'navigation.register' | translate}}
-        </span></a></li>
-        <li><a href="/login"><span>
-            <i class="fa fa-fw fa-sign-in"></i>
-            {{'navigation.login' | translate}}
-        </span></a></li>
-    </ul>
+    <div class="container">
+        <ul>
+            <li class="branding">
+                <a href="/" title="murderer.js">
+                    <img src="/logo.svg" alt="{{'navigation.home' | translate}}"/>
+                </a>
+            </li>
+            <li>
+                <a href="/game" title="{{'navigation.game' | translate}}">
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/statistics" title="{{'navigation.statistics' | translate}}">
+                    <i class="fa fa-fw fa-list-ol"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/register" title="{{'navigation.register' | translate}}">
+                    <i class="fa fa-fw fa-plug"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/login" title="{{'navigation.login' | translate}}">
+                    <i class="fa fa-fw fa-sign-in"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="language-selector"></ul>
+    </div>
 </nav>

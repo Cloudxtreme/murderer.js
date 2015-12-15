@@ -3,13 +3,9 @@ a {
     color: @link-color;
   }
 
-  &:active, &:focus {
+  &:active, &:focus, &:hover {
     text-decoration: none;
-    color: mix(@link-color-hover, @color-primary, 70%)
-  }
-
-  &:hover {
-    color: @link-color-hover;
+    color: @link-color-hover
   }
 }
 

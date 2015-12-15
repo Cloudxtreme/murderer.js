@@ -1,25 +1,42 @@
-<div id="identity">
-    <img ng-src="{{identity.avatarUrl}}"/>
-    <span ng-bind="identity.username"></span>
-    <a href="/logout" target="_self" title="{{'navigation.logout' | translate}}"><i class="fa fa-sign-out"></i></a>
-</div>
 <nav class="navigation">
-    <ul>
-        <li><a href="/"><span>
-            <i class="fa fa-fw fa-home"></i>
-            {{'navigation.home' | translate}}
-        </span></a></li>
-        <li><a href="/game"><span>
-            <i class="fa fa-fw fa-crosshairs"></i>
-            {{'navigation.game' | translate}}
-        </span></a></li>
-        <li><a href="/statistics"><span>
-            <i class="fa fa-fw fa-list-ol"></i>
-            {{'navigation.statistics' | translate}}
-        </span></a></li>
-        <li><a href="/acp"><span>
-            <i class="fa fa-fw fa-wrench"></i>
-            {{'navigation.acp' | translate}}
-        </span></a></li>
-    </ul>
+    <div class="container">
+        <ul>
+            <li class="branding">
+                <a href="/" title="murderer.js">
+                    <img src="/logo.svg" alt="{{'navigation.home' | translate}}"/>
+                </a>
+            </li>
+            <li>
+                <a href="/game" title="{{'navigation.game' | translate}}">
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/statistics" title="{{'navigation.statistics' | translate}}">
+                    <i class="fa fa-fw fa-list-ol"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/contracts" title="{{'navigation.contracts' | translate}}">
+                    <i class="fa fa-fw fa-user-secret"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/acp">
+                    <i class="fa fa-fw fa-wrench text-danger"></i>
+                </a>
+            </li>
+        </ul>
+        <ul id="identity">
+            <li>
+                <a class="text-mono" href="/logout" target="_self" title="{{'navigation.logout' | translate}}">
+                    {{identity.username}} <i class="fa fa-sign-out"></i>
+                </a>
+            </li>
+            <li>
+                <img ng-src="{{identity.avatarUrl}}"/>
+            </li>
+        </ul>
+        <ul class="language-selector"></ul>
+    </div>
 </nav>

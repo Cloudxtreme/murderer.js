@@ -11,6 +11,12 @@
 @color-info: #128bf4;
 
 
+// Navigation
+@navigation-height: 50px;
+@navigation-border-bottom-height: 2px;
+@navigation-padding: 2px;
+
+
 // Links
 @link-color: fade(white, 85);
 @link-color-hover: white;
@@ -26,6 +32,10 @@
 @font-family-base: sans-serif;
 @text-color: mix(white, @bg-color, 80%);
 @text-muted: #707070;
+@font-size-base: 14px;
+@line-height-base: 1.428571429; // 20/14
+@line-height-computed: floor((@font-size-base * @line-height-base)); // ~20px
+
 
 // Layouts
 @print-paper-width:21cm; // DIN-A4
