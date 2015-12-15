@@ -1,11 +1,18 @@
 .left {
-  flex: auto;
+  flex: 1;
+  flex-basis: 600px;
   margin-right: 25px;
 }
 
 .right {
-  flex: 350px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  width: 350px;
+  text-align: center;
+  flex: 1;
+  flex-basis: 300px;
+  img {
+    max-width: 100%;
+
+    &#logo-credits {
+      width: 450px;
+    }
+  }
 }
