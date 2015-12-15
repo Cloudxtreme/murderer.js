@@ -138,7 +138,7 @@ module.exports = function () {
         .then(function (server) {
           var defer = Q.defer();
           bus.emit("server:created", server);
-          server.listen(config.server.port);
+          server.listen(config.server.port, "127.0.0.1");
           server.on("error", function (err) {
             defer.reject(err);
           });
