@@ -8,6 +8,12 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
       .when("/", {
         templateUrl: "/views/common/home.html"
       })
+      .when("/policy", {
+        templateUrl: "/views/common/privacypolicy.html"
+      })
+      .when("/terms", {
+        templateUrl: "/views/common/terms.html"
+      })
       .when("/game", {
         templateUrl: "/views/common/game.html"
       })
