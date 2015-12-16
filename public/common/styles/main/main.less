@@ -27,14 +27,20 @@ body {
 #view {
   padding: 10px;
   margin-bottom: @line-height-computed + @footer-padding * 2 + @footer-border-top-height;
+
+  > *:first-child, > article:first-child > *:first-child {
+    margin-top: 0;
+  }
 }
 
-ul {
-  list-style: none;
+ul, ol {
+  &.no-style {
+    list-style: none;
+  }
 }
 
-ol.noNumbers {
-  list-style: none;
+h1 {
+  font-size: 2em;
 }
 
 hr {
