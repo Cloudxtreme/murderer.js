@@ -34,6 +34,7 @@ module.exports = (grunt) ->
   # file generation
     genTranslations: loadTask "build/code_generation/translations"
     genLocales: loadTask "build/code_generation/locales"
+    genConstants: loadTask "build/code_generation/constants"
   # html build
     htmlbuild: loadTask "build/compilation/htmlbuild"
   # styles build

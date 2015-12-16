@@ -5,6 +5,18 @@
         "module": "common",
         "service": "locales"
       }
+    ],
+    "constants": [
+      {
+        "module": "common",
+        "constant": "CONFIG",
+        "data": {
+          "website": {
+            "name": "frissdiegurke.com",
+            "site": "https://frissdiegurke.com"
+          }
+        }
+      }
     ]
   }
 }
