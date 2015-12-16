@@ -1,19 +1,25 @@
-.flexbox {
+.flexbox () {
   display: flex;
   justify-content: space-between;
+}
 
-  &.flexbox-vertical {
-    flex-direction: column;
-  }
-  &.flexbox-wrap {
-    flex-wrap: wrap;
-  }
+.flexbox-vertical() {
+  .flexbox();
+  flex-direction: column;
+}
 
-  .flex-no-shrink {
-    flex-shrink: 0;
-  }
+.flexbox {
+  .flexbox();
+}
 
-  > .flex-50 {
-    flex: 0.5;
-  }
+.flexbox-vertical {
+  .flexbox-vertical();
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
+.flex-50 {
+  flex: 0.5;
 }

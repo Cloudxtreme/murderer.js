@@ -1,61 +1,153 @@
-<div class="flexbox flexbox-wrap">
-    <div class="left">
-        <h2 translate>home.title</h2>
-        <h3 translate>home.welcome</h3>
+<article id="home">
+    <div class="content">
+
+        <h1>murderer.js</h1>
+
+        <h2>Beschreibung</h2>
+
         <p>
-            .. bei der Node.js-Umsetzung des <a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">Mörderspiels</a>.<br/>
-            Diese Seite bietet Unterstützung bei der Durchführung des Spieles indem es die Mordaufträge für alle
-            registrierten Mörder<em class="gender">Innen</em> generiert und verwaltet.
-            Dazu melden sich alle die mitspielen wollen auf dieser Seite an und ein Admin startet das Spiel.
-            Jetzt können die Mordaufträge ausgedruckt werden und von allen abgeholt werden.
-            Nach erfolgreichem Morden können Mörder<em class="gender">Innen</em> einen Token auf dieser Seite
-            abschicken,
-            wodurch der Spielserver den Mord registriert und eine Nachricht in den News sendet.
+            <strong>murderer.js</strong> ist ein hybrides Spiel das reale Interaktion mit einem Web-Service kombiniert.
+            Es eignet sich gut als Nebenl&auml;ufiges Spiel &uuml;ber mehrere Tage bis Wochen in mittelgro&szlig;er
+            (~15) bis gro&szlig;er (~200) Spieleranzahl.<br/>
+            Es handelt sich hierbei um ein Spiel der sozialen Interaktion und kann gut als Kennenlern-Spiel auf
+            mehrt&auml;gigen Konferenzen gespielt werden (Namensschilder/Klebestreifen mit Namen sind hilfreich).
         </p>
-        <h3 translate>home.rules</h3>
+
+        <h2>Spielablauf</h2>
+
         <p>
-            Die Regeln werden auf diversen Seiten (<a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">spielewiki.org</a>,
-            <a href="https://kif.fsinf.de/wiki/M%C3%B6rderspiel">KIF-Wiki</a>, <a href="http://moerderspiel.org">moerderspiel.org</a>)
-            ausführlich erklärt, weshalb hier auf eine genauere Regelerklärung verzichtet wird.
-            Trotzdem sind hier noch einige Details und Besonderheiten:<br/>
-            Der Spielserver kann Spiele mit beliebig vielen, voneinander unabhängigen <b>Kreisen</b> erzeugen.
-            Standardmäßig sind dies drei Kreise.
-            Alle Mörder<em class="gender">Innen</em> spielen automatisch in allen Kreisen mit.
-            Stirbt man in einem Kreis, so spielt man noch immer in den anderen Kreisen mit.
-            In jedem Kreis, in dem man gestorben ist, zählt man als tote Person.
-            Das heißt, dass man für Morde in diesem Kreis auch nicht mehr als Zeuge zählt.
-            Außerdem muss das Opfer den zum Kreis passenden Auftrag abgeben.
-            Ein Mörder<em class="gender">Innen</em> kann mit jedem Mord nur genau einen Mord begehen.
-            Sollten mehrere Aufträge das gleiche Opfer haben, so muss dieses auch mehrmals getötet werden.<br/>
-            In <b>Mordfreien Zonen</b> sind alle Opfer vor dem Töten geschützt.
-            Zu Mordfreien Zonen zählen zum Beispiel Toiletten und Duschen.
-            Zusätzlich können sich alle vorhandenen Mitspieler<em class="gender">Innen</em> gemeinsam dazu entscheiden,
-            eine temporäre Mordfreie Zone zu definieren.
-            Das ist dann sinnvoll, wenn durch das Mörderspiel eine andere Tätigkeit behindert wird.
-            Hat man eine Mordfreie Zone definiert, muss es allen hinzukommenden Mitspielenden mitgeteilt werden.
-            Ansonsten gilt für sie die Mordfreie Zone nicht!
+            In einem Spiel bekommen alle Teilnehmer individuelle <i>Mordauftr&auml;ge</i>, die online eingesehen und
+            ausgedruckt werden k&ouml;nnen.
+            Nun muss jeder Spieler versuchen, m&ouml;glichst viele dieser Auftr&auml;ge zu erf&uuml;llen bevor das Spiel
+            zu festgelegter Zeit beendet wird.
         </p>
-        <h3>Umgang mit den Aufträgen</h3>
+
+        <h3>Wie wird ein Auftrag erf&uuml;llt?</h3>
+
         <p>
-            Auch wenn sich die Mordaufträge theoretisch jederzeit online einsehen lassen, sollten dennoch alle immer
-            ihre Aufträge in Papierform dabei haben.
-            Schließlich ist auf ihnen der Token abgedruckt, um den Mord online eintragen zu können.
-            Außerdem muss der Auftrag weitergereicht werden wenn man stirbt.<br/>
-            Sollte es einmal passieren, dass der Auftrag verloren geht, dann kann der Admin kontaktiert werden.
-            Mit etwas Aufwand ist er in der Lage den fehlenden Auftrag neu zu erstellen und auszuhändigen.
+            Dies ist der sozial interaktive Aspekt des Spiels.
+            Um einen Auftrag zu erf&uuml;llen muss der <i>M&ouml;rder</i> dem <i>Ziel</i> einen beliebigen Gegenstand
+            &uuml;bergeben, ohne dass <i>Zeugen</i> anwesend sind.
+            Ein Mordgegenstand muss freiwillig angenommen werden (meistens, weil nicht an das Spiel gedacht wird), darf
+            nicht geworfen werden und muss erst vom M&ouml;rder, anschlie&szlig;end vom Opfer <b>prim&auml;r</b>
+            getragen werden.<br/>
+            Je nach Teilnehmergruppe muss der M&ouml;rder nat&uuml;rlich erst einmal herausbekommen, wer seine Ziele
+            &uuml;berhaupt sind.
         </p>
-        <h3>Selbstmord</h3>
+
+        <h3>Wer gilt als Zeuge?</h3>
+
         <p>
-            Es ist möglich, in diesem Mörderspiel Selbstmord zu begehen.
-            Gemeint ist damit der Button mit entsprechender Aufschrift.
-            Selbstmord sollte begangen werden, falls man früher von der Veranstaltung gehen muss und somit nicht mehr
-            mitspielen kann.
-            Damit keine Lücken in den Kreisen entstehen sollte der Spieladmin kontaktiert werden.
-            Die Nutzung des Buttons ist dafür in der Regel ausreichend.<br/>
+            Ein Zeuge kann jeder nicht am Mord beteiligte Spieler sein, der in dem <i>Ring</i> in welchem der Mord
+            stattfinden soll selbst am Leben ist.
+            Falls ein Spieler also einen Mord begehen m&ouml;chte, muss er zun&auml;chst sicherstellen, dass kein Zeuge
+            in dem Moment des Mordes (der Gegenstand&uuml;bergabe) diesen mitbekommt.
+        </p>
+
+        <h3>Was ist ein Ring?</h3>
+
+        <p>
+            Ein Spiel kann aus <code>N</code> Ringen bestehen und jeder Spieler ist anfangs in <code>M</code> Ringen am
+            Leben (<code>N,M</code> werden vom Spielleiter festgelegt).
+            In einem einzelnen Ring hat jeder dort lebendige Spieler genau einen Mordauftrag f&uuml;r einen anderen dort
+            lebendigen Spieler. Hierbei ist auch jeder Spieler nur Ziel genau eines Mordauftrages.
+        </p>
+
+        <h3>Was passiert, wenn jemand einen Auftrag erf&uuml;llt hat?</h3>
+
+        <p>
+            Wird jemand umgebracht (das <i>Opfer</i>), so verifiziert er dies indem er sich den Auftrag zeigen
+            l&auml;sst. Nun muss das Opfer seinem M&ouml;rder seinen <i>Token</i> und sein Ziel aus dem Ring, in dem der
+            Mord stattfand, nennen. Dieser Token steht auf dem Auftrag, den das Opfer in eben diesem Ring zu
+            erf&uuml;llen hatte (und nun daran gescheitert ist).
+            Sobald der M&ouml;rder diesen Token auf dieser Website eingibt (zusammen mit einer kurzen Notiz zum Mord),
+            bekommt er den Auftrag seines Opfers &uuml;berschrieben und kann munter weiter morden.<br/>
+            Falls das Opfer seinen Auftrag in ausgedruckter Form zur Verf&uuml;gung hat, kann dieser dem M&ouml;rder
+            &uuml;bergeben werden (Achtung: Auch diese &Uuml;bergabe kann als Mord in einem anderen Ring gelten, sollte
+            der M&ouml;rder allerdings explizit eine indirekte &Uuml;bergabe verlangen, muss diesem Folge geleistet
+            werden). Der Mord muss nicht unmittelbar eingetragen werden, sodass der M&ouml;rder zum Beispiel mehrere
+            Morde in einem Ring begehen kann und diese erst sp&auml;ter eintr&auml;gt. Es muss beim Eintragen allerdings
+            auf die Reihenfolge der Morde geachtet werden.
+        </p>
+
+        <h3>Mehrere Tage? Das ist mir zu lang!</h3>
+
+        <p>
+            Den Spielern steht es frei, zu beliebigem Zeitpunkt <i>Selbstmord</i> zu begehen und somit aus allen noch
+            aktiven Ringen freiwillig auszutreten.
+            Falls jemand diese Option w&auml;hlt, bekommen diejenigen Spieler die ihn als Ziel hatten eine E-Mail
+            Benachrichtigung und k&ouml;nnen sofort ihren neuen Auftrag (den fr&uuml;heren Auftrag des
+            Selbstm&ouml;rders) online einsehen.<br/>
+            Selbstmord ist eine sichere M&ouml;glichkeit aus dem Spiel auszusteigen, ohne den anderen Spielern den
+            Spa&szlig; zu nehmen.
+        </p>
+
+        <h3>Wer gewinnt?</h3>
+
+        <p>
+            Es gewinnt derjenige Spieler, der zum Zeitpunkt des Spielendes die meisten Morde (Summiert &uuml;ber alle
+            Ringe) begangen hat. Sollten mehrere Spieler gleich viele haben, gewinnt derjenige von ihnen mit den
+            <b>wenigsten</b> verbleibenden Leben (da dieser mehr soziale Aktivit&auml;t aufweist). Falls auch hier
+            Gleichstand herrscht, gewinnt derjenige mit den h&ouml;chsten Bewertungen der Mord-Nachrichten.
+            Sollte auch hier keine eindeutige Entscheidung existieren, gibt es wohl keinen alleinigen Gewinner.
+        </p>
+
+        <h2>Erg&auml;nzungen</h2>
+
+        <ul>
+            <li>
+                Zeugen m&uuml;ssen von sich aus den Mord unterbinden (indem sie den Beteiligten sagen, dass sie es
+                beobachtet haben). Aus diesem Grund muss die Aussage vom M&ouml;rder, dass er das Opfer umgebracht hat
+                umgehend kommen (in angemessener Lautst&auml;rke), ansonsten wird der Mord ung&uuml;ltig. Sollte das
+                Opfer jemanden direkt fragen, ob er den Mord bezeugt hat, ist dieser als Zeuge unzul&auml;ssig. Zeugen,
+                die nicht selbstst&auml;ndig merken was sich vor ihnen abspielt, k&ouml;nnen nichts bezeugen.
+            </li>
+            <li>
+                Eine &Uuml;bergabe kann nur einen Mord verursachen. Falls ein M&ouml;rder sein Opfer in verschiedenen
+                Ringen umbringen muss, muss dies auch durch mehrere &Uuml;bergaben geschehen.
+            </li>
+            <li>
+                Es sollte nicht zu ernst genommen werden. Die ganzen Tage lang nur keine Gegenst&auml;nde anzunehmen ist
+                zwar eine M&ouml;glichkeit (eine ziemlich schwierige &uuml;brigens), bietet aber weniger Spa&szlig; als
+                sich eher darauf zu konzentrieren, die eigenen Auftr&auml;ge zu erf&uuml;llen.
+            </li>
+            <li>
+                Falls an einem Ort von Autorit&auml;tspersonen (Spielleiter, etc.) eine <i>Mordfreie Zone</i> ausgerufen
+                wird (z.B. wird ein anderes Spiel gespielt, welches Gegenstands&uuml;bergabe involviert), kann dort kein
+                Mord stattfinden.
+            </li>
+            <li>
+                Toiletten und Duschen sind <b>immer</b> Mordfreie Zonen.
+            </li>
+            <li>
+                Der Begriff <i>Gegenstand</i> soll nicht ausschlie&szlig;en, dass Menschen oder andere Lebewesen (sofern
+                Menschen/Tierfreundlich behandelt) als <i>Mordgegenst&auml;nde</i> verwendet werden k&ouml;nnen.
+            </li>
+            <li>
+                In Notf&auml;llen (Verletzungen, etc.) soll auf keinen Fall Hilfeleistung unterlassen werden, weil ein
+                Gegenstand nicht angenommen werden kann. Somit sind Notf&auml;lle jeglicher Art als <i>Mordfreie
+                Situationen</i> einzustufen.
+            </li>
+        </ul>
+
+        <h1>Es ist nur ein Spiel!</h1>
+
+        <p>
+            Alle auf dieser Seite angepriesenen Ereignisse, wie "Morde" oder "Selbstmorde", sind fiktive Ereignisse und
+            weisen auf keinerlei Gewalt im realen Leben hin.
+        </p>
+
+        <h1>Credits</h1>
+
+        <p>
+            <strong>murderer.js</strong> ist frei vom "M&ouml;rderspiel" inspiriert:
+            <a href="https://kif.fsinf.de/wiki/M%C3%B6rderspiel">KIF-Wiki</a>,
+            <a href="http://www.spielewiki.org/wiki/M%C3%B6rderspiel">spielewiki.org</a>
         </p>
     </div>
-    <div class="right">
+
+    <div class="logo">
         <hr/>
         <img id="logo-credits" src="/logo_credits.svg"/>
     </div>
-</div>
+</article>

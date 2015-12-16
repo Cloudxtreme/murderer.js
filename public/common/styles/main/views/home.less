@@ -1,0 +1,29 @@
+@import "../flex";
+
+#home {
+  .flexbox();
+  flex-wrap: wrap;
+
+  .content {
+    flex: 1;
+    flex-basis: 600px;
+    margin-right: 25px;
+
+    > h1:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .logo {
+    text-align: center;
+    flex: 1;
+    flex-basis: 300px;
+    img {
+      max-width: 100%;
+
+      &#logo-credits {
+        width: 450px;
+      }
+    }
+  }
+}
