@@ -1,6 +1,7 @@
 {
   "footer": {
-    "policy": "Datenschutzerklärung",
+    "cookiePolicy": "Cookie-Richtlinie",
+    "privacyPolicy": "Datenschutzerklärung",
     "legalInfo": "Impressum"
   }
 }

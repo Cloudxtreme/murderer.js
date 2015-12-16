@@ -9,11 +9,14 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
         templateUrl: "/views/common/home.html"
       })
 
+      .when("/cookie-policy", {
+        templateUrl: "/views/cookiePolicy.html"
+      })
       .when("/privacy-policy", {
-        templateUrl: "/views/common/privacyPolicy.html"
+        templateUrl: "/views/privacyPolicy.html"
       })
       .when("/legal-info", {
-        templateUrl: "/views/common/legalInfo.html"
+        templateUrl: "/views/legalInfo.html"
       })
 
       .when("/game", {

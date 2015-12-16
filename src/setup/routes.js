@@ -82,6 +82,9 @@ module.exports.pre = function (app) {
 module.exports.post = function (app) {
   var router = express.Router();
 
+  router.get("/plain/cookie-policy", function (req, res) { sendFile("/views/cookiePolicy.html", res, _.noop); });
+  router.get("/plain/privacy-policy", function (req, res) { sendFile("/views/privacyPolicy.html", res, _.noop); });
+  router.get("/plain/legal-info", function (req, res) { sendFile("/views/legalInfo.html", res, _.noop); });
   router.get("/favicon.ico", sendPlain);
   router.get("/*.*", sendFileOrIndex);
   router.get("/*", sendIndex);

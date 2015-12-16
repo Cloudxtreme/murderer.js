@@ -4,6 +4,7 @@ module.exports = (config, grunt, helpers) ->
   grunt.loadNpmTasks 'grunt-html-build'
 
   paths = config.paths
+  serverConfig = config.loadServerConfig "server"
 
   staticTemplates = {}
 
@@ -38,6 +39,7 @@ module.exports = (config, grunt, helpers) ->
           main: config.__libs.js[name].map(prefixBower).concat config.__scripts.js[name].map prefixDev
         sections: sections
         data:
+          base: serverConfig.dev.url
           title: "#{config.package.name} - Development - #{config.package.version}"
           app: name
           livereload: getLiveReload config.livereload.port
@@ -55,6 +57,7 @@ module.exports = (config, grunt, helpers) ->
           main: ["#{paths.destination.dist}/scripts/#{name}.min.js"]
         sections: sections
         data:
+          base: serverConfig.dist.url
           title: config.package.name
           app: name
           styles: (for key, array of config.styles

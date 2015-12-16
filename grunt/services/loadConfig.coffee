@@ -85,4 +85,12 @@ module.exports = (grunt, cwd, configDir, configObj = {}) ->
       resolveDependencies module.dependencies, name if module.dependencies?.length
       addLibs name, name
 
+  configObj.cwd = cwd;
+
+  configObj.loadServerConfig = (name) ->
+    res = grunt.file.readJSON path.join cwd, "config/#{name}.json"
+    if grunt.file.exists path.join cwd, "config/#{name}.local.json"
+      _.merge res, grunt.file.readJSON path.join cwd, "config/#{name}.local.json"
+    res
+
   configObj

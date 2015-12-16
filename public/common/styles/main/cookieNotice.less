@@ -1,0 +1,17 @@
+.cookie-notice {
+  text-align: center;
+  padding: 10px;
+  line-height: 1.5em;
+  background-color: @cookie-notice-background-color;
+  border-bottom: 2px solid darken(@cookie-notice-background-color, 25%);
+  color: @cookie-notice-color;
+
+  a {
+    color: mix(@cookie-notice-color, red, 50%);
+    text-decoration: none;
+
+    &:hover, &:active, &:focus {
+      text-decoration: underline;
+    }
+  }
+}

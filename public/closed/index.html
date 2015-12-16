@@ -4,8 +4,8 @@
     <!-- build:process -->
     <title><%= title %></title>
     <meta property="og:site_name" content="<%= pkg.name %>"/>
+    <base href="<%= base %>"/>
     <!-- /build -->
-    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="content-type" content="text/html; charset=UTF-8"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -24,6 +24,15 @@
 <body ng-app="<%= app %>">
 <!-- /build -->
 
+<noscript>
+    Zur Nutzung der Dienste dieser Website ist JavaScript erforderlich.
+</noscript>
+
+<div ng-if="cookiesAccepted === null" class="cookie-notice">
+    <span ng-bind-html="'cookieNotice.terms' | translate | html"></span><br/>
+    <a ng-click="acceptCookies()" href="javascript:void 0;" translate>cookieNotice.disable</a>
+</div>
+
 <!-- build:section navigation -->
 <!-- /build -->
 
@@ -32,6 +41,17 @@
 <div id="view" class="container" ng-view></div>
 
 <footer></footer>
+
+<noscript>
+    <footer>
+        <hr/>
+        <a href="/plain/cookie-policy">Cookie-Richtlinie</a>
+        |
+        <a href="/plain/privacy-policy">Datenschutzerklärung</a>
+        |
+        <a href="/plain/legal-info">Impressum</a>
+    </footer>
+</noscript>
 
 </body>
 </html>

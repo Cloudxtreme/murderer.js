@@ -1,6 +1,7 @@
 {
   "footer": {
-    "policy": "Privacy policy",
+    "cookiePolicy": "Cookie policy",
+    "privacyPolicy": "Privacy policy",
     "legalInfo": "Legal Info"
   }
 }
