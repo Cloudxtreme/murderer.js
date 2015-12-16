@@ -1,44 +1,62 @@
-form.form-horizontal {
-  input, select, textarea {
-    &.form-control {
-      display: block;
-      width: 180px;
-      margin: 0 0 10px 0;
-      padding: 1px;
-      &.ng-invalid {
-        box-shadow: 0 0 4px 2px red;
-      }
+.form {
+  width: 100%;
+
+  .form-control {
+    box-sizing: border-box;
+    padding: 4px 8px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    background: white none;
+    color: @bg-color;
+    line-height: @line-height-base;
+    height: @line-height-computed + 2 * 4px;
+    border: 1px solid fade(@bg-color, 50%);
+    margin: 3px 0;
+    outline: none;
+
+    &.ng-invalid {
+      border-color: @color-danger;
+      box-shadow: 0 0 2px 1px @color-danger;
+    }
+
+    &:focus {
+      border-color: @color-info;
+      box-shadow: 0 0 2px 2px @color-info;
     }
   }
 
   textarea.form-control {
-    width: 180px + 2px;
-    max-width: 331px - 4px;
+    height: @line-height-computed * 2 + 2 * 4px;
   }
 
-  select.form-control {
-    width: 180px + 6px;
-  }
-
-  label.control-label {
-    float: left;
+  .control-label {
     display: block;
-    width: 140px;
-    margin: 0 5px 10px 0;
+    font-weight: bold;
+    margin-top: 6px;
+    color: mix(@text-color, @color-info, 90%);
+
+    > input[type="checkbox"], > input[type="radio"] {
+      position: relative;
+      top: 2px;
+    }
   }
 
   .form-btn {
+    box-sizing: border-box;
+    padding: 4px 8px;
     display: block;
-    width: 331px;
-    margin: 0 0 10px 0;
-    padding: 1px;
+    width: 100%;
+    margin: 6px 0;
+    outline: none;
+
+    &:focus {
+      border-color: @color-info;
+      box-shadow: 0 0 2px 2px @color-info;
+    }
   }
-}
 
-.error-msg {
-  color: @color-danger;
-}
-
-.form-info {
-  margin-bottom: 10px;
+  .error-msg {
+    color: @color-danger;
+  }
 }

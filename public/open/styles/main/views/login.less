@@ -1,0 +1,23 @@
+#login {
+  flex-wrap: wrap;
+
+  > form {
+    flex: 500px;
+    padding: 8px;
+    margin: 0 5px 10px 5px;
+    background: fade(@text-color, 10%);
+    border: 1px solid fade(black, 60%);
+
+    > h2:first-child {
+      margin: -8px -8px 8px -8px;
+      padding: 5px 8px;
+      text-align: center;
+      border-bottom: 1px solid fade(black, 30%);
+      background: fade(black, 40%);
+    }
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
