@@ -3,6 +3,6 @@ angular.module("common").controller("newsCtrl", function ( $scope, news) {
 
   $scope.news = news.list;
 
-  news.getAll().catch(console.error);
+  news.getAll();
 
 });
