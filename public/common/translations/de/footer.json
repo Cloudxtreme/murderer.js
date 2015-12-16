@@ -1,7 +1,6 @@
 {
   "footer": {
-    "terms": "Nutzungsbestimmungen",
-    "policy": "Datenschutzrichtlinien",
-    "disclaimer": "Haftungsausschluss"
+    "policy": "Datenschutzerklärung",
+    "legalInfo": "Impressum"
   }
 }
