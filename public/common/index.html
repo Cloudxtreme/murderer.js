@@ -24,6 +24,11 @@
 <body ng-app="<%= app %>">
 <!-- /build -->
 
+<div ng-if="cookiesAccepted === null" class="cookie-notice">
+    <span ng-bind-html="'cookieNotice.terms' | translate | html"></span><br/>
+    <a ng-click="acceptCookies()" href="javascript:void 0;" translate>cookieNotice.disable</a>
+</div>
+
 <ul id="language-selector" language-selector></ul>
 
 <!-- build:section navigation -->
@@ -33,6 +38,8 @@
 
 <footer>
     <hr/>
+    <a href="/cookie-policy">Cookie-Richtlinie</a>
+    |
     <a href="/privacy-policy">Datenschutzerklärung</a>
     |
     <a href="/legal-info">Impressum</a>
