@@ -30,6 +30,13 @@
     text-align: center;
     flex: 1;
     flex-basis: 300px;
+
+    @media(min-width: 945px) { // FIXME media-queries include window border and scrollbar, etc.
+      > hr:first-child {
+        display: none;
+      }
+    }
+
     img {
       max-width: 100%;
 

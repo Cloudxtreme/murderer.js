@@ -1,27 +1,27 @@
 <nav class="navigation">
     <div class="container">
         <ul>
-            <li class="branding">
+            <li class="branding" ng-class="{active: checkRoute('/')}">
                 <a href="/" title="murderer.js">
                     <img src="/logo.svg" alt="{{'navigation.home' | translate}}"/>
                 </a>
             </li>
-            <li>
+            <li ng-class="{active: checkRoutePrefix('/game')}">
                 <a href="/game" title="{{'navigation.game' | translate}}">
                     <i class="fa fa-fw fa-crosshairs"></i>
                 </a>
             </li>
-            <li>
+            <li ng-class="{active: checkRoutePrefix('/statistics')}">
                 <a href="/statistics" title="{{'navigation.statistics' | translate}}">
                     <i class="fa fa-fw fa-list-ol"></i>
                 </a>
             </li>
-            <li>
+            <li ng-class="{active: checkRoutePrefix('/contracts')}">
                 <a href="/contracts" title="{{'navigation.contracts' | translate}}">
                     <i class="fa fa-fw fa-user-secret"></i>
                 </a>
             </li>
-            <li>
+            <li ng-class="{active: checkRoutePrefix('/acp')}">
                 <a href="/acp">
                     <i class="fa fa-fw fa-wrench text-danger"></i>
                 </a>
