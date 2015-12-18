@@ -28,17 +28,7 @@
     Zur Nutzung der Dienste dieser Website ist JavaScript erforderlich.
 </noscript>
 
-<div ng-if="cookiesAccepted === null" class="cookie-notice">
-    <div ng-bind-html="'cookieNotice.terms' | translate | html"></div>
-    <div class="cookie-options">
-        <a ng-click="acceptCookies()" href="javascript:void 0;">
-            <i class="fa fa-fw text-success fa-check"></i> {{'cookieNotice.accept' | translate}}
-        </a><br/>
-        <a ng-click="rejectCookies()" href="javascript:void 0;">
-            <i class="fa fa-fw text-danger fa-times"></i> {{'cookieNotice.reject' | translate}}
-        </a>
-    </div>
-</div>
+<div class="cookie-notice"></div>
 
 <!-- build:section navigation -->
 <!-- /build -->
