@@ -8,28 +8,37 @@ var config = require.main.require("./utils/config").main;
 
 /*===================================================== Exports  =====================================================*/
 
-exports.generateRings = function (scope, game, amount) {
-  var users = _.flatten(_.pluck(game.groups, "users"));
-  if (users.length < 2) { return Q.reject("To few users."); }
-  var promise = game.rings.length ? ringC.qRemove(scope, {_id: {$in: game.rings}}) : Q.when();
-  return promise.then(function () {
-    var rings = game.rings = [];
-    var tokens = [];
-    return Q.all(_.times(amount, function () {
-      return ringC
-          .qCreate({
-            active: users.length,
-            chain: _.map(_.shuffle(users), _.partial(getChainEntry, tokens))
-          })
-          .then(function (ring) {
-            rings.push(ring._id);
-            return ring;
-          });
-    }));
-  });
-};
+exports.generateRings = generateRings;
+exports.purgeRings = purgeRings;
 
 /*==================================================== Functions  ====================================================*/
+
+function purgeRings(scope, ringIds) {
+  if (ringIds instanceof Array && ringIds.length > 0) {
+    scope.log.debug({rings: ringIds}, "purging rings");
+    return ringC.qRemove(scope, {_id: {$in: ringIds}});
+  }
+  return Q.resolve();
+}
+
+function generateRings(scope, game, amount) {
+  var log = scope.log.child({game: game, amount: amount});
+  log.debug("generating rings");
+  var users = _.flatten(_.pluck(game.groups, "users"));
+  if (users.length < 2) { return Q.reject("To few users."); }
+  var tokens = [];
+  return Q.all(_.times(amount, function () {
+    return ringC
+        .qCreate({
+          active: users.length,
+          chain: _.map(_.shuffle(users), _.partial(getChainEntry, tokens))
+        })
+        .then(function (ring) {
+          log.debug({ring: ring}, "ring created");
+          return ring._id;
+        });
+  }));
+}
 
 function getChainEntry(tokens, user) {
   var token;

@@ -1,6 +1,5 @@
 {
   "navigation": {
-    "login": "Login",
-    "register": "Sign Up"
+    "login": "Sign in"
   }
 }

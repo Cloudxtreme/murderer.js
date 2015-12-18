@@ -5,7 +5,7 @@ angular.module("open").controller("loginCtrl", function ($scope, $location) {
 
   $scope.credentials = {
     username: null,
-    password: null,
+    password: null
   };
 
 });

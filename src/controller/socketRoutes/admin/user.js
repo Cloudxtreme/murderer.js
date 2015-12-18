@@ -10,12 +10,12 @@ module.exports = function (queryRoute) {
   queryRoute("users:not-activated", function () { return userC.qFind(this, {activated: false}, projection); });
 
   queryRoute("user:remove", function (data) {
-    return userC.qRemoveById(this, {_id: data});
+    return userC.qRemoveById(this, data);
     // TODO remove current connection(s) of user
   });
 
   queryRoute("user:update", function (data) {
-    return userC.qFindByIdAndUpdate(this, {_id: data._id}, data);
+    return userC.qUpdateById(this, data._id, data);
     // TODO remove current connection(s) of user to enforce re-acquisition of module-permissions
   });
 };

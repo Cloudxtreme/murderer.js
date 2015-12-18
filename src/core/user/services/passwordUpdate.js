@@ -1,7 +1,6 @@
 "use strict";
 
 var _ = require("lodash");
-var Q = require("q");
 
 var security = require.main.require("./utils/security");
 var config = require.main.require("./utils/config").main;
@@ -14,26 +13,18 @@ exports.updatePasswordByToken = updatePasswordByToken;
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(user) { return Q.nbind(user.save, user)(); } // TODO attach q-methods within modelBase
-
-function applyPasswordVerificationToken(user) {
-  user.resetPasswordExpires = _.now() + (config.security.token.expires.passwordReset || 3600000 /* 1h */);
-  user.resetPasswordToken = security.generateToken();
-  return user;
-}
-
 function requestPasswordToken(scope, email) {
+  var body = {
+    resetPasswordExpires: _.now() + (config.security.token.expires.passwordReset || 3600000 /* 1h */),
+    resetPasswordToken: security.generateToken()
+  };
   return controller
-      .qFindByEmail(scope, email)
+      .qFindByEmailAndUpdate(scope, email, body, {new: true})
       .then(function (user) {
-        if (user == null) { throw (new Error("User not found.")); }
-        return applyPasswordVerificationToken(user);
-      })
-      .then(qSave)
-      .then(function (user) {
+        if (user == null) { throw new Error("User not found."); }
         var data = {link: config.server.url + "reset-password/" + user.username + "/" + user.resetPasswordToken};
         return controller.qSendMailByKey(scope, user, "account.passwordResetRequest", data);
-      }, function (err) {
+      }).fail(function (err) {
         scope.log.error({err: err, email: email}, "user password-reset request failed");
         throw err;
       });
@@ -44,14 +35,17 @@ function updatePasswordByToken(scope, username, token, newPassword) {
   return controller
       .qFindByUsername(scope, username)
       .then(function (err, user) {
-        if (!user || user.resetPasswordToken !== token || !(user.resetPasswordExpires >= now)) { // jshint ignore:line
-          throw("Invalid token or username");
+        if (user == null) { throw new Error("User not found."); }
+        if (user.resetPasswordExpires == null || user.resetPasswordExpires < now || user.resetPasswordToken !== token) {
+          throw("Invalid token.");
         }
-        user.changedPassword = config.security.secret; // TODO might be insecure?
-        user.password = newPassword;
-        return applyPasswordVerificationToken(user);
+        return controller
+            .qFindByIdAndUpdate(scope, user._id, {
+              pw: security.encryptPassword(newPassword),
+              resetPasswordExpires: null,
+              resetPasswordToken: null
+            }, {new: true});
       })
-      .then(qSave)
       .then(function (user) {
         return controller
             .qSendMailByKey(scope, user, "account.passwordReset")

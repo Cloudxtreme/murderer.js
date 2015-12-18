@@ -9,5 +9,7 @@ module.exports = function (queryRoute) {
 
   queryRoute("group:create", function (data) { return groupC.qCreate(this, data); });
 
-  queryRoute("group:update", function (data) { return groupC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
+  queryRoute("group:update", function (data) {
+    return groupC.qFindByIdAndUpdate(this, {_id: data._id}, data, {new: true});
+  });
 };

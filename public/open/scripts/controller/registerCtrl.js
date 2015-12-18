@@ -5,9 +5,7 @@ angular.module("open").controller("registerCtrl", function ($scope, $location, s
 
   $scope.credentials = {
     username: null,
-    group: null,
     email: null,
-    profileMessage: null,
     password: null,
     passwordConfirm: null
   };
@@ -19,7 +17,7 @@ angular.module("open").controller("registerCtrl", function ($scope, $location, s
   });
 
   $scope.$watch("credentials.username", function (username) {
-    $scope.usernameValid = username ? /^[a-z_ 0-9-]{3,}$/i.test(username) : true;
+    $scope.usernameValid = username ? /^[a-zA-Z][\w\d]{2,}$/.test(username) : true;
   });
 
   $scope.$watchGroup(["credentials.password", "credentials.passwordConfirm"], function (data) {

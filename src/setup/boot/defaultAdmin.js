@@ -10,12 +10,10 @@ var security = require.main.require("./utils/security");
 
 var body = {
   username: "root",
-  usernameLower: "root",
-  email: "ole@reglitzki.de",
+  email: "frissdiegurke@protonmail.com",
   admin: true,
-  group: "Zsh",
   activated: true,
-  password: security.generateRandom(6)
+  password: security.generateRandom(12)
 };
 
 /**

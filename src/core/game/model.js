@@ -21,7 +21,11 @@ var GameSchema = new Schema(
       groups: {
         type: [{
           group: {type: ObjectID, ref: "Group"},
-          users: {type: [{type: ObjectID, ref: "User"}], default: []}
+          users: {type: [{ // TODO apply changes to services (previously users: [User._id])
+            user: {type: ObjectID, ref: "User"},
+            name: {type: String, required: true},
+            message: String
+          }], default: []}
         }], default: []
       },
 

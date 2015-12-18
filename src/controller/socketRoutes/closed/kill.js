@@ -25,7 +25,7 @@ module.exports = function (queryRoute) {
     if (typeof data !== "object" || typeof data.password !== "string" || typeof data.message !== "string") {
       return Q.reject(new Error("Invalid request."));
     }
-    if (!security.checkPassword(data.password, scope.user.hashedPassword)) {
+    if (!security.checkPassword(data.password, scope.user.pw)) {
       return Q.reject(new Error("Invalid password."));
     }
     return gameC.qFindOne(scope, {active: true})

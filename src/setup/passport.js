@@ -21,7 +21,7 @@ module.exports = function (app) {
     userModel.findByUsername(username, function (err, user) {
       if (err != null) {
         cb(err);
-      } else if (user == null || !security.checkPassword(password, user.hashedPassword)) {
+      } else if (user == null || !security.checkPassword(password, user.pw)) {
         cb(null, false, {message: "validation.login.invalid"});
       } else {
         cb(null, user);

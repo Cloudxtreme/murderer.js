@@ -7,10 +7,9 @@ var omitFields = [
   "cdate",
   "mdate",
   "log",
-  "hashedPassword",
+  "pw",
   "email",
   "resetPasswordToken",
-  "usernameLower",
   "resetPasswordExpires"
 ];
 

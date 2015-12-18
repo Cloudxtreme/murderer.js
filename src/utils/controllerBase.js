@@ -3,8 +3,6 @@
 var _ = require("lodash");
 var Q = require("q");
 
-// TODO apply logging to model.model.prototype-functions (save, etc)
-
 var __slice = Array.prototype.slice;
 
 function getModelMethodWrapper(validators, model, key) {

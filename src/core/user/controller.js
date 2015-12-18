@@ -38,13 +38,9 @@ exports.qUpdateSelf = qUpdateSelf;
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(user) { return Q.nbind(user.save, user)(); } // TODO attach q-methods within modelBase
-
 function qUpdateSelf(scope, data) {
   exports
-      .qFindById(scope, scope.user._id)
-      .then(function (user) { return _.extend(user, _.omit(data, model.LOCKED_FIELDS));})
-      .then(qSave)
+      .qFindByIdAndUpdate(scope, scope.user._id, _.omit(data, model.LOCKED_FIELDS), {new: true})
       .fail(function (err) {
         scope.log.error({err: err}, "user update failed");
         return Q.reject(err);

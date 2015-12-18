@@ -9,7 +9,9 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
 
-  queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, {_id: data._id}, data); });
+  queryRoute("game:update", function (data) {
+    return gameC.qFindByIdAndUpdate(this, {_id: data._id}, data, {new: true});
+  });
 
   queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
 

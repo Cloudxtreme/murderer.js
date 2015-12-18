@@ -22,8 +22,6 @@ exports.qSuicide = murder.bySuicide;
 
 /*==================================================== Functions  ====================================================*/
 
-function qSave(game) { return Q.nbind(game.save, game)(); } // TODO attach q-methods within modelBase
-
 /**
  * Returns Promise for populated game instance by specified ID.
  * @param scope The scope object.
@@ -40,15 +38,13 @@ function findByIdPopulated(scope, gameId, population) {
 
 function generateRings(scope, id, amount) {
   return exports
-      .qFindById(scope, id)
+      .qFindById(scope, id, {rings: 1})
       .then(function (game) {
+        if (game == null) { throw new Error("Game not found."); }
         scope.log.debug({game: game, amount: amount}, "generating game rings");
         return generation
-            .generateRings(scope, game, amount)
-            .then(function () {
-              scope.log.debug({game: game, rings: game.rings}, "generated game rings");
-              return game;
-            });
-      })
-      .then(function (game) { return qSave(game); });
+            .purgeRings(scope, game.rings)
+            .then(function () { return generation.generateRings(scope, game, amount); })
+            .then(function (ringIds) { return exports.qUpdateById(scope, game._id, {rings: ringIds}); });
+      });
 }

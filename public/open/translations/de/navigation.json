@@ -1,6 +1,5 @@
 {
   "navigation": {
-    "login": "Login",
-    "register": "Registrieren"
+    "login": "Anmelden"
   }
 }

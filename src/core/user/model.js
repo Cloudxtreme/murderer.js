@@ -10,8 +10,8 @@ var security = require.main.require("./utils/security");
 var Schema = require("mongoose").Schema;
 
 var LOCKED_FIELDS = [
-  "cdate", "mdate", "username", "usernameLower", "hashedPassword", "admin", "password", "activated", "email",
-  "resetPasswordToken", "resetPasswordExpires"
+  "cdate", "mdate", "username", "pw", "admin", "password", "activated", "email", "resetPasswordToken",
+  "resetPasswordExpires"
 ];
 
 /*================================================ Schema Definition  ================================================*/
@@ -21,8 +21,7 @@ var UserSchema = new Schema(
       cdate: {type: Date, default: Date.now},
       // credentials
       username: {type: String, required: true, unique: true, trim: true},
-      usernameLower: {type: String, required: true, unique: true, trim: true},
-      hashedPassword: {type: String, default: ""},
+      pw: {type: String, default: ""},
       // status-flags
       admin: {type: Boolean, default: false},
       activated: {type: Boolean, default: true},
@@ -31,8 +30,10 @@ var UserSchema = new Schema(
       // reset password
       resetPasswordToken: {type: String, default: 0, trim: true},
       resetPasswordExpires: {type: Date, default: 0},
+      // data used for latest joined game, to be proposed for next one
+      lastName: String,
+      lastMessage: {type: String, default: "Try hard"},
       // misc
-      profileMessage: {type: String, trim: true},
       avatarUrl: {type: String, trim: true, lowercase: true}
     }
 );
@@ -41,7 +42,7 @@ UserSchema
     .virtual("password")
     .set(function (password) {
       this._pw = password;
-      this.hashedPassword = security.encryptPassword(password);
+      this.pw = security.encryptPassword(password);
     })
     .get(function () { return this._pw; });
 
