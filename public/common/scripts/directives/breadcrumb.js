@@ -1,4 +1,4 @@
-angular.module("closed").directive("breadcrumb", function ($rootScope, $location, $translate) {
+angular.module("common").directive("breadcrumb", function ($rootScope, $location, $translate) {
   "use strict";
 
   var listener = [];
@@ -10,7 +10,7 @@ angular.module("closed").directive("breadcrumb", function ($rootScope, $location
 
   return {
     restrict: "C",
-    templateUrl: "/templates/closed/breadcrumb.html",
+    templateUrl: "/templates/common/breadcrumb.html",
     link: function ($scope) {
       $scope.items = [];
 
