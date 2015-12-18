@@ -34,12 +34,14 @@
         <input type="email" class="form-control" id="email" name="email" ng-model="credentials.email" required/>
 
         <label for="register-password" class="control-label" translate>credentials.password</label>
-        <input type="password" class="form-control" id="register-password" placeholder="Mb2.r5oHf-0t" name="password"
-               ng-model="credentials.password" ng-minlength="4" required/>
+        <input type="password" class="form-control" id="register-password"
+               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" name="password" ng-model="credentials.password"
+               ng-minlength="4" required/>
 
         <label for="password-confirm" class="control-label" translate>credentials.passwordConfirm</label>
-        <input type="password" class="form-control" id="password-confirm" placeholder="Mb2.r5oHf-0t"
-               name="passwordConfirm" ng-model="credentials.passwordConfirm" ng-valid="passwordConfirmValid"
+        <input type="password" class="form-control" id="password-confirm"
+               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" name="passwordConfirm"
+               ng-model="credentials.passwordConfirm" ng-valid="passwordConfirmValid"
                required/>
 
         <label class="control-label">
