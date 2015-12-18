@@ -1,5 +1,7 @@
 <article id="login" class="flexbox">
 
+    <!-- TODO send requests via AJAX for better error handling -->
+
     <form name="loginForm" class="login form flex-50" action="/login" method="post">
         <h2 translate>login.title</h2>
 
@@ -11,11 +13,14 @@
         <input type="password" class="form-control" id="password" name="password" ng-model="credentials.password"
                ng-minlength="4" required/><br/>
 
-        <!-- TODO replace with all known errors explicitly -->
-        <div class="error-msg form-info" ng-if="error" translate>credentials.loginFailed</div>
+        <!-- TODO show validation errors -->
 
         <input type="submit" class="form-btn" ng-value="'credentials.login' | translate"
                ng-disabled="loginForm.$invalid"/>
+
+        <!-- TODO replace with all known errors explicitly -->
+        <div class="error-msg form-info" ng-if="error" translate>credentials.loginFailed</div>
+
     </form>
 
     <form name="registerForm" class="register form flex-50" action="/register" method="post">
@@ -47,13 +52,15 @@
                  translate>credentials.usernameMinLength
             </div>
             <div ng-if="registerForm.username.$error.bool" translate>credentials.usernameRegEx</div>
+            <!-- TODO show all validation errors-->
         </div>
+
+        <input type="submit" class="form-btn" ng-value="'credentials.register' | translate"
+               ng-disabled="registerForm.$invalid"/>
 
         <!-- TODO replace with all known errors explicitly -->
         <div class="error-msg form-info" ng-if="error && !registerForm.$dirty" ng-bind="error"></div>
 
-        <input type="submit" class="form-btn" ng-value="'credentials.register' | translate"
-               ng-disabled="registerForm.$invalid"/>
     </form>
 
 </article>
