@@ -10,8 +10,6 @@
       "moment/min/moment-with-locales.js": true,
       "angular-translate/angular-translate.js": true,
       "angular-route/angular-route.js": true,
-      "angular-translate-storage-cookie/angular-translate-storage-cookie.js": true,
-      "angular-translate-storage-local/angular-translate-storage-local.js": true,
       "angular-cookies/angular-cookies.js": true,
       "angular-smart-table/dist/smart-table.js": true
     }

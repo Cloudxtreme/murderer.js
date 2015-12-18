@@ -1,6 +1,7 @@
 {
   "cookieNotice": {
-    "terms": "Diese Website verwendet Cookies. Indem Sie weiter auf dieser Website navigieren, stimmen Sie unserer Verwendung von Cookies zu. Weitere Details können Sie in unserer <a href=\"/cookie-policy\">Cookie-Richtlinie</a> nachlesen.",
-    "disable": "Klicken Sie hier um diese Meldung dauerhaft durch Erzeugen eines Cookies auszublenden."
+    "terms": "Diese Website verwendet Cookies zum Speichern personenbezogener Daten (zum Beispiel Spracheinstellung). Weitere Details können Sie in unserer <a href=\"/cookie-policy\">Cookie-Richtlinie</a> nachlesen.",
+    "accept": "Ich stimme der Verwendung von Cookies zu.",
+    "reject": "Ich lehne die Verwendung von Cookies ab."
   }
 }
