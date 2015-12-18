@@ -1,3 +1,4 @@
+_ = require 'lodash'
 path = require 'path'
 
 PATH_BASE = path.join __dirname, 'grunt'
@@ -35,6 +36,7 @@ module.exports = (grunt) ->
     genTranslations: loadTask "build/code_generation/translations"
     genLocales: loadTask "build/code_generation/locales"
     genConstants: loadTask "build/code_generation/constants"
+    genConfig: loadTask "build/code_generation/config"
   # html build
     htmlbuild: loadTask "build/compilation/htmlbuild"
   # styles build
@@ -56,10 +58,13 @@ module.exports = (grunt) ->
   # - dependencies
   grunt.registerTask 'dependencies', ['npm-install', 'bower']
   # - build process
-  grunt.registerTask 'build_dev', ['copy_dev', 'generate', 'compile_dev']
-  grunt.registerTask 'build_dist', ['copy_dev', 'generate', 'compile_dist', 'copy_dist']
+  grunt.registerTask 'build_dev', ['copy_dev', 'generate_dev', 'compile_dev']
+  grunt.registerTask 'build_dist', ['copy_dev', 'generate_dist', 'compile_dist', 'copy_dist']
   # - - code-generation
-  grunt.registerTask 'generate', Object.keys(cfg).filter (task) -> /^gen[A-Z]/.test task
+  grunt.registerTask 'generate_dev', _.map Object.keys(cfg).filter((task) -> /^gen[A-Za-z]+(?:_dev)?$/.test task),
+    (k) -> if cfg[k].hasOwnProperty "dev" then k + ":dev" else k
+  grunt.registerTask 'generate_dist', _.map Object.keys(cfg).filter((task) -> /^gen[A-Za-z]+(?:_dist)?$/.test task),
+    (k) -> if cfg[k].hasOwnProperty "dist" then k + ":dist" else k
   # - - compilation
   grunt.registerTask 'compile_dev', ['less_dev', 'autoprefixer_dev', 'htmlbuild_dev']
   grunt.registerTask 'compile_dist', ['ngAnnotate', 'uglify', 'less_dist', 'autoprefixer_dist', 'htmlbuild_dist']

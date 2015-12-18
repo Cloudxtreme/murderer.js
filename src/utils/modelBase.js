@@ -5,6 +5,8 @@ var _ = require("lodash");
 var MODEL_FUNCTIONS_EXTEND = [
   "count",
   "create",
+  "exists", // non-mongoose, self defined
+  "existsViaCount", // non-mongoose, self defined
   "find",
   "findById", "findOne",
   "findByIdAndRemove", "findOneAndRemove",
@@ -13,6 +15,7 @@ var MODEL_FUNCTIONS_EXTEND = [
   "remove",
   "update" // to be used with care, no mongoose-validation/-middleware
 ];
+var LIGHTWEIGHT_PROJECTION = {_id: 1};
 
 //var MODEL_METHODS_EXTEND = [ TODO
 //    "save",
@@ -27,7 +30,7 @@ var UNIQUE_FUNCTIONS = [
   {prefix: "findBy", fn: "findOne"},
   {prefix: "findBy", suffix: "AndRemove", fn: "findOneAndRemove"},
   {prefix: "findBy", suffix: "AndUpdate", fn: "findOneAndUpdate"},
-  {prefix: "exists", fn: "count"},
+  {prefix: "exists", fn: "existsViaCount"},
   {prefix: "removeBy", fn: "remove"},
   {prefix: "updateBy", fn: "update"}
 ];
@@ -35,6 +38,7 @@ var UNIQUE_FUNCTIONS = [
 var GENERAL_FUNCTIONS = [
   {prefix: "findBy", fn: "find"},
   {prefix: "countBy", fn: "count"},
+  {prefix: "exists", fn: "exists"},
   {prefix: "removeBy", fn: "remove"},
   {prefix: "updateBy", fn: "update"}
 ];
@@ -59,6 +63,20 @@ function getQueryByKey(key) {
  */
 module.exports = function (model, target, uniques, keys) {
   var methods = target._methods = [];
+
+  model.exists = function (query, cb) {
+    return model.findOne(query, LIGHTWEIGHT_PROJECTION, function (err, obj) {
+      if (err != null) { return cb(err); }
+      cb(null, obj == null);
+    });
+  };
+
+  model.existsViaCount = function (query, cb) { // for unique keys preferred over exists due to less memory usage
+    return model.count(query, function (err, count) {
+      if (err != null) { return cb(err); }
+      cb(null, count > 0);
+    });
+  };
 
   _.each(MODEL_FUNCTIONS_EXTEND, function (key) {
     target[key] = function () { return model[key].apply(model, arguments); };

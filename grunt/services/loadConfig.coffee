@@ -87,10 +87,19 @@ module.exports = (grunt, cwd, configDir, configObj = {}) ->
 
   configObj.cwd = cwd;
 
-  configObj.loadServerConfig = (name) ->
+  configObj.loadServerConfig = (name, env) ->
     res = grunt.file.readJSON path.join cwd, "config/#{name}.json"
     if grunt.file.exists path.join cwd, "config/#{name}.local.json"
       _.merge res, grunt.file.readJSON path.join cwd, "config/#{name}.local.json"
-    res
+    if res._noEnv
+      delete res._noEnv
+      res
+    else
+      c = res[env]
+      while c._extend
+        k = c._extend
+        delete c._extend
+        c = _.extend {}, res[k], c
+      c
 
   configObj

@@ -1,5 +1,10 @@
 {
   "login": {
-    "title": "Login"
+    "title": "Login",
+    "error": {
+      "wrongData": "The password and username don't match.",
+      "delay": "Please wait a second.",
+      "other": "Login failed. Please try again."
+    }
   }
 }

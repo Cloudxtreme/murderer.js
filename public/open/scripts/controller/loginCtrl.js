@@ -1,11 +1,37 @@
-angular.module("open").controller("loginCtrl", function ($scope, $location) {
+angular.module("open").controller("loginCtrl", function (BASE_PATH, CREDENTIALS, $scope, $window, $location, $http) {
   "use strict";
 
-  $scope.error = $location.hash() === "failed";
+  var lastRequest = -1;
 
+  $scope.error = null;
+  $scope.loading = null;
+  $scope.passwordMinLength = CREDENTIALS.password.min;
   $scope.credentials = {
     username: null,
     password: null
+  };
+
+  $scope.$watch("credentials.username", function (value) {
+    $scope.usernameValid = CREDENTIALS.username.regex.test(value || "");
+  });
+
+  $scope.login = function () {
+    var reqId = ++lastRequest;
+    var data = _.clone($scope.credentials);
+    $scope.loading = true;
+    $scope.error = null;
+    $scope.credentials.password = null;
+    $http
+        .post("/login", data)
+        .then(function () {
+          $scope.loading = $scope.error = null;
+          $window.location.href = BASE_PATH;
+        }, function (err) {
+          if (reqId !== lastRequest) { return; }
+          if (err.status === 429) { $scope.credentials.password = data.password; }
+          $scope.loading = null;
+          $scope.error = err;
+        });
   };
 
 });

@@ -39,7 +39,7 @@ exports.qUpdateSelf = qUpdateSelf;
 /*==================================================== Functions  ====================================================*/
 
 function qUpdateSelf(scope, data) {
-  exports
+  return exports
       .qFindByIdAndUpdate(scope, scope.user._id, _.omit(data, model.LOCKED_FIELDS), {new: true})
       .fail(function (err) {
         scope.log.error({err: err}, "user update failed");

@@ -7,17 +7,21 @@
     display: block;
     width: 100%;
     max-width: 100%;
-    background: white none;
+    background: mix(@bg-color, white, 5%) none;
     color: @bg-color;
     line-height: @line-height-base;
     height: @line-height-computed + 2 * 4px;
     border: 1px solid fade(@bg-color, 50%);
     margin: 3px 0;
+  }
+
+  .form-control, .form-checkbox {
     outline: none;
 
     &.ng-invalid {
       border-color: @color-danger;
       box-shadow: 0 0 2px 1px @color-danger;
+      background-color: mix(@color-danger, white, 15%);
     }
 
     &:focus {

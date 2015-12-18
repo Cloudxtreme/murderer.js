@@ -1,6 +1,19 @@
 {
   "register": {
     "title": "Register",
-    "terms": "I have read and agree to the <a href=\"/privacy-policy\">Privacy policy</a>."
+    "terms": "I have read and agree to the <a href=\"/privacy-policy\">Privacy policy</a>.",
+    "invalid": {
+      "usernameMinLength": "The username needs at least {{min}} characters.",
+      "usernameForm": "The username may not contain special characters.",
+      "usernameTaken": "The username is already in use.",
+      "emailForm": "A valid email address is required.",
+      "emailTaken": "The email address is already in use.",
+      "passwordMinLength": "The password needs at least {{min}} characters.",
+      "passwordsMatch": "The passwords don't match."
+    },
+    "error": {
+      "delay": "Please wait a second.",
+      "other": "Login failed. Please try again."
+    }
   }
 }

@@ -1,5 +1,10 @@
 {
   "login": {
-    "title": "Einloggen"
+    "title": "Einloggen",
+    "error": {
+      "wrongData": "Das Passwort und der Nutzername stimmen nicht überein.",
+      "delay": "Bitte eine Sekunde warten.",
+      "other": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    }
   }
 }

@@ -5,6 +5,13 @@
         "module": "common",
         "service": "locales"
       }
+    ],
+    "config": [
+      {
+        "module": "common",
+        "constant": "BASE_PATH",
+        "key": "server.url"
+      }
     ]
   }
 }

@@ -1,6 +1,19 @@
 {
   "register": {
     "title": "Registrieren",
-    "terms": "Ich habe die <a href=\"/privacy-policy\">Datenschutzerklärung</a> gelesen und bin mit dieser einverstanden."
+    "terms": "Ich habe die <a href=\"/privacy-policy\">Datenschutzerklärung</a> gelesen und bin mit dieser einverstanden.",
+    "invalid": {
+      "usernameMinLength": "Der Nutzername muss mindestens {{min}} Zeichen lang sein.",
+      "usernameForm": "Der Nutzername darf keine Sonderzeichen enthalten.",
+      "usernameTaken": "Der Nutzername ist bereits vergeben.",
+      "emailForm": "Die Email Adresse ist nicht gültig.",
+      "emailTaken": "Die Email Adresse wird bereits verwendet.",
+      "passwordMinLength": "Das Passwort muss mindestens {{min}} Zeichen lang sein.",
+      "passwordsMatch": "Die Passwörter stimmen nicht überein."
+    },
+    "error": {
+      "delay": "Bitte eine Sekunde warten.",
+      "other": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    }
   }
 }
