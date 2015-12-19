@@ -47,16 +47,43 @@
   }
 
   .form-btn {
+    @form-button-color-light: mix(@bg-color, @text-color, 60%);
+    @form-button-color-dark: mix(@bg-color, @text-color, 80%);
     box-sizing: border-box;
-    padding: 4px 8px;
+    text-decoration: none;
+    padding: 4px 10px;
+    height: @line-height-computed + 2 * 4px;
     display: block;
     width: 100%;
     margin: 6px 0;
     outline: none;
+    cursor: pointer;
+    color: @text-color;
+    background: @form-button-color-light linear-gradient(to bottom, @form-button-color-light, @form-button-color-dark);
+    border: 1px outset @form-button-color-light;
+    text-shadow: 1px 1px black;
+    font-weight: bold;
 
     &:focus {
       border-color: @color-info;
       box-shadow: 0 0 2px 2px @color-info;
+    }
+
+    &:hover, &:active {
+      background: @form-button-color-dark linear-gradient(to bottom, @form-button-color-dark, @form-button-color-light);
+      padding: 5px 9px 3px 11px;
+      border: 1px inset @form-button-color-light;
+    }
+
+    &:disabled {
+      @form-button-color-light: mix(@bg-color, @text-color, 60%);
+      @form-button-color-dark: mix(@bg-color, @text-color, 70%);
+      background: @form-button-color-light linear-gradient(to bottom, @form-button-color-light, @form-button-color-dark);
+      border: 1px outset @form-button-color-light;
+      padding: 5px 10px;
+      cursor: not-allowed;
+      color: fade(darken(@text-color, 20%), 80%);
+      text-shadow: none;
     }
   }
 
