@@ -1,89 +1,150 @@
+/*
+ * This service provides communication capability between the client and server (and reverse).
+ * The connect() function needs to be called on bootstrapping in order to initiate the service.
+ *
+ * Note: This service can only manage one connection to a server. Multiple calls of connect() will be ignored.
+ */
 angular.module("common").factory("socket", function ($location, $q, $http) {
   "use strict";
-
-  var initialized = $q.defer();
-  var connected = $q.defer();
-  var authorized = $q.defer();
 
   var queryId = 0;
   var queryDeferreds = {};
   var queryMessageIds = {};
+  var initialized = $q.defer();
+  var connected = $q.defer();
+  var identified = $q.defer();
+  var authorized = $q.defer();
 
   var connection = null;
+
+  /*==================================================== Exports  ====================================================*/
+
+  var service = {
+    identity: null,
+    promises: {
+      /**
+       * Resolves once the WebSocket connection is created (Connection step #1 is done).
+       */
+      initialized: initialized.promise,
+      /**
+       * Resolves once the WebSocket connection to the server is established (Connection step #2 is done).
+       */
+      connected: connected.promise,
+      /**
+       * Resolves once the identity of the client got resolved by the server (Connection step #4 is done).
+       * Resolve value is the user object.
+       */
+      identified: identified.promise,
+      /**
+       * Resolves once the identity of the user is authenticated (Connection step #7 is done).
+       * Resolve value is the user object. Each guest gets assigned a user object too.
+       * TODO why do I send the user object once more via socket connection instead of using the http-transmitted one?
+       *      difference: auth-object contains guest-data (should be doable via first http-request, shouldn't it?)
+       */
+      authorized: authorized.promise
+    },
+
+    connect: connect,
+    on: attachMessageListener,
+    emit: emitMessage,
+    query: emitQuery
+  };
+
+  return service;
+
+  /*=================================================== Functions  ===================================================*/
+
+  /*--------------------------------------------------- Connection ---------------------------------------------------*/
+
+  /**
+   * Connection Steps:
+   *  1. io.connect()
+   *  2. server sends 'established' once set-up
+   *  3. client sends http request to get authenticated
+   *  4. server responds with user object and token for socket-association
+   *  5. client sends token to associate the socket with the user
+   *  6. server authorizes socket connection and sends 'authorized'
+   *  7. client creates listener for service-internal messages to provide query method
+   *
+   * @param {string} [url] The url to create the connection - see {@link Socket.connect}.
+   * @return {Q} {@link service.promises.connected}
+   */
+  function connect(url) {
+    if (connection == null) {
+      if (url == null) { url = $location.protocol() + "://" + $location.host() + ":" + $location.port(); }
+      connection = io.connect(url);
+      connection.on("connection:authorized", onAuthorized);
+      connection.on("connection:established", onEstablished);
+      initialized.resolve();
+    }
+    return connected.promise;
+  }
+
+  function onAuthorized(user) {
+    setupQueryListeners();
+    authorized.resolve(user);
+  }
+
+  function onEstablished() {
+    connected.resolve();
+    $http.get("/connection/authToken").then(function (res) {
+      var user = res.data.user;
+      user.guest = !!user.guest;
+      identified.resolve(service.identity = user);
+      connection.emit("connection:authorize", {userId: res.data.user._id, token: res.data.token});
+    }, function (err) {
+      identified.reject(err);
+      authorized.reject(err);
+    });
+  }
 
   function queryResolved(queryId) {
     delete queryDeferreds[queryId];
     delete queryMessageIds[queryId];
   }
 
-  function onConnectionEstablished() {
-    connection.on("query:response", function (data) {
-      queryDeferreds[data.id].resolve(data.response);
-      queryResolved(data.id);
-    });
-    connection.on("query:failed", function (data) {
-      console.error("query '" + queryMessageIds[data.id] + "' responded an error:", data.reason);
-      queryDeferreds[data.id].reject(data.reason);
-      queryResolved(data.id);
-    });
-    connection.on("query:progress", function (data) {
-      queryDeferreds[data.id].notify(data.progress);
-    });
+  /*---------------------------------------------------- Queries  ----------------------------------------------------*/
+
+  function setupQueryListeners() {
+    connection.on("query:failed", onQueryFailed);
+    connection.on("query:progress", onQueryProgress);
+    connection.on("query:response", onQueryResponse);
   }
 
-  function resolveAuth(user) {
-    service.identity = user;
-    authorized.resolve(user);
-    onConnectionEstablished();
+  function onQueryFailed(data) {
+    console.warn("query '" + queryMessageIds[data.id] + "' responded an error:", data.reason);
+    queryDeferreds[data.id].reject(data.reason);
+    queryResolved(data.id);
   }
 
-  var service = {
-    identity: null,
+  function onQueryProgress(data) {
+    queryDeferreds[data.id].notify(data.progress);
+  }
 
-    initialized: initialized.promise,
-    connected: connected.promise,
-    authorized: authorized.promise,
+  function onQueryResponse(data) {
+    queryDeferreds[data.id].resolve(data.response);
+    queryResolved(data.id);
+  }
 
-    connect: function (url) {
-      if (connection == null) {
-        connection = io.connect(url || "#{$location.protocol()}://#{$location.host()}:#{$location.port()}");
-        connection.on("connection:authorized", function (user) {
-          user.guest = !!user.guest;
-          resolveAuth(user);
-        });
-        connection.on("connection:established", function () {
-          $http.get("/connection/authToken").then(function (res) {
-            connected.resolve(res.data.user);
-            connection.emit("connection:authorize", {userId: res.data.user._id, token: res.data.token});
-          }, function (err) {
-            connected.reject(err);
-            authorized.reject(err);
-          });
-        });
-        initialized.resolve(service);
-      }
-      return service.connected;
-    },
+  function emitQuery(messageId, data) {
+    var defer = $q.defer();
+    authorized.promise.then(function () {
+      var qId = queryId++;
+      queryMessageIds[qId] = messageId;
+      queryDeferreds[qId] = defer;
+      connection.emit("query:send", {id: qId, method: messageId, data: data});
+    });
+    return defer.promise;
+  }
 
-    on: function (messageId, callback) {
-      service.initialized.then(function () { connection.on(messageId, callback); });
-    },
+  /*------------------------------------------------------ Misc ------------------------------------------------------*/
 
-    emit: function (messageId, data) {
-      return service.authorized.then(function () { return connection.emit(messageId, data); });
-    },
+  function attachMessageListener(messageId, callback) {
+    initialized.promise.then(function () { connection.on(messageId, callback); });
+  }
 
-    query: function (messageId, data) {
-      var defer = $q.defer();
-      service.authorized.then(function () {
-        var qId = queryId++;
-        queryMessageIds[qId] = messageId;
-        queryDeferreds[qId] = defer;
-        connection.emit("query:send", {id: qId, method: messageId, data: data});
-      });
-      return defer.promise;
-    }
-  };
+  function emitMessage(messageId, data) {
+    return authorized.promise.then(function () { return connection.emit(messageId, data); });
+  }
 
-  return service;
 });

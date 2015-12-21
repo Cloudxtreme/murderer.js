@@ -3,27 +3,37 @@ angular.module("common").factory("cookiesAccepted", function ($cookies, $q) {
 
   var defer = $q.defer();
 
+  /*==================================================== Exports  ====================================================*/
+
   var service = {
     promise: defer.promise,
 
-    init: function () {
-      var value = +$cookies.get("cookiesAccepted") > 0 ? true : null;
-      if (value === true) { defer.resolve(); }
-      return value;
-    },
-    accept: function (expire) {
-      $cookies.put("cookiesAccepted", Date.now(), {expires: expire});
-      defer.resolve();
-    },
+    init: init,
+    accept: accept,
     reject: function () { defer.reject(); },
-
-    delay: function (cb) {
-      return function () {
-        var args = arguments;
-        service.promise.then(function () { cb.apply(null, args); });
-      };
-    }
+    delay: delay
   };
 
   return service;
+
+  /*=================================================== Functions  ===================================================*/
+
+  function accept(expire) {
+    $cookies.put("cookiesAccepted", Date.now() + "", {expires: expire});
+    defer.resolve();
+  }
+
+  function delay(cb) {
+    return function () {
+      var args = arguments;
+      service.promise.then(function () { cb.apply(null, args); });
+    };
+  }
+
+  function init() {
+    var value = +$cookies.get("cookiesAccepted") > 0 ? true : null;
+    if (value === true) { defer.resolve(); }
+    return value;
+  }
+
 });

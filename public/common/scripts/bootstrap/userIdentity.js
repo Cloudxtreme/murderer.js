@@ -10,9 +10,15 @@ angular.module("common").run(function ($rootScope, $timeout, socket) {
 
   /*=============================================== Initial Execution  ===============================================*/
 
-  socket.connect().then(function (user) {
+  socket.connect();
+
+  socket.promises.identified.then(function (user) {
     $rootScope.identity = user;
+    console.log("id", user);
     $rootScope.connected = true;
+  });
+  socket.promises.authorized.then(function (user) {
+    console.log("au", user);
   });
 
   /*=================================================== Functions  ===================================================*/

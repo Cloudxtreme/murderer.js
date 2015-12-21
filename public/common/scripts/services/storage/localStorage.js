@@ -3,24 +3,49 @@ angular.module("common").factory("localStorage", function ($window, cookieStorag
 
   var localStorage = $window.localStorage;
 
-  return localStorage != null ? {
-    supported: true,
+  /*==================================================== Exports  ====================================================*/
 
-    get: function () { return localStorage.getItem.apply(localStorage, arguments); },
-    getObject: function () {
-      try {
-        return JSON.parse(localStorage.getItem.apply(localStorage, arguments));
-      } catch (e) {
-        return void 0;
-      }
-    },
-    getAll: function () { return localStorage; },
+  var service;
 
-    put: cookiesAccepted.delay(function (key, value) { return localStorage.setItem(key, value); }),
-    putObject: cookiesAccepted.delay(function (key, value) {
-      return localStorage.setItem(key, JSON.stringify(value));
-    }),
+  if (localStorage == null || typeof localStorage.getItem !== "function") {
 
-    remove: function () { return localStorage.removeItem.apply(localStorage, arguments); }
-  } : cookieStorage;
+    /*---------------------------------------- Export cookie storage fallback ----------------------------------------*/
+
+    service = cookieStorage;
+
+  } else {
+
+    /*----------------------------------------- Export local storage methods -----------------------------------------*/
+
+    service = {
+      get: getItem,
+      getObject: getItemJSON,
+      getAll: function () { return localStorage; },
+      put: cookiesAccepted.delay(setItem),
+      putObject: cookiesAccepted.delay(setItemJSON),
+      remove: removeItem
+    };
+
+  }
+
+  return service;
+
+  /*=================================================== Functions  ===================================================*/
+
+  function getItem() { return localStorage.getItem.apply(localStorage, arguments); }
+
+  function getItemJSON() {
+    try {
+      return JSON.parse(localStorage.getItem.apply(localStorage, arguments));
+    } catch (e) {
+      return void 0;
+    }
+  }
+
+  function removeItem() { return localStorage.removeItem.apply(localStorage, arguments); }
+
+  function setItem(key, value) { return localStorage.setItem(key, value); }
+
+  function setItemJSON(key, value) { return localStorage.setItem(key, JSON.stringify(value)); }
+
 });

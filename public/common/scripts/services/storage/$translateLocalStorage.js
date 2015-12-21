@@ -1,17 +1,22 @@
-angular.module("common").factory("$translateLocalStorage", $translateLocalStorage);
-
-function $translateLocalStorage(localStorage) {
+angular.module("common").factory("$translateLocalStorage", function (localStorage) {
   "use strict";
 
   var langKey;
 
-  return {
-    get: function (name) { return langKey || (langKey = localStorage.get(name)); },
-    put: function (name, value) {
-      langKey = value;
-      localStorage.put(name, value);
-    }
-  };
-}
+  /*==================================================== Exports  ====================================================*/
 
-$translateLocalStorage.displayName = "$translateLocalStorageFactory";
+  return {
+    get: get,
+    put: put
+  };
+
+  /*=================================================== Functions  ===================================================*/
+
+  function get(name) { return langKey || (langKey = localStorage.get(name)); }
+
+  function put(name, value) {
+    langKey = value;
+    localStorage.put(name, value);
+  }
+
+});
