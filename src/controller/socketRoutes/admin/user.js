@@ -1,5 +1,7 @@
 "use strict";
 
+var _ = require("lodash");
+
 var userC = require.main.require("./core/user/controller");
 
 module.exports = function (queryRoute) {
@@ -15,7 +17,7 @@ module.exports = function (queryRoute) {
   });
 
   queryRoute("user:update", function (data) {
-    return userC.qUpdateById(this, data._id, data);
+    return userC.qUpdateById(this, data._id, _.omit(data, ["_id"]));
     // TODO remove current connection(s) of user to enforce re-acquisition of module-permissions
   });
 };
