@@ -55,6 +55,13 @@
     background-color: fade(@text-color, 10%);
   }
 
+  > tbody > tr.primary {
+    background-color: fade(@color-primary, 15%);
+    &:hover {
+      background-color: fade(@color-primary, 25%);
+    }
+  }
+
   > tbody > tr > td {
     padding: 4px 7px;
     border: 1px solid fade(@text-color, 15%);

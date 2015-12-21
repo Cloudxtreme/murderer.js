@@ -1,20 +1,27 @@
-<table class="users-list-table">
+<table class="table table-striped" st-table="users">
     <thead>
     <tr>
         <th translate>user.name</th>
-        <th translate>user.email</th>
-        <th></th>
+        <th class="width-50" translate>user.email</th>
+        <th class="width-20"></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="user in users" data-user-id="{{user._id}}" ng-class="{admin: user.admin}">
-        <td class="user-name" ng-bind="user.username"></td>
-        <td class="user-email" ng-bind="user.email"></td>
-        <td class="user-actions">
+    <tr ng-repeat="user in users" data-user-id="{{user._id}}" ng-class="{primary: user.admin}">
+        <td ng-bind="user.username"></td>
+        <td ng-bind="user.email"></td>
+        <td class="text-right">
             <a class="fa fa-fw" ng-class="user.admin ? 'fa-user-secret' : 'fa-user'" ng-click="toggleAdmin(user)"
                ng-if="!isSelf(user)"></a>
             <a class="fa fa-fw fa-trash-o" ng-click="removeUser(user)"></a>
         </td>
     </tr>
     </tbody>
+    <tfoot ng-show="users.length > 10">
+    <tr>
+        <td colspan="3" class="text-center">
+            <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
+        </td>
+    </tr>
+    </tfoot>
 </table>

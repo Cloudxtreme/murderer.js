@@ -6,7 +6,7 @@
     "angular-chart.js": "~0.8.4",
     "angular-cookies": "^1.4.1",
     "angular-route": "^1.4.1",
-    "angular-smart-table": "^2.1.1",
+    "angular-smart-table": "^2.1.6",
     "angular-translate": "^2.7.2",
     "font-awesome": "^4.3.0",
     "jquery": "^2.1.4",
