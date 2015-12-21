@@ -1,0 +1,17 @@
+.panel {
+  padding: 8px;
+  background: fade(@text-color, 10%);
+  border: 1px solid fade(black, 60%);
+
+  > .panel-heading {
+    margin: -8px -8px 8px -8px;
+    padding: 5px 8px;
+    text-align: center;
+    border-bottom: 1px solid fade(black, 30%);
+    background: fade(black, 40%);
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

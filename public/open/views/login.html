@@ -1,7 +1,7 @@
 <article id="login" class="flexbox">
 
-    <form name="loginForm" class="login form flex-50" ng-submit="login()">
-        <h2 translate>login.title</h2>
+    <form name="loginForm" class="login panel form flex-50" ng-submit="login()">
+        <h2 class="panel-heading" translate>login.title</h2>
 
         <label for="username" class="control-label" translate>credentials.username</label>
         <input type="text" class="form-control" id="username" name="username" ng-model="credentials.username"
@@ -28,8 +28,8 @@
 
     </form>
 
-    <form name="registerForm" class="register form flex-50" ng-submit="register()">
-        <h2 translate>register.title</h2>
+    <form name="registerForm" class="register panel form flex-50" ng-submit="register()">
+        <h2 class="panel-heading" translate>register.title</h2>
 
         <label for="register-username" class="control-label" translate>credentials.username</label>
         <input type="text" class="form-control" id="register-username" name="username" ng-model="credentials.username"

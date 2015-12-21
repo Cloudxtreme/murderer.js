@@ -1,36 +1,38 @@
-<form name="addGroup" class="form-horizontal" ng-submit="createGroup()">
-    <h3 translate>group.create.title</h3>
+<form name="addGroup" class="form" ng-submit="createGroup()">
+    <div class="panel">
+        <h2 class="panel-heading" translate>group.create.title</h2>
 
-    <label for="group-name" class="control-label" translate>group.name</label>
-    <input type="text" name="name" id="group-name" class="form-control" ng-model="newGroup.name" required/>
-    <label for="group-description" class="control-label" translate>group.description</label>
-    <input name="description" id="group-description" class="form-control" ng-model="newGroup.description"/>
-    <input type="submit" class="form-btn" ng-value="'group.create.submit' | translate" translate>
+        <label for="group-name" class="control-label" translate>group.name</label>
+        <input type="text" name="name" id="group-name" class="form-control" ng-model="newGroup.name" required/>
+        <label for="group-description" class="control-label" translate>group.description</label>
+        <input name="description" id="group-description" class="form-control" ng-model="newGroup.description"/>
+        <br/>
+
+        <input type="submit" class="form-btn" ng-value="'group.create.submit' | translate" translate/>
+    </div>
 </form>
 
-<hr/>
-
-<table id="groups-list">
+<table class="table table-striped" st-table="groups">
     <thead>
     <tr>
         <th translate>group.name</th>
         <th translate>group.description</th>
-        <th></th>
+        <th class="width-20"></th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="group in groups" data-group-id="{{group._id}}">
-        <td class="group-name">
+        <td>
             <span ng-if="!group.editing" ng-bind="group.name"></span>
             <!--suppress HtmlFormInputWithoutLabel -->
-            <input type="text" ng-if="group.editing" ng-model="group.name"/>
+            <input class="table-input" type="text" ng-if="group.editing" ng-model="group.name"/>
         </td>
-        <td class="group-description">
+        <td>
             <span ng-if="!group.editing" ng-bind="group.description"></span>
             <!--suppress HtmlFormInputWithoutLabel -->
-            <input type="text" ng-if="group.editing" ng-model="group.description"/>
+            <input class="table-input" type="text" ng-if="group.editing" ng-model="group.description"/>
         </td>
-        <td class="group-actions">
+        <td class="text-right">
             <span ng-if="!group.saving">
                 <span ng-if="!group.editing">
                     <a class="fa fa-fw fa-edit" ng-click="editGroup(group)"></a>
