@@ -53,7 +53,8 @@ module.exports = (grunt) ->
   grunt.registerTask 'default', ['dist']
   # common tasks
   grunt.registerTask 'init', Object.keys(cfg).filter (task) -> /^init[A-Z]/.test task
-  grunt.registerTask 'dev', ['dependencies', 'build_dev', 'watch']
+  grunt.registerTask 'dev', ['build_dev', 'watch']
+  grunt.registerTask 'dev_deps', ['dependencies', 'build_dev', 'watch']
   grunt.registerTask 'dist', ['dependencies', 'build_dist']
   # - dependencies
   grunt.registerTask 'dependencies', ['npm-install', 'bower']
