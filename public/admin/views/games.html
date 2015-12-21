@@ -15,20 +15,23 @@
                         <div class="flexbox">
                             <strong ng-bind="group.name" title="{{group.description}}"></strong>
                             <div class="text-right width-30">
-                                <a ng-click="moveDown($index)" ng-if="!$last"><i class="fa fa-fw fa-angle-down"></i></a>
-                                <a ng-click="moveUp($index)" ng-if="!$first"><i class="fa fa-fw fa-angle-up"></i></a>
+                                <a ng-click="moveDown(newGame.groups, $index)" ng-if="!$last"><i
+                                        class="fa fa-fw fa-angle-down"></i></a>
+                                <a ng-click="moveUp(newGame.groups, $index)" ng-if="!$first"><i
+                                        class="fa fa-fw fa-angle-up"></i></a>
                                 <i class="fa fa-fw" ng-if="$first"></i>
-                                <a ng-click="removeGroup($index)"><i class="fa fa-fw fa-minus"></i></a>
+                                <a ng-click="remove(newGame.groups, $index)"><i class="fa fa-fw fa-minus"></i></a>
                             </div>
                         </div>
                     </li>
                 </ol>
                 <ol class="list-group groups">
-                    <li class="list-group-item" ng-repeat="group in groupsList" ng-if="!containsGroup(group)">
+                    <li class="list-group-item" ng-repeat="group in groupsList"
+                        ng-if="!containsGroup(newGame.groups, group)">
                         <div class="flexbox">
                             <strong ng-bind="group.name" title="{{group.description}}"></strong>
                             <div class="text-right width-10">
-                                <a ng-click="addGroup(group)"><i class="fa fa-fw fa-plus"></i></a>
+                                <a ng-click="addGroup(newGame.groups, group)"><i class="fa fa-fw fa-plus"></i></a>
                             </div>
                         </div>
                     </li>

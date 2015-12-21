@@ -3,19 +3,25 @@ angular.module("open").controller("loginCtrl", function (BASE_PATH, CREDENTIALS,
 
   var lastRequest = -1;
 
+  /*===================================================== Scope  =====================================================*/
+
   $scope.error = null;
   $scope.loading = null;
+
   $scope.passwordMinLength = CREDENTIALS.password.min;
-  $scope.credentials = {
-    username: null,
-    password: null
-  };
+  $scope.credentials = {username: null, password: null};
 
-  $scope.$watch("credentials.username", function (value) {
-    $scope.usernameValid = CREDENTIALS.username.regex.test(value || "");
-  });
+  $scope.login = login;
 
-  $scope.login = function () {
+  /*------------------------------------------------- Scope Watcher  -------------------------------------------------*/
+
+  $scope.$watch("credentials.username", validateUsername);
+
+  /*=================================================== Functions  ===================================================*/
+
+  /*----------------------------------------------------- Login  -----------------------------------------------------*/
+
+  function login() {
     var reqId = ++lastRequest;
     var data = _.clone($scope.credentials);
     $scope.loading = true;
@@ -32,6 +38,10 @@ angular.module("open").controller("loginCtrl", function (BASE_PATH, CREDENTIALS,
           $scope.loading = null;
           $scope.error = err;
         });
-  };
+  }
+
+  /*--------------------------------------------------- Validation ---------------------------------------------------*/
+
+  function validateUsername(value) { $scope.usernameValid = CREDENTIALS.username.regex.test(value || ""); }
 
 });

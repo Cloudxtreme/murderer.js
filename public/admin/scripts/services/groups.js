@@ -1,6 +1,8 @@
 angular.module("admin").factory("groups", function (socket) {
   "use strict";
 
+  /*==================================================== Exports  ====================================================*/
+
   //noinspection UnnecessaryLocalVariableJS
   var service = {
     all: function () { return socket.query("groups:all"); },
@@ -9,6 +11,7 @@ angular.module("admin").factory("groups", function (socket) {
     remove: function (id) { return socket.query("group:remove", id); }
   };
 
-  return service;
+  /*===================================================== Return =====================================================*/
 
+  return service;
 });

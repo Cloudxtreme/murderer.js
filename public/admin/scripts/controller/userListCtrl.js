@@ -1,6 +1,8 @@
 angular.module("admin").controller("userListCtrl", function ($scope, $rootScope, users) {
   "use strict";
 
+  /*===================================================== Scope  =====================================================*/
+
   $scope.toggleAdmin = toggleAdmin;
   $scope.removeUser = removeUser;
   $scope.isSelf = function (user) { return $rootScope.identity && user._id === $rootScope.identity._id; };

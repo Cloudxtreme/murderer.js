@@ -3,16 +3,21 @@ angular.module("admin").controller("groupsCtrl", function ($scope, $timeout, gro
 
   var originGroups = {}, groupKeys = ["_id", "name", "description"];
 
+  /*===================================================== Scope  =====================================================*/
+
+  $scope.groups = null;
+
   $scope.newGroup = {};
 
-  $scope.groups = [];
   $scope.createGroup = createGroup;
   $scope.editGroup = editGroup;
   $scope.revertGroup = revertGroup;
   $scope.saveGroup = saveGroup;
   $scope.removeGroup = removeGroup;
 
-  updateList();
+  /*=============================================== Initial Execution  ===============================================*/
+
+  groups.all().then(function (list) { $scope.groups = list; });
 
   /*=================================================== Functions  ===================================================*/
 
@@ -27,17 +32,14 @@ angular.module("admin").controller("groupsCtrl", function ($scope, $timeout, gro
     group.editing = true;
   }
 
-  function removeGroup(group) {
+  function removeGroup(group) { // TODO confirm dialog if in use within any game
     group.saving = true;
     groups
         .remove(group._id)
         .then(function () {
           var idx = _.indexOf($scope.groups, group);
           if (~idx) { $scope.groups.splice(idx, 1); }
-        }, function (err) {
-          console.log(err);
-          delete group.saving;
-        });
+        }, function () { delete group.saving; });
   }
 
   function revertGroup(group) {
@@ -54,13 +56,10 @@ angular.module("admin").controller("groupsCtrl", function ($scope, $timeout, gro
         .then(function () {
           delete group.saving;
           delete originGroups[group._id];
-        }, function (err) {
-          console.error(err);
+        }, function () {
           revertGroup(group);
           delete group.saving;
         });
   }
-
-  function updateList() { groups.all().then(function (list) { $scope.groups = list; }); }
 
 });

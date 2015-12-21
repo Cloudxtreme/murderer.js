@@ -1,7 +1,9 @@
-angular.module("admin").config(function ($routeProvider, $locationProvider) {
+angular.module("admin").config(function ($routeProvider) {
   "use strict";
 
-  $locationProvider.html5Mode(true);
+  /*===================================================== Routes =====================================================*/
+
+  /*------------------------------------------------------ ACP  ------------------------------------------------------*/
 
   // @ngInject
   $routeProvider
@@ -37,6 +39,7 @@ angular.module("admin").config(function ($routeProvider, $locationProvider) {
       .when("/acp/users", {
         templateUrl: "/views/admin/users.html",
         controller: "usersCtrl"
-      });
+      })
+  ;
 
 });

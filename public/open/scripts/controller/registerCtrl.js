@@ -5,61 +5,35 @@ angular.module("open").controller("registerCtrl", function (BASE_PATH, CREDENTIA
   var lastUsernameRequest = -1, usernameResponses = {};
   var lastEmailRequest = -1, emailResponses = {};
 
+  /*===================================================== Scope  =====================================================*/
+
   $scope.error = null;
   $scope.loading = null;
+  $scope.passwordConfirm = null;
+  $scope.usernameTaken = null;
+  $scope.usernameValid = null;
+  $scope.emailTaken = null;
+  $scope.passwordConfirmMatches = null;
+  $scope.passwordConfirmLength = null;
+
   $scope.passwordMinLength = CREDENTIALS.password.min;
   $scope.usernameMinLength = CREDENTIALS.username.min;
-  $scope.passwordConfirm = null;
-  $scope.credentials = {
-    username: null,
-    password: null,
-    email: null
-  };
+  $scope.credentials = {username: null, password: null, email: null};
 
-  $scope.$watch("credentials.username", function (value) {
-    $scope.usernameValid = CREDENTIALS.username.regex.test(value || "");
-    if (value) {
-      var reqId = ++lastUsernameRequest;
-      if (usernameResponses.hasOwnProperty(value)) {
-        usernameResponses[value].then(function (val) {
-          if (reqId === lastUsernameRequest) { $scope.usernameTaken = val; }
-        });
-        return;
-      }
-      usernameResponses[value] = socket
-          .query("exists:username", value)
-          .then(function (val) {
-            if (reqId === lastUsernameRequest) { $scope.usernameTaken = val; }
-            return val;
-          });
-    }
-  });
+  $scope.register = register;
 
-  $scope.$watch("credentials.email", function (value) {
-    if (value) {
-      var reqId = ++lastEmailRequest;
-      if (emailResponses.hasOwnProperty(value)) {
-        emailResponses[value].then(function (val) {
-          if (reqId === lastEmailRequest) { $scope.emailTaken = val; }
-        });
-        return;
-      }
-      emailResponses[value] = socket
-          .query("exists:email", value)
-          .then(function (val) {
-            if (reqId === lastEmailRequest) { $scope.emailTaken = val; }
-            return val;
-          });
-    }
-  });
+  /*------------------------------------------------- Scope Watcher  -------------------------------------------------*/
 
-  $scope.$watchGroup(["credentials.password", "passwordConfirm"], function (data) {
-    $scope.passwordConfirmMatches = (data[0] != null || data[1] != null) && data[0] === data[1];
-    $scope.passwordConfirmLength = $scope.passwordConfirmMatches ||
-        data[0] != null && data[1] != null && data[0].length === data[1].length;
-  });
+  $scope.$watch("credentials.username", validateUsername);
+  $scope.$watch("credentials.email", validateEmail);
 
-  $scope.register = function () {
+  $scope.$watchGroup(["credentials.password", "passwordConfirm"], validatePasswordConfirm);
+
+  /*=================================================== Functions  ===================================================*/
+
+  /*-------------------------------------------------- Registration --------------------------------------------------*/
+
+  function register() {
     var reqId = ++lastRequest;
     var data = _.clone($scope.credentials);
     $scope.loading = true;
@@ -76,6 +50,52 @@ angular.module("open").controller("registerCtrl", function (BASE_PATH, CREDENTIA
           $scope.loading = null;
           $scope.error = err;
         });
-  };
+  }
+
+  /*--------------------------------------------------- Validation ---------------------------------------------------*/
+
+  function validateEmail(value) {
+    if (value) {
+      var reqId = ++lastEmailRequest;
+      if (emailResponses.hasOwnProperty(value)) {
+        emailResponses[value].then(function (val) {
+          if (reqId === lastEmailRequest) { $scope.emailTaken = val; }
+        });
+      } else {
+        emailResponses[value] = socket
+            .query("exists:email", value)
+            .then(function (val) {
+              if (reqId === lastEmailRequest) { $scope.emailTaken = val; }
+              return val;
+            });
+      }
+    }
+  }
+
+  function validatePasswordConfirm(data) {
+    var password = data[0], confirm = data[1];
+    $scope.passwordConfirmMatches = (password != null || confirm != null) && password === confirm;
+    $scope.passwordConfirmLength = $scope.passwordConfirmMatches ||
+        password != null && confirm != null && password.length === confirm.length;
+  }
+
+  function validateUsername(value) {
+    $scope.usernameValid = CREDENTIALS.username.regex.test(value || "");
+    if (value) {
+      var reqId = ++lastUsernameRequest;
+      if (usernameResponses.hasOwnProperty(value)) {
+        usernameResponses[value].then(function (val) {
+          if (reqId === lastUsernameRequest) { $scope.usernameTaken = val; }
+        });
+      } else {
+        usernameResponses[value] = socket
+            .query("exists:username", value)
+            .then(function (val) {
+              if (reqId === lastUsernameRequest) { $scope.usernameTaken = val; }
+              return val;
+            });
+      }
+    }
+  }
 
 });

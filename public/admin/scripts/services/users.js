@@ -1,6 +1,8 @@
 angular.module("admin").factory("users", function (socket) {
   "use strict";
 
+  /*==================================================== Exports  ====================================================*/
+
   //noinspection UnnecessaryLocalVariableJS
   var service = {
     activated: function () { return socket.query("users:activated"); },
@@ -9,6 +11,7 @@ angular.module("admin").factory("users", function (socket) {
     remove: function (id) { return socket.query("user:remove", id); }
   };
 
-  return service;
+  /*===================================================== Return =====================================================*/
 
+  return service;
 });

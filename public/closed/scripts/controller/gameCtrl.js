@@ -1,21 +1,29 @@
 angular.module("closed").controller("gameCtrl", function ($scope, socket) {
   "use strict";
 
-  $scope.mission = {
-    token: null,
-    message: null
-  };
-  $scope.suicide = {
-    password: null,
-    message: null
-  };
+  /*===================================================== Scope  =====================================================*/
 
-  $scope.missionAttempt = function () {
+  $scope.missionLoading = null;
+  $scope.missionSuccess = null;
+  $scope.missionFailed = null;
+  $scope.suicideLoading = null;
+  $scope.suicideSuccess = null;
+  $scope.suicideFailed = null;
+
+  $scope.mission = {token: null, message: null};
+  $scope.suicide = {password: null, message: null};
+
+  $scope.missionAttempt = kill;
+  $scope.suicideAttempt = suicide;
+
+  /*=================================================== Functions  ===================================================*/
+
+  function kill() {
     $scope.missionLoading = true;
     $scope.missionSuccess = false;
     $scope.missionFailed = null;
-    var mission = $scope.mission;
-    socket.query("kill:token", mission).then(function () {
+    var data = $scope.mission;
+    socket.query("kill:token", data).then(function () {
       $scope.mission.token = $scope.mission.message = null;
       $scope.missionSuccess = true;
       $scope.missionLoading = false;
@@ -23,14 +31,14 @@ angular.module("closed").controller("gameCtrl", function ($scope, socket) {
       $scope.missionFailed = err.message;
       $scope.missionLoading = false;
     });
-  };
+  }
 
-  $scope.suicideAttempt = function () {
+  function suicide() {
     $scope.suicideLoading = true;
     $scope.suicideSuccess = false;
     $scope.suicideFailed = null;
-    var suicide = $scope.suicide;
-    socket.query("kill:self", suicide).then(function () {
+    var data = $scope.suicide;
+    socket.query("kill:self", data).then(function () {
       $scope.suicide.password = $scope.suicide.message = null;
       $scope.suicideSuccess = true;
       $scope.suicideLoading = false;
@@ -38,5 +46,6 @@ angular.module("closed").controller("gameCtrl", function ($scope, socket) {
       $scope.suicideFailed = err.message;
       $scope.suicideLoading = false;
     });
-  };
+  }
+
 });

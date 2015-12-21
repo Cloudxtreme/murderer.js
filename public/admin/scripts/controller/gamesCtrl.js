@@ -1,41 +1,49 @@
 angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, socket) {
   "use strict";
 
-  var gameGroups = [];
+  var gamesInit;
+
+  /*===================================================== Scope  =====================================================*/
 
   $scope.games = null;
-  $scope.newGame = {
-    name: null,
-    groups: gameGroups
-  };
+  $scope.groups = null;
+  $scope.groupsList = null;
 
-  var gamesInit = socket.query("games:all").then(function (games) { return $scope.games = games; });
+  $scope.newGame = {name: null, groups: []};
 
-  $scope.createGame = function () {
+  $scope.createGame = createGame;
+  $scope.containsGroup = function (arr, group) { return _.any($scope.newGame.groups, {group: group._id}); };
+  $scope.addGroup = function (arr, group) { arr.push({group: group._id}); };
+  $scope.remove = function (arr, index) { arr.splice(index, 1); };
+  $scope.moveDown = function (arr, index) { arr.splice(index, 2, arr[index + 1], arr[index]); };
+  $scope.moveUp = function (arr, index) { $scope.moveDown(arr, index - 1); };
+
+  /*=============================================== Initial Execution  ===============================================*/
+
+  /*------------------------------------------------ Fetch all games  ------------------------------------------------*/
+
+  gamesInit = socket
+      .query("games:all")
+      .then(function (games) { return $scope.games = games; });
+
+  /*------------------------------------------------ Fetch all groups ------------------------------------------------*/
+
+  socket
+      .query("groups:all")
+      .then(function (groups) {
+        var g = $scope.groups = {}; // apply map of groups by id to scope
+        $scope.groupsList = _.each(groups, function (group) { g[group._id] = group; });
+      });
+
+  /*=================================================== Functions  ===================================================*/
+
+  function createGame() {
     socket.query("game:create", $scope.newGame).then(function (game) {
-      game.new = true;
       gamesInit.then(function (games) {
         games.push(game);
-        $timeout(function () { delete game.new; }, 2000);
         return games;
       });
     });
-  };
-
-  $scope.toggleActive = function (game) {
-    socket.query("game:update", _.extend(_.pick(game, ["_id"]), {active: !game.active})).then(_.partial(_.merge, game));
-  };
-
-  $scope.containsGroup = function (group) { return _.any($scope.newGame.groups, {group: group._id}); };
-
-  $scope.addGroup = function (group) { gameGroups.push({group: group._id}); };
-  $scope.removeGroup = function (index) { gameGroups.splice(index, 1); };
-  $scope.moveDown = function (index) { gameGroups.splice(index, 2, gameGroups[index + 1], gameGroups[index]); };
-  $scope.moveUp = function (index) { $scope.moveDown(index - 1); };
-
-  socket.query("groups:all").then(function (groups) {
-    var g = $scope.groups = {};
-    $scope.groupsList = _.each(groups, function (group) { g[group._id] = group; });
-  });
+  }
 
 });
