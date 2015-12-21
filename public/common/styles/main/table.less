@@ -7,14 +7,28 @@
     background-color: fade(@text-color, 15%);
   }
 
+  > tbody > tr.primary {
+    background-color: fade(@color-primary, 15%);
+    &:hover {
+      background-color: mix(@text-color, fade(@color-primary, 15%), 6%);
+    }
+  }
+
   &.table-striped {
     > tbody > tr:nth-child(2N) {
       background-color: fade(@text-color, 4%);
-
       &:hover {
         background-color: fade(@text-color, 10%);
       }
     }
+
+    > tbody > tr.primary:nth-child(2N) {
+      background-color: mix(@text-color, fade(@color-primary, 15%), 3%);
+      &:hover {
+        background-color: mix(@text-color, fade(@color-primary, 15%), 6%);
+      }
+    }
+
     > thead > tr > th, > tbody > tr > td {
       border-top: 0;
       border-bottom: 0;
@@ -53,13 +67,6 @@
 
   > tbody > tr:hover {
     background-color: fade(@text-color, 10%);
-  }
-
-  > tbody > tr.primary {
-    background-color: fade(@color-primary, 15%);
-    &:hover {
-      background-color: fade(@color-primary, 25%);
-    }
   }
 
   > tbody > tr > td {
