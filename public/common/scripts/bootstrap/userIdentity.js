@@ -14,11 +14,7 @@ angular.module("common").run(function ($rootScope, $timeout, socket) {
 
   socket.promises.identified.then(function (user) {
     $rootScope.identity = user;
-    console.log("id", user);
     $rootScope.connected = true;
-  });
-  socket.promises.authorized.then(function (user) {
-    console.log("au", user);
   });
 
   /*=================================================== Functions  ===================================================*/
