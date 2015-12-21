@@ -1,16 +1,44 @@
-<form name="createForm" class="form-horizontal" ng-submit="createGame()">
-    <h3 translate>game.create.title</h3>
+<form name="createForm" class="form" id="create-game" ng-submit="createGame()">
+    <div class="panel">
+        <h2 class="panel-heading" translate>game.create.title</h2>
 
-    <label for="game-id" class="control-label" translate>game.name</label>
-    <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
-    <label for="rings" class="control-label" translate>game.rings</label>
-    <input type="number" id="rings" name="rings" class="form-control" ng-model="newGame.rings" min="1" required/>
-    <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate>
+        <div class="flexbox">
+            <div class="flex-50 flex-no-shrink">
+                <label for="game-id" class="control-label" translate>game.name</label>
+                <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
+            </div>
+            <div class="flex-50 flex-no-shrink">
+                <label for="groups" class="control-label" translate>group.titlePlural</label>
+                <ol class="list-group" id="groups">
+                    <li class="list-group-item list-group-item-info" ng-repeat="groupData in newGame.groups"
+                        ng-init="group = groups[groupData.group];">
+                        <div class="flexbox">
+                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
+                            <div class="text-right width-30">
+                                <a ng-click="moveDown($index)" ng-if="!$last"><i class="fa fa-fw fa-angle-down"></i></a>
+                                <a ng-click="moveUp($index)" ng-if="!$first"><i class="fa fa-fw fa-angle-up"></i></a>
+                                <i class="fa fa-fw" ng-if="$first"></i>
+                                <a ng-click="removeGroup($index)"><i class="fa fa-fw fa-minus"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <ol class="list-group groups">
+                    <li class="list-group-item" ng-repeat="group in groupsList" ng-if="!containsGroup(group)">
+                        <div class="flexbox">
+                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
+                            <div class="text-right width-10">
+                                <a ng-click="addGroup(group)"><i class="fa fa-fw fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate/>
+    </div>
 </form>
-
-<hr/>
-
-<h3 translate>game.title.plural</h3>
 
 <ol class="list-group game-list">
     <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">

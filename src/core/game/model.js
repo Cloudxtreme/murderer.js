@@ -31,7 +31,7 @@ var GameSchema = new Schema(
 
       rings: {type: [{type: ObjectID, ref: "Ring"}], default: []},
 
-      schedule: { // TODO handle automatic actions
+      schedule: { // TODO handle automatic actions, add ring-amount etc.
         start: Date,
         autoStart: {type: Boolean, default: false},
         end: Date,
