@@ -50,6 +50,8 @@
   .form-btn {
     @form-button-color-light: mix(@bg-color, @text-color, 60%);
     @form-button-color-dark: mix(@bg-color, @text-color, 80%);
+    @form-button-color-hover-light: mix(@bg-color, @text-color, 55%);
+    @form-button-color-hover-dark: mix(@bg-color, @text-color, 75%);
     box-sizing: border-box;
     text-decoration: none;
     padding: 4px 10px;
@@ -70,7 +72,12 @@
       box-shadow: 0 0 2px 2px @color-info;
     }
 
-    &:hover, &:active {
+    &:hover, &:focus {
+      background: @form-button-color-hover-light linear-gradient(to bottom, @form-button-color-hover-light, @form-button-color-hover-dark);
+      border: 1px outset @form-button-color-hover-light;
+    }
+
+    &:active {
       background: @form-button-color-dark linear-gradient(to bottom, @form-button-color-dark, @form-button-color-light);
       padding: 5px 9px 3px 11px;
       border: 1px inset @form-button-color-light;
