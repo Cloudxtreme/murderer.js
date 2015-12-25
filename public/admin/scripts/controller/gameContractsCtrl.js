@@ -1,7 +1,7 @@
 angular.module("closed").controller("gameContractsCtrl", function ($scope, $rootScope, socket, gameId) {
   "use strict";
 
-  // TODO code quality
+  // TODO rework
 
   var res = null;
 

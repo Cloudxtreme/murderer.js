@@ -1,6 +1,8 @@
 angular.module("common").directive("statsTotal", function (BAR_CHART_INTERVAL_SIZE, stats) {
   "use strict";
 
+  // TODO rework
+
   return {
     restrict: "C",
     scope: true,

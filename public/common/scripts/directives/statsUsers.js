@@ -1,6 +1,8 @@
 angular.module("common").directive("statsUsers", function (stats) {
   "use strict";
 
+  // TODO rework
+
   return {
     restrict: "C",
     scope: true,

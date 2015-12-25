@@ -1,7 +1,7 @@
 angular.module("admin").controller("gameDetailsCtrl", function ($scope, socket, gameId) {
   "use strict";
 
-  // TODO code quality
+  // TODO rework
 
   $scope.game = null;
   $scope.users = null;

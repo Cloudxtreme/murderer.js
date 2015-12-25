@@ -1,6 +1,8 @@
 angular.module("common").directive("statsGroupsRings", function ($rootScope, $translate, stats) {
   "use strict";
 
+  // TODO rework
+
   var languageListeners = [];
 
   $rootScope.$on("language.update", function () { _.each(languageListeners, _.attempt); });

@@ -1,6 +1,8 @@
 angular.module("common").directive("statsKillsSuicides", function (BAR_CHART_INTERVAL_SIZE, $rootScope, $translate, stats) {
   "use strict";
 
+  // TODO rework
+
   var languageListeners = [];
 
   $rootScope.$on("language.update", function () { _.each(languageListeners, _.attempt); });
