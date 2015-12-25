@@ -40,7 +40,7 @@ bus.on("socket:connected", function (socket) {
     }
 
     if (user == null) {
-      socket.emit("connection:error.401");
+      socket.emit("connection:error", {code: 401, message: "Invalid token.", name: "token.invalid"});
     } else {
       var conn = connections.add(user, socket);
       socket.emit("connection:authorized");

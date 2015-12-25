@@ -71,7 +71,7 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
     if (connection == null) {
       if (url == null) { url = $location.protocol() + "://" + $location.host() + ":" + $location.port(); }
       connection = io.connect(url);
-      connection.on("connection:error.401", on401);
+      connection.on("connection:error", onError);
       connection.on("connection:authorized", onAuthorized);
       connection.on("connection:established", onEstablished);
       initialized.resolve();
@@ -80,7 +80,7 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
   }
 
   // TODO better error handling (via alerts, retry button)
-  function on401() { console.error("Socket connection authorization failed."); }
+  function onError(data) { console.error("Socket connection failed:", data.code, data.message); }
 
   function onAuthorized() {
     setupQueryListeners();
