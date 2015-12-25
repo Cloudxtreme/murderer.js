@@ -21,23 +21,36 @@ var GameSchema = new Schema(
       groups: {
         type: [{
           group: {type: ObjectID, ref: "Group"},
-          users: {type: [{ // TODO apply changes to services (previously users: [User._id])
-            user: {type: ObjectID, ref: "User"},
-            name: {type: String, required: true},
-            message: String
-          }], default: []}
+          users: {
+            type: [{ // TODO apply changes to services (previously users: [User._id])
+              user: {type: ObjectID, ref: "User"},
+              name: {type: String, required: true},
+              message: String
+            }],
+            default: []
+          }
         }], default: []
       },
 
       rings: {type: [{type: ObjectID, ref: "Ring"}], default: []},
 
-      schedule: { // TODO handle automatic actions, add ring-amount etc.
-        start: Date,
-        autoStart: {type: Boolean, default: false},
-        end: Date,
-        autoEnd: {type: Boolean, default: false},
-        inactive: {type: [{type: Date, required: true}], default: []}, // alternating inactive-start and -end dates
-        autoInactive: {type: Boolean, default: false}
+      description: {type: String, default: ""}, // TODO parse markdown
+
+      startMeta: {
+        rings: {type: Number, required: true}, // TODO use for start of game
+        lives: {type: Number, required: true} // TODO use for start of game
+      },
+
+      schedule: {
+        end: {type: Date, required: true}, // TODO automatically end game
+        start: Date, // TODO automatically start game iff given
+        activate: {type: [Date], default: []}, // TODO automatically activate game
+        deactivate: {type: [Date], default: []} // TODO automatically deactivate game
+      },
+
+      log: {
+        deactivate: {type: [Date], default: []}, // TODO track
+        activate: {type: [Date], default: []} // TODO track
       }
     }
 );
