@@ -21,5 +21,5 @@ exports.createTransport = createTransport;
 
 function createTransport(user) {
   if (user instanceof Array) { return _.map(user, createTransport); }
-  return _.omit(user._doc, omitFields);
+  return _.omit(user.hasOwnProperty("_doc") ? user._doc : user, omitFields);
 }

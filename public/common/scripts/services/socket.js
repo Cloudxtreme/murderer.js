@@ -38,8 +38,6 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
       /**
        * Resolves once the identity of the user is authenticated (Connection step #7 is done).
        * Resolve value is the user object. Each guest gets assigned a user object too.
-       * TODO why do I send the user object once more via socket connection instead of using the http-transmitted one?
-       *      difference: auth-object contains guest-data (should be doable via first http-request, shouldn't it?)
        */
       authorized: authorized.promise
     },
@@ -73,6 +71,7 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
     if (connection == null) {
       if (url == null) { url = $location.protocol() + "://" + $location.host() + ":" + $location.port(); }
       connection = io.connect(url);
+      connection.on("connection:error.401", on401);
       connection.on("connection:authorized", onAuthorized);
       connection.on("connection:established", onEstablished);
       initialized.resolve();
@@ -80,9 +79,12 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
     return connected.promise;
   }
 
-  function onAuthorized(user) {
+  // TODO better error handling (via alerts, retry button)
+  function on401() { console.error("Socket connection authorization failed."); }
+
+  function onAuthorized() {
     setupQueryListeners();
-    authorized.resolve(user);
+    authorized.resolve(service.identity);
   }
 
   function onEstablished() {

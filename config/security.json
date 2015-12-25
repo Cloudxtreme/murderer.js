@@ -28,7 +28,7 @@
     "token": {
       "bytes": 64,
       "expires": {
-        "sessionAuth": 5000
+        "sessionAuth": 15000
       }
     },
     "humanToken": {

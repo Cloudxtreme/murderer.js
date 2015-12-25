@@ -8,6 +8,8 @@ var security = require.main.require("./utils/security");
 var userC = require.main.require("./core/user/controller");
 var config = require.main.require("./utils/config").main;
 
+var DEFAULT_SESSION_AUTH_TIMEOUT = 15000;
+
 /*
  This controller allows socket connections to get authenticated.
  New clients have to authorize (passport) using http(s), a token gets returned.
@@ -15,42 +17,42 @@ var config = require.main.require("./utils/config").main;
  */
 
 var tokens = {};
+var mainLogger = bunyan.logger.token;
+var timeout = config.security.token.expires.sessionAuth || DEFAULT_SESSION_AUTH_TIMEOUT;
 
 bus.on("socket:connected", function (socket) {
-  return socket.on("connection:authorize", function (data) {
-    if (data == null || typeof data !== "object") {
-      return;
-    }
+  socket.on("connection:authorize", function (data) {
+    if (data == null || typeof data !== "object") { return; }
+
     var token = data.token;
     var userId = data.userId;
+    var user = null;
 
-    var user, tUser;
     if (tokens.hasOwnProperty(userId)) {
       var obj = tokens[userId];
       if (obj.token === token) {
         obj.log.debug("used");
         removeToken(userId);
         user = obj.user;
-        tUser = obj.transport;
       } else {
         obj.log.warn("rejected");
-        user = tUser = userC.createGuest();
       }
-    } else {
-      user = tUser = userC.createGuest();
     }
 
-    var conn = connections.add(user, socket);
-    socket.emit("connection:authorized", tUser);
-    return bus.emit("socket:authorized", {socket: socket, connection: conn});
+    if (user == null) {
+      socket.emit("connection:error.401");
+    } else {
+      var conn = connections.add(user, socket);
+      socket.emit("connection:authorized");
+      bus.emit("socket:authorized", {socket: socket, connection: conn});
+    }
   });
 });
 
 function removeToken(userId) {
+  if (!tokens.hasOwnProperty(userId)) { return; }
+
   var obj = tokens[userId];
-  if (obj == null) {
-    return;
-  }
   clearTimeout(obj.timeout);
   obj.log.debug("removed");
   obj.log.end();
@@ -61,22 +63,12 @@ function createToken(req, res) {
   var user = req.isAuthenticated() ? req.user : userC.createGuest();
   if (tokens.hasOwnProperty(user._id)) { removeToken(user._id); }
   var token = security.generateToken();
-  var obj = tokens[user._id] = {
-    token: token,
-    user: user,
-    transport: userC.createTransport(user),
-    log: bunyan.logger.token.child({user: user, token: token, type: "socket authentication"})
-  };
-  obj.log.info("created");
-  var timeout = config.security.token.expires.sessionAuth || 5000;
-  obj.timeout = setTimeout(function () {
-    removeToken(user._id);
-  }, timeout);
-  res.send({
-    user: obj.transport,
-    token: token,
-    expires: new Date(Date.now() + timeout)
-  });
+  var expires = new Date(Date.now() + timeout);
+  var logger = mainLogger.child({user: user, token: token, expires: expires, type: "socket authentication"});
+  var obj = tokens[user._id] = {token: token, user: user, log: logger};
+  logger.info("auth token created");
+  obj.timeout = setTimeout(function () { removeToken(user._id); }, timeout);
+  res.send({user: userC.createTransport(user), token: token, expires: expires});
 }
 
 module.exports = function (app) {
