@@ -22,11 +22,7 @@ var GameSchema = new Schema(
 
       passwords: [String], // TODO restrict participation by password(s) iff set
       inviteOnly: {type: Boolean, default: false}, // TODO hide from public list when true
-      invites: [{ // TODO implement invitation system
-        user: {type: ObjectID, ref: "User"},
-        accepted: Date,
-        rejected: Date
-      }],
+      // TODO implement invitation system
 
       groups: {
         type: [{
@@ -52,7 +48,8 @@ var GameSchema = new Schema(
       },
 
       limit: {
-        participants: Number // TODO maximum amount of users to participate (if not invited)
+        participants: Number, // TODO maximum amount of users to participate
+        invitedParticipants: Number // TODO maximum amount of users to participate when invited to game
       },
 
       schedule: {
