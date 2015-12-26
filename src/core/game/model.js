@@ -18,6 +18,16 @@ var GameSchema = new Schema(
       started: {type: Boolean, default: false}, // if started, don't accept new registrations
       active: {type: Boolean, default: false}, // if started but not active, still show stats
 
+      author: {type: ObjectID, ref: "User"},
+
+      passwords: [String], // TODO restrict participation by password(s) iff set
+      inviteOnly: {type: Boolean, default: false}, // TODO hide from public list when true
+      invites: [{ // TODO implement invitation system
+        user: {type: ObjectID, ref: "User"},
+        accepted: Date,
+        rejected: Date
+      }],
+
       groups: {
         type: [{
           group: {type: ObjectID, ref: "Group"},
@@ -39,6 +49,10 @@ var GameSchema = new Schema(
       startMeta: {
         rings: {type: Number, required: true}, // TODO use for start of game
         lives: {type: Number, required: true} // TODO use for start of game
+      },
+
+      limit: {
+        participants: Number // TODO maximum amount of users to participate (if not invited)
       },
 
       schedule: {
