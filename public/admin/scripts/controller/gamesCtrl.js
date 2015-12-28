@@ -13,8 +13,9 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, admi
     name: null,
     description: null,
     groups: [], // {group: Group._id, users: [{user: User._id, name: "", message: ""}]}
-    //passwords: [], // [""]
-    //inviteOnly: false,
+    passwords: [], // [""]
+    passwordsText: "",
+    inviteOnly: false,
     limit: {
       participants: null,
       invitedParticipants: null
@@ -59,7 +60,9 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, admi
   /*=================================================== Functions  ===================================================*/
 
   function createGame() {
-    socket.query("game:create", $scope.newGame).then(function (game) {
+    $scope.newGame.passwords = $scope.newGame.passwordsText ?
+        _.compact(_.map($scope.newGame.passwordsText.split(","), function (s) { return s.trim() || null; })) : null;
+    socket.query("game:create", _.omit($scope.newGame, ["passwordsText"])).then(function (game) {
       gamesInit.then(function (games) {
         games.push(game);
         return games;

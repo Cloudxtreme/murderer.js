@@ -7,20 +7,35 @@
                 <label for="game-id" class="control-label" translate>game.name</label>
                 <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
 
-                <label for="game-participants" class="control-label">
-                    {{'game.limit.participants' | translate}}
-                    <small>({{'game.limit.empty' | translate}})</small>
+                <label class="control-label">
+                    <input type="checkbox" name="inviteOnly" ng-model="newGame.inviteOnly"/>
+                    {{'game.limit.inviteOnly' | translate}}
                 </label>
-                <input type="number" id="game-participants" name="gameParticipants" class="form-control"
-                       ng-model="newGame.limit.participants" min="2"
-                       ng-valid="newGame.limit.participants != null || newGame.limit.invitedParticipants == null"/>
+
+                <div ng-if="!newGame.inviteOnly">
+                    <label for="game-passwords" class="control-label">
+                        {{'game.passwords' | translate}}
+                        <small>(<span ng-bind-html="'game.passwordsNote' | translate | html"></span>)</small>
+                    </label>
+                    <input type="text" id="game-passwords" name="gamePasswords" class="form-control"
+                           ng-model="newGame.passwordsText"/>
+
+                    <label for="game-participants" class="control-label">
+                        {{'game.limit.participants' | translate}}
+                        <small>({{'game.limit.empty' | translate}})</small>
+                    </label>
+                    <input type="number" id="game-participants" name="gameParticipants" class="form-control"
+                           ng-model="newGame.limit.participants" min="2"
+                           ng-valid="newGame.limit.participants != null || newGame.limit.invitedParticipants == null"/>
+                </div>
 
                 <label for="game-invited-participants" class="control-label">
                     {{'game.limit.invitedParticipants' | translate}}
                     <small>({{'game.limit.empty' | translate}})</small>
                 </label>
                 <input type="number" id="game-invited-participants" name="gameInvitedParticipants" class="form-control"
-                       ng-model="newGame.limit.invitedParticipants" min="{{newGame.limit.participants}}"/>
+                       ng-model="newGame.limit.invitedParticipants"
+                       min="{{newGame.inviteOnly ? 2 : newGame.limit.participants}}"/>
 
                 <label for="game-rings" class="control-label" translate>game.startMeta.rings</label>
                 <input type="number" id="game-rings" name="gameRings" class="form-control"
