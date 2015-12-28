@@ -90,13 +90,15 @@
             </div>
         </div>
 
+        <!-- TODO add inputs for disabled periods of time -->
+
         <label for="game-description" class="control-label">
             {{'game.description' | translate}}
+            <small>(<span ng-bind-html="'game.descriptionNote' | translate | html"></span>)</small>
             <a class="pull-right" ng-click="markdownModal(newGame.description)" ng-show="newGame.description">
                 <i class="fa fa-image"></i>
             </a>
         </label>
-        <!-- TODO add notice that markdown is being used -->
         <textarea class="form-control" id="game-description" ng-model="newGame.description"></textarea>
 
         <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate/>

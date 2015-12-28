@@ -3,6 +3,7 @@
     "titlePlural": "Games",
     "participants": "Participants",
     "description": "Description",
+    "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
     "inactive": "Inactive",
     "passwords": "Passwords",
     "passwordsNote": "separated by <code>,</code>",
