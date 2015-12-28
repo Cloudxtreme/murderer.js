@@ -1,5 +1,6 @@
 "use strict";
 
 angular.module("admin", [
-  "active"
+  "active",
+  "ui.bootstrap"
 ]);

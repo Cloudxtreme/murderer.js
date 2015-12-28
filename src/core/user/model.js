@@ -24,7 +24,7 @@ var UserSchema = new Schema(
       pw: {type: String, default: ""},
       // status-flags
       admin: {type: Boolean, default: false},
-      author: {type: Boolean, default: false}, // TODO add author module
+      //author: {type: Boolean, default: false}, // TODO add author module
       activated: {type: Boolean, default: true},
       // email
       email: {type: String, required: true, unique: true, trim: true, lowercase: true},

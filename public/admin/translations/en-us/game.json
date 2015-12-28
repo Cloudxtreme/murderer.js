@@ -2,6 +2,7 @@
   "game": {
     "titlePlural": "Games",
     "participants": "Participants",
+    "description": "Description",
     "inactive": "Inactive",
     "contracts": {
       "list": "Show contracts list"

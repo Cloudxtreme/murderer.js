@@ -1,4 +1,4 @@
-angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, socket) {
+angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, adminModals, socket) {
   "use strict";
 
   var gamesInit;
@@ -17,6 +17,7 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, sock
   $scope.remove = function (arr, index) { arr.splice(index, 1); };
   $scope.moveDown = function (arr, index) { arr.splice(index, 2, arr[index + 1], arr[index]); };
   $scope.moveUp = function (arr, index) { $scope.moveDown(arr, index - 1); };
+  $scope.markdownModal = adminModals.markdownPreview;
 
   /*=============================================== Initial Execution  ===============================================*/
 

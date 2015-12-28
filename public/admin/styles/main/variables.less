@@ -1,0 +1,77 @@
+@border-radius-base: 4px;
+@border-radius-large: 6px;
+@border-radius-small: 3px;
+
+//== Modals
+//
+//##
+
+//** Z-Index
+@zindex-modal-background: 1040;
+@zindex-modal: 1050;
+
+//** Padding applied to the modal body
+@modal-inner-padding: 15px;
+
+//** Padding applied to the modal title
+@modal-title-padding: 15px;
+//** Modal title line-height
+@modal-title-line-height: @line-height-base;
+
+//** Background color of modal content area
+@modal-content-bg: mix(@bg-color, @text-color, 90%);
+//** Modal content border color
+@modal-content-border-color: fade(@bg-color, 40%);
+//** Modal content border color **for IE8**
+@modal-content-fallback-border-color: mix(@bg-color, @text-color, 95%);
+
+//** Modal backdrop background color
+@modal-backdrop-bg: black;
+//** Modal backdrop opacity
+@modal-backdrop-opacity: .75;
+//** Modal header border color
+@modal-header-border-color: fade(@text-color, 20%);
+//** Modal footer border color
+@modal-footer-border-color: @modal-header-border-color;
+
+@modal-lg: 900px;
+@modal-md: 600px;
+@modal-sm: 300px;
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs: 480px;
+//** Deprecated `@screen-xs-min` as of v3.2.0
+@screen-xs-min: @screen-xs;
+//** Deprecated `@screen-phone` as of v3.0.1
+@screen-phone: @screen-xs-min;
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm: 768px;
+@screen-sm-min: @screen-sm;
+//** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet: @screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md: 992px;
+@screen-md-min: @screen-md;
+//** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop: @screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg: 1200px;
+@screen-lg-min: @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop: @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max: (@screen-sm-min - 1);
+@screen-sm-max: (@screen-md-min - 1);
+@screen-md-max: (@screen-lg-min - 1);

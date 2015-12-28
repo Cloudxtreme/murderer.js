@@ -6,6 +6,14 @@
             <div class="flex-50 flex-no-shrink">
                 <label for="game-id" class="control-label" translate>game.name</label>
                 <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
+                <label for="game-description" class="control-label">
+                    {{'game.description' | translate}}
+                    <a class="pull-right" ng-click="markdownModal(newGame.description)" ng-show="newGame.description">
+                        <i class="fa fa-image"></i>
+                    </a>
+                </label>
+                <!-- TODO add notice that markdown is being used -->
+                <textarea class="form-control" id="game-description" ng-model="newGame.description"></textarea>
             </div>
             <div class="flex-50 flex-no-shrink">
                 <label for="groups" class="control-label" translate>group.titlePlural</label>

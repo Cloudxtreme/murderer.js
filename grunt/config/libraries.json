@@ -12,6 +12,9 @@
       "angular-route/angular-route.js": true,
       "angular-cookies/angular-cookies.js": true,
       "angular-smart-table/dist/smart-table.js": true
+    },
+    "admin": {
+      "angular-bootstrap/ui-bootstrap-tpls.js": true
     }
   },
   "files": {
