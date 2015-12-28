@@ -6,14 +6,40 @@
             <div class="flex-50 flex-no-shrink">
                 <label for="game-id" class="control-label" translate>game.name</label>
                 <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
-                <label for="game-description" class="control-label">
-                    {{'game.description' | translate}}
-                    <a class="pull-right" ng-click="markdownModal(newGame.description)" ng-show="newGame.description">
-                        <i class="fa fa-image"></i>
-                    </a>
+
+                <label for="game-participants" class="control-label">
+                    {{'game.limit.participants' | translate}}
+                    <small>({{'game.limit.empty' | translate}})</small>
                 </label>
-                <!-- TODO add notice that markdown is being used -->
-                <textarea class="form-control" id="game-description" ng-model="newGame.description"></textarea>
+                <input type="number" id="game-participants" name="gameParticipants" class="form-control"
+                       ng-model="newGame.limit.participants" min="2"
+                       ng-valid="newGame.limit.participants != null || newGame.limit.invitedParticipants == null"/>
+
+                <label for="game-invited-participants" class="control-label">
+                    {{'game.limit.invitedParticipants' | translate}}
+                    <small>({{'game.limit.empty' | translate}})</small>
+                </label>
+                <input type="number" id="game-invited-participants" name="gameInvitedParticipants" class="form-control"
+                       ng-model="newGame.limit.invitedParticipants" min="{{newGame.limit.participants}}"/>
+
+                <label for="game-rings" class="control-label" translate>game.startMeta.rings</label>
+                <input type="number" id="game-rings" name="gameRings" class="form-control"
+                       ng-model="newGame.startMeta.rings" min="1" required/>
+
+                <label for="game-lives" class="control-label" translate>game.startMeta.lives</label>
+                <input type="number" id="game-lives" name="gameLives" class="form-control"
+                       ng-model="newGame.startMeta.lives" min="1" max="{{newGame.startMeta.rings}}" required/>
+
+                <label for="game-end" class="control-label" translate>game.schedule.end</label>
+                <input type="datetime-local" id="game-end" name="gameEnd" class="form-control"
+                       ng-model="newGame.schedule.end" required/>
+
+                <label for="game-start" class="control-label">
+                    {{'game.schedule.start' | translate}}
+                    <small>({{'game.schedule.empty' | translate}})</small>
+                </label>
+                <input type="datetime-local" id="game-start" name="gameStart" class="form-control"
+                       ng-model="newGame.schedule.start"/>
             </div>
             <div class="flex-50 flex-no-shrink">
                 <label for="groups" class="control-label" translate>group.titlePlural</label>
@@ -46,6 +72,15 @@
                 </ol>
             </div>
         </div>
+
+        <label for="game-description" class="control-label">
+            {{'game.description' | translate}}
+            <a class="pull-right" ng-click="markdownModal(newGame.description)" ng-show="newGame.description">
+                <i class="fa fa-image"></i>
+            </a>
+        </label>
+        <!-- TODO add notice that markdown is being used -->
+        <textarea class="form-control" id="game-description" ng-model="newGame.description"></textarea>
 
         <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate/>
     </div>

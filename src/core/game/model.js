@@ -40,7 +40,7 @@ var GameSchema = new Schema(
 
       rings: {type: [{type: ObjectID, ref: "Ring"}], default: []},
 
-      description: {type: String, default: ""}, // TODO parse markdown
+      description: {type: String, default: ""}, // markdown syntax
 
       startMeta: {
         rings: {type: Number, required: true}, // TODO use for start of game

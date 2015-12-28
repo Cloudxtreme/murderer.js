@@ -13,6 +13,20 @@
     "create": {
       "title": "New Game",
       "submit": "Create Game"
+    },
+    "limit": {
+      "participants": "Participants register limit",
+      "invitedParticipants": "Invited participants register limit",
+      "empty": "leave empty for no limit"
+    },
+    "startMeta": {
+      "rings": "Amount of rings",
+      "lives": "Amount of starting rings per participant"
+    },
+    "schedule": {
+      "end": "Game end",
+      "start": "Automatic game start",
+      "empty": "leave empty to disable"
     }
   }
 }

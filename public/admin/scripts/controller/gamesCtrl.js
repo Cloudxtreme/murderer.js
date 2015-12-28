@@ -9,7 +9,27 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, admi
   $scope.groups = null;
   $scope.groupsList = null;
 
-  $scope.newGame = {name: null, groups: []};
+  $scope.newGame = {
+    name: null,
+    description: null,
+    groups: [], // {group: Group._id, users: [{user: User._id, name: "", message: ""}]}
+    //passwords: [], // [""]
+    //inviteOnly: false,
+    limit: {
+      participants: null,
+      invitedParticipants: null
+    },
+    startMeta: {
+      rings: 6,
+      lives: 4
+    },
+    schedule: {
+      end: null,
+      start: null,
+    //  activate: [], // [Date]
+    //  deactivate: [] // [Date]
+    }
+  };
 
   $scope.createGame = createGame;
   $scope.containsGroup = function (arr, group) { return _.any($scope.newGame.groups, {group: group._id}); };
