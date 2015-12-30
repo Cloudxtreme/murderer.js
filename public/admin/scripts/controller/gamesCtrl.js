@@ -26,13 +26,14 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, admi
     },
     schedule: {
       end: null,
-      start: null,
-    //  activate: [], // [Date]
-    //  deactivate: [] // [Date]
+      start: null//,
+      //  activate: [], // [Date]
+      //  deactivate: [] // [Date]
     }
   };
 
   $scope.createGame = createGame;
+  $scope.startGame = startGame;
   $scope.containsGroup = function (arr, group) { return _.any($scope.newGame.groups, {group: group._id}); };
   $scope.addGroup = function (arr, group) { arr.push({group: group._id}); };
   $scope.remove = function (arr, index) { arr.splice(index, 1); };
@@ -68,6 +69,10 @@ angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, admi
         return games;
       });
     });
+  }
+
+  function startGame(id) {
+    socket.query("game:start", id).then(function () { console.log(arguments); }, function () { console.error(arguments); });
   }
 
 });

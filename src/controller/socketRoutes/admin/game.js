@@ -9,11 +9,11 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
 
-  queryRoute("game:update", function (data) {
-    return gameC.qFindByIdAndUpdate(this, {_id: data._id}, data, {new: true});
-  });
+  queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, data._id, data, {new: true}); });
 
-  queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
+  queryRoute("game:start", function (data) { return gameC.qStart(this, data); });
 
-  queryRoute("game:contracts.all", function (data) { return gameC.qFindContracts(this, data); });
+  //queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
+
+  //queryRoute("game:contracts.all", function (data) { return gameC.qFindContracts(this, data); });
 };

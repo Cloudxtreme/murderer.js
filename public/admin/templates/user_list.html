@@ -13,7 +13,7 @@
         <td class="text-right">
             <a class="fa fa-fw" ng-class="user.admin ? 'fa-user-secret' : 'fa-user'" ng-click="toggleAdmin(user)"
                ng-if="!isSelf(user)"></a>
-            <a class="fa fa-fw fa-trash-o" ng-click="removeUser(user)"></a>
+            <a class="fa fa-fw fa-trash-o" ng-click="removeFromSet(user)"></a>
         </td>
     </tr>
     </tbody>

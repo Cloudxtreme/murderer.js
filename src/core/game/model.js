@@ -43,8 +43,8 @@ var GameSchema = new Schema(
       description: {type: String, default: ""}, // markdown syntax
 
       startMeta: {
-        rings: {type: Number, required: true}, // TODO use for start of game
-        lives: {type: Number, required: true} // TODO use for start of game
+        rings: {type: Number, required: true},
+        lives: {type: Number, required: true}
       },
 
       limit: {

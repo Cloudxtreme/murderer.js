@@ -107,6 +107,7 @@
 
 <ol class="list-group game-list">
     <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
+        <a ng-click="startGame(game._id)">START</a>
         <div class="game-active">
             <label>
                 <input type="checkbox" ng-model="game.active" ng-click="toggleActive(game)"/>
