@@ -8,7 +8,8 @@
         <input name="description" id="group-description" class="form-control" ng-model="newGroup.description"/>
         <br/>
 
-        <input type="submit" class="form-btn" ng-value="'group.create.submit' | translate" translate/>
+        <input type="submit" class="form-btn" ng-value="'group.create.submit' | translate"
+               ng-disabled="addGroup.$invalid"/>
     </div>
 </form>
 
