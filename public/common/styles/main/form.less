@@ -1,101 +1,131 @@
 .form {
   width: 100%;
   margin-bottom: 20px;
+}
 
-  .form-control {
-    box-sizing: border-box;
-    padding: 4px 8px;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    background: mix(@bg-color, white, 5%) none;
-    color: @bg-color;
-    line-height: @line-height-base;
-    height: @line-height-computed + 2 * 4px;
-    border: 1px solid fade(@bg-color, 50%);
-    margin: 3px 0;
+.form-control {
+  box-sizing: border-box;
+  padding: 4px 8px;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  background: mix(@bg-color, white, 5%) none;
+  color: @bg-color;
+  line-height: @line-height-base;
+  height: @line-height-computed + 2 * 4px;
+  border: 1px solid fade(@bg-color, 50%);
+  margin: 3px 0;
+}
+
+.form-control, .form-checkbox {
+  outline: none;
+
+  &.ng-invalid {
+    border-color: @color-danger;
+    box-shadow: 0 0 2px 1px @color-danger;
+    background-color: mix(@color-danger, white, 15%);
   }
 
-  .form-control, .form-checkbox {
-    outline: none;
+  &:focus {
+    border-color: @color-info;
+    box-shadow: 0 0 2px 2px @color-info;
+  }
+}
 
-    &.ng-invalid {
-      border-color: @color-danger;
-      box-shadow: 0 0 2px 1px @color-danger;
-      background-color: mix(@color-danger, white, 15%);
-    }
+textarea.form-control {
+  height: @line-height-computed * 2 + 2 * 4px;
+}
 
-    &:focus {
-      border-color: @color-info;
-      box-shadow: 0 0 2px 2px @color-info;
-    }
+.control-label {
+  display: block;
+  font-weight: bold;
+  margin-top: 6px;
+  color: mix(@text-color, @color-info, 90%);
+
+  > input[type="checkbox"], > input[type="radio"] {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.form-btn {
+  .colorize-btn(@text-color);
+  box-sizing: border-box;
+  text-decoration: none;
+  padding: 4px 10px;
+  height: @line-height-computed + 2 * 4px;
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  outline: none;
+  cursor: pointer;
+  color: @text-color;
+  text-shadow: 1px 1px black;
+  font-weight: bold;
+
+  &:focus {
+    border-color: @color-info;
+    box-shadow: 0 0 1px 1px @color-info;
   }
 
-  textarea.form-control {
-    height: @line-height-computed * 2 + 2 * 4px;
+  &:active {
+    padding: 5px 9px 3px 11px;
   }
 
-  .control-label {
-    display: block;
-    font-weight: bold;
-    margin-top: 6px;
-    color: mix(@text-color, @color-info, 90%);
+  &:disabled {
+    padding: 5px 10px;
+    cursor: not-allowed;
+    color: fade(darken(@text-color, 20%), 80%);
+    text-shadow: none;
+  }
+}
 
-    > input[type="checkbox"], > input[type="radio"] {
-      position: relative;
-      top: 2px;
-    }
+.colorize-btn(@color) {
+  @form-button-color-light: mix(@bg-color, @color, 60%);
+  @form-button-color-dark: mix(@bg-color, @color, 80%);
+  @form-button-color-hover-light: mix(@bg-color, @color, 55%);
+  @form-button-color-hover-dark: mix(@bg-color, @color, 75%);
+  background: @form-button-color-light linear-gradient(to bottom, @form-button-color-light, @form-button-color-dark);
+  border: 1px outset @form-button-color-light;
+
+  &:hover, &:focus {
+    background: @form-button-color-hover-light linear-gradient(to bottom, @form-button-color-hover-light, @form-button-color-hover-dark);
+    border: 1px outset @form-button-color-hover-light;
   }
 
-  .form-btn {
-    @form-button-color-light: mix(@bg-color, @text-color, 60%);
-    @form-button-color-dark: mix(@bg-color, @text-color, 80%);
-    @form-button-color-hover-light: mix(@bg-color, @text-color, 55%);
-    @form-button-color-hover-dark: mix(@bg-color, @text-color, 75%);
-    box-sizing: border-box;
-    text-decoration: none;
-    padding: 4px 10px;
-    height: @line-height-computed + 2 * 4px;
-    display: block;
-    width: 100%;
-    margin: 6px 0;
-    outline: none;
-    cursor: pointer;
-    color: @text-color;
+  &:active {
+    background: @form-button-color-dark linear-gradient(to bottom, @form-button-color-dark, @form-button-color-light);
+    border: 1px inset @form-button-color-light;
+  }
+
+  &:disabled {
+    @form-button-color-light: mix(@bg-color, @color, 60%);
+    @form-button-color-dark: mix(@bg-color, @color, 70%);
     background: @form-button-color-light linear-gradient(to bottom, @form-button-color-light, @form-button-color-dark);
     border: 1px outset @form-button-color-light;
-    text-shadow: 1px 1px black;
-    font-weight: bold;
-
-    &:focus {
-      border-color: @color-info;
-      box-shadow: 0 0 2px 2px @color-info;
-    }
-
-    &:hover, &:focus {
-      background: @form-button-color-hover-light linear-gradient(to bottom, @form-button-color-hover-light, @form-button-color-hover-dark);
-      border: 1px outset @form-button-color-hover-light;
-    }
-
-    &:active {
-      background: @form-button-color-dark linear-gradient(to bottom, @form-button-color-dark, @form-button-color-light);
-      padding: 5px 9px 3px 11px;
-      border: 1px inset @form-button-color-light;
-    }
-
-    &:disabled {
-      @form-button-color-light: mix(@bg-color, @text-color, 60%);
-      @form-button-color-dark: mix(@bg-color, @text-color, 70%);
-      background: @form-button-color-light linear-gradient(to bottom, @form-button-color-light, @form-button-color-dark);
-      border: 1px outset @form-button-color-light;
-      padding: 5px 10px;
-      cursor: not-allowed;
-      color: fade(darken(@text-color, 20%), 80%);
-      text-shadow: none;
-    }
   }
+}
 
-  .error-msg {
-    color: @color-danger;
-  }
+.form-btn-success {
+  .colorize-btn(@color-success);
+}
+
+.form-btn-danger {
+  .colorize-btn(@color-danger);
+}
+
+.form-btn-warning {
+  .colorize-btn(@color-warning);
+}
+
+.form-btn-info {
+  .colorize-btn(@color-info);
+}
+
+.form-btn-primary {
+  .colorize-btn(@color-primary);
+}
+
+.error-msg {
+  color: @color-danger;
 }

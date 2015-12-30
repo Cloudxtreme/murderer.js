@@ -5,6 +5,8 @@
     "description": "Description",
     "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
     "inactive": "Inactive",
+    "data": "Data",
+    "state": "State",
     "passwords": "Passwords",
     "passwordsNote": "separated by <code>,</code>",
     "contracts": {

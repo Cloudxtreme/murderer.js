@@ -1,138 +1,60 @@
-<form name="createForm" class="form" id="create-game" ng-submit="createGame()">
-    <div class="panel">
-        <h2 class="panel-heading" translate>game.create.title</h2>
+<button type="button" class="form-btn form-btn-success" ng-click="createGame()">
+    <i class="fa fa-fw fa-plus"></i> {{'game.create.title' | translate}}
+</button>
 
-        <div class="flexbox">
-            <div class="flex-50 flex-no-shrink">
-                <label for="game-id" class="control-label" translate>game.name</label>
-                <input type="text" id="game-id" name="gameId" class="form-control" ng-model="newGame.name" required/>
-
-                <label class="control-label">
-                    <input type="checkbox" name="inviteOnly" ng-model="newGame.inviteOnly"/>
-                    {{'game.limit.inviteOnly' | translate}}
-                </label>
-
-                <div ng-if="!newGame.inviteOnly">
-                    <label for="game-passwords" class="control-label">
-                        {{'game.passwords' | translate}}
-                        <small>(<span ng-bind-html="'game.passwordsNote' | translate | html"></span>)</small>
-                    </label>
-                    <input type="text" id="game-passwords" name="gamePasswords" class="form-control"
-                           ng-model="newGame.passwordsText"/>
-
-                    <label for="game-participants" class="control-label">
-                        {{'game.limit.participants' | translate}}
-                        <small>({{'game.limit.empty' | translate}})</small>
-                    </label>
-                    <input type="number" id="game-participants" name="gameParticipants" class="form-control"
-                           ng-model="newGame.limit.participants" min="2"
-                           ng-valid="newGame.limit.participants != null || newGame.limit.invitedParticipants == null"/>
-                </div>
-
-                <label for="game-invited-participants" class="control-label">
-                    {{'game.limit.invitedParticipants' | translate}}
-                    <small>({{'game.limit.empty' | translate}})</small>
-                </label>
-                <input type="number" id="game-invited-participants" name="gameInvitedParticipants" class="form-control"
-                       ng-model="newGame.limit.invitedParticipants"
-                       min="{{newGame.inviteOnly ? 2 : newGame.limit.participants}}"/>
-
-                <label for="game-rings" class="control-label" translate>game.startMeta.rings</label>
-                <input type="number" id="game-rings" name="gameRings" class="form-control"
-                       ng-model="newGame.startMeta.rings" min="1" required/>
-
-                <label for="game-lives" class="control-label" translate>game.startMeta.lives</label>
-                <input type="number" id="game-lives" name="gameLives" class="form-control"
-                       ng-model="newGame.startMeta.lives" min="1" max="{{newGame.startMeta.rings}}" required/>
-
-                <label for="game-end" class="control-label" translate>game.schedule.end</label>
-                <input type="datetime-local" id="game-end" name="gameEnd" class="form-control"
-                       ng-model="newGame.schedule.end" required/>
-
-                <label for="game-start" class="control-label">
-                    {{'game.schedule.start' | translate}}
-                    <small>({{'game.schedule.empty' | translate}})</small>
-                </label>
-                <input type="datetime-local" id="game-start" name="gameStart" class="form-control"
-                       ng-model="newGame.schedule.start"/>
-
-                <!-- TODO show validation error reasons (only non-obvious ones) -->
+<table class="table table-striped" st-table="displayedGames" data-st-safe-src="games">
+    <thead>
+    <tr>
+        <th st-sort="sort.state" class="fa-fw-2x" title="{{'game.state' | translate}}"><i
+                class="fa fa-fw fa-circle text-warning"></i></th>
+        <th st-sort="name" class="width-30" translate>game.name</th>
+        <th st-sort="schedule.end" class="width-30" translate>game.schedule.end</th>
+        <th st-sort="participants" class="width-20" translate>game.data</th>
+        <th translate>table.actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="game in displayedGames" data-game-id="{{game._id}}">
+        <td class="text-center">
+            <span class="fa fa-fw"
+                  ng-class="'text-' + (game.ended ? 'danger fa-stop' : game.active ? 'success fa-play' : game.started ? 'warning fa-pause' : 'info fa-circle')"></span>
+        </td>
+        <td ng-bind="game.name"></td>
+        <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
+        <td class="text-mono flexbox">
+            <div class="flex-50 text-center" title="{{'game.rings' | translate}}">
+                {{game.rings.length}} <i class="fa fa-fw fa-link"></i>
             </div>
-            <div class="flex-50 flex-no-shrink">
-                <label for="groups" class="control-label" translate>group.titlePlural</label>
-                <ol class="list-group" id="groups">
-                    <li class="list-group-item list-group-item-info" ng-repeat="groupData in newGame.groups"
-                        ng-init="group = groups[groupData.group];">
-                        <div class="flexbox">
-                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
-                            <div class="text-right width-30">
-                                <a ng-click="moveDown(newGame.groups, $index)" ng-if="!$last"><i
-                                        class="fa fa-fw fa-angle-down"></i></a>
-                                <a ng-click="moveUp(newGame.groups, $index)" ng-if="!$first"><i
-                                        class="fa fa-fw fa-angle-up"></i></a>
-                                <i class="fa fa-fw" ng-if="$first"></i>
-                                <a ng-click="remove(newGame.groups, $index)"><i class="fa fa-fw fa-minus"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                </ol>
-                <ol class="list-group groups">
-                    <li class="list-group-item" ng-repeat="group in groupsList"
-                        ng-if="!containsGroup(newGame.groups, group)">
-                        <div class="flexbox">
-                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
-                            <div class="text-right width-10">
-                                <a ng-click="addGroup(newGame.groups, group)"><i class="fa fa-fw fa-plus"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                </ol>
+            <div class="flex-50 text-center" title="{{'game.participants' | translate}}">
+                {{game.participants}} <i class="fa fa-fw fa-users"></i>
             </div>
-        </div>
+        </td>
+        <td class="text-center">
+            <!-- TODO rework/create URL -->
+            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}" ng-if="game.started"></a>
+            <!-- TODO rework/create URL -->
+            <a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"></a>
 
-        <!-- TODO add inputs for disabled periods of time -->
+            <!-- TODO rework/create URL -->
+            <a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"></a>
 
-        <label for="game-description" class="control-label">
-            {{'game.description' | translate}}
-            <small>(<span ng-bind-html="'game.descriptionNote' | translate | html"></span>)</small>
-            <a class="pull-right" ng-click="markdownModal(newGame.description)" ng-show="newGame.description">
-                <i class="fa fa-image"></i>
-            </a>
-        </label>
-        <textarea class="form-control" id="game-description" ng-model="newGame.description"></textarea>
+            <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"></a>
+            <a class="fa fa-fw fa-repeat" ng-click="resumeGame(game)"
+               ng-if="game.started && !game.active && !game.ended"></a>
 
-        <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate" translate/>
-    </div>
-</form>
+            <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"></a>
+            <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"></a>
 
-<ol class="list-group game-list">
-    <li class="list-group-item" ng-repeat="game in games" ng-class="{'list-group-item-info': game.active}">
-        <a ng-click="startGame(game._id)">START</a>
-        <div class="game-active">
-            <label>
-                <input type="checkbox" ng-model="game.active" ng-click="toggleActive(game)"/>
-                <span class="text-mono" translate>game.active</span>
-            </label>
-        </div>
-        <div class="game-name"><a ng-href="/acp/games/{{game._id}}" ng-bind="game.name"></a><br/></div>
-        <div class="game-participants">
-            {{'game.participants' | translate}}: <span class="text-mono" ng-bind="game.participants.length"></span>
-        </div>
-        <div class="clearfix"></div>
-
-        <hr/>
-
-        <div ng-repeat="ring in game.rings" class="game-ring">
-            <hr ng-if="!$first"/>
-            <b class="text-mono">{{'game.ring' | translate}} #{{$index}}</b>
-
-            <div>
-                <b class="text-mono" ng-bind="ring.active.length"></b>
-                {{'game.active.remaining' | translate}}
-                <small class="text-mono" ng-if="game.participants.length">({{(ring.active.length /
-                    game.participants.length * 10000 | math:'round') / 100}}%)
-                </small>
-            </div>
-        </div>
-    </li>
-</ol>
+            <a class="fa fa-fw fa-stop" ng-class="stopGame(game)" ng-if="game.started && !game.ended"></a>
+            <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"></a>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot ng-show="games.length > 10">
+    <tr>
+        <td colspan="5" class="text-center">
+            <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
+        </td>
+    </tr>
+    </tfoot>
+</table>

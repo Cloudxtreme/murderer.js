@@ -4,7 +4,8 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
   /*==================================================== Exports  ====================================================*/
 
   var service = {
-    markdownPreview: markdownPreview
+    markdownPreview: markdownPreview,
+    newGame: newGame
   };
 
   _.each(_.keys(service), function (key) {
@@ -22,6 +23,16 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
       controller: "markdownPreviewCtrl",
       size: "lg",
       resolve: {plainText: _.constant(text)}
+    });
+  }
+
+  function newGame() {
+    return $uibModal.open({
+      templateUrl: "/templates/admin/modals/new_game.html",
+      controller: "newGameCtrl",
+      size: "lg",
+      backdrop: "static",
+      keyboard: false
     });
   }
 

@@ -1,5 +1,6 @@
 {
   "button": {
-    "toggle": "Toggle"
+    "toggle": "Toggle",
+    "dismiss": "Dismiss"
   }
 }

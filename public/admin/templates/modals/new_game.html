@@ -1,0 +1,120 @@
+<form name="createForm" class="form no-margin" id="create-game" ng-submit="confirm()">
+
+    <div class="modal-header" translate>game.create.title</div>
+
+    <div class="modal-body">
+        <div class="flexbox">
+            <div class="flex-50 flex-no-shrink">
+                <label for="game-id" class="control-label" translate>game.name</label>
+                <input type="text" id="game-id" name="gameId" class="form-control" ng-model="game.name" required/>
+
+                <label class="control-label">
+                    <input type="checkbox" name="inviteOnly" ng-model="game.inviteOnly"/>
+                    {{'game.limit.inviteOnly' | translate}}
+                </label>
+
+                <div ng-if="!game.inviteOnly">
+                    <label for="game-passwords" class="control-label">
+                        {{'game.passwords' | translate}}
+                        <small>(<span ng-bind-html="'game.passwordsNote' | translate | html"></span>)</small>
+                    </label>
+                    <input type="text" id="game-passwords" name="gamePasswords" class="form-control"
+                           ng-model="passwordsText"/>
+
+                    <label for="game-participants" class="control-label">
+                        {{'game.limit.participants' | translate}}
+                        <small>({{'game.limit.empty' | translate}})</small>
+                    </label>
+                    <input type="number" id="game-participants" name="gameParticipants" class="form-control"
+                           ng-model="game.limit.participants" min="2"
+                           ng-valid="game.limit.participants != null || game.limit.invitedParticipants == null"/>
+                </div>
+
+                <label for="game-invited-participants" class="control-label">
+                    {{'game.limit.invitedParticipants' | translate}}
+                    <small>({{'game.limit.empty' | translate}})</small>
+                </label>
+                <input type="number" id="game-invited-participants" name="gameInvitedParticipants"
+                       class="form-control" ng-model="game.limit.invitedParticipants"
+                       min="{{game.inviteOnly ? 2 : game.limit.participants}}"/>
+
+                <label for="game-rings" class="control-label" translate>game.startMeta.rings</label>
+                <input type="number" id="game-rings" name="gameRings" class="form-control"
+                       ng-model="game.startMeta.rings" min="1" required/>
+
+                <label for="game-lives" class="control-label" translate>game.startMeta.lives</label>
+                <input type="number" id="game-lives" name="gameLives" class="form-control"
+                       ng-model="game.startMeta.lives" min="1" max="{{game.startMeta.rings}}" required/>
+
+                <label for="game-end" class="control-label" translate>game.schedule.end</label>
+                <input type="datetime-local" id="game-end" name="gameEnd" class="form-control"
+                       ng-model="game.schedule.end" required/>
+
+                <label for="game-start" class="control-label">
+                    {{'game.schedule.start' | translate}}
+                    <small>({{'game.schedule.empty' | translate}})</small>
+                </label>
+                <input type="datetime-local" id="game-start" name="gameStart" class="form-control"
+                       ng-model="game.schedule.start"/>
+
+                <!-- TODO show validation error reasons (only non-obvious ones) -->
+            </div>
+            <div class="flex-50 flex-no-shrink">
+                <label for="groups" class="control-label" translate>group.titlePlural</label>
+                <ol class="list-group" id="groups">
+                    <li class="list-group-item list-group-item-info" ng-repeat="groupData in game.groups"
+                        ng-init="group = groups[groupData.group];">
+                        <div class="flexbox">
+                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
+                            <div class="text-right width-30">
+                                <a ng-click="moveDown(game.groups, $index)" ng-if="!$last"><i
+                                        class="fa fa-fw fa-angle-down"></i></a>
+                                <a ng-click="moveUp(game.groups, $index)" ng-if="!$first"><i
+                                        class="fa fa-fw fa-angle-up"></i></a>
+                                <i class="fa fa-fw" ng-if="$first"></i>
+                                <a ng-click="remove(game.groups, $index)"><i class="fa fa-fw fa-minus"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <ol class="list-group groups">
+                    <li class="list-group-item" ng-repeat="group in groupsList"
+                        ng-if="!containsGroup(game.groups, group)">
+                        <div class="flexbox">
+                            <strong ng-bind="group.name" title="{{group.description}}"></strong>
+                            <div class="text-right width-10">
+                                <a ng-click="addGroup(game.groups, group)"><i class="fa fa-fw fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- TODO add inputs for disabled periods of time -->
+
+        <label for="game-description" class="control-label">
+            {{'game.description' | translate}}
+            <small>(<span ng-bind-html="'game.descriptionNote' | translate | html"></span>)</small>
+            <a class="pull-right" ng-click="markdownModal(game.description)" ng-show="game.description">
+                <i class="fa fa-image"></i>
+            </a>
+        </label>
+        <textarea class="form-control" id="game-description" ng-model="game.description"></textarea>
+    </div>
+
+    <div class="modal-footer">
+        <div class="flexbox">
+            <div class="flex-50 margin-bottom-0">
+                <button type="button" class="form-btn form-btn-danger" ng-click="dismiss()" translate>
+                    button.dismiss
+                </button>
+            </div>
+            <div class="flex-50 margin-bottom-0">
+                <input type="submit" class="form-btn" ng-value="'game.create.submit' | translate"
+                       ng-disabled="createForm.$invalid"/>
+            </div>
+        </div>
+    </div>
+
+</form>

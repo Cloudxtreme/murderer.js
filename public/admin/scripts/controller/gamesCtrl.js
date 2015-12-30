@@ -1,78 +1,53 @@
-angular.module("admin").controller("gamesCtrl", function ($scope, $timeout, adminModals, socket) {
+angular.module("admin").controller("gamesCtrl", function ($q, $scope, adminModals, socket) {
   "use strict";
 
   var gamesInit;
 
   /*===================================================== Scope  =====================================================*/
 
-  $scope.games = null;
   $scope.groups = null;
   $scope.groupsList = null;
 
-  $scope.newGame = {
-    name: null,
-    description: null,
-    groups: [], // {group: Group._id, users: [{user: User._id, name: "", message: ""}]}
-    passwords: [], // [""]
-    passwordsText: "",
-    inviteOnly: false,
-    limit: {
-      participants: null,
-      invitedParticipants: null
-    },
-    startMeta: {
-      rings: 6,
-      lives: 4
-    },
-    schedule: {
-      end: null,
-      start: null//,
-      //  activate: [], // [Date]
-      //  deactivate: [] // [Date]
-    }
+  $scope.games = [];
+  $scope.displayedGames = [];
+  $scope.sort = {
+    state: sortStateValue
   };
 
-  $scope.createGame = createGame;
+  $scope.createGame = createGame; // TODO implement
+  $scope.lockGame = startGame; // TODO implement
   $scope.startGame = startGame;
-  $scope.containsGroup = function (arr, group) { return _.any($scope.newGame.groups, {group: group._id}); };
-  $scope.addGroup = function (arr, group) { arr.push({group: group._id}); };
-  $scope.remove = function (arr, index) { arr.splice(index, 1); };
-  $scope.moveDown = function (arr, index) { arr.splice(index, 2, arr[index + 1], arr[index]); };
-  $scope.moveUp = function (arr, index) { $scope.moveDown(arr, index - 1); };
-  $scope.markdownModal = adminModals.markdownPreview;
+  $scope.resumeGame = startGame; // TODO implement
+  $scope.pauseGame = startGame; // TODO implement
+  $scope.stopGame = startGame; // TODO implement
+  $scope.removeGame = startGame; // TODO implement
 
   /*=============================================== Initial Execution  ===============================================*/
 
-  /*------------------------------------------------ Fetch all games  ------------------------------------------------*/
-
   gamesInit = socket
       .query("games:all")
-      .then(function (games) { return $scope.games = games; });
-
-  /*------------------------------------------------ Fetch all groups ------------------------------------------------*/
-
-  socket
-      .query("groups:all")
-      .then(function (groups) {
-        var g = $scope.groups = {}; // apply map of groups by id to scope
-        $scope.groupsList = _.each(groups, function (group) { g[group._id] = group; });
+      .then(function (games) {
+        Array.prototype.push.apply($scope.games, _.each(games, prepareGame));
+        return $scope.games;
       });
 
   /*=================================================== Functions  ===================================================*/
 
   function createGame() {
-    $scope.newGame.passwords = $scope.newGame.passwordsText ?
-        _.compact(_.map($scope.newGame.passwordsText.split(","), function (s) { return s.trim() || null; })) : null;
-    socket.query("game:create", _.omit($scope.newGame, ["passwordsText"])).then(function (game) {
-      gamesInit.then(function (games) {
-        games.push(game);
-        return games;
-      });
-    });
+    $q
+        .all([gamesInit, adminModals.qNewGame()])
+        .then(function (results) { results[0].unshift(prepareGame(results[1])); });
   }
 
-  function startGame(id) {
-    socket.query("game:start", id).then(function () { console.log(arguments); }, function () { console.error(arguments); });
+  function prepareGame(game) {
+    game.participants = _.sum(_.map(game.groups, function (g) { return g.users.length; }));
+    return game;
   }
+
+  function startGame(game) { // TODO handle result
+    socket.query("game:start", game._id).then(function () { console.log(arguments); }, function () { console.error(arguments); });
+  }
+
+  function sortStateValue(game) { return game.ended ? 3 : game.active ? 2 : game.started ? 1 : 0; }
 
 });
