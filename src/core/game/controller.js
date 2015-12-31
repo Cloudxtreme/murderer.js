@@ -82,7 +82,10 @@ function startGame(scope, gameId, activate) {
             .purgeRings(scope, game.rings)
             .then(function () { return generation.generateRings(scope, game); })
             .then(function (ringIds) {
-              return exports.qUpdateById(scope, game._id, {rings: ringIds, started: true, active: activate || false});
+              return exports.qFindByIdAndUpdate(scope,
+                  game._id,
+                  {rings: ringIds, started: true, active: activate || false},
+                  {new: true});
             });
       })
       .then(function (game) {

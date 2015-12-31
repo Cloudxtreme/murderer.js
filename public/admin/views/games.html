@@ -39,7 +39,7 @@
             <a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"></a>
 
             <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"></a>
-            <a class="fa fa-fw fa-repeat" ng-click="resumeGame(game)"
+            <a class="fa fa-fw fa-play-circle" ng-click="resumeGame(game)"
                ng-if="game.started && !game.active && !game.ended"></a>
 
             <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"></a>

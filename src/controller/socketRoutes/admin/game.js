@@ -13,12 +13,16 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:start", function (data) { return gameC.qStart(this, data, true); });
 
-  queryRoute("game:resume", function (data) { return gameC.qFindByIdAndUpdate(this, data, {active: true}); });
+  queryRoute("game:resume", function (data) {
+    return gameC.qFindByIdAndUpdate(this, data, {active: true}, {new: true});
+  });
 
-  queryRoute("game:pause", function (data) { return gameC.qFindByIdAndUpdate(this, data, {active: false}); });
+  queryRoute("game:pause", function (data) {
+    return gameC.qFindByIdAndUpdate(this, data, {active: false}, {new: true});
+  });
 
   queryRoute("game:stop", function (data) {
-    return gameC.qFindByIdAndUpdate(this, data, {active: false, ended: true});
+    return gameC.qFindByIdAndUpdate(this, data, {active: false, ended: true}, {new: true});
   });
 
   queryRoute("game:remove", function (data) { return gameC.qRemoveById(this, data); });

@@ -93,12 +93,11 @@ function generateRings(scope, game) {
       chain = chain.concat(chainAddition);
     }
     livesLeftTotal -= chain.length;
-    var newVar = {
-      active: chain.length,
-      chain: _.map(_.shuffle(chain), _.partial(getChainEntry, track.tokens))
-    };
     return ringC
-        .qCreate(scope, newVar)
+        .qCreate(scope, {
+          active: chain.length,
+          chain: _.map(_.shuffle(chain), _.partial(getChainEntry, track.tokens))
+        })
         .then(function (ring) {
           log.debug({ring: ring}, "ring created");
           return ring._id;
