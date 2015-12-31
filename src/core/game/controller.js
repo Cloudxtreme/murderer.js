@@ -30,6 +30,8 @@ exports.qLeave = leave;
 
 /*==================================================== Functions  ====================================================*/
 
+// TODO move most functions into services
+
 /**
  * Returns Promise for populated game instance by specified ID.
  * @param scope The scope object.
@@ -127,6 +129,7 @@ function join(scope, gameId, name, message, groupId) {
         if (_.any(game.groups, function (group) { return _.any(group.users, {user: userId}); })) {
           return Q.reject("Already joined.");
         }
+        if (game.started) { return Q.reject("Game already locked."); }
         return _.findIndex(game.groups, function (group) { return group.group.toString() === groupId; });
       })
       .then(function (groupIdx) {
@@ -148,7 +151,7 @@ function leave(scope, gameId) {
   var userId = scope.user._id;
   return exports
       .qFindOneAndUpdate(scope,
-          {_id: gameId, "groups.users.user": userId},
+          {_id: gameId, started: false, "groups.users.user": userId},
           {$pull: {"groups.$.users": {user: userId}}},
           {new: true})
       .then(groupsDataOnly);
