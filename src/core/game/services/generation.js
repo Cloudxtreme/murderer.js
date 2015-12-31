@@ -67,7 +67,7 @@ function generateRings(scope, game) {
   if (rings <= 0) { return Q.resolve([]); }
   if (rings < lives) { lives = rings; }
 
-  users = _.flatten(_.pluck(game.groups, ["users", "user"]));
+  users = _(game.groups).pluck("users").flatten().pluck("user").value();
   if (users.length < 2) { return Q.reject("To few users."); }
   livesLeftTotal = users.length * lives;
   _.each(users, function (user) { track.users[user] = lives; });
@@ -84,7 +84,7 @@ function generateRings(scope, game) {
     var additions = capSize - chain.length;
     if (additions > 0) {
       // add random users that have lives left until cap-size is reached
-      var chainAddition = _.sample(_.without.apply(_, users, chain), additions);
+      var chainAddition = _.sample(_.without.call(_, users, chain), additions);
       for (var i = 0; i < chainAddition.length; i++) {
         candidate = chainAddition[i];
         // remove user from users list if no lives left
@@ -93,11 +93,12 @@ function generateRings(scope, game) {
       chain = chain.concat(chainAddition);
     }
     livesLeftTotal -= chain.length;
+    var newVar = {
+      active: chain.length,
+      chain: _.map(_.shuffle(chain), _.partial(getChainEntry, track.tokens))
+    };
     return ringC
-        .qCreate({
-          active: chain.length,
-          chain: _.map(_.shuffle(chain), _.partial(getChainEntry, track.tokens))
-        })
+        .qCreate(scope, newVar)
         .then(function (ring) {
           log.debug({ring: ring}, "ring created");
           return ring._id;

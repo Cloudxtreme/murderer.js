@@ -45,7 +45,7 @@
             <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"></a>
             <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"></a>
 
-            <a class="fa fa-fw fa-stop" ng-class="stopGame(game)" ng-if="game.started && !game.ended"></a>
+            <a class="fa fa-fw fa-stop" ng-click="stopGame(game)" ng-if="game.started && !game.ended"></a>
             <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"></a>
         </td>
     </tr>
