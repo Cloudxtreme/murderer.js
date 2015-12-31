@@ -1,0 +1,51 @@
+<div ng-if="loading" class="text-center"><i class="fa fa-fw fa-3x fa-spin fa-spinner"></i></div>
+
+<div ng-if="!loading">
+
+    <table class="table table-striped" id="games-table" st-table="games" ng-if="games.length">
+        <thead>
+        <tr>
+            <th st-sort="sort.state" class="fa-fw-2x" title="{{'game.state' | translate}}"><i
+                    class="fa fa-fw fa-circle text-warning"></i></th>
+            <th st-sort="author.username" class="fa-fw"></th>
+            <th st-sort="name" translate>game.name</th>
+            <th st-sort="schedule.end" translate>game.schedule.end</th>
+            <th st-sort="rings" class="width-10" translate>game.rings</th>
+            <th st-sort="sort.participants" class="width-20" translate>game.participants</th>
+            <th class="fa-fw"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="game in games" data-game-id="{{game._id}}" ng-class="{primary: game.joined}">
+            <td class="text-center">
+            <span class="fa fa-fw"
+                  ng-class="'text-' + (game.ended ? 'danger fa-stop' : game.active ? 'success fa-play' : game.started ? 'warning fa-pause' : 'info fa-circle')"></span>
+            </td>
+            <td class="game-author" title="{{game.author.username}}"><img
+                    ng-src="{{avatar(21, game.author.avatarUrl)}}"/></td>
+            <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td> <!-- TODO create route -->
+            <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
+            <td class="text-mono text-center" ng-bind="game.rings"></td>
+            <td class="text-mono text-center">
+                {{game.participants}} <span ng-if="game.limit.participants">/ {{game.limit.participants}}</span>
+            </td>
+            <td class="text-center">
+                <a class="fa fa-fw fa-sign-in" ng-click="joinGame(game)" ng-if="game.mayJoin"></a>
+                <a class="fa fa-fw fa-sign-out" ng-click="leaveGame(game)" ng-if="game.mayLeave"></a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot ng-show="adminGames.length > 10">
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div ng-if="!games.length" class="text-warning text-center">
+        <i class="fa fa-fw fa-2x fa-meh-o"></i> {{'game.noneFound' | translate}} <i class="fa fa-fw fa-2x fa-meh-o"></i>
+    </div>
+
+</div>

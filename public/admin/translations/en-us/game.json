@@ -1,12 +1,10 @@
 {
   "game": {
     "titlePlural": "Games",
-    "participants": "Participants",
     "description": "Description",
     "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
     "inactive": "Inactive",
     "data": "Data",
-    "state": "State",
     "passwords": "Passwords",
     "passwordsNote": "separated by <code>,</code>",
     "contracts": {
@@ -30,7 +28,6 @@
       "lives": "Amount of starting rings per participant"
     },
     "schedule": {
-      "end": "Game end",
       "start": "Automatic game start",
       "empty": "leave empty to disable"
     }

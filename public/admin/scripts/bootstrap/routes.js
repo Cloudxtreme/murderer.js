@@ -13,7 +13,7 @@ angular.module("admin").config(function ($routeProvider) {
 
       .when("/acp/games", {
         templateUrl: "/views/admin/games.html",
-        controller: "gamesCtrl"
+        controller: "adminGamesCtrl"
       })
 
       .when("/acp/games/:id", {

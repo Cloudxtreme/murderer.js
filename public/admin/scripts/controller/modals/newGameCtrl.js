@@ -1,4 +1,4 @@
-angular.module("admin").controller("newGameCtrl", function ($scope, $timeout, $uibModalInstance, adminModals, games) {
+angular.module("admin").controller("newGameCtrl", function ($scope, $timeout, $uibModalInstance, adminModals, adminGames, socket) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -57,7 +57,7 @@ angular.module("admin").controller("newGameCtrl", function ($scope, $timeout, $u
   function confirm() {
     var game = $scope.game, pwText = $scope.passwordsText;
     game.passwords = pwText ? _.compact(_.map(pwText.split(","), trimmedOrNull)) : null;
-    return games.create(game)
+    return adminGames.create(game)
         .then($uibModalInstance.close, function (err) {
           // TODO proper error handling
           console.error(err);

@@ -1,7 +1,7 @@
 {
   "register": {
     "enterGame": "Einem Spiel beitreten",
-    "games": "Aktuelle Spiele",
+    "adminGames": "Aktuelle Spiele",
     "selectGroup": "Wähle Gruppe",
     "participate": "Du willst mitspielen?",
     "information": "Du brauchst dich nur rechtzeitig zu registrieren. Falls du dich rechtzeitig registriert hast, wirst du automatisch dem Spiel hinzugefügt sobald es startet. Die Email wird benutzt um dir deine Mordaufträge zu senden."

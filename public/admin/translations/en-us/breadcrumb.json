@@ -2,7 +2,7 @@
   "breadcrumb/": {
     "acp": "Admin CP",
     "acp/": {
-      "games": "Games",
+      "adminGames": "Games",
       "games/": {
         "*": "<span class=\"text-mono\">{{part.substring(part.length-8).toUpperCase()}}</span>",
         "*/": {

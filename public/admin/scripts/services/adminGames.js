@@ -1,11 +1,11 @@
-angular.module("admin").factory("games", function (socket) {
+angular.module("admin").factory("adminGames", function (socket) {
   "use strict";
 
   /*==================================================== Exports  ====================================================*/
 
   //noinspection UnnecessaryLocalVariableJS
   var service = {
-    all: function () { return socket.query("games:all"); },
+    all: function () { return socket.query("games:admin.all"); },
 
     create: function (game) { return socket.query("game:create", game); },
     lock: function (game) { return socket.query("game:lock", game._id); },
@@ -15,10 +15,6 @@ angular.module("admin").factory("games", function (socket) {
     stop: function (game) { return socket.query("game:stop", game._id); },
     remove: function (game) { return socket.query("game:remove", game._id); }
   };
-
-  /*=================================================== Functions  ===================================================*/
-
-
 
   /*===================================================== Return =====================================================*/
 

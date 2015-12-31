@@ -3,6 +3,13 @@
     "title": {
       "plural": "Games"
     },
+    "participants": "Participants",
+    "state": "State",
+    "author": "Author",
+    "noneFound": "No games have been found. You may try again later.",
+    "schedule": {
+      "end": "Game end"
+    },
     "mission": {
       "attempt": "Attempt a murder",
       "token": "Token",

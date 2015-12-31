@@ -19,9 +19,9 @@ angular.module("common").run(function ($rootScope, $timeout, socket) {
 
   /*=================================================== Functions  ===================================================*/
 
-  function getAvatar(size) {
+  function getAvatar(size, url) {
     if (!$rootScope.connected) { return null; }
-    var url = $rootScope.identity.avatarUrl;
+    if (url == null) { url = $rootScope.identity.avatarUrl; }
     return url && url + (~url.indexOf("?") ? "&" : "?") + "s=" + size || null;
   }
 

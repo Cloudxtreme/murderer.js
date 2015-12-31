@@ -23,6 +23,10 @@ exports.qAddRings = addRingsToGame; // TODO use
 exports.qKillByToken = murder.byKill;
 exports.qSuicide = murder.bySuicide;
 exports.qStart = startGame;
+exports.qFindWithAccess = findWithAccess;
+exports.qFindJoined = findJoined;
+exports.qJoin = join;
+exports.qLeave = leave;
 
 /*==================================================== Functions  ====================================================*/
 
@@ -36,7 +40,7 @@ exports.qStart = startGame;
 function findByIdPopulated(scope, gameId, population) {
   if (population == null) { population = ["rings"]; }
   scope.log.debug({gameId: gameId, population: population}, "fetching populated game instance");
-  var query = model.findById(gameId).populate(["rings"]);
+  var query = model.findById(gameId).populate("rings");
   return Q.nbind(query.exec, query)();
 }
 
@@ -83,4 +87,69 @@ function startGame(scope, gameId, activate) {
         scope.log.info({game: game}, "game started");
         return game;
       });
+}
+
+function findWithAccess() {
+  var query = model
+      .find(null, {
+        "groups.users.message": 0,
+        "groups.users.name": 0,
+        description: 0,
+        "schedule.start": 0,
+        "schedule.activate": 0,
+        "schedule.deactivate": 0,
+        log: 0
+      })
+      .populate("author", {username: 1, avatarUrl: 1});
+  return Q
+      .nbind(query.exec, query)()
+      .then(function (games) {
+        return _.map(games, function (game) {
+          return _.extend(game._doc, {
+            passwords: !!(game.passwords && game.passwords.length),
+            rings: game.started ? game.rings.length : game.startMeta.rings
+          });
+        });
+      });
+}
+
+function findJoined(scope) {
+  return exports
+      .qFind(scope, {"groups.users.user": scope.user._id}, {_id: 1})
+      .then(function (games) { return _.pluck(games, "_id"); });
+}
+
+function join(scope, gameId, name, message, groupId) {
+  var userId = scope.user._id;
+  return exports
+      .qFindById(scope, gameId)
+      .then(function (game) {
+        if (_.any(game.groups, function (group) { return _.any(group.users, {user: userId}); })) {
+          return Q.reject("Already joined.");
+        }
+        return _.findIndex(game.groups, function (group) { return group.group.toString() === groupId; });
+      })
+      .then(function (groupIdx) {
+        if (!~groupIdx) { return Q.reject("Group not found."); }
+        var push = {};
+        push["groups." + groupIdx + ".users"] = {user: userId, name: name, message: message};
+        return exports.qFindByIdAndUpdate(scope, gameId, {$push: push}, {new: true});
+      })
+      .then(groupsDataOnly);
+}
+
+function groupsDataOnly(game) {
+  return {
+    groups: _.map(game.groups, function (group) { return {group: group.group, users: _.pluck(group.users, "user")}; })
+  };
+}
+
+function leave(scope, gameId) {
+  var userId = scope.user._id;
+  return exports
+      .qFindOneAndUpdate(scope,
+          {_id: gameId, "groups.users.user": userId},
+          {$pull: {"groups.$.users": {user: userId}}},
+          {new: true})
+      .then(groupsDataOnly);
 }

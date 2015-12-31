@@ -1,11 +1,13 @@
 "use strict";
 
+var _ = require("lodash");
+
 var gameC = require.main.require("./core/game/controller");
 
 module.exports = function (queryRoute) {
-  queryRoute("games:all", function (data) { return gameC.qFind(this, data); });
+  queryRoute("games:admin.all", function (data) { return gameC.qFind(this, data); });
 
-  queryRoute("game:create", function (data) { return gameC.qCreate(this, data); });
+  queryRoute("game:create", function (data) { return gameC.qCreate(this, _.extend(data, {author: this.user._id})); });
 
   queryRoute("game:lock", function (data) { return gameC.qStart(this, data, false); });
 

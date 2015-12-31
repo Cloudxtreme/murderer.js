@@ -1,7 +1,5 @@
-angular.module("admin").controller("gamesCtrl", function ($q, $scope, adminModals, games) {
+angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModals, adminGames) {
   "use strict";
-
-  var gamesInit;
 
   /*===================================================== Scope  =====================================================*/
 
@@ -15,16 +13,16 @@ angular.module("admin").controller("gamesCtrl", function ($q, $scope, adminModal
   };
 
   $scope.createGame = createGame;
-  $scope.lockGame = function (game) { games.lock(game).then(function (g) { _.extend(game, g); }); };
-  $scope.startGame = function (game) { games.start(game).then(function (g) { _.extend(game, g); }); };
-  $scope.resumeGame = function (game) { games.resume(game).then(function (g) { _.extend(game, g); }); };
-  $scope.pauseGame = function (game) { games.pause(game).then(function (g) { _.extend(game, g); }); };
-  $scope.stopGame = function (game) { games.stop(game).then(function (g) { _.extend(game, g); }); };
+  $scope.lockGame = function (game) { adminGames.lock(game).then(function (g) { _.extend(game, g); }); };
+  $scope.startGame = function (game) { adminGames.start(game).then(function (g) { _.extend(game, g); }); };
+  $scope.resumeGame = function (game) { adminGames.resume(game).then(function (g) { _.extend(game, g); }); };
+  $scope.pauseGame = function (game) { adminGames.pause(game).then(function (g) { _.extend(game, g); }); };
+  $scope.stopGame = function (game) { adminGames.stop(game).then(function (g) { _.extend(game, g); }); };
   $scope.removeGame = removeGame;
 
   /*=============================================== Initial Execution  ===============================================*/
 
-  gamesInit = games.all()
+  adminGames.all()
       .then(function (games) {
         Array.prototype.push.apply($scope.games, _.each(games, prepareGame));
         return $scope.games;
@@ -38,13 +36,11 @@ angular.module("admin").controller("gamesCtrl", function ($q, $scope, adminModal
   }
 
   function createGame() {
-    $q
-        .all([gamesInit, adminModals.qNewGame()])
-        .then(function (results) { results[0].unshift(prepareGame(results[1])); });
+    adminModals.qNewGame().then(function (results) { results[0].unshift(prepareGame(results[1])); });
   }
 
   function removeGame(game) {
-    games
+    adminGames
         .remove(game)
         .then(function () { $scope.games.splice(_.indexOf($scope.games, game), 1); });
   }

@@ -7,9 +7,9 @@ angular.module("common").config(function ($routeProvider) {
 
   // @ngInject
   $routeProvider
-      .when("/game", {
-        templateUrl: "/views/closed/game.html",
-        controller: "gameCtrl"
+      .when("/games", {
+        templateUrl: "/views/closed/games.html",
+        controller: "gamesCtrl"
       })
 
       .when("/contracts", {
