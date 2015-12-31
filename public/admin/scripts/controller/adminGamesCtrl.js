@@ -35,9 +35,7 @@ angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModa
     return game;
   }
 
-  function createGame() {
-    adminModals.qNewGame().then(function (results) { results[0].unshift(prepareGame(results[1])); });
-  }
+  function createGame() { adminModals.qNewGame().then(function (game) { $scope.games.unshift(prepareGame(game)); }); }
 
   function removeGame(game) {
     adminGames
