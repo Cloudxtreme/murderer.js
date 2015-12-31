@@ -47,15 +47,15 @@
                        ng-model="game.startMeta.lives" min="1" max="{{game.startMeta.rings}}" required/>
 
                 <label for="game-end" class="control-label" translate>game.schedule.end</label>
-                <input type="datetime-local" id="game-end" name="gameEnd" class="form-control"
+                <input type="datetime-local" id="game-end" name="gameEnd" class="form-control" min="{{now}}"
                        ng-model="game.schedule.end" required/>
 
                 <label for="game-start" class="control-label">
                     {{'game.schedule.start' | translate}}
                     <small>({{'game.schedule.empty' | translate}})</small>
                 </label>
-                <input type="datetime-local" id="game-start" name="gameStart" class="form-control"
-                       ng-model="game.schedule.start"/>
+                <input type="datetime-local" id="game-start" name="gameStart" class="form-control" min="{{now}}"
+                       max="{{game.schedule.end.toISOString()}}" ng-model="game.schedule.start"/>
 
                 <!-- TODO show validation error reasons (only non-obvious ones) -->
             </div>

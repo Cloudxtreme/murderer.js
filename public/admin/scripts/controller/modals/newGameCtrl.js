@@ -1,4 +1,4 @@
-angular.module("admin").controller("newGameCtrl", function ($scope, $uibModalInstance, adminModals, socket) {
+angular.module("admin").controller("newGameCtrl", function ($scope, $timeout, $uibModalInstance, adminModals, socket) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -25,6 +25,7 @@ angular.module("admin").controller("newGameCtrl", function ($scope, $uibModalIns
       //deactivate: [] // [Date]
     }
   };
+  $scope.now = new Date().toISOString();
 
   $scope.dismiss = $uibModalInstance.dismiss;
   $scope.confirm = confirm;
@@ -34,6 +35,11 @@ angular.module("admin").controller("newGameCtrl", function ($scope, $uibModalIns
   $scope.moveDown = function (arr, index) { arr.splice(index, 2, arr[index + 1], arr[index]); };
   $scope.moveUp = function (arr, index) { $scope.moveDown(arr, index - 1); };
   $scope.markdownModal = adminModals.markdownPreview;
+
+  $scope.$watch("game.schedule.start", function (value) {
+    // fix angular datetime-local validation ignoring that no required is set
+    if (value == null) { $timeout(function () { $scope.createForm.gameStart.$setValidity("datetimelocal", true); }); }
+  });
 
   /*=============================================== Initial Execution  ===============================================*/
 
