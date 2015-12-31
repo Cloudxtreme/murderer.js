@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "Home",
-    "game": "Game",
-    "statistics": "Stats"
+    "games": "Games",
+    "news": "News"
   }
 }
