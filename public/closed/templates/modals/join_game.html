@@ -1,0 +1,33 @@
+<form name="joinForm" class="form no-margin" id="join-game" ng-submit="confirm()">
+
+    <div class="modal-header" translate>game.join</div>
+
+    <div class="modal-body">
+        <label for="name" translate>game.user.name</label>
+        <input type="text" id="name" name="name" class="form-control" ng-model="data.name" required/>
+        <label for="message" translate>game.user.message</label>
+        <input type="text" id="message" name="message" class="form-control" ng-model="data.message" required/>
+        <div ng-if="groups == null || groups.length">
+            <label for="group" translate>group.title</label>
+            <select id="group" name="group" class="form-control" ng-model="data.groupId"
+                    ng-options="group._id as group.name + ' (' + group.description + ')' for group in groups" required>
+                <option value="" translate>group.selectGroup</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="flexbox">
+            <div class="flex-50 margin-bottom-0">
+                <button type="button" class="form-btn form-btn-danger" ng-click="dismiss()" translate>
+                    button.dismiss
+                </button>
+            </div>
+            <div class="flex-50 margin-bottom-0">
+                <input type="submit" class="form-btn" ng-value="'game.join' | translate"
+                       ng-disabled="joinForm.$invalid"/>
+            </div>
+        </div>
+    </div>
+
+</form>

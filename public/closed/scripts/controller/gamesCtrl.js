@@ -1,4 +1,4 @@
-angular.module("closed").controller("gamesCtrl", function ($scope, games) {
+angular.module("closed").controller("gamesCtrl", function ($scope, modals, games) {
   "use strict";
 
   var joinedPromise;
@@ -51,12 +51,11 @@ angular.module("closed").controller("gamesCtrl", function ($scope, games) {
   }
 
   function joinGame(game) {
-    // TODO modal for name, message and group to join
-    games.join(game, {name: "frissdiegurke", message: "Try to.", groupId: "5677f36ff227ed78129d1066"}).then(function (g) {
+    return modals.qJoinGame(game).then(function (g) {
       prepareGameSync(_.extend(game, g));
       game.mayJoin = false;
       game.mayLeave = game.joined = true;
-    }); // TODO proper error handling
+    });
   }
 
   function leaveGame(game) {

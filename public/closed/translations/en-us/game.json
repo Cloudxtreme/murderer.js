@@ -7,8 +7,13 @@
     "state": "State",
     "author": "Author",
     "noneFound": "No games have been found. You may try again later.",
+    "join": "Join Game",
     "schedule": {
       "end": "Game end"
+    },
+    "user": {
+      "name": "Alias",
+      "message": "Quote message"
     },
     "mission": {
       "attempt": "Attempt a murder",
