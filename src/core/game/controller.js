@@ -16,7 +16,7 @@ var generation = require("./services/generation");
 ctrlBase(model, exports);
 
 // get
-exports.qPopulated = findByIdPopulated;
+exports.qPopulated = findByIdPopulated; // TODO use, rework
 exports.qFindContracts = contract.all;
 // update
 exports.qAddRings = addRingsToGame; // TODO use
@@ -66,7 +66,7 @@ function addRingsToGame(scope, gameId, rings) {
       });
 }
 
-function startGame(scope, gameId) {
+function startGame(scope, gameId, activate) {
   return exports
       .qFindById(scope, gameId, {rings: 1, groups: 1, "startMeta.rings": 1, "startMeta.lives": 1})
       .then(function (game) {
@@ -76,7 +76,7 @@ function startGame(scope, gameId) {
             .purgeRings(scope, game.rings)
             .then(function () { return generation.generateRings(scope, game); })
             .then(function (ringIds) {
-              return exports.qUpdateById(scope, game._id, {rings: ringIds, started: true, active: true});
+              return exports.qUpdateById(scope, game._id, {rings: ringIds, started: true, active: activate || false});
             });
       })
       .then(function (game) {

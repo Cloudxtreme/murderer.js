@@ -7,11 +7,23 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:create", function (data) { return gameC.qCreate(this, data); });
 
-  queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
+  queryRoute("game:lock", function (data) { return gameC.qStart(this, data, false); });
 
-  queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, data._id, data, {new: true}); });
+  queryRoute("game:start", function (data) { return gameC.qStart(this, data, true); });
 
-  queryRoute("game:start", function (data) { return gameC.qStart(this, data); });
+  queryRoute("game:resume", function (data) { return gameC.qFindByIdAndUpdate(this, data, {active: true}); });
+
+  queryRoute("game:pause", function (data) { return gameC.qFindByIdAndUpdate(this, data, {active: false}); });
+
+  queryRoute("game:stop", function (data) {
+    return gameC.qFindByIdAndUpdate(this, data, {active: false, ended: true});
+  });
+
+  queryRoute("game:remove", function (data) { return gameC.qRemoveById(this, data); });
+
+  //queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
+
+  //queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, data._id, data, {new: true}); });
 
   //queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
 
