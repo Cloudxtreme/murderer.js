@@ -36,16 +36,16 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
   /*----------------------------------------------------- Games  -----------------------------------------------------*/
 
   // @ngInject
-  $routeProvider
-      .when("/game", {
-        templateUrl: "/views/common/game.html"
-      })
-      
-      .when("/statistics", {
-        templateUrl: "/views/common/stats.html",
-        resolve: {cacheInvalidation: function (stats) { stats.clearCache(); }}
-      })
-  ;
+  //$routeProvider
+  //    .when("/game", {
+  //      templateUrl: "/views/common/game.html"
+  //    })
+  //
+  //    .when("/statistics", {
+  //      templateUrl: "/views/common/stats.html",
+  //      resolve: {cacheInvalidation: function (stats) { stats.clearCache(); }}
+  //    })
+  //;
 
   /*-------------------------------------------------- Error Pages  --------------------------------------------------*/
 

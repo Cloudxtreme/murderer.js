@@ -16,20 +16,20 @@ angular.module("admin").config(function ($routeProvider) {
         controller: "adminGamesCtrl"
       })
 
-      .when("/acp/games/:id", {
-        templateUrl: "/views/admin/game/details.html",
-        controller: "gameDetailsCtrl",
-        resolve: {
-          gameId: function ($route) { return $route.current.params.id; }
-        }
-      })
-      .when("/acp/games/:id/contracts", {
-        templateUrl: "/views/admin/game/contracts.html",
-        controller: "gameContractsCtrl",
-        resolve: {
-          gameId: function ($route) { return $route.current.params.id; }
-        }
-      })
+      //.when("/acp/games/:id", {
+      //  templateUrl: "/views/admin/game/details.html",
+      //  controller: "gameDetailsCtrl",
+      //  resolve: {
+      //    gameId: function ($route) { return $route.current.params.id; }
+      //  }
+      //})
+      //.when("/acp/games/:id/contracts", {
+      //  templateUrl: "/views/admin/game/contracts.html",
+      //  controller: "gameContractsCtrl",
+      //  resolve: {
+      //    gameId: function ($route) { return $route.current.params.id; }
+      //  }
+      //})
 
       .when("/acp/groups", {
         templateUrl: "/views/admin/groups.html",
