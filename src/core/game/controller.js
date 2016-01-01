@@ -124,21 +124,31 @@ function findJoined(scope) {
       .then(function (games) { return _.pluck(games, "_id"); });
 }
 
+function getJoinErrorOrGroupIndex(groups, groupId, userId, name) {
+  var err = null, groupIdx = null;
+  var groupCheck = function (group, i) {
+    if (group.group.toString() === groupId) { groupIdx = i; }
+    return _.any(group.users, function (u) {
+      return err = u.user === userId ? "Already joined." : u.name === name ? "Name already in use." : null;
+    });
+  };
+  if (_.any(groups, groupCheck)) { return Q.reject(err); }
+  if (groupIdx == null) { return Q.reject("Group not found."); }
+  return groupIdx;
+}
+
 function join(scope, gameId, name, message, groupId) {
   var userId = scope.user._id;
   return exports
       .qFindById(scope, gameId)
       .then(function (game) {
-        if (_.any(game.groups, function (group) { return _.any(group.users, {user: userId}); })) {
-          return Q.reject("Already joined.");
-        }
         if (game.started) { return Q.reject("Game already locked."); }
-        return _.findIndex(game.groups, function (group) { return group.group.toString() === groupId; });
+        return getJoinErrorOrGroupIndex(game.groups, groupId, userId, name);
       })
       .then(function (groupIdx) {
-        if (!~groupIdx) { return Q.reject("Group not found."); }
         var push = {};
         push["groups." + groupIdx + ".users"] = {user: userId, name: name, message: message};
+        scope.log.info({gameId: gameId, name: name, groupIdx: groupIdx}, "user joins game");
         return exports.qFindByIdAndUpdate(scope, gameId, {$push: push}, {new: true});
       })
       .then(groupsDataOnly);
@@ -157,5 +167,9 @@ function leave(scope, gameId) {
           {_id: gameId, started: false, "groups.users.user": userId},
           {$pull: {"groups.$.users": {user: userId}}},
           {new: true})
+      .then(function (game) {
+        scope.log.info({game: game}, "user left game");
+        return game;
+      })
       .then(groupsDataOnly);
 }
