@@ -1,5 +1,6 @@
 "use strict";
 
 angular.module("closed", [
-  "common"
+  "common",
+  "ui.bootstrap"
 ]);

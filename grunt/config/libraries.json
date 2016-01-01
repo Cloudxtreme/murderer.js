@@ -13,7 +13,7 @@
       "angular-cookies/angular-cookies.js": true,
       "angular-smart-table/dist/smart-table.js": true
     },
-    "admin": {
+    "closed": {
       "angular-bootstrap/ui-bootstrap-tpls.js": true
     }
   },
