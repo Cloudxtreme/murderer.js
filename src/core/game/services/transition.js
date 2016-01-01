@@ -110,10 +110,7 @@ function stop(scope, gameId) {
 
 function remove(scope, gameId) {
   return controller
-      .qRemove(scope,
-          {_id: gameId, $or: [{started: true, ended: true}, {started: false}]})
-      .then(function (data) {
-        if (!data.nRemoved) { return Q.reject("Game not found or deletion not allowed."); }
-        return data;
-      });
+      .qFindOneAndRemove(scope, {_id: gameId, $or: [{started: true, ended: true}, {started: false}]})
+      .then(errorIfNull)
+      .then(function (game) { return purgeRings(scope, game.rings); });
 }
