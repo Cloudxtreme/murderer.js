@@ -1,13 +1,11 @@
 "use strict";
 
-var _ = require("lodash");
 var Q = require("q");
 
-var gameM = require.main.require("./core/game/model");
 var gameC = require.main.require("./core/game/controller");
 
 module.exports = function (queryRoute) {
-  queryRoute("games:all", function () { return gameC.qFindWithAccess(this); });
+  queryRoute("games:all", function () { return gameC.qGameListEntries(this); });
 
   queryRoute("games:joined", function () { return gameC.qFindJoined(this); });
 

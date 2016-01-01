@@ -15,18 +15,6 @@ var GameSchema = new Schema(
       cdate: {type: Date, default: Date.now},
       name: {type: String, required: true, unique: true, trim: true},
 
-      /* Valid combination of state flags
-       *  a) !started && !active && !ended   => TODO no statistics, no kills, no suicides
-       *  b)  started && !active && !ended   => TODO                no kills,              no (de)registrations
-       *  c)  started &&  active && !ended   => TODO                                       no (de)registrations
-       *  d)  started && !active &&  ended   => TODO                no kills, no suicides, no (de)registrations
-       *
-       * State transitions (0 = delete game)
-       *  a -> [b,c,0] (lock, start, purge)
-       *  b -> [c,d]   (resume, end)
-       *  c -> [b,d]   (pause, end)
-       *  d -> [0]     (purge)
-       */
       started: {type: Boolean, default: false},
       active: {type: Boolean, default: false},
       ended: {type: Boolean, default: false},

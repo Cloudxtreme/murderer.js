@@ -9,29 +9,14 @@ module.exports = function (queryRoute) {
 
   queryRoute("game:create", function (data) { return gameC.qCreate(this, _.extend(data, {author: this.user._id})); });
 
-  queryRoute("game:lock", function (data) { return gameC.qStart(this, data, false); });
-
-  queryRoute("game:start", function (data) { return gameC.qStart(this, data, true); });
-
-  queryRoute("game:resume", function (data) {
-    return gameC.qFindByIdAndUpdate(this, data, {active: true}, {new: true});
-  });
-
-  queryRoute("game:pause", function (data) {
-    return gameC.qFindByIdAndUpdate(this, data, {active: false}, {new: true});
-  });
-
-  queryRoute("game:stop", function (data) {
-    return gameC.qFindByIdAndUpdate(this, data, {active: false, ended: true}, {new: true});
-  });
-
-  queryRoute("game:remove", function (data) { return gameC.qRemoveById(this, data); });
+  queryRoute("game:lock", function (data) { return gameC.qLock(this, data); });
+  queryRoute("game:start", function (data) { return gameC.qStart(this, data); });
+  queryRoute("game:resume", function (data) { return gameC.qResume(this, data); });
+  queryRoute("game:pause", function (data) { return gameC.qPause(this, data); });
+  queryRoute("game:stop", function (data) { return gameC.qStop(this, data); });
+  queryRoute("game:remove", function (data) { return gameC.qRemoveSafe(this, data); });
 
   //queryRoute("game:details", function (data) { return gameC.qPopulated(data); });
-
-  //queryRoute("game:update", function (data) { return gameC.qFindByIdAndUpdate(this, data._id, data, {new: true}); });
-
-  //queryRoute("game:rings.set", function (data) { return gameC.qGenerateRings(this, data.gameId, data.amount); });
 
   //queryRoute("game:contracts.all", function (data) { return gameC.qFindContracts(this, data); });
 };

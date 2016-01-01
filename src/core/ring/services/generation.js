@@ -2,29 +2,16 @@
 
 var _ = require("lodash");
 var Q = require("q");
+
 var ringC = require.main.require("./core/ring/controller");
 var security = require.main.require("./utils/security");
 var config = require.main.require("./utils/config").main;
 
 /*===================================================== Exports  =====================================================*/
 
-exports.generateRings = generateRings;
-exports.purgeRings = purgeRings;
+exports.generate = generate;
 
 /*==================================================== Functions  ====================================================*/
-
-function purgeRings(scope, ringIds) {
-  if (ringIds instanceof Array && ringIds.length > 0) {
-    scope.log.debug({rings: ringIds}, "purging rings");
-    return ringC
-        .qRemove(scope, {_id: {$in: ringIds}})
-        .then(function (data) {
-          ringIds.splice(0, ringIds.length);
-          return data;
-        });
-  }
-  return Q.resolve();
-}
 
 function removeFromSet(set, item) {
   for (var j = 0; j < set.length; j++) {
@@ -43,8 +30,7 @@ function checkUserObligatory(chain, rings, lives, user) {
 }
 
 /**
- * TODO test this xD
- * Generates (does not attach to game) rings as defined within game startMeta with users defined within game.
+ * Generates rings as specified via parameters.
  *
  * The generation process:
  *   1. Iterate over rings.
@@ -55,24 +41,21 @@ function checkUserObligatory(chain, rings, lives, user) {
  *   2. Once all promises are resolved, return IDs.
  *
  * @param scope The scope object.
- * @param game The game object.
+ * @param {[User._id]} users The list of users to consider for generated rings.
+ * @param {Number} rings The amount of rings to generate.
+ * @param {Number} lives The amount of rings for each user to be present in.
+ * @param {[String]} tokens Tokens that are already in use and need to be considered for uniqueness tests.
  * @returns {[ObjectID]} IDs of rings that got generated.
  */
-function generateRings(scope, game) {
-  var log = scope.log.child({game: game, startMeta: game.startMeta});
-  var rings = game.startMeta.rings, lives = game.startMeta.lives;
-  var track = {tokens: [], users: {}};
-  var users, livesLeftTotal;
-
-  if (rings <= 0) { return Q.resolve([]); }
-  if (rings < lives) { lives = rings; }
-
-  users = _(game.groups).pluck("users").flatten().pluck("user").value();
+function generate(scope, users, rings, lives, tokens) {
   if (users.length < 2) { return Q.reject("To few users."); }
-  livesLeftTotal = users.length * lives;
-  _.each(users, function (user) { track.users[user] = lives; });
 
-  log.debug({amount: rings, lives: lives}, "generating rings");
+  tokens = tokens ? _.clone(tokens) : [];
+  var livesLeftTotal = users.length * lives;
+  var remainingLives = {};
+  _.each(users, function (user) { remainingLives[user] = lives; });
+
+  scope.log.debug({amount: rings, lives: lives}, "generating rings");
 
   return Q.all(_.times(rings, function (j) {
     var ringsLeft = rings - j;
@@ -80,7 +63,7 @@ function generateRings(scope, game) {
     var candidate;
     var capSize = Math.ceil(livesLeftTotal / ringsLeft);
     // add users to chain that must be added into all remaining rings
-    _.each(users, _.partial(checkUserObligatory, chain, ringsLeft, track.users));
+    _.each(users, _.partial(checkUserObligatory, chain, ringsLeft, remainingLives));
     var additions = capSize - chain.length;
     if (additions > 0) {
       // add random users that have lives left until cap-size is reached
@@ -88,7 +71,7 @@ function generateRings(scope, game) {
       for (var i = 0; i < chainAddition.length; i++) {
         candidate = chainAddition[i];
         // remove user from users list if no lives left
-        if (!--track.users[candidate]) { removeFromSet(users, candidate); }
+        if (!--remainingLives[candidate]) { removeFromSet(users, candidate); }
       }
       chain = chain.concat(chainAddition);
     }
@@ -96,10 +79,10 @@ function generateRings(scope, game) {
     return ringC
         .qCreate(scope, {
           active: chain.length,
-          chain: _.map(_.shuffle(chain), _.partial(getChainEntry, track.tokens))
+          chain: _.map(_.shuffle(chain), _.partial(getChainEntry, tokens))
         })
         .then(function (ring) {
-          log.debug({ring: ring}, "ring created");
+          scope.log.debug({ring: ring}, "ring created");
           return ring._id;
         });
   }));
