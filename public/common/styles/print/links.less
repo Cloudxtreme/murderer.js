@@ -1,0 +1,13 @@
+a, a:after {
+  color: #274177 !important;
+}
+
+a[href^='http://'], a[href^='https://'], a[href^='//'] {
+  display: inline-block;
+
+  &:after {
+    content: "[" attr(href) "]" !important;
+    vertical-align: 30% !important;
+    font-size: 0.65em !important;
+  }
+}

@@ -17,7 +17,7 @@ ctrlBase(model, exports);
 
 exports.qGameListEntries = gameListEntries;
 
-exports.qFindContracts = contract.all;
+exports.qActiveContracts = contract.activeContracts;
 
 exports.qKillByToken = murder.byKill;
 exports.qSuicide = murder.bySuicide;

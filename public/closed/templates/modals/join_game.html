@@ -7,7 +7,7 @@
         <input type="text" id="name" name="name" class="form-control" ng-model="data.name" required/>
         <label for="message" translate>game.user.message</label>
         <input type="text" id="message" name="message" class="form-control" ng-model="data.message" required/>
-        <div ng-if="groups == null || groups.length">
+        <div ng-if="groups == null || groups.length > 1">
             <label for="group" translate>group.title</label>
             <select id="group" name="group" class="form-control" ng-model="data.groupId"
                     ng-options="group._id as group.name + ' (' + group.description + ')' for group in groups" required>

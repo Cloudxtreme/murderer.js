@@ -61,6 +61,10 @@
             </div>
             <div class="flex-50 flex-no-shrink">
                 <label for="groups" class="control-label" translate>group.titlePlural</label>
+                <input type="hidden" name="groups" ng-model="groupsValidation"
+                       ng-valid="{required: game.groups.length}"/>
+                <div ng-if="createForm.groups.$error.required" class="error-msg"
+                     translate>game.create.invalid.groups.required</div>
                 <ol class="list-group" id="groups">
                     <li class="list-group-item list-group-item-info" ng-repeat="groupData in game.groups"
                         ng-init="group = groups[groupData.group];">

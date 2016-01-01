@@ -16,7 +16,10 @@ angular.module("closed").controller("joinGameCtrl", function ($scope, $timeout, 
 
   socket
       .query("groups:populate", _.pluck(game.groups, "group")) // TODO create route within server
-      .then(function (groups) { $scope.groups = groups; });
+      .then(function (groups) {
+        $scope.groups = groups;
+        if (groups.length === 1) { $scope.data.groupId = groups[0]._id; }
+      });
 
   /*=================================================== Functions  ===================================================*/
 

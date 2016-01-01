@@ -15,7 +15,12 @@
     },
     "create": {
       "title": "New Game",
-      "submit": "Create Game"
+      "submit": "Create Game",
+      "invalid": {
+        "groups": {
+          "required": "You need to add at least one group."
+        }
+      }
     },
     "limit": {
       "inviteOnly": "Invite-Only mode",

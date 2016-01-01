@@ -1,17 +1,8 @@
 {
-  "": [
-    "always"
-  ],
   "all": [
     "main"
   ],
-  "screen": [
-    "screen"
-  ],
-  "only screen and (max-device-width:767px)": [
-    "antiscreen"
-  ],
-  "handheld,only screen and (max-device-width:767px)": [
-    "handheld"
+  "print": [
+    "print"
   ]
 }

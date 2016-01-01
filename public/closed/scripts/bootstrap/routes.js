@@ -12,10 +12,10 @@ angular.module("common").config(function ($routeProvider) {
         controller: "gamesCtrl"
       })
 
-      //.when("/contracts", {
-      //  templateUrl: "/views/closed/contracts.html",
-      //  controller: "contractsCtrl"
-      //})
+      .when("/contracts", {
+        templateUrl: "/views/closed/contracts.html",
+        controller: "contractsCtrl"
+      })
   ;
 
 });
