@@ -1,6 +1,6 @@
 <form class="form print-hide">
     <!--suppress HtmlFormInputWithoutLabel -->
-    <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter"
+    <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter" ng-if="allGames.length > 1"
             ng-options="game._id as game.name for game in allGames">
         <option value="" translate>contract.filterGame</option>
     </select>
