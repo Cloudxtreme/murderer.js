@@ -9,7 +9,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
 
   socket.query("contracts:active").then(function (games) {
     $scope.games = games;
-    //* Prepend '/' for layout development
+    /* Prepend '/' for layout development
     var playerNameSelf = "frissdiegurke", groupName = "admins", playerName = "asterix", message = "Kill me please!";
     var gameName1 = "Halloween Massacre", gameName2 = "Game #8128";
     $scope.games = [
@@ -18,6 +18,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
         multiGroup: true,
         active: false,
         alias: {name: playerNameSelf, group: {name: groupName}},
+        schedule: {end: "2016-01-21T23:00:00.000Z"},
         contracts: [
           {present: false},
           {present: false, resolved: true, survivor: {name: playerName, message: message}},
@@ -34,6 +35,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
         multiGroup: false,
         active: true,
         alias: {name: playerNameSelf, group: {name: groupName}},
+        schedule: {end: "2016-01-28T23:00:00.000Z"},
         contracts: _.shuffle([
           {present: false},
           {present: false, resolved: true, survivor: {name: playerName, message: message}},
