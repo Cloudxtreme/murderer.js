@@ -14,7 +14,8 @@ exports.activeContracts = findActiveContracts;
 function findActiveContracts(scope) {
   var userId = scope.user._id;
   var query = model
-      .find({started: true, ended: false, "groups.users.user": userId}, {name: 1, active: 1, groups: 1, rings: 1})
+      .find({started: true, ended: false, "groups.users.user": userId},
+          {name: 1, active: 1, groups: 1, rings: 1, "schedule.end": 1})
       .populate("rings groups.group");
   return Q
       .nbind(query.exec, query)()
@@ -40,6 +41,7 @@ function findActiveContracts(scope) {
             name: game.name,
             multiGroup: game.groups.length > 1,
             alias: alias,
+            schedule: {end: game.schedule.end},
             active: game.active,
             contracts: _.map(game.rings, _.partial(getContractDataOfRing, userId, usersMap))
           };
