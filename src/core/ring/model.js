@@ -14,6 +14,7 @@ var GameSchema = new Schema(
     {
       cdate: {type: Date, default: Date.now},
       active: {type: Number},
+      game: {type: ObjectID, ref: "Game", required: true},
 
       chain: {
         type: [{

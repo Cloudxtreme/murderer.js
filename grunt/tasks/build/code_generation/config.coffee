@@ -5,8 +5,8 @@ module.exports = (config, grunt) ->
 
   getContent = (name, id, key, env) ->
     parts = key.split "."
-    data = config.loadServerConfig(parts.shift(), env)
-    data = if data != null && data.hasOwnProperty k then data[k] else undefined for k in parts
+    data = config.loadServerConfig parts.shift(), env
+    data = (if data != null && data.hasOwnProperty k then data[k] else undefined) for k in parts
     "angular.module(\"#{name}\").constant(\"#{id}\", #{JSON.stringify data});"
 
   writeFile = (getDestination, name, id, key, env) ->

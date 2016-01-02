@@ -41,13 +41,14 @@ function checkUserObligatory(chain, rings, lives, user) {
  *   2. Once all promises are resolved, return IDs.
  *
  * @param scope The scope object.
+ * @param {ObjectID} gameId The ID of the game that contains the ring.
  * @param {[User._id]} users The list of users to consider for generated rings.
  * @param {Number} rings The amount of rings to generate.
  * @param {Number} lives The amount of rings for each user to be present in.
  * @param {[String]} tokens Tokens that are already in use and need to be considered for uniqueness tests.
  * @returns {[ObjectID]} IDs of rings that got generated.
  */
-function generate(scope, users, rings, lives, tokens) {
+function generate(scope, gameId, users, rings, lives, tokens) {
   if (users.length < 2) { return Q.reject("To few users."); }
 
   tokens = tokens ? _.clone(tokens) : [];
@@ -78,6 +79,7 @@ function generate(scope, users, rings, lives, tokens) {
     livesLeftTotal -= chain.length;
     return ringC
         .qCreate(scope, {
+          game: gameId,
           active: chain.length,
           chain: _.map(_.shuffle(chain), _.partial(getChainEntry, tokens))
         })

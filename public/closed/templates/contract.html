@@ -1,13 +1,26 @@
-<h2 class="contract-header text-mono print-hide" data-translate-values="{ring:contract.ring, game:contract.game}"
-    translate>contract.header</h2>
+<form class="contract-header text-mono print-hide flexbox" name="tokenKillForm" ng-submit="attemptTokenKill()">
+    <div class="width-60">
+        <a ng-click="hide = !hide;"><i class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></a>
+        {{'contract.header' | translate:{ring:contract.ring, game:contract.game} }}
+    </div>
+    <div class="width-20">
+        <input type="text" name="token" class="form-control text-mono" ng-model="token" ng-valid="isHex(token)"
+               placeholder="{{'game.mission.token' | translate}}" ng-minlength="tokenLength" ng-maxlength="tokenLength"
+               required/>
+    </div>
+    <div class="width-20">
+        <input type="submit" class="form-btn form-btn-primary" ng-value="'game.mission.attempt' | translate"
+               ng-disabled="tokenKillForm.$invalid"/>
+    </div>
+</form>
 
-<div class="print-page print-block">
+<div ng-if="printLayout" class="print-page print-block" ng-class="{hidden: hide}">
     <div class="contract-target">
-        <h3 ng-bind-html="'contract.title' | translate:{project: 'murderer.js', game: 'M&ouml;rderspiel'} | html"></h3>
+        <h3 ng-bind-html="'contract.title' | translate:project | html"></h3>
 
         <h1 class="wanted">
             <i class="fa fa-fw fa-crosshairs"></i>
-            {{'contract.wanted' | translate}}
+            {{'contract.wanted' | translate | uppercase}}
             <i class="fa fa-fw fa-crosshairs"></i>
         </h1>
 
@@ -30,7 +43,7 @@
             <div class="flex-50 text-mono">{{contract.game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
 
             <div class="flex-50">
-                <label translate>contract.token</label><br/>
+                <label translate>contract.token.description</label><br/>
                 &dagger;<strong class="text-mono token" ng-bind="contract.details.token"></strong>&dagger;
             </div>
         </div>
@@ -63,6 +76,42 @@
                     <img src="/logo_credits.svg" alt="murderer.js" class="cover"/>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="contract-compact" ng-if="!printLayout" ng-class="{hidden: hide}">
+    <div class="print-block hidden">
+        <div class="flexbox">
+            <div class="flex-50 text-right" translate>game.title.one</div>
+            <div class="flex-50 text-left text-mono">
+                <span class="target" ng-bind="contract.game.name"></span>
+            </div>
+        </div>
+        <div class="flexbox">
+            <!-- TODO move ring-related translations into ring.json -->
+            <div class="flex-50 text-right" translate>game.ring</div>
+            <div class="flex-50 text-left text-mono">
+                <span class="target">#{{contract.ring}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="flexbox">
+        <div class="flex-50 text-right" translate>contract.wanted</div>
+        <div class="flex-50 text-left" data-user-id="{{contract.details.target._id}}">
+            <span class="target" ng-bind="contract.details.target.name"></span>
+        </div>
+    </div>
+    <div class="flexbox">
+        <div class="flex-50 text-right" translate>contract.message</div>
+        <div class="flex-50 text-left">
+            <span class="target" ng-bind="contract.details.target.message"></span>
+        </div>
+    </div>
+    <div class="flexbox">
+        <div class="flex-50 text-right" translate>contract.token.title</div>
+        <div class="flex-50 text-left text-mono">
+            <span class="target" ng-bind="contract.details.token"></span>
         </div>
     </div>
 </div>

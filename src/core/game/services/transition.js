@@ -53,7 +53,7 @@ function start(scope, gameId, activate) {
               if (rings < lives) { lives = rings; }
               var users = _(game.groups).pluck("users").flatten().pluck("user").value();
               var childScope = _.extend({}, scope, {log: scope.log.child({game: game, startMeta: game.startMeta})});
-              return ringC.qGenerate(childScope, users, rings, lives);
+              return ringC.qGenerate(childScope, game._id, users, rings, lives);
             })
             .then(function (ringIds) {
               return controller.qFindByIdAndUpdate(scope,

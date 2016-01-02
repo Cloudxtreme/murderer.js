@@ -4,16 +4,44 @@
   @cover-size: @print-paper-height / 3 - 2cm;
 
   text-align: center;
-  margin: 0 auto;
-  page-break-after: always;
+  margin: 0 auto 5px; // 5px margin within print-view
   width: @print-paper-width;
 
+  &.contract-print-layout {
+    page-break-after: always;
+    margin-bottom: 0;
+
+    .contract-header {
+      font-size: 1.5em;
+      padding: 10px;
+    }
+  }
+
   .contract-header {
+    text-align: left;
     margin: 0;
-    padding: 10px 0 10px 0;
+    padding: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
     background-color: fade(@color-info, 50%);
     border-top: 4px solid fade(@color-info, 30%);
     border-bottom: 4px solid fade(@color-info, 30%);
+
+    .form-btn, .form-control {
+      margin: 0;
+      padding: 0 5px;
+      height: 24px; // TODO figure out relative value calculation
+      font-size: 0.7em;
+      &.ng-invalid {
+        background-color: mix(@text-color, @color-primary, 80%);
+      }
+      &::placeholder {
+        color: fade(@bg-color, 50%);
+      }
+      .compact & {
+        height: 20px;
+      }
+    }
   }
 
   .contract-footer {
@@ -21,6 +49,19 @@
     height: 4px;
     border-top: 4px solid fade(@color-info, 30%);
     margin-bottom: 20px;
+
+    .compact & {
+      margin-bottom: 10px;
+    }
+  }
+
+  .contract-compact {
+    background-color: fade(@color-info, 15%);
+    page-break-inside: avoid;
+    .flex-50 {
+      padding: 3px 10px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+    }
   }
 
   .contract-target {
@@ -116,6 +157,7 @@
   width: @print-paper-width;
   margin: 20px auto;
   text-align: center;
+  page-break-inside: avoid;
 
   .colorize(@color, @intensity) {
     background-color: fade(@color, @intensity);
@@ -159,6 +201,15 @@
   }
   .present .not-resolved & > div.dead {
     .colorize(@color-primary, 45%);
+  }
+}
+
+.compact .ring-status {
+  margin: 10px auto;
+  > div {
+    padding: 5px 0;
+    border-width: 1px !important;
+    line-height: 1.2;
   }
 }
 

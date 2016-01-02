@@ -42,6 +42,10 @@ textarea.form-control {
   margin-top: 6px;
   color: mix(@text-color, @color-info, 90%);
 
+  &.disabled, &[disabled] {
+    color: fade(mix(@text-color, @color-info, 90%), 60%);
+  }
+
   > input[type="checkbox"], > input[type="radio"] {
     position: relative;
     top: 2px;

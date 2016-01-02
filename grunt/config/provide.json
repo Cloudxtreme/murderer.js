@@ -11,6 +11,11 @@
         "module": "common",
         "constant": "BASE_PATH",
         "key": "server.url"
+      },
+      {
+        "module": "closed",
+        "constant": "TOKEN_SIZE",
+        "key": "security.humanToken.bytes"
       }
     ]
   }

@@ -1,7 +1,8 @@
 {
   "game": {
     "title": {
-      "plural": "Games"
+      "plural": "Games",
+      "one": "Game"
     },
     "participants": "Participants",
     "state": "State",

@@ -4,16 +4,27 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
   /*===================================================== Scope  =====================================================*/
 
   $scope.games = null;
+  $scope.allGames = null;
+  $scope.gameFilter = null;
+
+  $scope.compact = true;
+  $scope.contractsOnly = false;
+  $scope.activeOnly = false;
+
+  $scope.$watchGroup(["allGames", "gameFilter"], function () {
+    $scope.games = $scope.gameFilter ? [_.findWhere($scope.allGames, {_id: $scope.gameFilter})] : $scope.allGames;
+  });
 
   /*=============================================== Initial Execution  ===============================================*/
 
   socket.query("contracts:active").then(function (games) {
-    $scope.games = games;
+    $scope.allGames = games;
     /* Prepend '/' for layout development
     var playerNameSelf = "frissdiegurke", groupName = "admins", playerName = "asterix", message = "Kill me please!";
     var gameName1 = "Halloween Massacre", gameName2 = "Game #8128";
-    $scope.games = [
+    $scope.allGames = [
       {
+        _id: "game-1",
         name: gameName1,
         multiGroup: true,
         active: false,
@@ -31,6 +42,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
         ]
       },
       {
+        _id: "game-2",
         name: gameName2,
         multiGroup: false,
         active: true,
