@@ -3,9 +3,32 @@
 .contract {
   @cover-size: @print-paper-height / 3 - 2cm;
 
+  .colorize(@color) {
+    .contract-header {
+      background-color: fade(@color, 50%);
+      border-top: 4px solid fade(@color, 30%);
+      border-bottom: 4px solid fade(@color, 30%);
+    }
+
+    .contract-footer {
+      background-color: fade(@color, 50%);
+      border-top: 4px solid fade(@color, 30%);
+    }
+
+    .contract-compact {
+      background-color: fade(@color, 15%);
+    }
+  }
+
   text-align: center;
   margin: 0 auto 5px; // 5px margin within print-view
   width: @print-paper-width;
+
+  .colorize(mix(@bg-color, @color-success, 40%));
+
+  .game-contracts.inactive & {
+    .colorize(mix(@bg-color, @color-info, 40%));
+  }
 
   &.contract-print-layout {
     margin-bottom: 0;
@@ -26,9 +49,6 @@
     padding: 5px;
     font-size: 1.2em;
     font-weight: bold;
-    background-color: fade(@color-info, 50%);
-    border-top: 4px solid fade(@color-info, 30%);
-    border-bottom: 4px solid fade(@color-info, 30%);
 
     .form-btn, .form-control {
       margin: 0;
@@ -45,12 +65,18 @@
         height: 20px;
       }
     }
+
+    .form-control {
+      box-shadow: none;
+      border: none;
+      &:focus {
+        box-shadow: 0 0 2px 2px @color-info;
+      }
+    }
   }
 
   .contract-footer {
-    background-color: fade(@color-info, 50%);
     height: 4px;
-    border-top: 4px solid fade(@color-info, 30%);
     margin-bottom: 20px;
 
     .compact & {
@@ -59,7 +85,6 @@
   }
 
   .contract-compact {
-    background-color: fade(@color-info, 15%);
     page-break-inside: avoid;
     .flex-50 {
       padding: 3px 10px;

@@ -9,6 +9,7 @@
     "author": "Author",
     "noneFound": "No games have been found. You may try again later.",
     "join": "Join Game",
+    "paused": "The game is paused.",
     "schedule": {
       "end": "Game end"
     },
