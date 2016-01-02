@@ -1,21 +1,17 @@
-<form class="contract-header print-hide flexbox" name="tokenKillForm" ng-submit="attemptTokenKill()">
-    <div class="width-60 text-mono">
+<div class="contract-header print-hide flexbox">
+    <div class="width-80 text-mono">
         <a ng-click="hide = !hide;"><i class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></a>
         {{'contract.header' | translate:{ring:contract.ring, game:contract.game} }}
     </div>
-    <div class="width-40 text-right" ng-if="!contract.game.active">
+    <div class="width-20 text-right" ng-if="!contract.game.active">
         <i class="fa fa-fw fa-pause text-warning" title="{{'game.paused' | translate}}"></i>
     </div>
     <div class="width-20" ng-if="contract.game.active">
-        <input type="text" name="token" class="form-control text-mono" ng-model="token" ng-valid="isHex(token)"
-               placeholder="{{'game.mission.token' | translate}}" ng-minlength="tokenLength" ng-maxlength="tokenLength"
-               required/>
+        <button ng-click="attemptTokenKill()" class="form-btn form-btn-primary">
+            <i class="fa fa-fw fa-check"></i> {{'contract.accomplished' | translate}}
+        </button>
     </div>
-    <div class="width-20" ng-if="contract.game.active">
-        <input type="submit" class="form-btn form-btn-primary" ng-value="'game.mission.attempt' | translate"
-               ng-disabled="tokenKillForm.$invalid"/>
-    </div>
-</form>
+</div>
 
 <div ng-if="!hide && printLayout" class="print-page">
     <div class="contract-target">

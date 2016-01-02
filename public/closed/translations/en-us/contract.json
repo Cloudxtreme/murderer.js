@@ -11,6 +11,7 @@
     "contractsOnly": "Contracts only",
     "activeOnly": "Hide rings not taking part",
     "collapse": "Collapse all contracts",
+    "accomplished": "Accomplished",
     "token": {
       "title": "Token",
       "description": "Token to hand over your murderer"

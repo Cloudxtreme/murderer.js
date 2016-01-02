@@ -1,11 +1,9 @@
-angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope, socket) {
+angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope, adminModals) {
   "use strict";
 
   var REGEX_HEX = /^[a-fA-F0-9]+$/i;
 
   /*===================================================== Scope  =====================================================*/
-
-  $scope.token = null;
 
   $scope.hide = true;
   $scope.tokenLength = TOKEN_SIZE * 2; // two hex-chars per byte
@@ -18,7 +16,8 @@ angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope
   /*=================================================== Functions  ===================================================*/
 
   function attemptTokenKill() {
-    socket.query("kill:token", {ringId: $scope.contract.details.ringId, token: $scope.token});
+    // TODO open modal
+    //socket.query("kill:token", {ringId: $scope.contract.details.ringId, token: $scope.token});
     // TODO implement query-route
     // TODO handle result
   }
