@@ -4,11 +4,9 @@ angular.module("closed").directive("contract", function () {
   return {
     restrict: "A",
     scope: {
-      contract: "=",
-      murderer: "=",
-      game: "="
+      contract: "=contract",
+      murderer: "="
     },
-    templateUrl: "/templates/closed/contract.html",
-    link: function ($scope, $elem) { $elem.addClass("contract"); }
+    templateUrl: "/templates/closed/contract.html"
   };
 });

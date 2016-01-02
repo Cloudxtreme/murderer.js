@@ -1,10 +1,10 @@
-<div ng-repeat="game in games" data-game-id="{{game._id}}">
+<div ng-repeat="game in games" data-game-id="{{game._id}}" class="game-contracts" ng-class="{inactive: !game.active}">
     <div ng-repeat="contract in game.contracts" data-ring-id="{{contract.ringId}}"
-         ng-init="data = {ring: $index, game: game, details: contract}">
+         ng-init="data = {ring: $index + 1, game: game, details: contract}">
         <div ng-if="!contract.present" class="not-present">
             <div ng-if="!contract.resolved" class="ring-status not-resolved">
                 <i class="fa fa-fw fa-circle-o-notch"></i>
-                <span ng-bind-html="'contract.notPresent.active' | translate:data | html"></span>
+                <span ng-bind-html="'contract.notPresent.running' | translate:data | html"></span>
                 <i class="fa fa-fw fa-circle-o-notch"></i>
             </div>
 

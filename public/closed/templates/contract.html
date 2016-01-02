@@ -1,4 +1,4 @@
-<h2 class="contract-header text-mono hide-print" data-translate-values="{ring:contract.ring, game:game.name}"
+<h2 class="contract-header text-mono hide-print" data-translate-values="{ring:contract.ring, game:contract.game}"
     translate>contract.header</h2>
 
 <div class="print-page">
@@ -11,27 +11,27 @@
             <i class="fa fa-fw fa-crosshairs"></i>
         </h1>
 
-        <h2 data-user-id="{{contract.mission._id}}">
-            <span class="target" ng-bind="contract.mission.username"></span>
+        <h2 data-user-id="{{contract.details.target._id}}">
+            <span class="target" ng-bind="contract.details.target.name"></span>
         </h2>
         <!--suppress HtmlUnknownTarget -->
         <img class="portrait" src="/img/pirate_draft.png" alt="image"/>
 
         <div class="message">
-            <div ng-if="contract.mission.profileMessage">
+            <div ng-if="contract.details.target.message">
                 <i class="fa fa-fw fa-quote-left"></i>
-                {{contract.mission.profileMessage}}
+                {{contract.details.target.message}}
                 <i class="fa fa-fw fa-quote-right"></i>
             </div>
-            <div ng-if="!contract.mission.profileMessage"><i class="fa fa-fw fa-ellipsis-h"></i></div>
+            <div ng-if="!contract.details.target.message"><i class="fa fa-fw fa-ellipsis-h"></i></div>
         </div>
 
         <div class="flexbox">
-            <div class="flex-50 text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
+            <div class="flex-50 text-mono">{{contract.game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
 
             <div class="flex-50">
                 <label translate>contract.token</label><br/>
-                &dagger;<strong class="text-mono token" ng-bind="contract.token"></strong>&dagger;
+                &dagger;<strong class="text-mono token" ng-bind="contract.details.token"></strong>&dagger;
             </div>
         </div>
     </div>
@@ -44,14 +44,17 @@
                         <h3 translate>contract.recipient</h3>
 
                         <h2><span class="recipient">
-                            {{murderer.group}}
-                            &ndash;
-                            <span ng-bind="murderer.username"></span>
+                            <span ng-if="contract.game.multiGroup">{{contract.game.alias.group.name}} &ndash;</span>
+                            <span ng-bind="contract.game.alias.name"></span>
                         </span></h2>
 
-                        <h4 class="text-mono">{{game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</h4>
+                        <h4 class="text-mono">
+                            {{contract.game.name}} - {{'game.ring' | translate}} #{{contract.ring}}
+                        </h4>
 
-                        <small class="text-mono">{{'contract.end' | translate}} <span moment="endDate"></span></small>
+                        <small class="text-mono">
+                            {{'contract.end' | translate}} <span moment="contract.game.schedule.end"></span>
+                        </small>
                     </div>
                 </div>
 

@@ -38,6 +38,7 @@ function findActiveContracts(scope) {
           return {
             _id: game._id,
             name: game.name,
+            multiGroup: game.groups.length > 1,
             alias: alias,
             active: game.active,
             contracts: _.map(game.rings, _.partial(getContractDataOfRing, userId, usersMap))

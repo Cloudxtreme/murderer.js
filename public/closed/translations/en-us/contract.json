@@ -1,6 +1,6 @@
 {
   "contract": {
-    "header": "{{game}} - Ring #{{ring}}",
+    "header": "{{game.name}} - Ring #{{ring}}",
     "title": "<em>{{project}}</em> &ndash; Node.js implementation of '{{game}}'",
     "wanted": "WANTED",
     "token": "Token to hand over your murderer",
