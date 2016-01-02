@@ -4,9 +4,13 @@ angular.module("closed").directive("contract", function () {
   return {
     restrict: "A",
     scope: {
-      contract: "=contract",
-      murderer: "="
+      contract: "="
     },
-    templateUrl: "/templates/closed/contract.html"
+    templateUrl: "/templates/closed/contract.html",
+    link: function ($scope) {
+      $scope.$watch("::contract", function (contract) {
+        if (contract != null) { $scope.alias = contract.details.alias || contract.game.alias; }
+      });
+    }
   };
 });
