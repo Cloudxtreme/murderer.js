@@ -13,6 +13,8 @@ angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope
   $scope.attemptTokenKill = attemptTokenKill;
   $scope.isHex = function (value) { return REGEX_HEX.test(value); };
 
+  $scope.$watch("collapseOverwrite", function (value) { $scope.hide = value; });
+
   /*=================================================== Functions  ===================================================*/
 
   function attemptTokenKill() {

@@ -14,7 +14,7 @@
     </div>
 </form>
 
-<div ng-if="printLayout" class="print-page print-block" ng-class="{hidden: hide}">
+<div ng-if="!hide && printLayout" class="print-page">
     <div class="contract-target">
         <h3 ng-bind-html="'contract.title' | translate:project | html"></h3>
 
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<div class="contract-compact" ng-if="!printLayout" ng-class="{hidden: hide}">
+<div class="contract-compact" ng-if="!hide && !printLayout">
     <div class="print-block hidden">
         <div class="flexbox">
             <div class="flex-50 text-right" translate>game.title.one</div>

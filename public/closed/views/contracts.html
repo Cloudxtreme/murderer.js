@@ -1,11 +1,15 @@
 <form class="form print-hide">
     <!--suppress HtmlFormInputWithoutLabel -->
-    <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter" ng-if="allGames.length > 1"
+    <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter" ng-show="allGames.length > 1"
             ng-options="game._id as game.name for game in allGames">
         <option value="" translate>contract.filterGame</option>
     </select>
 
     <div class="flexbox">
+        <label class="flex-50 text-center control-label" ng-click="collapsed = !collapsed;">
+            <i class="fa fa-fw" ng-class="'fa-caret-' + (collapsed ? 'down' : 'up')"></i>
+            {{'contract.collapse' | translate}}
+        </label>
         <label class="flex-50 text-center control-label">
             <input type="checkbox" class="form-checkbox" ng-model="compact"/>
             {{'contract.compact' | translate}}
@@ -90,7 +94,8 @@
                         <span ng-bind-html="'contract.present.dead' | translate:data | html"></span>
                     </div>
                 </div>
-                <div ng-if="!contract.dead" class="contract not-dead" contract="data" data-print-layout="!compact">
+                <div ng-if="!contract.dead" class="contract not-dead" contract="data" data-print-layout="!compact"
+                     data-collapse-overwrite="collapsed">
                     <!-- Only in this case an actual contract is shown -->
                 </div>
             </div>

@@ -7,6 +7,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
   $scope.allGames = null;
   $scope.gameFilter = null;
 
+  $scope.collapsed = true;
   $scope.compact = true;
   $scope.contractsOnly = false;
   $scope.activeOnly = false;

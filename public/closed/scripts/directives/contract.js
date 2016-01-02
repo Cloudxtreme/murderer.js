@@ -8,7 +8,8 @@ angular.module("closed").directive("contract", function () {
     restrict: "A",
     scope: {
       contract: "=",
-      printLayout: "="
+      printLayout: "=",
+      collapseOverwrite: "="
     },
     templateUrl: "/templates/closed/contract.html",
     controller: "contractCtrl",

@@ -8,8 +8,11 @@
   width: @print-paper-width;
 
   &.contract-print-layout {
-    page-break-after: always;
     margin-bottom: 0;
+
+    .print-page {
+      page-break-after: always;
+    }
 
     .contract-header {
       font-size: 1.5em;
