@@ -104,7 +104,7 @@
   }
 }
 
-div:last-child > .contract {
+.game-contracts:last-child > div:last-child .contract {
   page-break-after: inherit;
 
   .contract-footer {
@@ -112,44 +112,51 @@ div:last-child > .contract {
   }
 }
 
-.no-contract {
+.ring-status {
   width: @print-paper-width;
   margin: 20px auto;
   text-align: center;
 
-  div {
+  .colorize(@color, @intensity) {
+    background-color: fade(@color, @intensity);
+    border: 3px solid mix(@color, black, 30%);
+  }
+
+  > div {
     padding: 25px 0;
-    &.dead {
-      background-color: fade(@color-danger, 45%);
-      border: 3px solid mix(@color-danger, black, 30%);
 
-      .fa {
-        color: @color-danger;
-      }
+    .fa {
+      color: fade(black, 60%);
     }
-    &.resolved {
-      background-color: fade(@color-warning, 60%);
-      border: 3px solid mix(@color-warning, black, 30%);
+  }
 
-      .fa, span:first-child, span:last-child {
-        color: @color-warning;
-      }
-    }
-    &.survived {
-      background-color: fade(@color-success, 45%);
-      border: 3px solid mix(@color-success, black, 30%);
-
-      .fa {
-        color: @color-success;
-      }
-    }
+  .not-present & > div.not-resolved {
+    .colorize(@color-info, 45%);
+  }
+  .not-present .resolved & > div.survivor {
+    .colorize(@color-info, 30%);
+  }
+  .not-present .resolved & > div.no-survivor {
+    .colorize(@color-info, 15%);
+  }
+  .present .resolved & > div.survived {
+    .colorize(@color-success, 45%);
+  }
+  .present .resolved .not-survived & > div.no-survivor {
+    .colorize(@color-primary, 15%);
+  }
+  .present .resolved .not-survived & > div.survivor {
+    .colorize(@color-primary, 30%);
+  }
+  .present .not-resolved & > div.dead {
+    .colorize(@color-primary, 45%);
   }
 }
 
-div[data-ring-index="0"] > .no-contract {
+.game-contracts:first-child > div:first-child .ring-status {
   margin-top: 0;
 }
 
-div:last-child > .no-contract {
+.game-contracts:last-child > div:last-child .ring-status {
   margin-bottom: 0;
 }

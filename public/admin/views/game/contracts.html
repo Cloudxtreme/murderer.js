@@ -1,18 +1,4 @@
-<style type="text/css" media="print">
-    body {
-        background-color: white;
-    }
-
-    nav, #language-selector, #identity, .hide-print, .breadcrumb {
-        display: none;
-    }
-
-    #container {
-        padding: 0;
-    }
-</style>
-
-<form class="hide-print form-horizontal">
+<form class="print-hide form-horizontal">
     <label for="filter-ring" class="control-label" translate>contract.filter.ring</label>
     <input id="filter-ring" name="ring" class="form-control" type="number" ng-model="filter.ring" min="0"
            max="{{game.rings - 1}}" placeholder="{{'contract.filter.noRing' | translate}}"/>
@@ -34,7 +20,7 @@
 </form>
 
 <div id="contract-container">
-    <div ng-repeat="res in resolved" data-ring-index="{{res.ring}}" class="hide-print">
+    <div ng-repeat="res in resolved" data-ring-index="{{res.ring}}" class="print-hide">
         <div class="no-contract">
             <div ng-if="!res.survivor" class="resolved">
                 <span>&dagger;</span>
