@@ -9,7 +9,7 @@ angular.module("closed").controller("contractsCtrl", function ($scope, $rootScop
 
   socket.query("contracts:active").then(function (games) {
     $scope.games = games;
-    /* Prepend '/' for layout development
+    //* Prepend '/' for layout development
     var playerNameSelf = "frissdiegurke", groupName = "admins", playerName = "asterix", message = "Kill me please!";
     var gameName1 = "Halloween Massacre", gameName2 = "Game #8128";
     $scope.games = [

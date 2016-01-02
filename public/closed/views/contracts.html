@@ -4,26 +4,26 @@
         <div ng-if="!contract.present" class="not-present">
             <div ng-if="!contract.resolved" class="ring-status">
                 <div class="not-resolved">
-                    <i class="fa fa-fw fa-caret-right"></i>
+                    <i class="fa fa-fw fa-cog"></i><br/>
+                    <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                     <span ng-bind-html="'contract.notPresent.running' | translate:data | html"></span>
-                    <i class="fa fa-fw fa-caret-left"></i>
                 </div>
             </div>
 
             <div ng-if="contract.resolved" class="resolved">
                 <div ng-if="contract.survivor != null" data-survivor-id="{{contract.survivor._id}}" class="ring-status">
                     <div class="survivor">
-                        <i class="fa fa-fw fa-user"></i>
+                        <i class="fa fa-fw fa-user"></i><br/>
+                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                         <span ng-bind-html="'contract.notPresent.survivor' | translate:data | html"></span>
-                        <i class="fa fa-fw fa-user"></i>
                     </div>
                 </div>
 
                 <div ng-if="contract.survivor == null" class="ring-status">
                     <div class="no-survivor">
-                        <i class="fa fa-fw fa-bomb"></i>
+                        <i class="fa fa-fw fa-bomb"></i><br/>
+                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                         <span ng-bind-html="'contract.notPresent.resolved' | translate:data | html"></span>
-                        <i class="fa fa-fw fa-bomb"></i>
                     </div>
                 </div>
             </div>
@@ -33,25 +33,25 @@
             <div ng-if="contract.resolved" class="resolved">
                 <div ng-if="contract.survived" data-survivor-id="{{identity._id}}" class="ring-status">
                     <div class="survived">
-                        <i class="fa fa-fw fa-trophy"></i>
+                        <i class="fa fa-fw fa-trophy"></i><br/>
+                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                         <span ng-bind-html="'contract.present.survived' | translate:data | html"></span>
-                        <i class="fa fa-fw fa-trophy"></i>
                     </div>
                 </div>
                 <div ng-if="!contract.survived" class="not-survived">
                     <div ng-if="contract.survivor == null" class="ring-status">
                         <div class="no-survivor">
-                            <i class="fa fa-fw fa-bomb"></i>
+                            <i class="fa fa-fw fa-bomb"></i><br/>
+                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                             <span ng-bind-html="'contract.present.resolved' | translate:data | html"></span>
-                            <i class="fa fa-fw fa-bomb"></i>
                         </div>
                     </div>
                     <div ng-if="contract.survivor != null" data-survivor-id="{{contract.survivor._id}}"
                          class="ring-status">
                         <div class="survivor">
-                            <i class="fa fa-fw fa-user"></i>
+                            <i class="fa fa-fw fa-user"></i><br/>
+                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                             <span ng-bind-html="'contract.present.survivor' | translate:data | html"></span>
-                            <i class="fa fa-fw fa-user"></i>
                         </div>
                     </div>
                 </div>
@@ -59,9 +59,9 @@
             <div ng-if="!contract.resolved" class="not-resolved">
                 <div ng-if="contract.dead" class="ring-status">
                     <div class="dead">
-                        <i class="fa fa-fw fa-spoon"></i>
+                        <i class="fa fa-fw fa-spoon"></i><br/>
+                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
                         <span ng-bind-html="'contract.present.dead' | translate:data | html"></span>
-                        <i class="fa fa-fw fa-spoon"></i>
                     </div>
                 </div>
                 <div ng-if="!contract.dead" class="contract not-dead" contract="data" data-murderer="identity">

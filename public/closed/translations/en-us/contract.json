@@ -6,9 +6,16 @@
     "token": "Token to hand over your murderer",
     "recipient": "Contract for",
     "end": "The game ends on",
-    "dead": "You're not alive in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b>",
-    "allDead": "In <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b> all users are dead.",
-    "resolved": "The sole survivor in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b> is <strong class=\"text-upper text-mono\" data-user-id=\"{{survivor._id}}\">{{survivor.username}}</strong>",
-    "survived": "You're the sole survivor in <b class=\"text-mono\">{{game}} - Ring #{{ring}}</b>. Congratulations!"
+    "notPresent": {
+      "running": "Active, you're not taking part.",
+      "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived, you were not taking part.",
+      "resolved": "Forfeited, you were not taking part."
+    },
+    "present": {
+      "survived": "You have survived.",
+      "resolved": "Forfeited.",
+      "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived.",
+      "dead": "Active, you're dead."
+    }
   }
 }

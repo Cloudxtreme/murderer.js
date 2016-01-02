@@ -123,10 +123,19 @@
   }
 
   > div {
-    padding: 25px 0;
+    padding: 10px 0;
+    line-height: 1.5;
 
-    .fa {
-      color: fade(black, 60%);
+    > .fa {
+      color: rgba(233, 104, 104, 0.8);
+
+      .not-present & {
+        color: rgba(0, 158, 206, 0.85);
+      }
+
+      &.fa-trophy {
+        color: rgb(255, 168, 36);
+      }
     }
   }
 
