@@ -1,6 +1,7 @@
 <div class="contract-header print-hide flexbox">
     <div class="width-80 text-mono">
-        <button type="button" class="form-btn" ng-click="hide = !hide;"><i class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></button>
+        <button type="button" class="form-btn" ng-click="hide = !hide;"><i
+                class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></button>
         <a ng-href="/games/{{contract.game._id}}" ng-bind="contract.game.name"></a>
         - {{'contract.header' | translate:{ring: contract.ring} }}
     </div>
@@ -44,7 +45,7 @@
 
             <div class="flex-50">
                 <label translate>contract.token.description</label><br/>
-                &dagger;<strong class="text-mono token" ng-bind="contract.details.token"></strong>&dagger;
+                &dagger;<strong class="text-mono token token-hover" ng-bind="contract.details.token"></strong>&dagger;
             </div>
         </div>
     </div>
@@ -110,7 +111,7 @@
     </div>
     <div class="flexbox">
         <div class="flex-50 text-right" translate>contract.token.title</div>
-        <div class="flex-50 text-left text-mono">
+        <div class="flex-50 text-left text-mono token-hover">
             <span class="target" ng-bind="contract.details.token"></span>
         </div>
     </div>

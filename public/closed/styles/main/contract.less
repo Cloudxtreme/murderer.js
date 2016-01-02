@@ -148,6 +148,15 @@
     display: inline-block;
   }
 
+  .token-hover {
+    color: transparent;
+    background-color: black;
+    &:hover {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
+
   .contract-public {
     height: @print-paper-height / 3 - 0.08cm - 0.5cm; // 0.5cm is static border-compensation
 
