@@ -11,7 +11,7 @@
         <input type="password" class="form-control" id="password" name="password" ng-model="credentials.password"
                ng-minlength="passwordMinLength" required/><br/>
 
-        <input type="submit" class="form-btn" ng-value="'credentials.login' | translate"
+        <input type="submit" class="form-btn form-btn-block" ng-value="'credentials.login' | translate"
                ng-disabled="loginForm.$invalid"/>
 
         <div ng-if="loading" class="text-center">
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <input type="submit" class="form-btn" ng-value="'credentials.register' | translate"
+        <input type="submit" class="form-btn form-btn-block" ng-value="'credentials.register' | translate"
                ng-disabled="registerForm.$invalid"/>
 
         <div class="error-msg form-info" ng-if="error" ng-switch="error.status">

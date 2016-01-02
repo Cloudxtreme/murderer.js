@@ -51,18 +51,12 @@
     font-size: 1.2em;
     font-weight: bold;
 
-    .form-btn, .form-control {
+    .form-btn {
       margin: 0;
       padding: 0 5px;
       height: 24px; // TODO figure out relative value calculation
-      font-size: 0.7em;
-      &.ng-invalid {
-        background-color: mix(@text-color, @color-primary, 80%);
-      }
-      //noinspection CssInvalidPseudoSelector
-      &::placeholder {
-        color: fade(@bg-color, 50%);
-      }
+      font-size: 0.7rem;
+
       .compact & {
         height: 20px;
       }

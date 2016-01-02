@@ -58,14 +58,18 @@ textarea.form-control {
   text-decoration: none;
   padding: 4px 10px;
   height: @line-height-computed + 2 * 4px;
-  display: block;
-  width: 100%;
+  display: inline-block;
   margin: 6px 0;
   outline: none;
   cursor: pointer;
   color: @text-color;
   text-shadow: 1px 1px black;
   font-weight: bold;
+
+  &.form-btn-block {
+    display: block;
+    width: 100%;
+  }
 
   &:focus {
     border-color: @color-info;
@@ -81,6 +85,11 @@ textarea.form-control {
     cursor: not-allowed;
     color: fade(darken(@text-color, 20%), 80%);
     text-shadow: none;
+  }
+
+  > .fa {
+    position: relative;
+    top: -1px;
   }
 }
 
