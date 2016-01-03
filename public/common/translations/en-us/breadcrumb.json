@@ -1,11 +1,14 @@
 {
   "breadcrumb": "Home",
   "breadcrumb/": {
-    "game": "Game",
-    "statistics": "Statistics",
     "cookie-policy": "Cookie Policy",
     "privacy-policy": "Privacy Policy",
     "legal-info": "Legal Info",
-    "login": "Login"
+    "login": "Login",
+    "games": "Games",
+    "games/": {
+      "*": "<span class=\"text-mono\">{{part.substring(part.length-8).toUpperCase()}}</span>"
+    },
+    "news": "News"
   }
 }

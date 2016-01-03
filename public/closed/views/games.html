@@ -8,7 +8,7 @@
             <th st-sort="sort.state" class="fa-fw" title="{{'game.state' | translate}}"></th>
             <th st-sort="author.username" class="fa-fw"></th>
             <th st-sort="name" translate>game.name</th>
-            <th st-sort="schedule.end" translate>game.schedule.end</th>
+            <th st-sort="schedule.end" translate>game.details.end</th>
             <th st-sort="rings" class="width-10" translate>game.rings</th>
             <th st-sort="sort.participants" class="width-20" translate>game.participants</th>
             <th class="fa-fw"></th>
@@ -17,8 +17,7 @@
         <tbody>
         <tr ng-repeat="game in games" data-game-id="{{game._id}}" ng-class="{primary: game.joined}">
             <td class="text-center">
-            <span class="fa fa-fw"
-                  ng-class="'text-' + (game.ended ? 'danger fa-stop' : game.active ? 'success fa-play' : game.started ? 'warning fa-pause' : 'info fa-circle')"></span>
+            <span class="fa fa-fw" ng-class="game.statusIcon"></span>
             </td>
             <td class="game-author" title="{{game.author.username}}"><img
                     ng-src="{{avatar(21, game.author.avatarUrl)}}"/></td>
@@ -31,6 +30,7 @@
             <td class="text-center">
                 <a class="fa fa-fw fa-sign-in" ng-click="joinGame(game)" ng-if="game.mayJoin"></a>
                 <a class="fa fa-fw fa-sign-out" ng-click="leaveGame(game)" ng-if="game.mayLeave"></a>
+                <a class="fa fa-fw fa-bomb" ng-click="suicide(game)" ng-if="game.maySuicide"></a>
             </td>
         </tr>
         </tbody>

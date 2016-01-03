@@ -1,5 +1,6 @@
 angular.module("closed").controller("gamesCtrl", function ($scope, modals, games) {
   "use strict";
+  // TODO move into common
 
   var joinedPromise;
 
@@ -14,6 +15,7 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
 
   $scope.joinGame = joinGame;
   $scope.leaveGame = leaveGame;
+  $scope.suicide = _.noop; // TODO implement
 
   /*=============================================== Initial Execution  ===============================================*/
 
@@ -36,10 +38,20 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
 
   function prepareGame(game) {
     prepareGameSync(game);
-    var promise = joinedPromise.then(function (games) { game.joined = _.contains(games, game._id); });
+    game.statusIcon = "text-" +
+        (game.ended ? "danger fa-stop" :
+            game.active ? "success fa-play" :
+                game.started ? "warning fa-pause" :
+                    "info fa-circle");
+    var promise = joinedPromise.then(function (games) {
+      game.joined = _.contains(games, game._id);
+      game.maySuicide = game.joined && game.started; // TODO check iff alive in any ring
+    });
     if (game.started) {
       game.mayJoin = game.mayLeave = false;
+      game.maySuicide = game.joined; // TODO check iff alive in any ring
     } else {
+      game.maySuicide = false;
       promise.then(function () { game.mayJoin = !(game.mayLeave = game.joined); });
     }
     return game;

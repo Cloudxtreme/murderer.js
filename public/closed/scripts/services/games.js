@@ -9,7 +9,9 @@ angular.module("closed").factory("games", function (socket) {
     joined: function () { return socket.query("games:joined"); },
 
     join: function (game, data) { return socket.query("game:join", _.extend(data, {gameId: game._id})); },
-    leave: function (game) { return socket.query("game:leave", game._id); }
+    leave: function (game) { return socket.query("game:leave", game._id); },
+
+    byId: function (gameId) { return socket.query("game:details", gameId); }
   };
 
   /*===================================================== Return =====================================================*/

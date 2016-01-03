@@ -3,6 +3,9 @@
 var _ = require("lodash");
 var Q = require("q");
 
+var marked = require("marked");
+var murderM = require.main.require("./core/murder/model");
+
 var model = require("./model");
 var ctrlBase = require.main.require("./utils/controllerBase");
 
@@ -16,6 +19,7 @@ var participation = require("./services/participation");
 ctrlBase(model, exports);
 
 exports.qGameListEntries = gameListEntries;
+exports.qDetails = gameDetails;
 
 exports.qActiveContracts = contract.activeContracts;
 
@@ -57,4 +61,33 @@ function gameListEntries() {
           });
         });
       });
+}
+
+function gameDetails(scope, gameId) {
+  var query = model
+      .findOne({_id: gameId}, {
+        "groups.users.message": 0,
+        "schedule.activate": 0,
+        "schedule.deactivate": 0,
+        log: 0
+      })
+      .populate("groups.group")
+      .populate("author", {username: 1, avatarUrl: 1})
+      .populate("rings", {active: 1});
+  var murderQuery = murderM
+      .find({game: gameId})
+      .populate("trigger", {username: 1, avatarUrl: 1})
+      .sort({cdate: 1});
+  return Q.spread([
+    Q
+        .nbind(query.exec, query)()
+        .then(function (game) {
+          if (game == null) { return Q.reject("Game not found."); }
+          game = game._doc;
+          game.passwords = !!(game.passwords && game.passwords.length);
+          game.description = game.description && marked(game.description);
+          return game;
+        }),
+    Q.nbind(murderQuery.exec, murderQuery)()
+  ], function (game, murders) { return {game: game, murders: murders}; });
 }

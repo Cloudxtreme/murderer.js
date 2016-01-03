@@ -6,12 +6,25 @@
     },
     "participants": "Participants",
     "state": "State",
-    "author": "Author",
     "noneFound": "No games have been found. You may try again later.",
     "join": "Join Game",
+    "leave": "Leave Game",
     "paused": "The game is paused.",
-    "schedule": {
+    "news": "News",
+    "score": "Scoreboard",
+    "table": "Details",
+    "stats": "Statistics",
+    "usersAlive": "users alive",
+    "details": {
+      "participants": "participants",
+      "rings": "rings",
+      "initialRings": "initial rings",
+      "initialLives": "initial lives",
+      "start": "Game start",
       "end": "Game end"
+    },
+    "author": {
+      "alt": "Author: {{username}}"
     },
     "user": {
       "name": "Alias",

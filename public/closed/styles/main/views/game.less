@@ -1,0 +1,34 @@
+img.author-avatar {
+  display: block;
+  float: right;
+}
+
+.game-details, .game-rings {
+  margin: 10px 0;
+}
+
+.groups-wrapper {
+  flex-wrap: wrap;
+  margin: 10px -5px;
+
+  .group-panel {
+    flex-basis: 20%;
+    flex-grow: 1;
+
+    > div {
+      margin: 5px;
+      padding: 2px 5px;
+      line-height: 1.2em;
+      background-color: fade(@color-primary, 20%);
+      border: 3px outset fade(@color-primary, 20%);
+    }
+  }
+}
+
+.game-title {
+  justify-content: flex-start;
+
+  > div:first-child {
+    margin-right: 5px;
+  }
+}
