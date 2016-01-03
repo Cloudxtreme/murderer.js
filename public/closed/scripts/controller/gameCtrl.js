@@ -42,7 +42,6 @@ angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, ga
       if (userNames.length > MAX_NAMES_TITLE) { userNames = _.take(userNames, MAX_NAMES_TITLE).concat(["..."]); }
       groupData.title = userNames.join(", ");
     });
-    console.log(game);
     return game;
   }
 

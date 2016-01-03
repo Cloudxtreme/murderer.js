@@ -58,6 +58,7 @@
     </div>
 
     <div ng-if="game.groups.length > 1" class="flexbox groups-wrapper">
+        <!-- TODO colorize joined group with color-success -->
         <div class="flex-no-shrink group-panel text-center" ng-repeat="groupData in game.groups">
             <div title="{{groupData.title}}">
                 <small class="text-mono">({{groupData.users.length}})</small>
@@ -89,13 +90,13 @@
             <!-- TODO check iff alive in any ring -->
             <i class="fa fa-fw fa-bomb"></i> {{'game.suicide.attempt' | translate}}
         </button>
-        <button type="button" class="form-btn form-btn-block form-btn-danger" ng-if="!game.started" ng-click="leave()">
+        <button type="button" class="form-btn form-btn-block form-btn-warning" ng-if="!game.started" ng-click="leave()">
             <i class="fa fa-fw fa-sign-out"></i> {{'game.leave' | translate}}
         </button>
     </div>
 
     <div ng-if="!game.participating">
-        <button type="button" class="form-btn form-btn-block form-btn-danger" ng-if="!game.started" ng-click="join()">
+        <button type="button" class="form-btn form-btn-block form-btn-success" ng-if="!game.started" ng-click="join()">
             <i class="fa fa-fw fa-sign-in"></i> {{'game.join' | translate}}
         </button>
     </div>
