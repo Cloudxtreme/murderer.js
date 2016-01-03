@@ -39,16 +39,16 @@
 
     <div class="flexbox game-details">
         <div class="flex-50">
+            <div class="text-mono">{{game.startMeta.rings}} {{'game.details.initialRings' | translate}}</div>
+            <div class="text-mono">{{game.startMeta.lives}} {{'game.details.initialLives' | translate}}</div>
+        </div>
+        <div class="flex-50 text-center">
+            <div class="text-mono">{{game.rings.length}} {{'game.details.rings' | translate}}</div>
             <div class="text-mono">
                 {{game.participants}}
                 <span ng-if="game.limit.participants">/ {{game.limit.participants}}</span>
                 {{'game.details.participants' | translate}}
             </div>
-            <div class="text-mono">{{game.rings.length}} {{'game.details.rings' | translate}}</div>
-        </div>
-        <div class="flex-50 text-center">
-            <div class="text-mono">{{game.startMeta.rings}} {{'game.details.initialRings' | translate}}</div>
-            <div class="text-mono">{{game.startMeta.lives}} {{'game.details.initialLives' | translate}}</div>
         </div>
         <div class="flex-50 text-right" data-user-id="{{game.author._id}}">
             <img class="author-avatar" ng-src="{{avatar(32, game.author.avatarUrl)}}"
@@ -73,6 +73,7 @@
     <div class="game-description" ng-bind="game.description"></div>
 
     <div class="game-rings list-group list-group-spaced" ng-if="game.rings.length">
+        <!-- TODO highlight rings where the user is alive -->
         <div class="list-group-item" ng-repeat="ring in game.rings" data-ring-id="{{ring._id}}">
             <div class="flexbox">
                 <div class="flex-50">{{'game.ring' | translate}} <span class="text-mono">#{{$index}}</span></div>
