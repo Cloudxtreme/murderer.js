@@ -89,7 +89,7 @@ angular.module("common").factory("socket", function ($location, $q, $http) {
 
   function onEstablished() {
     connected.resolve();
-    $http.get("/connection/authToken").then(function (res) {
+    $http.get("/connection/authToken", {headers: {"Cache-Control": "no-cache"}}).then(function (res) {
       var user = res.data.user;
       user.guest = !!user.guest;
       identified.resolve(service.identity = user);
