@@ -38,5 +38,12 @@ For more details, view a hosted instance of it: https://frissdiegurke.com:8130/ 
     # compile public sources
     grunt
     
+    # set environment variables
+    ## email service
+    export MURDERERJS_MAILER_HOST="YOUR_MAILING_HOST"
+    export MURDERERJS_MAILER_USERNAME="YOUR_MAILING_USERNAME"
+    export MURDERERJS_MAILER_PASSWORD="YOUR_MAILING_PASSWORD"
+    export MURDERERJS_MAILER_EMAIL="YOUR_MAILING_EMAIL"
+    
     # start server
     node .
