@@ -10,6 +10,12 @@ angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, ga
   $scope.murders = null;
 
   $scope.loading = true;
+  $scope.stateIcons = {
+    stopped: "fa-stop text-danger",
+    running: "fa-play text-success",
+    paused: "fa-pause text-warning",
+    initial: "fa-circle text-info"
+  };
 
   $scope.suicide = $scope.join = $scope.leave = _.noop; // TODO implement
   $scope.news = $scope.score = $scope.table = $scope.stats = _.noop; // TODO implement
@@ -30,11 +36,7 @@ angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, ga
   function prepareGame(game) {
     game.participants = 0;
     game.participating = false;
-    game.statusIcon = "text-" +
-        (game.ended ? "danger fa-stop" :
-            game.active ? "success fa-play" :
-                game.started ? "warning fa-pause" :
-                    "info fa-circle");
+    game.state = game.ended ? "stopped" : game.active ? "running" : game.started ? "paused" : "initial";
     _.each(game.groups, function (groupData) {
       game.participants += groupData.users.length;
       game.participating = game.participating || _.any(groupData.users, {user: $rootScope.identity._id});

@@ -8,6 +8,7 @@ a[href^='http://'], a[href^='https://'], a[href^='//'] {
   &:after {
     content: "[" attr(href) "]" !important;
     vertical-align: 30% !important;
-    font-size: 0.65em !important;
+    font-size: 0.65rem !important;
+    line-height: 0.65 * @line-height-computed;
   }
 }

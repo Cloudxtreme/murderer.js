@@ -5,12 +5,13 @@
       "one": "Game"
     },
     "participants": "Participants",
-    "state": "State",
     "noneFound": "No games have been found. You may try again later.",
     "join": "Join Game",
     "leave": "Leave Game",
     "paused": "The game is paused.",
     "news": "News",
+    "locked": "Private game",
+    "unlocked": "Public game",
     "score": "Scoreboard",
     "table": "Details",
     "stats": "Statistics",
@@ -48,6 +49,13 @@
       "invalidPassword": "The password is not correct.",
       "notActive": "You are not participating in this game.",
       "success": "You no longer take part in this game."
+    },
+    "state": {
+      "title": "State",
+      "stopped": "Game is resolved",
+      "running": "Game is active",
+      "paused": "Game is paused",
+      "initial": "Game has not started yet"
     },
     "name": "Name",
     "ring": "Ring",

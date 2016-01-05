@@ -1,16 +1,18 @@
 <div class="contract-header print-hide flexbox">
-    <div class="width-80 text-mono">
-        <button type="button" class="form-btn" ng-click="hide = !hide;"><i
-                class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></button>
+    <button type="button" class="form-btn toggle-collapse" ng-click="hide = !hide;"><i
+            class="fa fa-fw" ng-class="'fa-caret-' + (hide ? 'down' : 'up')"></i></button>
+    <div class="text-mono contract-title">
         <a ng-href="/games/{{contract.game._id}}" ng-bind="contract.game.name"></a>
         - {{'contract.header' | translate:{ring: contract.ring} }}
     </div>
-    <div class="width-20 text-right" ng-if="!contract.game.active">
-        <i class="fa fa-fw fa-pause text-warning" title="{{'game.paused' | translate}}"></i>
+    <div class="fa-fw" ng-if="!contract.game.active">
+        <i class="fa fa-fw fa-pause text-warning paused" title="{{'game.paused' | translate}}"></i>
     </div>
-    <div class="width-20" ng-if="contract.game.active">
-        <button type="button" class="form-btn form-btn-block form-btn-primary" ng-click="attemptTokenKill()">
-            <i class="fa fa-fw fa-check"></i> {{'contract.accomplished' | translate}}
+    <div ng-if="contract.game.active">
+        <button type="button" class="form-btn accomplished" ng-click="attemptTokenKill()">
+            <span>
+                <i class="fa fa-fw fa-check"></i> {{'contract.accomplished' | translate}}
+            </span>
         </button>
     </div>
 </div>

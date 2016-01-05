@@ -1,6 +1,7 @@
 angular.module("closed").controller("gamesCtrl", function ($scope, modals, games) {
   "use strict";
   // TODO move into common
+  // TODO move functionality into service
 
   var joinedPromise;
 
@@ -11,6 +12,12 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
   $scope.sort = {
     state: sortStateValue,
     participants: sortParticipantsValue
+  };
+  $scope.stateIcons = {
+    stopped: "fa-stop text-danger",
+    running: "fa-play text-success",
+    paused: "fa-pause text-warning",
+    initial: "fa-circle text-info"
   };
 
   $scope.joinGame = joinGame;
@@ -38,11 +45,7 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
 
   function prepareGame(game) {
     prepareGameSync(game);
-    game.statusIcon = "text-" +
-        (game.ended ? "danger fa-stop" :
-            game.active ? "success fa-play" :
-                game.started ? "warning fa-pause" :
-                    "info fa-circle");
+    game.state = game.ended ? "stopped" : game.active ? "running" : game.started ? "paused" : "initial";
     var promise = joinedPromise.then(function (games) {
       game.joined = _.contains(games, game._id);
       game.maySuicide = game.joined && game.started; // TODO check iff alive in any ring

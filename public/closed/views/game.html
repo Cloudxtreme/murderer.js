@@ -21,10 +21,16 @@
         <div class="flex-50">
             <div class="flexbox game-title">
                 <div class="fa-fw">
-                    <span class="fa fa-fw" ng-class="game.statusIcon"></span>
-                    <span class="fa fa-fw fa-lock text-warning" ng-if="game.inviteOnly || game.passwords"></span>
+                    <span class="fa fa-fw fa-lock text-danger" title="{{'game.locked' | translate}}"
+                          ng-if="game.inviteOnly || game.passwords"></span>
+                    <span class="fa fa-fw fa-unlock-alt" title="{{'game.unlocked' | translate}}"
+                          ng-if="!(game.inviteOnly || game.passwords)"></span>
+                    <span class="fa fa-fw" ng-class="stateIcons[game.state]"
+                          title="{{'game.state.' + game.state | translate}}"></span>
                 </div>
-                <h2 class="no-margin" ng-bind="game.name"></h2>
+                <div class="flexbox flexbox-vertical game-title-flexbox">
+                    <h2 ng-bind="game.name"></h2>
+                </div>
             </div>
         </div>
         <div class="flex-50 text-center">
@@ -51,7 +57,8 @@
             </div>
         </div>
         <div class="flex-50 text-right" data-user-id="{{game.author._id}}">
-            <img class="author-avatar" ng-src="{{avatar(32, game.author.avatarUrl)}}"
+            <!-- 40px == 2 * @line-height-computed [less-variable] -->
+            <img class="author-avatar" ng-src="{{avatar(40, game.author.avatarUrl)}}"
                  alt="{{'game.author.alt' | translate:game.author}}"
                  title="{{'game.author.alt' | translate:game.author}}"/>
         </div>
@@ -81,8 +88,9 @@
                     <span class="text-mono" ng-bind="ring.active"></span> {{'game.usersAlive' | translate}}
                 </div>
                 <div class="flex-50 text-right">
-                    <a ng-click="showRingNews(ring)" class="fa fa-fw fa-fire"></a>
-                    <a ng-click="showRingTable(ring)" class="fa fa-fw fa-th-list"></a>
+                    <a ng-click="showRingNews(ring)" class="fa fa-fw fa-fire" title="{{'game.news' | translate}}"></a>
+                    <a ng-click="showRingTable(ring)" class="fa fa-fw fa-th-list"
+                       title="{{'game.table' | translate}}"></a>
                 </div>
             </div>
         </div>

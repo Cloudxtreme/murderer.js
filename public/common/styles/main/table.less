@@ -76,7 +76,8 @@
     .table-input {
       width: 100%;
       border: none;
-      font-size: 1em;
+      font-size: @font-size-base;
+      line-height: @line-height-computed;
       margin: -4px -7px;
       padding: 4px 7px;
     }
@@ -101,7 +102,8 @@
 
       > a {
         font-family: monospace;
-        font-size: 1.2em;
+        font-size: 1.2rem;
+        line-height: 1.2 * @line-height-computed;
         background-color: fade(@text-color, 20%);
         border-right: 1px solid fade(@text-color, 10%);
         padding: 3px 5px;

@@ -4,6 +4,11 @@
     "name": "Name",
     "email": "Email",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "admin": {
+      "set": "Add admin privileges",
+      "unset": "Remove admin privileges"
+    },
+    "remove": "Delete user"
   }
 }

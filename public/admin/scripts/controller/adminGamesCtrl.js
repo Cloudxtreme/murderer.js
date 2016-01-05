@@ -8,6 +8,12 @@ angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModa
 
   $scope.games = [];
   $scope.displayedGames = [];
+  $scope.stateIcons = {
+    stopped: "fa-stop text-danger",
+    running: "fa-play text-success",
+    paused: "fa-pause text-warning",
+    initial: "fa-circle text-info"
+  };
   $scope.sort = {
     state: sortStateValue
   };
@@ -32,6 +38,7 @@ angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModa
 
   function prepareGame(game) {
     game.participants = _.sum(_.map(game.groups, function (g) { return g.users.length; }));
+    game.state = game.ended ? "stopped" : game.active ? "running" : game.started ? "paused" : "initial";
     return game;
   }
 

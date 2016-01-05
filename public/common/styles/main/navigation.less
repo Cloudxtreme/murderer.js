@@ -31,21 +31,33 @@ nav.navigation {
         }
 
         > a {
+          @icon-factor: 1.5;
           background-color: fade(@text-color, 5%);
-          padding: (@navigation-height - @navigation-border-bottom-height - @line-height-computed) / 2;
+          padding: (@navigation-height - @navigation-border-bottom-height - @icon-factor * @line-height-computed) / 2;
           text-decoration: none;
           display: block;
           border-right: 1px solid @item-border-color;
           border-left: 1px solid @item-border-color;
-          height: @line-height-computed;
-          line-height: @line-height-computed;
+          height: @icon-factor * @line-height-computed;
+          line-height: @icon-factor * @line-height-computed;
+          font-size: @icon-factor * 1rem;
+
+          .resize(@final-factor) {
+            font-size: @final-factor * 1rem;
+            line-height: @final-factor * @line-height-computed;
+            margin-top: (@icon-factor - @final-factor) * @line-height-computed / 2;
+          }
 
           &:hover, &:focus, &:active {
             background-color: fade(@text-color, 15%);
           }
 
-          .fa {
-            font-size: @line-height-computed;
+          > div {
+            display: block;
+            .resize(0.8);
+            &.logout {
+              .resize(1);
+            }
           }
         }
 

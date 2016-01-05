@@ -17,10 +17,13 @@
         <tbody>
         <tr ng-repeat="game in games" data-game-id="{{game._id}}" ng-class="{primary: game.joined}">
             <td class="text-center">
-            <span class="fa fa-fw" ng-class="game.statusIcon"></span>
+                <span class="fa fa-fw" ng-class="stateIcons[game.state]"
+                      title="{{'game.state.' + game.state | translate}}"></span>
             </td>
-            <td class="game-author" title="{{game.author.username}}"><img
-                    ng-src="{{avatar(21, game.author.avatarUrl)}}"/></td>
+            <td class="game-author" title="{{game.author.username}}">
+                <img ng-src="{{avatar(21, game.author.avatarUrl)}}" alt="{{'game.author.alt' | translate:game.author}}"
+                     title="{{'game.author.alt' | translate:game.author}}"/>
+            </td>
             <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td> <!-- TODO create route -->
             <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
             <td class="text-mono text-center" ng-bind="game.rings"></td>
@@ -28,9 +31,12 @@
                 {{game.participants}} <span ng-if="game.limit.participants">/ {{game.limit.participants}}</span>
             </td>
             <td class="text-center">
-                <a class="fa fa-fw fa-sign-in" ng-click="joinGame(game)" ng-if="game.mayJoin"></a>
-                <a class="fa fa-fw fa-sign-out" ng-click="leaveGame(game)" ng-if="game.mayLeave"></a>
-                <a class="fa fa-fw fa-bomb" ng-click="suicide(game)" ng-if="game.maySuicide"></a>
+                <a class="fa fa-fw fa-sign-in" title="{{'game.join' | translate}}" ng-click="joinGame(game)"
+                   ng-if="game.mayJoin"></a>
+                <a class="fa fa-fw fa-sign-out" title="{{'game.leave' | translate}}" ng-click="leaveGame(game)"
+                   ng-if="game.mayLeave"></a>
+                <a class="fa fa-fw fa-bomb" title="{{'game.suicide.attempt' | translate}}" ng-click="suicide(game)"
+                   ng-if="game.maySuicide"></a>
             </td>
         </tr>
         </tbody>

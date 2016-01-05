@@ -7,6 +7,17 @@
     "data": "Data",
     "passwords": "Passwords",
     "passwordsNote": "separated by <code>,</code>",
+    "actions": {
+      "plain": "Go to plain game view",
+      "contracts": "Go to contracts list",
+      "edit": "Edit game",
+      "pause": "Pause game",
+      "resume": "Resume game",
+      "lock": "Lock game (start game in paused state)",
+      "start": "Start game",
+      "stop": "Stop game",
+      "remove": "Delete game"
+    },
     "contracts": {
       "list": "Show contracts list"
     },
@@ -34,6 +45,7 @@
     },
     "schedule": {
       "start": "Automatic game start",
+      "end": "Automatic game end",
       "empty": "leave empty to disable"
     }
   }

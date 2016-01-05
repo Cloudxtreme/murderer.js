@@ -3,6 +3,10 @@
     "titlePlural": "Groups",
     "name": "Name",
     "description": "Description",
+    "edit": "Edit group",
+    "undo": "Undo changes",
+    "save": "Save changes",
+    "remove": "Delete group",
     "create": {
       "title": "New Group",
       "submit": "Create group"

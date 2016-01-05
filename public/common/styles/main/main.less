@@ -18,13 +18,17 @@
 @import "404";
 @import "views/home";
 
+html {
+  font-family: @font-family-base;
+  font-size: @font-size-base;
+  line-height: @line-height-computed;
+}
+
 body {
   overflow-y: scroll;
   color: @text-color;
   background-color: @bg-color;
   margin: 0;
-  font-family: @font-family-base;
-  font-size: @font-size-base;
 }
 
 #view {
@@ -43,7 +47,33 @@ ul, ol {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 2rem;
+  line-height: 2 * @line-height-computed;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.5 * @line-height-computed;
+}
+
+h3 {
+  font-size: 1.17rem;
+  line-height: 1.17 * @line-height-computed;
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: @line-height-computed;
+}
+
+h5 {
+  font-size: 0.83rem;
+  line-height: 0.83 * @line-height-computed;
+}
+
+h6 {
+  font-size: 0.67rem;
+  line-height: 0.67 * @line-height-computed;
 }
 
 hr {

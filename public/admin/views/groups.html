@@ -36,12 +36,13 @@
         <td class="text-right">
             <span ng-if="!group.saving">
                 <span ng-if="!group.editing">
-                    <a class="fa fa-fw fa-edit" ng-click="editGroup(group)"></a>
-                    <a class="fa fa-fw fa-trash-o" ng-click="removeGroup(group)"></a>
+                    <a class="fa fa-fw fa-edit" ng-click="editGroup(group)" title="{{'group.edit' | translate}}"></a>
+                    <a class="fa fa-fw fa-trash-o" ng-click="removeGroup(group)"
+                       title="{{'group.remove' | translate}}"></a>
                 </span>
                 <span ng-if="group.editing">
-                    <a class="fa fa-fw fa-undo" ng-click="revertGroup(group)"></a>
-                    <a class="fa fa-fw fa-save" ng-click="saveGroup(group)"></a>
+                    <a class="fa fa-fw fa-undo" ng-click="revertGroup(group)" title="{{'group.undo' | translate}}"></a>
+                    <a class="fa fa-fw fa-save" ng-click="saveGroup(group)" title="{{'group.save' | translate}}"></a>
                 </span>
             </span>
             <span ng-if="group.saving"><i class="fa fa-fw fa-spin fa-spinner"></i></span>

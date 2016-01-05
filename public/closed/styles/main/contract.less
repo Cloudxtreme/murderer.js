@@ -1,6 +1,12 @@
 // TODO add print-paper-border-{top,bottom,left,right} variables and use within calculations
 
 .contract {
+  text-align: center;
+  margin: 0 auto 5px; // 5px margin within print-view (compact-mode)
+  &.contract-print-layout {
+    margin-bottom: 0;
+  }
+
   @cover-size: @print-paper-height / 3 - 2cm;
 
   .colorize(@color) {
@@ -22,43 +28,78 @@
     }
   }
 
-  text-align: center;
-  margin: 0 auto 5px; // 5px margin within print-view
-
   .colorize(mix(@bg-color, @color-success, 40%));
 
   .game-contracts.inactive & {
     .colorize(mix(@bg-color, @color-info, 40%));
   }
 
-  &.contract-print-layout {
-    margin-bottom: 0;
-
-    .print-page {
-      page-break-after: always;
-    }
-
-    .contract-header {
-      font-size: 1.5em;
-      padding: 10px;
-    }
+  .print-page {
+    page-break-after: always;
   }
 
   .contract-header {
+    @header-padding: 5px;
     text-align: left;
     margin: 0;
-    padding: 5px;
-    font-size: 1.2em;
+    padding: @header-padding;
+    font-size: 1.2rem;
+    line-height: 1.2 * @line-height-computed;
     font-weight: bold;
 
-    .form-btn {
-      margin: 0;
-      padding: 0 5px;
-      height: 24px; // TODO figure out relative value calculation
-      font-size: 0.7rem;
+    .contract-title {
+      flex: 1;
+      padding: 0 10px;
+    }
 
-      .compact & {
-        height: 20px;
+    .paused {
+      opacity: 0.5;
+    }
+
+    .form-btn {
+      height: @line-height-computed * 1.2 + @header-padding * 2;
+      flex-shrink: 0;
+      flex-grow: 0;
+      border: none;
+      box-shadow: none;
+      display: block;
+      &.toggle-collapse {
+        margin: -@header-padding 0 -@header-padding -@header-padding;
+        font-size: 1.5rem;
+        line-height: 1.5 * @line-height-computed;
+        padding: 0 @header-padding;
+        background: fade(@text-color, 10%);
+        border-right: 1px solid fade(black, 20%);
+        &:hover {
+          background-color: fade(@text-color, 15%);
+        }
+        &:focus {
+          border-right-color: fade(@color-info, 60%);
+          background-color: fade(mix(@color-info, @text-color, 40%), 20%);
+        }
+      }
+      &.accomplished {
+        margin: -@header-padding -@header-padding -@header-padding 0;
+        background: fade(mix(@color-primary, @text-color, 60%), 20%);
+        padding: 0 8px;
+        border-left: 1px solid fade(black, 15%);
+        &:hover {
+          background-color: fade(mix(@color-primary, @text-color, 75%), 30%);
+        }
+        &:focus {
+          border-left-color: fade(@color-info, 60%);
+          background-color: fade(@color-primary, 40%);
+        }
+      }
+
+      > * {
+        opacity: 0.5;
+      }
+      &:hover > * {
+        opacity: 0.7;
+      }
+      &:focus > * {
+        opacity: 0.8;
       }
     }
 
@@ -73,11 +114,7 @@
 
   .contract-footer {
     height: 4px;
-    margin-bottom: 20px;
-
-    .compact & {
-      margin-bottom: 10px;
-    }
+    margin-bottom: 10px;
   }
 
   .contract-compact {
@@ -95,7 +132,8 @@
     .wanted {
       font-family: serif;
       color: black;
-      font-size: 29pt;
+      font-size: 2.5rem;
+      line-height: 2.5 * @line-height-computed;
     }
 
     .target {
@@ -122,6 +160,7 @@
       font-variant: small-caps;
       padding: 0 1cm;
       font-size: 1.2em;
+      line-height: 1.2 * @line-height-computed;
 
       .fa {
         opacity: 0.6;
@@ -144,6 +183,7 @@
 
   .token {
     font-size: 1.2rem;
+    line-height: 1.2 * @line-height-computed;
     margin: 10px 20px;
     display: inline-block;
   }
@@ -233,15 +273,6 @@
   }
   .present .not-resolved & > div.dead {
     .colorize(@color-primary, 45%);
-  }
-}
-
-.compact .ring-status {
-  margin: 10px auto;
-  > div {
-    padding: 5px 0;
-    border-width: 1px !important;
-    line-height: 1.2;
   }
 }
 

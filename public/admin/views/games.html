@@ -5,7 +5,7 @@
 <table class="table table-striped" st-table="displayedGames" data-st-safe-src="games">
     <thead>
     <tr>
-        <th st-sort="sort.state" class="fa-fw" title="{{'game.state' | translate}}"></th>
+        <th st-sort="sort.state" class="fa-fw" title="{{'game.state.title' | translate}}"></th>
         <th st-sort="name" class="width-30" translate>game.name</th>
         <th st-sort="schedule.end" class="width-30" translate>game.schedule.end</th>
         <th st-sort="participants" class="width-20" translate>game.data</th>
@@ -15,8 +15,8 @@
     <tbody>
     <tr ng-repeat="game in displayedGames" data-game-id="{{game._id}}">
         <td class="text-center">
-            <span class="fa fa-fw"
-                  ng-class="'text-' + (game.ended ? 'danger fa-stop' : game.active ? 'success fa-play' : game.started ? 'warning fa-pause' : 'info fa-circle')"></span>
+            <span class="fa fa-fw" ng-class="stateIcons[game.state]"
+                  title="{{'game.state.' + game.state | translate}}"></span>
         </td>
         <td ng-bind="game.name"></td>
         <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
@@ -29,23 +29,30 @@
             </div>
         </td>
         <td class="text-center">
+            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}" ng-if="game.started"
+               title="{{'game.actions.plain' | translate}}"></a>
             <!-- TODO rework/create URL -->
-            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}" ng-if="game.started"></a>
-            <!-- TODO rework/create URL -->
-            <a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"></a>
+            <a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"
+               title="{{'game.actions.contracts' | translate}}"></a>
 
             <!-- TODO rework/create URL -->
-            <a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"></a>
+            <a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"
+               title="{{'game.actions.edit' | translate}}"></a>
 
-            <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"></a>
+            <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"
+               title="{{'game.actions.pause' | translate}}"></a>
             <a class="fa fa-fw fa-play-circle" ng-click="resumeGame(game)"
-               ng-if="game.started && !game.active && !game.ended"></a>
+               ng-if="game.started && !game.active && !game.ended" title="{{'game.actions.resume' | translate}}"></a>
 
-            <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"></a>
-            <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"></a>
+            <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"
+               title="{{'game.actions.lock' | translate}}"></a>
+            <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"
+               title="{{'game.actions.start' | translate}}"></a>
 
-            <a class="fa fa-fw fa-stop" ng-click="stopGame(game)" ng-if="game.started && !game.ended"></a>
-            <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"></a>
+            <a class="fa fa-fw fa-stop" ng-click="stopGame(game)" ng-if="game.started && !game.ended"
+               title="{{'game.actions.stop' | translate}}"></a>
+            <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"
+               title="{{'game.actions.remove' | translate}}"></a>
         </td>
     </tr>
     </tbody>

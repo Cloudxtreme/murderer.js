@@ -12,8 +12,8 @@
         <td ng-bind="user.email"></td>
         <td class="text-right">
             <a class="fa fa-fw" ng-class="user.admin ? 'fa-user-secret' : 'fa-user'" ng-click="toggleAdmin(user)"
-               ng-if="!isSelf(user)"></a>
-            <a class="fa fa-fw fa-trash-o" ng-click="removeFromSet(user)"></a>
+               title="{{'user.admin.' + (user.admin ? 'unset' : 'set') | translate}}" ng-if="!isSelf(user)"></a>
+            <a class="fa fa-fw fa-trash-o" ng-click="removeFromSet(user)" title="{{'user.remove' | translate}}"></a>
         </td>
     </tr>
     </tbody>

@@ -27,9 +27,11 @@
             <li class="avatar">
                 <img ng-src="{{avatar(48)}}"/>
             </li>
-            <li class="logout">
+            <li>
                 <a class="text-mono" href="/logout" target="_self" title="{{'navigation.logout' | translate}}">
-                    {{identity.username}} <i class="fa fa-sign-out"></i>
+                    <div class="logout">
+                        {{identity.username}} <i class="fa fa-sign-out"></i>
+                    </div>
                 </a>
             </li>
         </ul>
