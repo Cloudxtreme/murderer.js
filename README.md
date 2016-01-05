@@ -8,7 +8,7 @@ This is a hybrid game (real-life combined with online actions) that should last 
 
 It can be played without any additional requisites (since all handy objects around are involved).
 
-For more details, view a hosted instance of it: https://frissdiegurke.com:8130/ the rules and hints are described within (in german only to-date).
+For more details, view a hosted instance of it: https://frissdiegurke.com/ the rules and hints are described within (in german only to-date).
 
 ## Installation (GNU/Linux)
 

@@ -2,7 +2,7 @@
   "name": "murderer.js",
   "description": "Node.js implementation of Moerderspiel",
   "author": "Ole Reglitzki <ole@reglitzki.de> (https://github.com/frissdiegurke)",
-  "license": "WTFPL",
+  "license": "MIT",
   "version": "0.1.0-alpha.1",
   "private": true,
   "dependencies": {
