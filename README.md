@@ -1,10 +1,42 @@
 # murderer.js
+
 Node.js implementation of "Mörderspiel"
 
-## Customization
+## What is this?
 
-If you host an instance of this project, please be sure to change the data within *public/static/views/* in order to
-provide your personal information for legal purposes.
+This is a hybrid game (real-life combined with online actions) that should last over a few days and is best played with ~15 to ~200 participants.
 
-Note: The privacy policy, etc. are written in german to match my local legal conditions. If you're not hosting in
-Germany you might have to adjust this to match the local laws.
+It can be played without any additional requisites (since all handy objects around are involved).
+
+For more details, view a hosted instance of it: https://frissdiegurke.com:8130/ the rules and hints are described within (in german only to-date).
+
+## Installation (GNU/Linux)
+
+    # install dependencies, installation varies depending on your OS
+    sudo pacman -S nodejs npm mongodb git
+    
+    # clone repository
+    git clone https://github.com/frissdiegurke/murderer.js.git
+    cd murderer.js
+    
+    # install NPM dependencies
+    npm install
+    
+    # edit legal information
+    ## I am not a lawyer.
+    $EDITOR public/static/views/legalInfo.html  # needs to be changed to provide your data instead of mine
+    $EDITOR public/static/views/privacyPolicy.html  # needs to be changed to fit your local laws (e.g. translation into
+                                                    # local language) and to provide your data instead of mine
+    $EDITOR public/static/views/cookiePolicy.html  # needs to be changed to fit your local laws (e.g. translation into
+                                                   #local language)
+    
+    # modify configuration
+    grunt init  # this generates a unique secret for your server
+    cp config/server.json config/server.local.json
+    $EDITOR config/server.local.json  # modify attributes within "dist" as needed
+    
+    # compile public sources
+    grunt
+    
+    # start server
+    node .
