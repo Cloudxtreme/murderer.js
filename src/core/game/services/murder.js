@@ -210,6 +210,7 @@ function notifySuicideHunters(scope, game, emailData) {
 function sendSuicideEmail(scope, addressee, game, target, survived) {
   if (!_.keys(target).length) { return; }
   var listing = _.map(target, function (name, idx) {
+    idx++; // Since we use 1-based indices for end-user
     return survived ? "#" + idx : "  #" + idx + ": " + name;
   }).join(survived ? ", " : "\n  ");
   return userC.qSendMailByKey(scope, addressee, "game." + (survived ? "survived" : "newMissions"), {
