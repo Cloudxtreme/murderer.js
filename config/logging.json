@@ -13,7 +13,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "warn",
-            "path": "log/dev/app.trace.log",
+            "path": "logs/dev/app.trace.log",
             "limit": 50
           }
         ]
@@ -29,7 +29,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "warn",
-            "path": "log/dev/socket.trace.log",
+            "path": "logs/dev/socket.trace.log",
             "limit": 15,
             "replicate": 2
           }
@@ -46,7 +46,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "warn",
-            "path": "log/dev/http.trace.log",
+            "path": "logs/dev/http.trace.log",
             "limit": 15,
             "replicate": 2
           }
@@ -63,7 +63,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "warn",
-            "path": "log/dev/token.trace.log",
+            "path": "logs/dev/token.trace.log",
             "limit": 5,
             "replicate": true
           }
@@ -80,7 +80,7 @@
           {
             "type": "file",
             "level": "warn",
-            "path": "log/bunyan.log"
+            "path": "logs/bunyan.log"
           }
         ]
       },
@@ -94,12 +94,12 @@
           {
             "type": "file",
             "level": "warn",
-            "path": "log/app.warn.log"
+            "path": "logs/app.warn.log"
           },
           {
             "type": "rotating-file",
             "level": "info",
-            "path": "log/app.log",
+            "path": "logs/app.log",
             "period": "24h",
             "count": 7
           },
@@ -107,7 +107,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "error",
-            "path": "log/app.trace.log",
+            "path": "logs/app.trace.log",
             "limit": 50,
             "flush": true
           }
@@ -123,12 +123,12 @@
           {
             "type": "file",
             "level": "warn",
-            "path": "log/socket.warn.log"
+            "path": "logs/socket.warn.log"
           },
           {
             "type": "rotating-file",
             "level": "info",
-            "path": "log/socket.log",
+            "path": "logs/socket.log",
             "period": "8h",
             "count": 6
           },
@@ -136,7 +136,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "error",
-            "path": "log/socket.trace.log",
+            "path": "logs/socket.trace.log",
             "limit": 35,
             "replicate": 2
           }
@@ -152,12 +152,12 @@
           {
             "type": "file",
             "level": "warn",
-            "path": "log/http.warn.log"
+            "path": "logs/http.warn.log"
           },
           {
             "type": "rotating-file",
             "level": "info",
-            "path": "log/http.log",
+            "path": "logs/http.log",
             "period": "8h",
             "count": 6
           },
@@ -165,7 +165,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "error",
-            "path": "log/http.trace.log",
+            "path": "logs/http.trace.log",
             "limit": 35,
             "replicate": 1
           }
@@ -181,12 +181,12 @@
           {
             "type": "file",
             "level": "warn",
-            "path": "log/token.warn.log"
+            "path": "logs/token.warn.log"
           },
           {
             "type": "rotating-file",
             "level": "info",
-            "path": "log/token.log",
+            "path": "logs/token.log",
             "period": "12h",
             "count": 2
           },
@@ -194,7 +194,7 @@
             "type": "RingBuffer",
             "level": "trace",
             "threshold": "error",
-            "path": "log/token.trace.log",
+            "path": "logs/token.trace.log",
             "limit": 15,
             "replicate": true
           }
