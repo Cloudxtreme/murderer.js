@@ -128,7 +128,7 @@ function getIndexIfSuicideCommittable(userId, ring) {
   for (var i = 0; i < chain.length; i++) {
     current = chain[i];
     if (current.murder == null) {
-      if (found) { return i; }
+      if (found) { return idx; }
       if (current.user.equals(userId)) {
         if (anyOther) { return i; }
         idx = i;
@@ -175,7 +175,7 @@ function getSuicideEmailData(game, suicide) {
   } while (nextIdx !== prevIdx && chain[nextIdx].murder != null);
   var target = null, user = chain[nextIdx].user;
   _.any(game.groups, function (groupData) {
-    return target = _.find(groupData.users, function (userData) { return userData.user.equals(user); }).name;
+    return target = _.find(groupData.users, function (userData) { return userData.user.equals(user); });
   });
   if (target == null) {
     throw new Error("Target not identified.");
@@ -184,7 +184,7 @@ function getSuicideEmailData(game, suicide) {
   return {
     last: prevIdx === nextIdx,
     addressee: chain[prevIdx].user,
-    target: target,
+    target: target.name,
     ringIndex: suicide.ringIndex,
     ring: suicide.ring
   };
