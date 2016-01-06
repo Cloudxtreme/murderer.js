@@ -83,7 +83,7 @@
         <div class="list-group-item" ng-repeat="ring in game.rings" data-ring-id="{{ring._id}}"
              ng-class="'list-group-item-' + (ring.present ? (ring.active > 1 ? (ring.alive ? 'info' : 'warning') : ring.alive ? 'success' : 'danger') : 'default')">
             <div class="flexbox">
-                <div class="flex-50">{{'game.ring' | translate}} <span class="text-mono">#{{$index}}</span></div>
+                <div class="flex-50">{{'game.ring' | translate}} <span class="text-mono">#{{$index + 1}}</span></div>
                 <div class="flex-50 text-center">
                     <span class="text-mono" ng-bind="ring.active"></span> {{'game.usersAlive' | translate}}
                 </div>
