@@ -41,14 +41,11 @@
       "success": "May he/she rest in peace."
     },
     "suicide": {
+      "title": "Commit suicide",
       "attempt": "Commit suicide",
-      "submit": "Commit suicide",
       "message": "Last words",
-      "defaultMessage": "I'm out.",
-      "warning": "You won't be able to join back into the game anymore.",
-      "invalidPassword": "The password is not correct.",
-      "notActive": "You are not participating in this game.",
-      "success": "You no longer take part in this game."
+      "password": "Confirm with your password",
+      "warning": "You won't be able to rejoin the game <strong data-game-id=\"{{id}}\">{{name}}</strong>."
     },
     "state": {
       "title": "State",

@@ -68,7 +68,7 @@ function findActiveContracts(scope) {
  *            * token - String iff the user might get killed within the ring.
  *            * survived - true iff the user is the last survivor within the ring.
  *            * target - Object iff the user has an active contract within the ring.
- *            * resolved - true iff the user is not alive and the ring got resolved.
+ *            * resolved - true iff the ring got resolved.
  *            * survivor - Object iff the user is not alive and the ring got resolved.
  */
 function getContractDataOfRing(userId, usersMap, ring) {
@@ -92,6 +92,7 @@ function getContractDataOfRing(userId, usersMap, ring) {
   }
   if (result.present && !result.dead) {
     if (aliveChain.length === 1) {
+      result.resolved = true;
       result.survived = true;
       delete result.token;
     } else {

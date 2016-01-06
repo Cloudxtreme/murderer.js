@@ -1,4 +1,4 @@
-angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope, adminModals) {
+angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope) {
   "use strict";
 
   var REGEX_HEX = /^[a-fA-F0-9]+$/i;

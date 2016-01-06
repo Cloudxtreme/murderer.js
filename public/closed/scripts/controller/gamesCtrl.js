@@ -22,7 +22,7 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
 
   $scope.joinGame = joinGame;
   $scope.leaveGame = leaveGame;
-  $scope.suicide = _.noop; // TODO implement
+  $scope.suicide = suicide;
 
   /*=============================================== Initial Execution  ===============================================*/
 
@@ -79,6 +79,13 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
       game.mayJoin = true;
       game.mayLeave = game.joined = false;
     }); // TODO proper error handling
+  }
+
+  function suicide(game) {
+    modals.qSuicide(game).then(function (g) {
+      prepareGameSync(_.extend(game, g));
+      game.maySuicide = false;
+    });
   }
 
 });

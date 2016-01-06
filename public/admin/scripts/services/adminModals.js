@@ -1,6 +1,8 @@
 angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) {
   "use strict";
 
+  var Q_METHOD_REGEX = /^q[A-Z]/;
+
   /*==================================================== Exports  ====================================================*/
 
   var service = {
@@ -8,12 +10,7 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
     newGame: newGame
   };
 
-  _.each(_.keys(service), function (key) {
-    var value = service[key];
-    service["q" + key[0].toUpperCase() + key.substring(1)] = function () {
-      return value.apply(service, arguments).result;
-    };
-  });
+  qIfy(service);
 
   /*=================================================== Functions  ===================================================*/
 
@@ -33,6 +30,14 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
       size: "lg",
       backdrop: "static",
       keyboard: false
+    });
+  }
+
+  function qIfy(obj) {
+    _.each(_.keys(obj), function (key) {
+      if (Q_METHOD_REGEX.test(key)) { return; }
+      var value = obj[key];
+      obj["q" + key[0].toUpperCase() + key.substring(1)] = function () { return value.apply(obj, arguments).result; };
     });
   }
 

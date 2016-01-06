@@ -1,0 +1,31 @@
+<form name="suicideForm" class="form no-margin" id="suicide" ng-submit="confirm()">
+
+    <div class="modal-header" translate>game.suicide.title</div>
+
+    <div class="modal-body">
+        <div class="text-warning">
+            <i class="fa fa-fw fa-warning"></i>
+            <span ng-bind-html="'game.suicide.warning' | translate:game | html"></span>
+        </div>
+
+        <label for="message" translate>game.suicide.message</label>
+        <input type="text" id="message" name="message" class="form-control" ng-model="data.message" required/>
+        <label for="password" translate>game.suicide.password</label>
+        <input type="password" id="password" name="password" class="form-control" ng-model="data.password" required/>
+    </div>
+
+    <div class="modal-footer">
+        <div class="flexbox">
+            <div class="flex-50 margin-bottom-0">
+                <button type="button" class="form-btn form-btn-block form-btn-danger" ng-click="dismiss()" translate>
+                    button.dismiss
+                </button>
+            </div>
+            <div class="flex-50 margin-bottom-0">
+                <input type="submit" class="form-btn form-btn-block" ng-value="'game.suicide.attempt' | translate"
+                       ng-disabled="suicideForm.$invalid"/>
+            </div>
+        </div>
+    </div>
+
+</form>
