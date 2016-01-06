@@ -13,8 +13,9 @@ var controller = require("../controller");
 
 exports.byKill = kill;
 exports.bySuicide = suicide;
+exports.getIndexIfSuicideCommittable = getIndexIfSuicideCommittable;
 
-// TODO test all functions
+// TODO test kill
 
 /*==================================================== Functions  ====================================================*/
 
@@ -114,27 +115,30 @@ function suicide(scope, userId, gameId, message, triggered) {
 function findSuicideIndices(data) {
   var rings = data.game.rings;
   data.suicides = _.compact(_.map(rings, function (ring, ringIdx) {
-    // check whether any other user is still alive and find index of active user
-    var anyOther = false, found = false, idx = -1, chain = ring.chain, current;
-    for (var i = 0; i < chain.length; i++) {
-      current = chain[i];
-      if (current.murder == null) {
-        if (found) {
-          anyOther = true;
-          break;
-        } else if (current.user.equals(data.murderer)) {
-          idx = i;
-          found = true;
-          if (anyOther) { break; }
-        } else {
-          anyOther = true;
-        }
-      }
-    }
-    if (anyOther && found) { return {ring: ring, index: idx, ringIndex: ringIdx}; }
+    var idx = getIndexIfSuicideCommittable(data.murderer, ring);
+    if (~idx) { return {ring: ring, index: idx, ringIndex: ringIdx}; }
   }));
   if (!data.suicides.length) { return Q.reject("Not alive in any non-resolved ring."); }
   return data;
+}
+
+function getIndexIfSuicideCommittable(userId, ring) {
+  // check whether any other user is still alive and find index
+  var anyOther = false, found = false, chain = ring.chain, current, idx = -1;
+  for (var i = 0; i < chain.length; i++) {
+    current = chain[i];
+    if (current.murder == null) {
+      if (found) { return i; }
+      if (current.user.equals(userId)) {
+        if (anyOther) { return i; }
+        idx = i;
+        found = true;
+      } else {
+        anyOther = true;
+      }
+    }
+  }
+  return -1;
 }
 
 function applySuicideToRing(data) {

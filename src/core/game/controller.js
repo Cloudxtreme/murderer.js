@@ -2,8 +2,9 @@
 
 var _ = require("lodash");
 var Q = require("q");
-
 var marked = require("marked");
+
+var userC = require.main.require("./core/user/controller");
 var murderM = require.main.require("./core/murder/model");
 
 var model = require("./model");
@@ -40,7 +41,7 @@ exports.qRemoveSafe = transition.remove;
 
 /*==================================================== Functions  ====================================================*/
 
-function gameListEntries() {
+function gameListEntries(scope) {
   var query = model
       .find(null, {
         "groups.users.message": 0,
@@ -51,17 +52,24 @@ function gameListEntries() {
         "schedule.deactivate": 0,
         log: 0
       })
-      .populate("author", {username: 1, avatarUrl: 1});
+      .populate("author", {username: 1, avatarUrl: 1})
+      .populate("rings");
   return Q
       .nbind(query.exec, query)()
       .then(function (games) {
         return _.map(games, function (game) {
           return _.extend(game._doc, {
             passwords: !!(game.passwords && game.passwords.length),
+            maySuicide: isSuicideCommittable(scope.user, game),
             rings: game.started ? game.rings.length : game.startMeta.rings
           });
         });
       });
+}
+
+function isSuicideCommittable(user, game) {
+  return game.started && userC.isModulePermitted(user, "closed") &&
+      _.any(game.rings, function (ring) { return ~murder.getIndexIfSuicideCommittable(user._id, ring); });
 }
 
 function gameDetails(scope, gameId) {
@@ -74,8 +82,8 @@ function gameDetails(scope, gameId) {
       })
       .populate("groups.group")
       .populate("author", {username: 1, avatarUrl: 1})
-      .populate("rings", {active: 1});
-  var murderQuery = murderM
+      .populate("rings");
+  var murderQuery = murderM // TODO move into murder-controller
       .find({game: gameId})
       .populate("trigger", {username: 1, avatarUrl: 1})
       .sort({cdate: 1});
@@ -85,6 +93,8 @@ function gameDetails(scope, gameId) {
         .then(function (game) {
           if (game == null) { return Q.reject("Game not found."); }
           game = game._doc;
+          game.maySuicide = isSuicideCommittable(scope.user, game);
+          game.rings = _.map(game.rings, function (ring) { return {active: ring.active}; });
           game.passwords = !!(game.passwords && game.passwords.length);
           game.description = game.description && marked(game.description);
           return game;

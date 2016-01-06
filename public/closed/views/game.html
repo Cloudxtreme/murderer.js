@@ -77,7 +77,7 @@
 
     <!-- TODO indicate self name and message -->
 
-    <div class="game-description" ng-bind-html="game.description | html"></div>
+    <div class="game-description well" ng-bind-html="game.description | html" ng-if="game.description"></div>
 
     <div class="game-rings list-group list-group-spaced" ng-if="game.rings.length">
         <!-- TODO highlight rings where the user is alive -->
@@ -97,7 +97,8 @@
     </div>
 
     <div ng-if="game.participating">
-        <button type="button" class="form-btn form-btn-block form-btn-danger" ng-if="game.started" ng-click="suicide()">
+        <button type="button" class="form-btn form-btn-block form-btn-danger" ng-if="game.maySuicide"
+                ng-click="suicide()">
             <!-- TODO check iff alive in any ring -->
             <i class="fa fa-fw fa-bomb"></i> {{'game.suicide.attempt' | translate}}
         </button>
