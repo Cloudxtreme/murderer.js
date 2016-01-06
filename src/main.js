@@ -378,10 +378,10 @@ module.exports.shutdown = module.exports.exit = function (code) {
 process.on("exit", function (code) {
   if (!clean) {
     try {
-      bunyan.logger.app.warn({exitCode: code}, "Unexpected shutdown");
+      bunyan.logger.app.fatal({exitCode: code}, "Unexpected shutdown");
     } catch (e) {
     }
-    console.warn("Unexpected shutdown. [" + code + "]");
+    console.error("Unexpected shutdown. [" + code + "]");
   }
 });
 
