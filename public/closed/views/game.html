@@ -80,8 +80,8 @@
     <div class="game-description well" ng-bind-html="game.description | html" ng-if="game.description"></div>
 
     <div class="game-rings list-group list-group-spaced" ng-if="game.rings.length">
-        <!-- TODO highlight rings where the user is alive -->
-        <div class="list-group-item" ng-repeat="ring in game.rings" data-ring-id="{{ring._id}}">
+        <div class="list-group-item" ng-repeat="ring in game.rings" data-ring-id="{{ring._id}}"
+             ng-class="'list-group-item-' + (ring.present ? (ring.active > 1 ? (ring.alive ? 'info' : 'warning') : ring.alive ? 'success' : 'danger') : 'default')">
             <div class="flexbox">
                 <div class="flex-50">{{'game.ring' | translate}} <span class="text-mono">#{{$index}}</span></div>
                 <div class="flex-50 text-center">

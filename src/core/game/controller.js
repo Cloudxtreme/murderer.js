@@ -94,7 +94,9 @@ function gameDetails(scope, gameId) {
           if (game == null) { return Q.reject("Game not found."); }
           game = game._doc;
           game.maySuicide = isSuicideCommittable(scope.user, game);
-          game.rings = _.map(game.rings, function (ring) { return {active: ring.active}; });
+          game.rings = _.map(game.rings, function (ring) {
+            return addPresentData({active: ring.active}, scope.user, ring);
+          });
           game.passwords = !!(game.passwords && game.passwords.length);
           game.description = game.description && marked(game.description);
           return game;
@@ -103,6 +105,19 @@ function gameDetails(scope, gameId) {
   ], function (game, murders) { return {game: game, murders: murders}; });
 }
 
+function addPresentData(data, user, ring) {
+  var chain = ring.chain, userId = user._id, current;
+  for (var i = 0; i < chain.length; i++) {
+    current = chain[i];
+    if (current.user.equals(userId)) {
+      data.present = true;
+      data.alive = current.murder == null;
+      return data;
+    }
+  }
+  data.present = data.alive = false;
+  return data;
+}
 
 /**
  * Returns Promise for populated game instance by specified ID.
