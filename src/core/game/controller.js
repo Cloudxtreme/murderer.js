@@ -20,6 +20,7 @@ ctrlBase(model, exports);
 
 exports.qGameListEntries = gameListEntries;
 exports.qDetails = gameDetails;
+exports.qPopulated = findByIdPopulated;
 
 exports.qActiveContracts = contract.activeContracts;
 
@@ -90,4 +91,19 @@ function gameDetails(scope, gameId) {
         }),
     Q.nbind(murderQuery.exec, murderQuery)()
   ], function (game, murders) { return {game: game, murders: murders}; });
+}
+
+
+/**
+ * Returns Promise for populated game instance by specified ID.
+ * @param scope The scope object.
+ * @param gameId The ID of the game to fetch.
+ * @param [population] The population options (most likely array of paths).
+ * @returns Q Promise of populated game instance.
+ */
+function findByIdPopulated(scope, gameId, population) {
+  if (population == null) { population = ["rings"]; }
+  scope.log.debug({gameId: gameId, population: population}, "fetching populated game instance");
+  var query = model.findById(gameId).populate("rings");
+  return Q.nbind(query.exec, query)();
 }

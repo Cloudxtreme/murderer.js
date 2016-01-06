@@ -39,7 +39,8 @@ function findCrimeScene(data) {
   data = passFirst(rings, function (ring, ringIdx) {
     if (ring.active < 2) { return; }
 
-    var mItemIdx = _.findLastIndex(ring.chain, isAlive), potentialVictim = ring.chain[mItemIdx].user === data.murderer;
+    var mItemIdx = _.findLastIndex(ring.chain, isAlive);
+    var potentialVictim = ring.chain[mItemIdx].user.equals(data.murderer);
     var skippedVictims = [];
     return passFirst(ring.chain, function (item, idx) {
       if (item.vulnerable) {
@@ -57,7 +58,7 @@ function findCrimeScene(data) {
           }
           skippedVictims.push(idx);
         } else if (isAlive(item)) { // item is next potential murderer
-          potentialVictim = ring.chain[mItemIdx = idx].user === data.murderer;
+          potentialVictim = ring.chain[mItemIdx = idx].user.equals(data.murderer);
         }
       }
     });
@@ -82,13 +83,13 @@ function applyMurderToRing(data) {
   $set["chain." + data.index + ".vulnerable"] = false;
   $set["chain." + data.index + ".murder"] = data.murder._id;
   return ringC
-      .qUpdate(data.ring._id, {$set: $set, $inc: {active: -(1 + data.skippedVictims.length)}})
+      .qUpdate(data.scope, data.ring._id, {$set: $set, $inc: {active: -(1 + data.skippedVictims.length)}})
       .then(_.constant(data))
       .fail(function (err) {
         data.scope.log.error({err: err}, "failed to update ring with murder");
         data.scope.log.info("attempt to revert murder");
         return murderC
-            .qRemoveById(data.murder._id)
+            .qRemoveById(data.scope, data.murder._id)
             .then(function () { data.scope.log.info("revert successful"); },
                 function (err) { data.scope.log.fatal({err: err, data: data}, "revert failed"); })
             .then(_.constant(Q.reject("Internal error.")));
@@ -112,11 +113,27 @@ function suicide(scope, userId, gameId, message, triggered) {
 
 function findSuicideIndices(data) {
   var rings = data.game.rings;
-  data.suicides = _.compact(_.map(rings, function (ring) {
-    var idx = _.findIndex(ring.chain, function (item) { return item.user === data.murderer && item.murder == null; });
-    if (~idx) { return {ring: ring, index: idx}; }
+  data.suicides = _.compact(_.map(rings, function (ring, ringIdx) {
+    // check whether any other user is still alive and find index of active user
+    var anyOther = false, found = false, idx = -1, chain = ring.chain, current;
+    for (var i = 0; i < chain.length; i++) {
+      current = chain[i];
+      if (current.murder == null) {
+        if (found) {
+          anyOther = true;
+          break;
+        } else if (current.user.equals(data.murderer)) {
+          idx = i;
+          found = true;
+          if (anyOther) { break; }
+        } else {
+          anyOther = true;
+        }
+      }
+    }
+    if (anyOther && found) { return {ring: ring, index: idx, ringIndex: ringIdx}; }
   }));
-  if (!data.suicides.length) { return Q.reject("Not alive."); }
+  if (!data.suicides.length) { return Q.reject("Not alive in any non-resolved ring."); }
   return data;
 }
 
@@ -126,36 +143,46 @@ function applySuicideToRing(data) {
         var $set = {};
         $set["chain." + suicide.index + ".murder"] = data.murder._id;
         return ringC
-            .qUpdate(suicide.ring._id, {$set: $set, $inc: {active: -1}})
+            .qUpdateById(data.scope, suicide.ring._id, {$set: $set, $inc: {active: -1}})
             .fail(function (err) {
               data.scope.log.fatal({err: err}, "failed to update ring with suicide");
               return Q.reject("Internal error.");
             })
-            .then(function () { return getSuicideEmailData(suicide); });
+            .then(function () { return getSuicideEmailData(data.game, suicide); });
       }))
       .then(function (emailData) {
+        data.scope.log("suicide executed");
         notifySuicideHunters(data.scope, data.game, emailData).done();
         return data;
       });
 }
 
-function getSuicideEmailData(suicide) {
+function getSuicideEmailData(game, suicide) {
   var chain = suicide.ring.chain, prevIdx = suicide.index, nextIdx = suicide.index;
   var last = chain.length - 1;
   do {
     prevIdx--;
     if (prevIdx < 0) { prevIdx = last; }
   } while (prevIdx !== suicide.index && chain[prevIdx].murder != null);
+  // TODO create custom notification type if last remaining user in ring
   if (prevIdx === suicide.index) { return; } // last remaining user in ring => no notification needed
   do {
     nextIdx++;
     if (nextIdx > last) { nextIdx = 0; }
   } while (nextIdx !== prevIdx && chain[nextIdx].murder != null);
+  var target = null, user = chain[nextIdx].user;
+  _.any(game.groups, function (groupData) {
+    return target = _.find(groupData.users, function (userData) { return userData.user.equals(user); }).name;
+  });
+  if (target == null) {
+    throw new Error("Target not identified.");
+  }
+  // TODO add suicide-message of user into email
   return {
     last: prevIdx === nextIdx,
-    addressee: chain[prevIdx],
-    target: chain[nextIdx],
-    ringIndex: suicide.index,
+    addressee: chain[prevIdx].user,
+    target: target,
+    ringIndex: suicide.ringIndex,
     ring: suicide.ring
   };
 }
@@ -163,9 +190,9 @@ function getSuicideEmailData(suicide) {
 function notifySuicideHunters(scope, game, emailData) {
   // send grouped emails to each ex-hunter of whom who committed suicide
   var addressee = _.groupBy(emailData, "addressee");
-  return _.map(addressee, function (emailD, adr) {
+  return Q.all(_.map(addressee, function (emailD, adr) {
     return userC
-        .qFindById(adr)
+        .qFindById(scope, adr)
         .then(function (user) {
           var survived = {}, nextTarget = {};
           _.each(emailD, function (eD) { (eD.last ? survived : nextTarget)[eD.ringIndex] = eD.target; });
@@ -178,25 +205,19 @@ function notifySuicideHunters(scope, game, emailData) {
                 scope.log.warn({err: err, addressee: user}, "failed to notify hunter");
               });
         });
-  });
+  }));
 }
 
 function sendSuicideEmail(scope, addressee, game, target, survived) {
   if (!_.keys(target).length) { return; }
-  return Q
-      .all(_.map(target, function (target, key) {
-        return userC.qFindById(target).then(function (t) { target[key] = t.username; });
-      }))
-      .then(function () {
-        var listing = _.map(target, function (targetName, idx) {
-          return survived ? "#" + idx : "  #" + idx + ": " + targetName;
-        }).join(survived ? ", " : "\n  ");
-        return userC.qSendMailByKey(scope, addressee, "game." + (survived ? "survived" : "newMissions"), {
-          listing: listing,
-          link: config.server.url + "contracts",
-          game: game.name
-        });
-      });
+  var listing = _.map(target, function (name, idx) {
+    return survived ? "#" + idx : "  #" + idx + ": " + name;
+  }).join(survived ? ", " : "\n  ");
+  return userC.qSendMailByKey(scope, addressee, "game." + (survived ? "survived" : "newMissions"), {
+    listing: listing,
+    link: config.server.url + "contracts",
+    game: game.name
+  });
 }
 
 /*------------------------------------------- shared by kills and suicides -------------------------------------------*/
@@ -214,9 +235,9 @@ function findGameData(scope, gameId, data) {
 }
 
 function populateRings(data) {
-  if (!data.game.active) { throw new Error("Game is not active."); }
+  if (!data.suicide && !data.game.active) { throw new Error("Game is not active."); }
   return controller
-      .qPopulate(data.game, "rings")
+      .qPopulate(data.scope, data.game, "rings")
       .fail(function (err) {
         data.scope.log.error({err: err}, "failed to populate game rings");
         return Q.reject("Internal error.");
@@ -225,10 +246,10 @@ function populateRings(data) {
 }
 
 function createMurder(data) {
-  data.scope.log = data.scope.log.child(data);
+  data.scope.log = data.scope.log.child(_.omit(data, ["scope"]));
   data.scope.log.info("valid " + (data.suicide ? "suicide" : "kill"));
   return murderC
-      .qCreate({
+      .qCreate(data.scope, {
         message: data.message,
         murderer: data.murderer,
         victim: data.victim,

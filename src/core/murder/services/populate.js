@@ -15,8 +15,8 @@ exports.newsInstance = populateSingle;
 
 function populateSingle(scope, murder, murderer, victim, game) {
   var promise;
-  if (typeof murder === "string" || !murder.hasOwnProperty("_doc")) {
-    promise = controller.qFindById(murder);
+  if (typeof murder === "string" || murder._id == null) {
+    promise = controller.qFindById(scope, murder);
   } else {
     promise = Q.when(murder);
   }
@@ -24,9 +24,9 @@ function populateSingle(scope, murder, murderer, victim, game) {
     return Q
         .spread(
             [
-              murderer || murder.murderer && userC.qFindById(murder.murderer),
-              victim || userC.qFindById(murder.victim),
-              game || gameC.qFindById(murder.game)
+              murderer || murder.murderer && userC.qFindById(scope, murder.murderer),
+              victim || userC.qFindById(scope, murder.victim),
+              game || gameC.qFindById(scope, murder.game)
             ],
             function (murderer, victim, game) {
               return _.extend(

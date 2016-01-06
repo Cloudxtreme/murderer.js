@@ -208,6 +208,13 @@ var stdSerializers = {
     };
   },
   ring: function (ring) { return ring._id; },
+  suicides: function (suicides) {
+    return _.map(suicides, function (s) {
+      var clone = _.clone(s);
+      clone.ring = clone.ring._id;
+      return clone;
+    });
+  },
   murder: function (murder) { return murder._id; },
   user: function (user) {
     var obj = {
@@ -248,6 +255,7 @@ var querySerializer = {
   game: stdSerializers.game,
   ring: stdSerializers.ring,
   murder: stdSerializers.murder,
+  suicides: stdSerializers.suicides,
   model: stdSerializers.mongoDBModel,
   body: stdSerializers.modelBody,
   filter: stdSerializers.modelBody
