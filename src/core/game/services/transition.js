@@ -5,6 +5,7 @@ var Q = require("q");
 
 var controller = require("../controller");
 var ringC = require.main.require("./core/ring/controller");
+var murderC = require.main.require("./core/murder/controller");
 
 /*================================================ State Definitions  ================================================*/
 
@@ -46,7 +47,8 @@ function start(scope, gameId, activate) {
       .then(errorIfNull)
       .then(function (game) {
         scope.log.debug({game: game, startMeta: game.startMeta}, "starting game");
-        return purgeRings(scope, game.rings)
+        return Q
+            .all([purgeRings(scope, game.rings), purgeMurders(scope, game._id)])
             .then(function () {
               var rings = game.startMeta.rings, lives = game.startMeta.lives;
               if (rings <= 0) { return Q.resolve([]); }
@@ -81,6 +83,8 @@ function purgeRings(scope, ringIds) {
   return Q.resolve();
 }
 
+function purgeMurders(scope, gameId) { return murderC.qRemove(scope, {game: gameId}); }
+
 function resume(scope, gameId) {
   return controller
       .qFindOneAndUpdate(scope,
@@ -112,5 +116,5 @@ function remove(scope, gameId) {
   return controller
       .qFindOneAndRemove(scope, {_id: gameId, $or: [{started: true, ended: true}, {started: false}]})
       .then(errorIfNull)
-      .then(function (game) { return purgeRings(scope, game.rings); });
+      .then(function (game) { return Q.allSettled([purgeRings(scope, game.rings), purgeMurders(scope, game._id)]); });
 }
