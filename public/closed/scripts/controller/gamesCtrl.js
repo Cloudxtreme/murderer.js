@@ -48,11 +48,11 @@ angular.module("closed").controller("gamesCtrl", function ($scope, modals, games
     game.state = game.ended ? "stopped" : game.active ? "running" : game.started ? "paused" : "initial";
     var promise = joinedPromise.then(function (games) {
       game.joined = _.contains(games, game._id);
-      game.maySuicide = game.joined && game.started; // TODO check iff alive in any ring
+      game.maySuicide = game.joined && game.started; // TODO check iff alive and not alone in any ring
     });
     if (game.started) {
       game.mayJoin = game.mayLeave = false;
-      game.maySuicide = game.joined; // TODO check iff alive in any ring
+      game.maySuicide = game.joined; // TODO check iff alive and not alone in any ring
     } else {
       game.maySuicide = false;
       promise.then(function () { game.mayJoin = !(game.mayLeave = game.joined); });

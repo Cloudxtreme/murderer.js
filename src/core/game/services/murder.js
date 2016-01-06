@@ -151,7 +151,7 @@ function applySuicideToRing(data) {
             .then(function () { return getSuicideEmailData(data.game, suicide); });
       }))
       .then(function (emailData) {
-        data.scope.log("suicide executed");
+        data.scope.log.info("suicide executed");
         notifySuicideHunters(data.scope, data.game, emailData).done();
         return data;
       });
