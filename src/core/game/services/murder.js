@@ -164,7 +164,6 @@ function getSuicideEmailData(game, suicide) {
     prevIdx--;
     if (prevIdx < 0) { prevIdx = last; }
   } while (prevIdx !== suicide.index && chain[prevIdx].murder != null);
-  // TODO create custom notification type if last remaining user in ring
   if (prevIdx === suicide.index) { return; } // last remaining user in ring => no notification needed
   do {
     nextIdx++;
