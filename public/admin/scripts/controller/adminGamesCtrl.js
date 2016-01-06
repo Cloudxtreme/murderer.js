@@ -19,11 +19,11 @@ angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModa
   };
 
   $scope.createGame = createGame;
-  $scope.lockGame = function (game) { adminGames.lock(game).then(function (g) { _.extend(game, g); }); };
-  $scope.startGame = function (game) { adminGames.start(game).then(function (g) { _.extend(game, g); }); };
-  $scope.resumeGame = function (game) { adminGames.resume(game).then(function (g) { _.extend(game, g); }); };
-  $scope.pauseGame = function (game) { adminGames.pause(game).then(function (g) { _.extend(game, g); }); };
-  $scope.stopGame = function (game) { adminGames.stop(game).then(function (g) { _.extend(game, g); }); };
+  $scope.lockGame = lockGame;
+  $scope.startGame = startGame;
+  $scope.resumeGame = resumeGame;
+  $scope.pauseGame = pauseGame;
+  $scope.stopGame = stopGame;
   $scope.removeGame = removeGame;
 
   /*=============================================== Initial Execution  ===============================================*/
@@ -35,6 +35,16 @@ angular.module("admin").controller("adminGamesCtrl", function ($scope, adminModa
       });
 
   /*=================================================== Functions  ===================================================*/
+
+  function lockGame(game) { adminGames.lock(game).then(function (g) { prepareGame(_.extend(game, g)); }); }
+
+  function startGame(game) { adminGames.start(game).then(function (g) { prepareGame(_.extend(game, g)); }); }
+
+  function resumeGame(game) { adminGames.resume(game).then(function (g) { prepareGame(_.extend(game, g)); }); }
+
+  function pauseGame(game) { adminGames.pause(game).then(function (g) { prepareGame(_.extend(game, g)); }); }
+
+  function stopGame(game) { adminGames.stop(game).then(function (g) { prepareGame(_.extend(game, g)); }); }
 
   function prepareGame(game) {
     game.participants = _.sum(_.map(game.groups, function (g) { return g.users.length; }));

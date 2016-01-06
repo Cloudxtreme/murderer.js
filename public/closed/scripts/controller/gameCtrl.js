@@ -1,4 +1,4 @@
-angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, gameId, games) {
+angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, gameId, modals, games) {
   "use strict";
   // TODO move into common
 
@@ -17,33 +17,50 @@ angular.module("closed").controller("gameCtrl", function ($rootScope, $scope, ga
     initial: "fa-circle text-info"
   };
 
-  $scope.suicide = $scope.join = $scope.leave = _.noop; // TODO implement
+  $scope.join = join;
+  $scope.leave = leave;
+  $scope.suicide = suicide;
   $scope.news = $scope.score = $scope.table = $scope.stats = _.noop; // TODO implement
   $scope.showRingNews = $scope.showRingTable = _.noop; // TODO implement
 
   /*=============================================== Initial Execution  ===============================================*/
 
-  games
-      .byId(gameId)
-      .then(function (result) {
-        $scope.game = prepareGame(result.game);
-        $scope.murders = result.murders;
-        $scope.loading = false;
-      });
+  loadGame();
 
   /*=================================================== Functions  ===================================================*/
 
+  function loadGame() {
+    $scope.loading = true;
+    games
+        .byId(gameId)
+        .then(function (result) {
+          $scope.game = prepareGame(result.game);
+          $scope.murders = result.murders;
+          $scope.loading = false;
+        });
+  }
+
   function prepareGame(game) {
-    game.participants = 0;
+    prepareGameSync(game);
     game.participating = false;
     game.state = game.ended ? "stopped" : game.active ? "running" : game.started ? "paused" : "initial";
-    _.each(game.groups, function (groupData) {
-      game.participants += groupData.users.length;
-      game.participating = game.participating || _.any(groupData.users, {user: $rootScope.identity._id});
-      var userNames = _.pluck(groupData.users, "name");
+    game.participating = _.any(game.groups, function (g) { return _.any(g.users, {user: $rootScope.identity._id}); });
+    return game;
+  }
+
+  function join() { return modals.qJoinGame($scope.game).then(loadGame); } // TODO proper error handling
+
+  function leave() { games.leave($scope.game).then(loadGame); } // TODO proper error handling
+
+  function suicide() { modals.qSuicide($scope.game).then(loadGame); } // TODO proper error handling
+
+  function prepareGameSync(game) {
+    game.participants = _.sum(_.map(game.groups, function (g) {
+      var userNames = _.pluck(g.users, "name");
       if (userNames.length > MAX_NAMES_TITLE) { userNames = _.take(userNames, MAX_NAMES_TITLE).concat(["..."]); }
-      groupData.title = userNames.join(", ");
-    });
+      g.title = userNames.join(", ");
+      return g.users.length;
+    }));
     return game;
   }
 
