@@ -18,7 +18,7 @@
             <span class="fa fa-fw" ng-class="stateIcons[game.state]"
                   title="{{'game.state.' + game.state | translate}}"></span>
         </td>
-        <td ng-bind="game.name"></td>
+        <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td>
         <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
         <td class="text-mono flexbox">
             <div class="flex-50 text-center" title="{{'game.rings' | translate}}">
@@ -33,8 +33,6 @@
             <!--<a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"-->
             <!--   title="{{'game.actions.edit' | translate}}"></a>-->
 
-            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}"
-               title="{{'game.actions.plain' | translate}}"></a>
             <!-- TODO rework/create URL -->
             <!--<a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"-->
             <!--   title="{{'game.actions.contracts' | translate}}"></a>-->

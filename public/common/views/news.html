@@ -1,5 +1,6 @@
 <article id="news">
-    <div ng-repeat="data in news" class="panel news-instance" ng-class="'news-' + data.type">
+    <div ng-repeat="data in news" class="panel news-instance" ng-class="'news-' + data.type"
+         data-news-id="{{data._id}}">
         <div class="panel-heading flexbox">
             <span class="flexbox">
                 <i class="fa fa-fw" ng-class="data.icon"></i>

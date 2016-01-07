@@ -24,7 +24,7 @@
                 <img ng-src="{{avatar(21, game.author.avatarUrl)}}" alt="{{'game.author.alt' | translate:game.author}}"
                      title="{{'game.author.alt' | translate:game.author}}"/>
             </td>
-            <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td> <!-- TODO create route -->
+            <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td>
             <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
             <td class="text-mono text-center" ng-bind="game.rings"></td>
             <td class="text-mono text-center">
