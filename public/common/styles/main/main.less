@@ -6,7 +6,6 @@
 @import "container";
 @import "flex";
 @import "footer";
-@import "news";
 @import "listGroup";
 @import "form";
 @import "navigation";
@@ -17,12 +16,16 @@
 @import "width";
 @import "panel";
 @import "404";
+
 @import "views/home";
+@import "views/news";
 
 html {
   font-family: @font-family-base;
   font-size: @font-size-base;
-  line-height: @line-height-computed;
+  &, .panel-heading .fa { // no clue why it doesn't work without... fa-icon seems to silently overwrite line-height
+    line-height: @line-height-computed;
+  }
 }
 
 body {

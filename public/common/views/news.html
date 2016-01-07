@@ -1,0 +1,29 @@
+<article id="news">
+    <div ng-repeat="data in news" class="panel news-instance" ng-class="'news-' + data.type">
+        <div class="panel-heading flexbox">
+            <span class="flexbox">
+                <i class="fa fa-fw" ng-class="data.icon"></i>
+                <span class="news-title" ng-bind-html="'news.instance.' + data.type | translate:data | html"></span>
+            </span>
+            <div class="flexbox">
+                <small class="text-mono text-right" moment="data.cdate"></small>
+                <img class="news-author" ng-src="{{avatar(32, data.trigger.avatarUrl)}}" ng-if="data.trigger"
+                     title="{{'news.triggered' | translate:{username: data.trigger.username} }}"
+                     data-user-id="data.trigger._id"/>
+            </div>
+        </div>
+        <div class="flexbox news-body">
+            <strong>
+                <i class="fa fa-fw fa-angle-double-right"></i>
+                {{data.message}}
+                <i class="fa fa-fw fa-angle-double-left"></i>
+            </strong>
+            <div>
+                <strong ng-bind="data.game.name" data-game-id="{{data.game._id}}"></strong>
+                &ndash;
+                {{'game.ring' | translate}}
+                <span class="text-mono" data-ring-id="{{data.ring}}">#{{data.ringIdx + 1}}</span>
+            </div>
+        </div>
+    </div>
+</article>

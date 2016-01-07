@@ -1,0 +1,45 @@
+#news {
+  .news-instance {
+    margin-bottom: 10px;
+
+    .panel-heading {
+      .news-author {
+        margin: -5px -8px -5px 8px;
+      }
+
+      .victim, .murderer {
+        text-transform: uppercase;
+        font-family: monospace;
+      }
+
+      .victim {
+        font-style: oblique;
+        font-size: 0.9rem;
+        line-height: 0.9 * @line-height-computed;
+        opacity: 0.75;
+      }
+
+      .murderer {
+        font-weight: bold;
+      }
+
+      .fa {
+        margin-right: 8px;
+      }
+    }
+
+    &.news-kill .panel-heading .fa {
+      color: @color-warning;
+    }
+    &.news-suicide .panel-heading .fa {
+      color: @color-danger;
+    }
+
+    .news-body {
+      .fa {
+        opacity: 0.75;
+        color: @color-info;
+      }
+    }
+  }
+}

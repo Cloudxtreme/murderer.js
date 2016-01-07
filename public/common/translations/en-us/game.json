@@ -2,6 +2,7 @@
   "game": {
     "name": "Name",
     "active": "Active",
+    "ring": "Ring",
     "stats": {
       "kills": "Kills",
       "suicides": "Suicides",

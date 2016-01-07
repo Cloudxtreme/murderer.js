@@ -1,21 +1,21 @@
 angular.module("common").factory("news", function ($q, $timeout, socket) {
   "use strict";
 
-  var LIMIT_GAME_NEWS = 10;
   var fetchAllPromise = null;
 
   /*==================================================== Exports  ====================================================*/
 
   var service = {
     list: [],
+    games: {},
 
     getAll: function () { return fetchAllPromise = fetchAllPromise || fetchAll(); }
   };
 
   /*------------------------------------------------- Socket watcher -------------------------------------------------*/
 
-  socket.on("news:update.game", updateGameNews);
-  socket.on("news:update.global", updateGlobalNews);
+  //socket.on("news:update.game", updateGameNews);
+  //socket.on("news:update.global", updateGlobalNews);
 
   /*----------------------------------------------------- Return -----------------------------------------------------*/
 
@@ -24,54 +24,33 @@ angular.module("common").factory("news", function ($q, $timeout, socket) {
   /*=================================================== Functions  ===================================================*/
 
   function fetchAll() {
-    return $q
-        .all([
-          socket.query("news:global"),
-          socket.query("news:game", LIMIT_GAME_NEWS)
-        ])
-        .then(function (data) {
-          var sticky = data[0].concat(data[1].special);
-          // uncomment for styling
-          //sticky.push({server: true, entryDate: new Date().toISOString(), message: "Server shutdown in 20min."});
-          //sticky.push({server: false, entryDate: new Date().toISOString(), author: {_id: "test-ID", username: "Asterisk"}, message: "Game 'ProjectAI' will end in 45min."});
-          var list = _.sortByOrder(_.map(sticky, getStickyEntry), ["date"], ["desc"])
-              .concat(_.sortByOrder(_.map(data[1].kills, getEntry), ["date"], ["desc"]));
-          Array.prototype.splice.apply(service.list, [0, service.list.length].concat(list));
-          return service.list;
+    return socket
+        .query("murder:all")
+        .then(function (result) {
+          _.each(result.games, function (game) { service.games[game._id] = game; });
+          _.each(result.murders, prepareMurder);
+          Array.prototype.splice.apply(service.list, [0, service.list.length].concat(result.murders));
         });
   }
 
-  function getEntry(entry) {
-    return {
-      type: entry.server != null ? (entry.author ? "ADMIN" : "SERVER") : (entry.murderer != null ? "KILL" : "SUICIDE"),
-      date: entry.entryDate,
-      data: entry
-    };
+  function prepareMurder(murder) {
+    murder.game = service.games[murder.game];
+    if (murder.ring != null) { murder.ringIdx = _.indexOf(murder.game.rings, murder.ring); }
+    murder.victim = findUserData(murder.game, murder.victim);
+    murder.murderer = findUserData(murder.game, murder.murderer);
+    murder.suicide = murder.victim == null;
+    murder.type = murder.suicide ? "suicide" : "kill";
+    murder.icon = murder.suicide ? "fa-bomb" : "fa-spoon";
+    return murder;
   }
 
-  function getStickyEntry(entry) {
-    var e = getEntry(entry);
-    e.sticky = true;
-    return e;
-  }
-
-  function insertInOrder(list, entry) {
-    var current;
-    for (var i = 0; i < list.length; i++) {
-      current = list[i];
-      if (entry.sticky && !current.sticky || entry.sticky === current.sticky && entry.date >= current.date) {
-        break;
-      }
-    }
-    list.splice(i, 0, entry);
-  }
-
-  function updateGameNews(track) {
-    service.getAll().then(_.partial(insertInOrder, _, getEntry(track)));
-  }
-
-  function updateGlobalNews(track) {
-    service.getAll().then(_.partial(insertInOrder, _, getStickyEntry(track)));
+  function findUserData(game, userId) {
+    if (userId == null) { return userId; }
+    var userData = null;
+    _.any(game.groups, function (groupData) {
+      return _.any(groupData.users, function (uD) { if (uD.user === userId) { return userData = uD; } });
+    });
+    return userData;
   }
 
 });

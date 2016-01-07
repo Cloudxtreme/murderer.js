@@ -33,19 +33,15 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
       })
   ;
 
-  /*----------------------------------------------------- Games  -----------------------------------------------------*/
+  /*------------------------------------------------------ News ------------------------------------------------------*/
 
   // @ngInject
-  //$routeProvider
-  //    .when("/game", {
-  //      templateUrl: "/views/common/game.html"
-  //    })
-  //
-  //    .when("/statistics", {
-  //      templateUrl: "/views/common/stats.html",
-  //      resolve: {cacheInvalidation: function (stats) { stats.clearCache(); }}
-  //    })
-  //;
+  $routeProvider
+      .when("/news", {
+        templateUrl: "/views/common/news.html",
+        controller: "newsCtrl"
+      })
+  ;
 
   /*-------------------------------------------------- Error Pages  --------------------------------------------------*/
 

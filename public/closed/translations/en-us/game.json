@@ -52,7 +52,6 @@
       "initial": "Game has not started yet"
     },
     "name": "Name",
-    "ring": "Ring",
     "rings": "Rings"
   }
 }
