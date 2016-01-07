@@ -1,6 +1,11 @@
 angular.module("common").factory("news", function ($q, $timeout, socket) {
   "use strict";
 
+  var ICONS = {
+    suicide: "fa-bomb",
+    kill: "fa-spoon"
+  };
+
   var fetchAllPromise = null;
 
   /*==================================================== Exports  ====================================================*/
@@ -40,7 +45,7 @@ angular.module("common").factory("news", function ($q, $timeout, socket) {
     murder.murderer = findUserData(murder.game, murder.murderer);
     murder.suicide = murder.victim == null;
     murder.type = murder.suicide ? "suicide" : "kill";
-    murder.icon = murder.suicide ? "fa-bomb" : "fa-spoon";
+    murder.icon = ICONS[murder.type];
     return murder;
   }
 
