@@ -15,10 +15,10 @@ module.exports = function (queryRoute) {
   });
 
   queryRoute("murder:token", function (data) {
-    if (typeof data !== "object" || data == null || typeof data.token !== "string" || typeof data.message !== "string" || typeof data.gameId !== "string" || !data.message.length) {
+    if (typeof data !== "object" || data == null || typeof data.token !== "string" || typeof data.message !== "string" || typeof data.gameId !== "string" || typeof data.ringId !== "string" || !data.message.length) {
       return Q.reject("Bad request.");
     }
-    return gameC.qKillByToken(this, this.user._id, data.gameId, data.token, data.message).then(_.noop);
+    return gameC.qKillByToken(this, this.user._id, data.gameId, data.ringId, data.token, data.message).then(_.noop);
     // TODO return new contract instead of undefined
   });
 };

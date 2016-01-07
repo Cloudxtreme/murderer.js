@@ -21,8 +21,9 @@ exports.getIndexIfSuicideCommittable = getIndexIfSuicideCommittable;
 
 /*--------------------------------------------- relevant for kills only  ---------------------------------------------*/
 
-function kill(scope, userId, gameId, token, message, triggered) {
+function kill(scope, userId, gameId, ringId, token, message, triggered) {
   return findGameData(scope, gameId, {
+    ringId: ringId,
     murderer: userId,
     token: token,
     message: message,
@@ -36,46 +37,41 @@ function kill(scope, userId, gameId, token, message, triggered) {
 }
 
 function findCrimeScene(data) {
-  var rings = data.game.rings;
-  data = passFirst(rings, function (ring, ringIdx) {
-    if (ring.active < 2) { return; }
-
-    var mItemIdx = _.findLastIndex(ring.chain, isAlive);
-    var potentialVictim = ring.chain[mItemIdx].user.equals(data.murderer);
-    var skippedVictims = [];
-    return passFirst(ring.chain, function (item, idx) {
-      if (item.vulnerable) {
-        if (potentialVictim) {
-          if (data.token === item.token) { // victim found and verified
-            return _.extend(data, {
-              ring: ring,
-              ringIndex: ringIdx,
-              index: idx,
-              victim: item.user,
-              skippedVictims: skippedVictims
-            });
-          } else if (isAlive(item)) { // stop looking for any other victim in this ring
-            return false;
-          }
-          skippedVictims.push(idx);
-        } else if (isAlive(item)) { // item is next potential murderer
-          potentialVictim = ring.chain[mItemIdx = idx].user.equals(data.murderer);
-        }
-      }
-    });
-  });
-  return data || Q.reject("Token invalid.");
+  var rings = data.game.rings, ringIdx = _.findIndex(rings, function (ring) { return ring._id.equals(data.ringId); });
+  if (!~ringIdx) { return Q.reject("Ring not found."); }
+  var victimData = findVictimData(data.ring = rings[data.ringIndex = ringIdx], data.murderer, data.token);
+  return typeof victimData === "string" ? Q.reject(victimData) : _.extend(data, victimData);
 }
 
-function isAlive(chainItem) { return chainItem.murder == null; }
+function findVictimData(ring, murderer, token) {
+  var lastAliveIdx = _.findLastIndex(ring.chain, function (entry) { return entry.murder == null; });
+  if (!~lastAliveIdx) { return "Not alive."; }
+  var lastAliveIsMurderer = ring.chain[lastAliveIdx].user.equals(murderer);
+  var skippedVictims = [];
 
-function passFirst(array, fn) {
-  var result;
-  for (var i = 0; i < array.length; i++) {
-    result = fn(array, i);
-    if (result != null) { return result === false ? null : result; }
+  var chain = ring.chain, current;
+  for (var i = 0; i < chain.length; i++) {
+    current = chain[i];
+    if (current.vulnerable) {
+      if (lastAliveIsMurderer) {
+        if (token === current.token) {
+          // victim found and token valid
+          return {index: i, victim: current.user, skippedVictims: skippedVictims};
+        } else if (current.murder == null) {
+          // victim found but tokens don't match
+          return "Token invalid.";
+        } else {
+          // keep track of entries that would've been valid victims (since they committed suicide)
+          skippedVictims.push(i);
+        }
+      } else if (current.murder == null) {
+        // item is next potential murderer
+        lastAliveIsMurderer = chain[lastAliveIdx = i].user.equals(murderer);
+      }
+    }
   }
-  return null;
+
+  return lastAliveIsMurderer ? "No victim found." : "Not alive.";
 }
 
 function applyMurderToRing(data) {
@@ -84,7 +80,7 @@ function applyMurderToRing(data) {
   $set["chain." + data.index + ".vulnerable"] = false;
   $set["chain." + data.index + ".murder"] = data.murder._id;
   return ringC
-      .qUpdate(data.scope, data.ring._id, {$set: $set, $inc: {active: -(1 + data.skippedVictims.length)}})
+      .qUpdateById(data.scope, data.ring._id, {$set: $set, $inc: {active: -(1 + data.skippedVictims.length)}})
       .then(_.constant(data))
       .fail(function (err) {
         data.scope.log.error({err: err}, "failed to update ring with murder");
