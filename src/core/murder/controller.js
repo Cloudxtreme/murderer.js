@@ -30,7 +30,8 @@ function news(scope) {
   var query = model
       .find()
       .sort("-cdate")
-      .populate("trigger", {username: 1, avatarUrl: 1});
+      .populate("trigger", {username: 1, avatarUrl: 1})
+      .limit(20);
   var gameProjection = {"groups.users.name": 1, "groups.users.user": 1, name: 1, rings: 1};
   return Q.spread(
       [Q.nbind(query.exec, query)(), gameC.qFind(scope, {}, gameProjection)],
