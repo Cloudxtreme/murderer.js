@@ -7,7 +7,8 @@ angular.module("closed").factory("modals", function ($uibModal) {
 
   var service = {
     joinGame: joinGame,
-    suicide: suicide
+    suicide: suicide,
+    kill: kill
   };
 
   qIfy(service);
@@ -30,6 +31,18 @@ angular.module("closed").factory("modals", function ($uibModal) {
       controller: "suicideCtrl",
       resolve: {
         game: _.constant(game)
+      }
+    });
+  }
+
+  function kill(game, ringId, ringIndex) {
+    return $uibModal.open({
+      templateUrl: "/templates/closed/modals/kill.html",
+      controller: "killCtrl",
+      resolve: {
+        game: _.constant(game),
+        ringId: _.constant(ringId),
+        ringIndex: _.constant(ringIndex)
       }
     });
   }

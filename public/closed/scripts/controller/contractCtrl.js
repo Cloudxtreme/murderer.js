@@ -1,25 +1,23 @@
-angular.module("closed").controller("contractCtrl", function (TOKEN_SIZE, $scope) {
+angular.module("closed").controller("contractCtrl", function ($scope, modals) {
   "use strict";
-
-  var REGEX_HEX = /^[a-fA-F0-9]+$/i;
 
   /*===================================================== Scope  =====================================================*/
 
   $scope.hide = true;
-  $scope.tokenLength = TOKEN_SIZE * 2; // two hex-chars per byte
 
   $scope.attemptTokenKill = attemptTokenKill;
-  $scope.isHex = function (value) { return REGEX_HEX.test(value); };
 
   $scope.$watch("collapseOverwrite", function (value) { $scope.hide = value; });
 
   /*=================================================== Functions  ===================================================*/
 
   function attemptTokenKill() {
-    // TODO open modal
-    //socket.query("kill:token", {ringId: $scope.contract.details.ringId, token: $scope.token});
-    // TODO implement query-route
-    // TODO handle result
+    modals
+        .qKill($scope.contract.game, $scope.contract.details.ringId, $scope.contract.ring)
+        .then(function (contract) {
+          // TODO proper response handling
+          console.log(contract);
+        });
   }
 
 });

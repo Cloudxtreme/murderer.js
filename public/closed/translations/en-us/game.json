@@ -32,13 +32,10 @@
       "message": "Quote message"
     },
     "mission": {
-      "attempt": "Attempt a murder",
+      "title": "Attempt a murder within <strong data-game-id=\"{{game.id}}\">{{game.name}}</strong> - Ring <span class=\"text-mono\">#{{ring}}</span>",
       "token": "Token",
       "submit": "Track kill",
-      "message": "Cause of Death",
-      "defaultMessage": "Beat to death with a 1k ton tuna.",
-      "invalidToken": "Invalid token.",
-      "success": "May he/she rest in peace."
+      "message": "Cause of Death"
     },
     "suicide": {
       "title": "Commit suicide",
