@@ -1,7 +1,7 @@
+# murderer.js
+
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-Alpha-ff69b4.svg)
-
-# murderer.js
 
 Node.js implementation of "Mörderspiel"
 
