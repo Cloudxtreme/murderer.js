@@ -2,20 +2,20 @@
 
 <div ng-if="!loading" data-game-id="{{game.id}}">
 
-    <div class="flexbox">
-        <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="news()">
-            <i class="fa fa-fw fa-fire"></i> {{'game.news' | translate}}
-        </button>
-        <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="score()">
-            <i class="fa fa-fw fa-trophy"></i> {{'game.score' | translate}}
-        </button>
-        <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="table()">
-            <i class="fa fa-fw fa-th-list"></i> {{'game.table' | translate}}
-        </button>
-        <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="stats()">
-            <i class="fa fa-fw fa-pie-chart"></i> {{'game.stats' | translate}}
-        </button>
-    </div>
+    <!--<div class="flexbox">-->
+    <!--    <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="news()">-->
+    <!--        <i class="fa fa-fw fa-fire"></i> {{'game.news' | translate}}-->
+    <!--    </button>-->
+    <!--    <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="score()">-->
+    <!--        <i class="fa fa-fw fa-trophy"></i> {{'game.score' | translate}}-->
+    <!--    </button>-->
+    <!--    <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="table()">-->
+    <!--        <i class="fa fa-fw fa-th-list"></i> {{'game.table' | translate}}-->
+    <!--    </button>-->
+    <!--    <button type="button" class="flex-50 no-margin form-btn form-btn-block form-btn-info" ng-click="stats()">-->
+    <!--        <i class="fa fa-fw fa-pie-chart"></i> {{'game.stats' | translate}}-->
+    <!--    </button>-->
+    <!--</div>-->
 
     <div class="flexbox game-details">
         <div class="flex-50">
@@ -88,9 +88,9 @@
                     <span class="text-mono" ng-bind="ring.active"></span> {{'game.usersAlive' | translate}}
                 </div>
                 <div class="flex-50 text-right">
-                    <a ng-click="showRingNews(ring)" class="fa fa-fw fa-fire" title="{{'game.news' | translate}}"></a>
-                    <a ng-click="showRingTable(ring)" class="fa fa-fw fa-th-list"
-                       title="{{'game.table' | translate}}"></a>
+                    <!--<a ng-click="showRingNews(ring)" class="fa fa-fw fa-fire" title="{{'game.news' | translate}}"></a>-->
+                    <!--<a ng-click="showRingTable(ring)" class="fa fa-fw fa-th-list"-->
+                    <!--   title="{{'game.table' | translate}}"></a>-->
                 </div>
             </div>
         </div>

@@ -29,15 +29,15 @@
             </div>
         </td>
         <td class="text-center">
-            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}" ng-if="game.started"
+            <!-- TODO rework/create URL -->
+            <!--<a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"-->
+            <!--   title="{{'game.actions.edit' | translate}}"></a>-->
+
+            <a class="fa fa-fw fa-file-o" ng-href="/games/{{game._id}}"
                title="{{'game.actions.plain' | translate}}"></a>
             <!-- TODO rework/create URL -->
-            <a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"
-               title="{{'game.actions.contracts' | translate}}"></a>
-
-            <!-- TODO rework/create URL -->
-            <a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"
-               title="{{'game.actions.edit' | translate}}"></a>
+            <!--<a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"-->
+            <!--   title="{{'game.actions.contracts' | translate}}"></a>-->
 
             <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"
                title="{{'game.actions.pause' | translate}}"></a>
