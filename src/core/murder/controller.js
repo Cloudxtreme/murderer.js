@@ -34,7 +34,7 @@ function news(scope) {
       .limit(20); // TODO add pagination
   var gameProjection = {"groups.users.name": 1, "groups.users.user": 1, name: 1, rings: 1};
   return Q.spread(
-      [Q.nbind(query.exec, query)(), gameC.qFind(scope, {}, gameProjection)],
+      [Q.nbind(query.exec, query)(), gameC.qFind(scope, {started: true}, gameProjection)],
       function (murders, games) { return {games: games, murders: murders}; }
   );
 }
