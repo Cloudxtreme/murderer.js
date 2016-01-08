@@ -1,8 +1,8 @@
 <h2>Beschreibung</h2>
 
 <p>
-    <strong>murderer.js</strong> ist ein hybrides Spiel das reale Interaktion mit einem Web-Service kombiniert.
-    Es eignet sich gut als Nebenl&auml;ufiges Spiel &uuml;ber mehrere Tage bis Wochen in mittelgro&szlig;er (~15) bis
+    <strong>murderer.js</strong> ist ein hybrides Spiel das reale Interaktion mit einem Web-Service kombiniert. Es
+    eignet sich gut als Nebenl&auml;ufiges Spiel &uuml;ber mehrere Tage bis Wochen in mittelgro&szlig;er (~15) bis
     gro&szlig;er (~200) Spieleranzahl.<br/>
 
     Es handelt sich hierbei um ein Spiel der sozialen Interaktion und kann gut als Kennenlern-Spiel auf mehrt&auml;gigen
@@ -12,9 +12,9 @@
 <h2>Spielablauf</h2>
 
 <p>
-    In einem Spiel bekommen alle Teilnehmer individuelle <em>Mordauftr&auml;ge</em>, die online eingesehen und ausgedruckt
-    werden k&ouml;nnen. Nun muss jeder Spieler versuchen, m&ouml;glichst viele dieser Auftr&auml;ge zu erf&uuml;llen
-    bevor das Spiel zu festgelegter Zeit beendet wird.
+    In einem Spiel bekommen alle Teilnehmer individuelle <em>Mordauftr&auml;ge</em>, die online eingesehen und
+    ausgedruckt werden k&ouml;nnen. Nun muss jeder Spieler versuchen, m&ouml;glichst viele dieser Auftr&auml;ge zu
+    erf&uuml;llen bevor das Spiel zu festgelegter Zeit beendet wird.
 </p>
 
 <h3>Wie wird ein Auftrag erf&uuml;llt?</h3>
@@ -22,8 +22,8 @@
 <p>
     Dies ist der sozial interaktive Aspekt des Spiels. Um einen Auftrag zu erf&uuml;llen muss der <em>M&ouml;rder</em>
     dem <em>Ziel</em> einen beliebigen Gegenstand &uuml;bergeben, ohne dass <em>Zeugen</em> anwesend sind. Ein
-    Mordgegenstand muss freiwillig angenommen werden (meistens, weil nicht an das Spiel gedacht wird), darf nicht
-    geworfen werden und muss erst vom M&ouml;rder, anschlie&szlig;end vom Opfer <b>prim&auml;r</b> getragen werden.<br/>
+    Mordgegenstand muss freiwillig angenommen werden, darf nicht geworfen werden und muss erst vom M&ouml;rder,
+    anschlie&szlig;end vom <em>Opfer</em> <b>prim&auml;r</b> getragen werden.<br/>
 
     Je nach Teilnehmergruppe muss der M&ouml;rder nat&uuml;rlich erst einmal herausbekommen, wer seine Ziele
     &uuml;berhaupt sind.
@@ -32,35 +32,36 @@
 <h3>Wer gilt als Zeuge?</h3>
 
 <p>
-    Ein Zeuge kann jeder nicht am Mord beteiligte Spieler sein, der in dem <em>Ring</em> in welchem der Mord stattfinden
-    soll selbst am Leben ist. Falls ein Spieler also einen Mord begehen m&ouml;chte, muss er zun&auml;chst
-    sicherstellen, dass kein Zeuge in dem Moment des Mordes (der Gegenstand&uuml;bergabe) diesen mitbekommt.
+    Jeder nicht am Mord beteiligte Spieler, der in dem <em>Ring</em> in welchem der Mord stattfinden soll am Leben ist,
+    kann diesen bezeugen und somit annullieren. Falls ein Spieler also einen Mord begehen m&ouml;chte, muss er
+    zun&auml;chst sicherstellen, dass kein Zeuge die Gegenstand&uuml;bergabe mitbekommt.
 </p>
 
 <h3>Was ist ein Ring?</h3>
 
 <p>
     Ein Spiel kann aus <code>N</code> Ringen bestehen und jeder Spieler ist anfangs in <code>M</code> Ringen am Leben
-    (<code>N</code>, <code>M</code> werden vom Spielleiter festgelegt). In einem einzelnen Ring hat jeder dort lebendige
-    Spieler genau einen Mordauftrag f&uuml;r einen anderen dort lebendigen Spieler. Hierbei ist auch jeder Spieler nur
-    Ziel genau eines Mordauftrages.
+    (<code>N</code>, <code>M</code> werden vom Spielleiter festgelegt). In jedem Ring hat jeder dort lebendige Spieler
+    genau einen Mordauftrag f&uuml;r einen anderen dort lebendigen Spieler. Hierbei ist auch jeder Spieler nur Ziel
+    genau eines Mordauftrages und die Auftr&auml;ge bilden einen Kreis.
 </p>
 
-<h3>Was passiert, wenn jemand einen Auftrag erf&uuml;llt hat?</h3>
+<h3>Was passiert wenn ein Auftrag erf&uuml;llt wird?</h3>
 
 <p>
-    Wird jemand umgebracht (das <em>Opfer</em>), so verifiziert er dies indem er sich den Auftrag zeigen l&auml;sst. Nun
-    muss das Opfer seinem M&ouml;rder seinen <em>Token</em> und sein Ziel aus dem Ring, in dem der Mord stattfand,
-    nennen. Dieser Token steht auf dem Auftrag, den das Opfer in eben diesem Ring zu erf&uuml;llen hatte (und nun daran
-    gescheitert ist). Sobald der M&ouml;rder diesen Token auf dieser Website eingibt (zusammen mit einer kurzen Notiz
-    zum Mord), bekommt er den Auftrag seines Opfers &uuml;berschrieben und kann munter weiter morden.<br/>
+    Wird jemand umgebracht, so verifiziert er dies indem er sich den Auftrag zeigen l&auml;sst. Nun muss das Opfer
+    seinem M&ouml;rder seinen <em>Token</em> und sein Ziel aus dem Ring, in dem der Mord stattfand, nennen. Dieser Token
+    steht auf dem Auftrag, den das Opfer in eben diesem Ring zu erf&uuml;llen hatte (und nun daran gescheitert ist).
+    Sobald der M&ouml;rder diesen Token auf dieser Website eingibt (zusammen mit einer kurzen Notiz zum Mord), bekommt
+    er den Auftrag seines Opfers &uuml;berschrieben und kann munter weiter morden.<br/>
 
     Falls das Opfer seinen Auftrag in ausgedruckter Form zur Verf&uuml;gung hat, kann dieser dem M&ouml;rder
     &uuml;bergeben werden (Achtung: Auch diese &Uuml;bergabe kann als Mord in einem anderen Ring gelten, sollte der
     M&ouml;rder allerdings explizit eine indirekte &Uuml;bergabe verlangen, muss diesem Folge geleistet werden). Der
     Mord muss nicht unmittelbar eingetragen werden, sodass der M&ouml;rder zum Beispiel mehrere Morde in einem Ring
     begehen kann und diese erst sp&auml;ter eintr&auml;gt. Es muss beim Eintragen allerdings auf die Reihenfolge der
-    Morde geachtet werden.
+    Morde geachtet werden. Auch ist zu beachten, dass alle Morde bis zum Spielende eingetragen werden m&uuml;ssen. Ist
+    ein Mord zum Spielende nicht eingetragen, wird dieser annulliert.
 </p>
 
 <h3>Mehrere Tage? Das ist mir zu lang!</h3>
@@ -72,7 +73,8 @@
     Selbstm&ouml;rders) online einsehen.<br/>
 
     Selbstmord ist eine sichere M&ouml;glichkeit aus dem Spiel auszusteigen, ohne den anderen Spielern den Spa&szlig; zu
-    nehmen.
+    nehmen. Falls ein Spieler nach einem Mord, aber bevor dieser online eingegeben wurde, Selbstmord begeht, z&auml;hlt
+    der Mord dennoch sobald der Token nachtr&auml;glich eingegeben wird.
 </p>
 
 <h3>Wer gewinnt?</h3>
@@ -100,7 +102,7 @@
         Zeugen m&uuml;ssen von sich aus den Mord unterbinden (indem sie den Beteiligten sagen, dass sie es beobachtet
         haben). Aus diesem Grund muss die Aussage vom M&ouml;rder, dass er das Opfer umgebracht hat umgehend kommen (in
         angemessener Lautst&auml;rke), ansonsten wird der Mord ung&uuml;ltig. Sollte das Opfer jemanden direkt fragen,
-        ob er den Mord bezeugt hat, ist dieser als Zeuge unzul&auml;ssig. Zeugen, die nicht selbstst&auml;ndig merken
+        ob er den Mord bezeugt hat, ist dieser als Zeuge unzul&auml;ssig. Spieler, die nicht selbstst&auml;ndig merken
         was sich vor ihnen abspielt, k&ouml;nnen nichts bezeugen.
     </li>
     <li id="murderless-zones-rule">
