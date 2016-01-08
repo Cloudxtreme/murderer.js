@@ -131,7 +131,7 @@ eachFileRecursive(configDir, function (filename) {
   // skip .local.json files
   if (!/\.local\.json$/.test(filename)) {
     var basename = path.basename(filename, ".json");
-    var customName = basename + ".local.json";
+    var customName = path.join(path.dirname(filename), basename + ".local.json");
     var c = cfg[camelCase(basename)] = require(filename);
     if (fs.existsSync(customName)) {
       // if same filename with .local.json exists, extend that
