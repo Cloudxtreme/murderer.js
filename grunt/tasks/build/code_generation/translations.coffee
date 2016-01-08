@@ -1,17 +1,19 @@
 _ = require 'lodash'
+path = require 'path'
 
 module.exports = (config, grunt, helpers) ->
   paths = config.paths
 
   grunt.registerMultiTask "genTranslations", "Merges translations of dependent modules", ->
     data = this.data
+    readFn = _.partial readTranslationsFile, data.cwd
     _.each config.modules, (mod, name) ->
       return if !mod.deploy
       translations = {}
       _.each config.locales.all, (ignored, locale) ->
         translations[locale] = helpers.recursiveExtend {}, name, (n) ->
           files = grunt.file.expand data, data.files n, locale
-          _.merge.apply this, files.map (file) -> grunt.file.readJSON "#{data.cwd}/#{file}"
+          _.merge.apply this, files.map readFn
       destination = "#{paths.destination.dev}/scripts/#{name}/bootstrap/translations.js"
       grunt.file.write destination, data.filePrototype name, translations
 
@@ -21,11 +23,22 @@ module.exports = (config, grunt, helpers) ->
   getLocalesString = (translations) ->
     Object.keys(config.locales.all).map((locale) -> getLocaleLine locale, translations[locale]).join grunt.util.linefeed
 
+  readTranslationsFile = (cwd, file) ->
+    filePath = "#{cwd}/#{file}"
+    if grunt.file.isFile filePath
+      return grunt.file.readJSON filePath if file.endsWith ".json"
+      parts = path.basename(file).split "."
+      ignored = parts.pop() # file-extension
+      key = parts.pop()
+      obj = o = {}
+      o = o[p] = {} for p in parts
+      o[key] = grunt.file.read filePath
+      obj
+
   all:
     cwd: paths.source
     files: (name, locale) -> [
-      "#{name}/translations/**/#{locale}.json" # en-us.json files in any sub-directory
-      "#{name}/translations/#{locale}/**/*.json" # json-files within en-us/
+      "#{name}/translations/#{locale}/**/*" # files within en-us/
     ]
     filePrototype: (name, translations) ->
       """
