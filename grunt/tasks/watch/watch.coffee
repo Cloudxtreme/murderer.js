@@ -34,7 +34,7 @@ module.exports = (config, grunt, ignored, dirs) ->
       files: ["#{paths.source}/*/index.html", "#{paths.source}/*/templates-static/**/*"]
       tasks: ['htmlbuild_dev']
     translations:
-      files: "#{paths.source}/*/translations/**/*.json"
+      files: "#{paths.source}/*/translations/**/*"
       tasks: ['clean:translations', 'genTranslations', 'htmlbuild_dev']
 
   watch
