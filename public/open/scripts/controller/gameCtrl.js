@@ -1,4 +1,4 @@
-angular.module("closed").controller("gameCtrl", function ($scope, gameId, games, closedGames) {
+angular.module("open").controller("gameCtrl", function ($scope, gameId, games) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -11,10 +11,6 @@ angular.module("closed").controller("gameCtrl", function ($scope, gameId, games,
 
   $scope.news = $scope.score = $scope.table = $scope.stats = _.noop; // TODO implement
   $scope.showRingNews = $scope.showRingTable = _.noop; // TODO implement
-
-  $scope.join = function () { closedGames.join($scope.game); };
-  $scope.leave = function () { closedGames.leave($scope.game); };
-  $scope.suicide = function () { closedGames.suicide($scope.game); };
 
   /*=============================================== Initial Execution  ===============================================*/
 

@@ -1,4 +1,4 @@
-angular.module("closed").controller("suicideCtrl", function ($scope, $uibModalInstance, game, games) {
+angular.module("closed").controller("suicideCtrl", function ($scope, $uibModalInstance, game) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -11,13 +11,6 @@ angular.module("closed").controller("suicideCtrl", function ($scope, $uibModalIn
 
   /*=================================================== Functions  ===================================================*/
 
-  function confirm() {
-    games
-        .suicide(game, $scope.data)
-        .then($uibModalInstance.close, function (err) {
-          // TODO proper error handling
-          console.error(err);
-        });
-  }
+  function confirm() { $uibModalInstance.close($scope.data); }
 
 });

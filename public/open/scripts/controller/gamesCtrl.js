@@ -1,4 +1,4 @@
-angular.module("closed").controller("gamesCtrl", function ($scope, games, closedGames) {
+angular.module("open").controller("gamesCtrl", function ($scope, games) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -11,9 +11,6 @@ angular.module("closed").controller("gamesCtrl", function ($scope, games, closed
     state: games.sortValue.state,
     participants: games.sortValue.participants
   };
-  $scope.join = function (game) { closedGames.join(game); };
-  $scope.leave = function (game) { closedGames.leave(game); };
-  $scope.suicide = function (game) { closedGames.suicide(game); };
 
   /*=============================================== Initial Execution  ===============================================*/
 

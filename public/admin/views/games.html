@@ -15,7 +15,7 @@
     <tbody>
     <tr ng-repeat="game in displayedGames" data-game-id="{{game._id}}">
         <td class="text-center">
-            <span class="fa fa-fw" ng-class="stateIcons[game.state]"
+            <span class="fa fa-fw" ng-class="stateIcon[game.state]"
                   title="{{'game.state.' + game.state | translate}}"></span>
         </td>
         <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td>

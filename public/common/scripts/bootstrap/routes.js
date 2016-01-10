@@ -33,6 +33,21 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
       })
   ;
 
+  /*----------------------------------------------------- Games  -----------------------------------------------------*/
+
+  // @ngInject
+  $routeProvider
+      .when("/games", {
+        templateUrl: "/views/common/games.html",
+        controller: "gamesCtrl" // to be implemented in extending modules
+      })
+      .when("/games/:gameId", {
+        templateUrl: "/views/common/game.html",
+        controller: "gameCtrl", // to be implemented in extending modules
+        resolve: {gameId: function ($route) { return $route.current.params.gameId; }}
+      })
+  ;
+
   /*------------------------------------------------------ News ------------------------------------------------------*/
 
   // @ngInject

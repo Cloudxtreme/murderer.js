@@ -1,4 +1,4 @@
-angular.module("closed").controller("contractCtrl", function ($scope, modals) {
+angular.module("closed").controller("contractCtrl", function ($scope, closedGames) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -12,8 +12,8 @@ angular.module("closed").controller("contractCtrl", function ($scope, modals) {
   /*=================================================== Functions  ===================================================*/
 
   function attemptTokenKill() {
-    modals
-        .qKill($scope.contract.game, $scope.contract.details.ringId, $scope.contract.ring)
+    closedGames
+        .kill($scope.contract.game, $scope.contract.details.ringId, $scope.contract.ring)
         .then(function (contract) {
           // TODO proper response handling
           console.log(contract);

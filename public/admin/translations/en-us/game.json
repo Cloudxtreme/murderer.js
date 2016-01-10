@@ -1,6 +1,5 @@
 {
   "game": {
-    "titlePlural": "Games",
     "description": "Description",
     "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
     "inactive": "Inactive",

@@ -35,13 +35,12 @@ angular.module("closed").factory("modals", function ($uibModal) {
     });
   }
 
-  function kill(game, ringId, ringIndex) {
+  function kill(game, ringIndex) {
     return $uibModal.open({
       templateUrl: "/templates/closed/modals/kill.html",
       controller: "killCtrl",
       resolve: {
         game: _.constant(game),
-        ringId: _.constant(ringId),
         ringIndex: _.constant(ringIndex)
       }
     });

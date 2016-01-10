@@ -1,29 +1,34 @@
 {
   "game": {
     "name": "Name",
-    "active": "Active",
     "ring": "Ring",
-    "stats": {
-      "kills": "Kills",
-      "suicides": "Suicides",
-      "lives": "{{amount}} {{amount === 1 ? 'life' : 'lives'}} left",
-      "total": {
-        "active": "<strong class=\"text-mono\">{{active}}</strong> active {{active === 1 ? 'contract for murder is' : 'contracts for murder are'}} signed",
-        "kills": "<strong class=\"text-mono\">{{kills}}</strong> {{kills === 1 ? 'person has' : 'people have'}} been assassinated yet"
-      },
-      "groups": {
-        "kills": "Kills by group",
-        "active": "Lives left by group"
-      },
-      "rings": {
-        "active": "Alive users by ring",
-        "remaining": "Users by lives left"
-      },
-      "users": {
-        "name": "Name",
-        "active": "Lives remaining",
-        "kills": "Assassinations completed"
-      }
+    "rings": "Rings",
+    "participants": "Participants",
+    "noneFound": "No games have been found. You may try again later.",
+    "news": "News",
+    "score": "Scoreboard",
+    "table": "Details",
+    "stats": "Statistics",
+    "locked": "Private game",
+    "unlocked": "Public game",
+    "usersAlive": "users alive",
+    "details": {
+      "participants": "participants",
+      "rings": "rings",
+      "initialRings": "initial rings",
+      "initialLives": "initial lives",
+      "start": "Game start",
+      "end": "Game end"
+    },
+    "author": {
+      "alt": "Author: {{username}}"
+    },
+    "state": {
+      "title": "State",
+      "stopped": "Game is resolved",
+      "running": "Game is active",
+      "paused": "Game is paused",
+      "initial": "Game has not started yet"
     }
   }
 }

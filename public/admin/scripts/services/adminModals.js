@@ -7,7 +7,7 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
 
   var service = {
     markdownPreview: markdownPreview,
-    newGame: newGame
+    createGame: createGame
   };
 
   qIfy(service);
@@ -23,10 +23,10 @@ angular.module("admin").factory("adminModals", function ($rootScope, $uibModal) 
     });
   }
 
-  function newGame() {
+  function createGame() {
     return $uibModal.open({
-      templateUrl: "/templates/admin/modals/new_game.html",
-      controller: "newGameCtrl",
+      templateUrl: "/templates/admin/modals/create_game.html",
+      controller: "createGameCtrl",
       size: "lg",
       backdrop: "static",
       keyboard: false

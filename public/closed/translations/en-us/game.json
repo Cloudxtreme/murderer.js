@@ -4,29 +4,9 @@
       "plural": "Games",
       "one": "Game"
     },
-    "participants": "Participants",
-    "noneFound": "No games have been found. You may try again later.",
     "join": "Join Game",
     "leave": "Leave Game",
     "paused": "The game is paused.",
-    "news": "News",
-    "locked": "Private game",
-    "unlocked": "Public game",
-    "score": "Scoreboard",
-    "table": "Details",
-    "stats": "Statistics",
-    "usersAlive": "users alive",
-    "details": {
-      "participants": "participants",
-      "rings": "rings",
-      "initialRings": "initial rings",
-      "initialLives": "initial lives",
-      "start": "Game start",
-      "end": "Game end"
-    },
-    "author": {
-      "alt": "Author: {{username}}"
-    },
     "user": {
       "name": "Alias",
       "message": "Quote message"
@@ -43,15 +23,6 @@
       "message": "Last words",
       "password": "Confirm with your password",
       "warning": "You won't be able to rejoin the game <strong data-game-id=\"{{id}}\">{{name}}</strong>."
-    },
-    "state": {
-      "title": "State",
-      "stopped": "Game is resolved",
-      "running": "Game is active",
-      "paused": "Game is paused",
-      "initial": "Game has not started yet"
-    },
-    "name": "Name",
-    "rings": "Rings"
+    }
   }
 }

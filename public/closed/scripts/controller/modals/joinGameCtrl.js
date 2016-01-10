@@ -1,4 +1,4 @@
-angular.module("closed").controller("joinGameCtrl", function ($scope, $timeout, $uibModalInstance, game, games, socket) {
+angular.module("closed").controller("joinGameCtrl", function ($scope, $uibModalInstance, game, socket) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/
@@ -15,7 +15,7 @@ angular.module("closed").controller("joinGameCtrl", function ($scope, $timeout, 
   /*------------------------------------------------ Fetch all groups ------------------------------------------------*/
 
   socket
-      .query("groups:populate", _.pluck(game.groups, "group")) // TODO create route within server
+      .query("groups:populate", _.pluck(game.groups, "group"))
       .then(function (groups) {
         $scope.groups = groups;
         if (groups.length === 1) { $scope.data.groupId = groups[0]._id; }
@@ -23,13 +23,6 @@ angular.module("closed").controller("joinGameCtrl", function ($scope, $timeout, 
 
   /*=================================================== Functions  ===================================================*/
 
-  function confirm() {
-    games
-        .join(game, $scope.data)
-        .then($uibModalInstance.close, function (err) {
-          // TODO proper error handling
-          console.error(err);
-        });
-  }
+  function confirm() { $uibModalInstance.close($scope.data); }
 
 });

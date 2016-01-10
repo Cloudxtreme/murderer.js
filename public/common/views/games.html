@@ -11,13 +11,13 @@
             <th st-sort="schedule.end" translate>game.details.end</th>
             <th st-sort="rings" class="width-10" translate>game.rings</th>
             <th st-sort="sort.participants" class="width-20" translate>game.participants</th>
-            <th class="fa-fw"></th>
+            <th class="fa-fw" ng-if="identity.guest == false"></th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="game in games" data-game-id="{{game._id}}" ng-class="{primary: game.joined}">
             <td class="text-center">
-                <span class="fa fa-fw" ng-class="stateIcons[game.state]"
+                <span class="fa fa-fw" ng-class="stateIcon[game.state]"
                       title="{{'game.state.' + game.state | translate}}"></span>
             </td>
             <td class="game-author" title="{{game.author.username}}">
@@ -30,13 +30,13 @@
             <td class="text-mono text-center">
                 {{game.participants}} <span ng-if="game.limit.participants">/ {{game.limit.participants}}</span>
             </td>
-            <td class="text-center">
-                <a class="fa fa-fw fa-sign-in" title="{{'game.join' | translate}}" ng-click="joinGame(game)"
-                   ng-if="game.mayJoin"></a>
-                <a class="fa fa-fw fa-sign-out" title="{{'game.leave' | translate}}" ng-click="leaveGame(game)"
-                   ng-if="game.mayLeave"></a>
-                <a class="fa fa-fw fa-bomb" title="{{'game.suicide.attempt' | translate}}" ng-click="suicide(game)"
-                   ng-if="game.maySuicide"></a>
+            <td class="text-center" ng-if="identity.guest == false">
+                <a class="fa fa-fw fa-sign-in" title="{{'game.join' | translate}}" ng-if="game.mayJoin"
+                   ng-click="join(game)"></a>
+                <a class="fa fa-fw fa-sign-out" title="{{'game.leave' | translate}}" ng-if="game.mayLeave"
+                   ng-click="leave(game)"></a>
+                <a class="fa fa-fw fa-bomb" title="{{'game.suicide.attempt' | translate}}" ng-if="game.maySuicide"
+                   ng-click="suicide(game)"></a>
             </td>
         </tr>
         </tbody>

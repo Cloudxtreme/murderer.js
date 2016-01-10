@@ -20,6 +20,7 @@ var participation = require("./services/participation");
 ctrlBase(model, exports);
 
 exports.qGameListEntries = gameListEntries;
+exports.qGroupDetails = groupDetails;
 exports.qDetails = gameDetails;
 exports.qPopulated = findByIdPopulated;
 
@@ -60,7 +61,7 @@ function gameListEntries(scope) {
         return _.map(games, function (game) {
           return _.extend(game._doc, {
             passwords: !!(game.passwords && game.passwords.length),
-            maySuicide: isSuicideCommittable(scope.user, game),
+            isAlive: isSuicideCommittable(scope.user, game),
             rings: game.started ? game.rings.length : game.startMeta.rings
           });
         });
@@ -70,6 +71,22 @@ function gameListEntries(scope) {
 function isSuicideCommittable(user, game) {
   return game.started && userC.isModulePermitted(user, "closed") &&
       _.any(game.rings, function (ring) { return ~murder.getIndexIfSuicideCommittable(user._id, ring); });
+}
+
+function groupDetails(ignored, gameId) {
+  var query = model
+      .findOne({_id: gameId}, {
+        "groups.group": 1,
+        "groups.users.user": 1,
+        "groups.users.name": 1
+      })
+      .populate("groups.group");
+  return Q
+      .nbind(query.exec, query)()
+      .then(function (game) {
+        if (game == null) { return Q.reject("Game not found."); }
+        return game.groups;
+      });
 }
 
 function gameDetails(scope, gameId) {
@@ -93,7 +110,7 @@ function gameDetails(scope, gameId) {
         .then(function (game) {
           if (game == null) { return Q.reject("Game not found."); }
           game = game._doc;
-          game.maySuicide = isSuicideCommittable(scope.user, game);
+          game.isAlive = isSuicideCommittable(scope.user, game);
           game.rings = _.map(game.rings, function (ring) {
             return addPresentData({active: ring.active}, scope.user, ring);
           });
@@ -106,13 +123,15 @@ function gameDetails(scope, gameId) {
 }
 
 function addPresentData(data, user, ring) {
-  var chain = ring.chain, userId = user._id, current;
-  for (var i = 0; i < chain.length; i++) {
-    current = chain[i];
-    if (current.user.equals(userId)) {
-      data.present = true;
-      data.alive = current.murder == null;
-      return data;
+  if (userC.isModulePermitted(user, "closed")) {
+    var chain = ring.chain, userId = user._id, current;
+    for (var i = 0; i < chain.length; i++) {
+      current = chain[i];
+      if (current.user.equals(userId)) {
+        data.present = true;
+        data.alive = current.murder == null;
+        return data;
+      }
     }
   }
   data.present = data.alive = false;

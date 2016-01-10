@@ -44,27 +44,19 @@ function join(scope, gameId, name, message, groupId) {
         var push = {};
         push["groups." + groupIdx + ".users"] = {user: userId, name: name, message: message};
         scope.log.info({gameId: gameId, name: name, groupIdx: groupIdx}, "user joins game");
-        return controller.qFindByIdAndUpdate(scope, gameId, {$push: push}, {new: true});
+        return controller.qUpdateById(scope, gameId, {$push: push});
       })
-      .then(groupsDataOnly);
+      .then(function () { return controller.qGroupDetails(scope, gameId); });
 }
 
-function groupsDataOnly(game) {
-  return {
-    groups: _.map(game.groups, function (group) { return {group: group.group, users: _.pluck(group.users, "user")}; })
-  };
-}
+
 
 function leave(scope, gameId) {
   var userId = scope.user._id;
   return controller
-      .qFindOneAndUpdate(scope,
+      .qUpdate(scope,
           {_id: gameId, started: false, "groups.users.user": userId},
-          {$pull: {"groups.$.users": {user: userId}}},
-          {new: true})
-      .then(function (game) {
-        scope.log.info({game: game}, "user left game");
-        return game;
-      })
-      .then(groupsDataOnly);
+          {$pull: {"groups.$.users": {user: userId}}})
+      .then(function () { scope.log.info({gameId: gameId}, "user left game"); })
+      .then(function () { return controller.qGroupDetails(scope, gameId); });
 }
