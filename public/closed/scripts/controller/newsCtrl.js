@@ -10,6 +10,6 @@ angular.module("closed").controller("newsCtrl", function ($scope, news, closedNe
 
   /*=============================================== Initial Execution  ===============================================*/
 
-  news.getAll().then(function (entries) { return _.each(entries, closedNews.prepareNews); });
+  news.getAll();
 
 });

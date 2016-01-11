@@ -5,9 +5,7 @@ angular.module("closed").factory("closedNews", function (socket) {
 
   //noinspection UnnecessaryLocalVariableJS
   var service = {
-    toggleUpVote: toggleUpVote,
-
-    prepareNews: prepareNews
+    toggleUpVote: toggleUpVote
   };
 
   /*----------------------------------------------------- Return -----------------------------------------------------*/
@@ -17,18 +15,13 @@ angular.module("closed").factory("closedNews", function (socket) {
   /*=================================================== Functions  ===================================================*/
 
   function toggleUpVote(murder) {
+    if (!murder.mayUpVote) { return; }
     socket
         .query("murder:upVote", murder._id)
         .then(function (votes) {
-          murder.mayUpVote = !(murder.hasUpVoted = !murder.hasUpVoted);
+          murder.hasUpVoted = !murder.hasUpVoted;
           murder.upVotes = votes;
         });
-  }
-
-  function prepareNews(news) {
-    if (news.isMurder) {
-      news.mayUpVote = !news.hasUpVoted;
-    }
   }
 
 });

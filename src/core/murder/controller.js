@@ -8,7 +8,6 @@ var ctrlBase = require.main.require("./utils/controllerBase");
 var socket = require.main.require("./controller/socket");
 
 var gameC = require.main.require("./core/game/controller");
-var userC = require.main.require("./core/user/controller");
 
 var populate = require("./services/populate");
 var voting = require("./services/voting");
@@ -31,7 +30,7 @@ function newsBroadcast() {
 }
 
 function news(scope) {
-  var userId = scope.user._id;
+  var user = scope.user;
   var query = model
       .find()
       .sort("-cdate")
@@ -42,7 +41,7 @@ function news(scope) {
         Q.nbind(query.exec, query)().then(function (murders) {
           return _.each(murders, function (murder) {
             murder = murder._doc;
-            murder.hasUpVoted = userC.isModulePermitted(scope.user, "closed") && voting.hasVoted(userId, murder);
+            murder.hasUpVoted = (murder.mayUpVote = voting.mayVote(user, murder)) && voting.hasVoted(user, murder);
             murder.upVotes = murder.upVotes.length;
           });
         }),

@@ -5,25 +5,29 @@ var Q = require("q");
 
 var controller = require("../controller");
 
+var userC = require.main.require("./core/user/controller");
+
 /*===================================================== Exports  =====================================================*/
 
 exports.upVote = upVote;
+exports.mayVote = mayVote;
 exports.hasVoted = hasVoted;
 
 /*==================================================== Functions  ====================================================*/
 
 function upVote(scope, murderId) {
-  var userId = scope.user._id;
+  var user = scope.user;
   return controller
-      .qFindById(scope, murderId)
+      .qFindOne(scope, {_id: murderId, murderer: {$ne: user._id}})
       .then(function (murder) {
+        if (murder == null) { return Q.reject("Murder not found or you are the murderer."); }
         var votes = murder.upVotes.length;
         var query = {};
-        if (hasVoted(userId, murder)) {
-          query.$pull = {upVotes: userId};
+        if (hasVoted(user, murder)) {
+          query.$pull = {upVotes: user._id};
           votes--;
         } else {
-          query.$addToSet = {upVotes: userId};
+          query.$addToSet = {upVotes: user._id};
           votes++;
         }
         return controller
@@ -35,4 +39,6 @@ function upVote(scope, murderId) {
       });
 }
 
-function hasVoted(userId, murder) { return _.any(murder.upVotes, function (entry) { return userId.equals(entry); }); }
+function hasVoted(user, murder) { return _.any(murder.upVotes, function (entry) { return user._id.equals(entry); }); }
+
+function mayVote(user, murder) { return userC.isModulePermitted(user, "closed") && !user._id.equals(murder.murderer); }
