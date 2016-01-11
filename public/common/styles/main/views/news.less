@@ -38,9 +38,27 @@
     }
 
     .news-body {
-      .fa {
-        opacity: 0.75;
-        color: @color-info;
+      .up-vote {
+        &.voted {
+          color: #E8DC00;
+        }
+        &.not-voted {
+          opacity: 0.75;
+          color: @color-info;
+        }
+        &.no-vote {
+          cursor: not-allowed;
+          color: @text-muted;
+          opacity: 0.75;
+        }
+      }
+
+      > strong {
+        margin-left: 10px;
+        .fa {
+          opacity: 0.75;
+          color: @color-info;
+        }
       }
     }
   }

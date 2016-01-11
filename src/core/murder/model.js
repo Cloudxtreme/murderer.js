@@ -18,6 +18,8 @@ var GameSchema = new Schema(
       murderer: {type: ObjectID, ref: "User", required: true},
       victim: {type: ObjectID, ref: "User"},
 
+      upVotes: {type: [{type: ObjectID, ref: "User"}], default: []},
+
       ring: {type: ObjectID, ref: "Ring"},
       game: {type: ObjectID, ref: "Game", required: true},
       trigger: {type: ObjectID, ref: "User"} // if an admin triggers a murder he's going to be referenced here

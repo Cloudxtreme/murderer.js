@@ -14,7 +14,12 @@
             </div>
         </div>
         <div class="flexbox news-body">
-            <strong>
+            <div class="fa-fw">
+                <a class="fa fa-fw up-vote" ng-click="toggleUpVote(data)" ng-if="data.isMurder"
+                   ng-class="'fa-star' + (data.hasUpVoted ? ' voted' : data.mayUpVote ? '-o not-voted' : '-o no-vote')"
+                   title="{{'news.murder.upVotes' | translate:{amount: data.upVotes} }}"></a>
+            </div>
+            <strong class="flex-100">
                 <i class="fa fa-fw fa-angle-double-right"></i>
                 {{data.message}}
                 <i class="fa fa-fw fa-angle-double-left"></i>

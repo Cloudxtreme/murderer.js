@@ -1,4 +1,4 @@
-angular.module("common").factory("news", function ($q, $timeout, socket) {
+angular.module("common").factory("news", function (socket) {
   "use strict";
 
   var ICONS = {
@@ -35,10 +35,12 @@ angular.module("common").factory("news", function ($q, $timeout, socket) {
           _.each(result.games, function (game) { service.games[game._id] = game; });
           _.each(result.murders, prepareMurder);
           Array.prototype.splice.apply(service.list, [0, service.list.length].concat(result.murders));
+          return service.list;
         });
   }
 
   function prepareMurder(murder) {
+    murder.isMurder = true;
     murder.game = service.games[murder.game];
     if (murder.ring != null) { murder.ringIdx = _.indexOf(murder.game.rings, murder.ring); }
     murder.victim = findUserData(murder.game, murder.victim);

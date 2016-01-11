@@ -1,4 +1,4 @@
-angular.module("common").controller("newsCtrl", function ($scope, news) {
+angular.module("open").controller("newsCtrl", function ($scope, news) {
   "use strict";
 
   /*===================================================== Scope  =====================================================*/

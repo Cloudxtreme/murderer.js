@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var Q = require("q");
 var gameC = require.main.require("./core/game/controller");
+var murderC = require.main.require("./core/murder/controller");
 var security = require.main.require("./utils/security");
 
 module.exports = function (queryRoute) {
@@ -20,5 +21,10 @@ module.exports = function (queryRoute) {
     }
     return gameC.qKillByToken(this, this.user._id, data.gameId, data.ringId, data.token, data.message).then(_.noop);
     // TODO return new contract instead of undefined
+  });
+
+  queryRoute("murder:upVote", function (data) {
+    if (typeof data !== "string") { return Q.reject("Bad request."); }
+    return murderC.qUpVote(this, data);
   });
 };

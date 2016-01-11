@@ -54,7 +54,7 @@ angular.module("common").config(function ($routeProvider, $locationProvider) {
   $routeProvider
       .when("/news", {
         templateUrl: "/views/common/news.html",
-        controller: "newsCtrl"
+        controller: "newsCtrl" // to be implemented in extending modules
       })
   ;
 

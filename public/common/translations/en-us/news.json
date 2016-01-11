@@ -5,6 +5,9 @@
     "instance": {
       "kill": "<span class=\"murderer\" data-user-id=\"{{murderer.user}}\">{{murderer.name}}</span> murdered <span class=\"victim\" data-user-id=\"{{victim.user}}\">{{victim.name}}</span> in stealth",
       "suicide": "<span class=\"victim\" data-user-id=\"{{murderer.user}}\">{{murderer.name}}</span> committed suicide"
+    },
+    "murder": {
+      "upVotes": "{{amount}} {{amount == 1 ? 'user has' : 'users have'}} voted for this"
     }
   }
 }
