@@ -2,7 +2,6 @@
   "game": {
     "description": "Description",
     "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
-    "inactive": "Inactive",
     "data": "Data",
     "passwords": "Passwords",
     "passwordsNote": "separated by <code>,</code>",
@@ -16,12 +15,6 @@
       "start": "Start game",
       "stop": "Stop game",
       "remove": "Delete game"
-    },
-    "contracts": {
-      "list": "Show contracts list"
-    },
-    "active": {
-      "remaining": "Users alive"
     },
     "create": {
       "title": "New Game",

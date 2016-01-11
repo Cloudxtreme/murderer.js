@@ -1,52 +1,57 @@
-<form name="addGroup" class="form" ng-submit="createGroup()">
-    <div class="panel">
-        <h2 class="panel-heading text-center" translate>group.create.title</h2>
+<div id="acp-groups">
+    <form name="addGroup" class="form" ng-submit="createGroup()">
+        <div class="panel">
+            <h2 class="panel-heading text-center" translate>group.create.title</h2>
 
-        <label for="group-name" class="control-label" translate>group.name</label>
-        <input type="text" name="name" id="group-name" class="form-control" ng-model="newGroup.name" required/>
-        <label for="group-description" class="control-label" translate>group.description</label>
-        <input name="description" id="group-description" class="form-control" ng-model="newGroup.description"/>
-        <br/>
+            <label for="group-name" class="control-label" translate>group.name</label>
+            <input type="text" name="name" id="group-name" class="form-control" ng-model="newGroup.name" required/>
+            <label for="group-description" class="control-label" translate>group.description</label>
+            <input name="description" id="group-description" class="form-control" ng-model="newGroup.description"/>
+            <br/>
 
-        <input type="submit" class="form-btn form-btn-block" ng-value="'group.create.submit' | translate"
-               ng-disabled="addGroup.$invalid"/>
-    </div>
-</form>
+            <input type="submit" class="form-btn form-btn-block" ng-value="'group.create.submit' | translate"
+                   ng-disabled="addGroup.$invalid"/>
+        </div>
+    </form>
 
-<table class="table table-striped" st-table="groups">
-    <thead>
-    <tr>
-        <th translate>group.name</th>
-        <th translate>group.description</th>
-        <th class="width-20"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="group in groups" data-group-id="{{group._id}}">
-        <td>
-            <span ng-if="!group.editing" ng-bind="group.name"></span>
-            <!--suppress HtmlFormInputWithoutLabel -->
-            <input class="table-input" type="text" ng-if="group.editing" ng-model="group.name"/>
-        </td>
-        <td>
-            <span ng-if="!group.editing" ng-bind="group.description"></span>
-            <!--suppress HtmlFormInputWithoutLabel -->
-            <input class="table-input" type="text" ng-if="group.editing" ng-model="group.description"/>
-        </td>
-        <td class="text-right">
-            <span ng-if="!group.saving">
-                <span ng-if="!group.editing">
-                    <a class="fa fa-fw fa-edit" ng-click="editGroup(group)" title="{{'group.edit' | translate}}"></a>
-                    <a class="fa fa-fw fa-trash-o" ng-click="removeGroup(group)"
-                       title="{{'group.remove' | translate}}"></a>
+    <table class="table table-striped" st-table="groups">
+        <thead>
+        <tr>
+            <th translate>group.name</th>
+            <th translate>group.description</th>
+            <th class="width-20"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups" data-group-id="{{group._id}}">
+            <td>
+                <span ng-if="!group.editing" ng-bind="group.name"></span>
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <input class="table-input" type="text" ng-if="group.editing" ng-model="group.name"/>
+            </td>
+            <td>
+                <span ng-if="!group.editing" ng-bind="group.description"></span>
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <input class="table-input" type="text" ng-if="group.editing" ng-model="group.description"/>
+            </td>
+            <td class="text-right">
+                <span ng-if="!group.saving">
+                    <span ng-if="!group.editing">
+                        <a class="fa fa-fw fa-edit" ng-click="editGroup(group)"
+                           title="{{'group.edit' | translate}}"></a>
+                        <a class="fa fa-fw fa-trash-o" ng-click="removeGroup(group)"
+                           title="{{'group.remove' | translate}}"></a>
+                    </span>
+                    <span ng-if="group.editing">
+                        <a class="fa fa-fw fa-undo" ng-click="revertGroup(group)"
+                           title="{{'group.undo' | translate}}"></a>
+                        <a class="fa fa-fw fa-save" ng-click="saveGroup(group)"
+                           title="{{'group.save' | translate}}"></a>
+                    </span>
                 </span>
-                <span ng-if="group.editing">
-                    <a class="fa fa-fw fa-undo" ng-click="revertGroup(group)" title="{{'group.undo' | translate}}"></a>
-                    <a class="fa fa-fw fa-save" ng-click="saveGroup(group)" title="{{'group.save' | translate}}"></a>
-                </span>
-            </span>
-            <span ng-if="group.saving"><i class="fa fa-fw fa-spin fa-spinner"></i></span>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <span ng-if="group.saving"><i class="fa fa-fw fa-spin fa-spinner"></i></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

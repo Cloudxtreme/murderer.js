@@ -60,7 +60,7 @@
                 <!-- TODO show validation error reasons (only non-obvious ones) -->
             </div>
             <div class="flex-50 flex-no-shrink">
-                <label for="groups" class="control-label" translate>group.titlePlural</label>
+                <label for="groups" class="control-label" translate>group.title.plural</label>
                 <input type="hidden" name="groups" ng-model="groupsValidation"
                        ng-valid="{required: game.groups.length}"/>
                 <div ng-if="createForm.groups.$error.required" class="error-msg"

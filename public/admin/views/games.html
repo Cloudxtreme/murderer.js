@@ -1,64 +1,67 @@
-<button type="button" class="form-btn form-btn-block form-btn-success" ng-click="createGame()">
-    <i class="fa fa-fw fa-plus"></i> {{'game.create.title' | translate}}
-</button>
+<div id="acp-games">
+    <button type="button" class="form-btn form-btn-block form-btn-success" ng-click="createGame()">
+        <i class="fa fa-fw fa-plus"></i> {{'game.create.title' | translate}}
+    </button>
 
-<table class="table table-striped" st-table="displayedGames" data-st-safe-src="games">
-    <thead>
-    <tr>
-        <th st-sort="sort.state" class="fa-fw" title="{{'game.state.title' | translate}}"></th>
-        <th st-sort="name" class="width-30" translate>game.name</th>
-        <th st-sort="schedule.end" class="width-30" translate>game.schedule.end</th>
-        <th st-sort="participants" class="width-20" translate>game.data</th>
-        <th translate>table.actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="game in displayedGames" data-game-id="{{game._id}}">
-        <td class="text-center">
+    <table class="table table-striped" st-table="displayedGames" data-st-safe-src="games">
+        <thead>
+        <tr>
+            <th st-sort="sort.state" class="fa-fw" title="{{'game.state.title' | translate}}"></th>
+            <th st-sort="name" class="width-30" translate>game.name</th>
+            <th st-sort="schedule.end" class="width-30" translate>game.schedule.end</th>
+            <th st-sort="participants" class="width-20" translate>game.data</th>
+            <th translate>table.actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="game in displayedGames" data-game-id="{{game._id}}">
+            <td class="text-center">
             <span class="fa fa-fw" ng-class="stateIcon[game.state]"
                   title="{{'game.state.' + game.state | translate}}"></span>
-        </td>
-        <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td>
-        <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
-        <td class="text-mono flexbox">
-            <div class="flex-50 text-center" title="{{'game.rings' | translate}}">
-                {{game.rings.length}} <i class="fa fa-fw fa-link"></i>
-            </div>
-            <div class="flex-50 text-center" title="{{'game.participants' | translate}}">
-                {{game.participants}} <i class="fa fa-fw fa-users"></i>
-            </div>
-        </td>
-        <td class="text-center">
-            <!-- TODO rework/create URL -->
-            <!--<a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"-->
-            <!--   title="{{'game.actions.edit' | translate}}"></a>-->
+            </td>
+            <td><a ng-href="/games/{{game._id}}" ng-bind="game.name"></a></td>
+            <td class="text-center" moment="game.schedule.end" data-moment-format="LLL"></td>
+            <td class="text-mono flexbox">
+                <div class="flex-50 text-center" title="{{'game.rings' | translate}}">
+                    {{game.rings.length}} <i class="fa fa-fw fa-link"></i>
+                </div>
+                <div class="flex-50 text-center" title="{{'game.participants' | translate}}">
+                    {{game.participants}} <i class="fa fa-fw fa-users"></i>
+                </div>
+            </td>
+            <td class="text-center">
+                <!-- TODO rework/create URL -->
+                <!--<a class="fa fa-fw fa-edit" ng-href="/acp/games/{{game._id}}" ng-if="!game.ended"-->
+                <!--   title="{{'game.actions.edit' | translate}}"></a>-->
 
-            <!-- TODO rework/create URL -->
-            <!--<a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"-->
-            <!--   title="{{'game.actions.contracts' | translate}}"></a>-->
+                <!-- TODO rework/create URL -->
+                <!--<a class="fa fa-fw fa-book" ng-href="/acp/games/{{game._id}}/contracts" ng-if="game.started"-->
+                <!--   title="{{'game.actions.contracts' | translate}}"></a>-->
 
-            <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"
-               title="{{'game.actions.pause' | translate}}"></a>
-            <a class="fa fa-fw fa-play-circle" ng-click="resumeGame(game)"
-               ng-if="game.started && !game.active && !game.ended" title="{{'game.actions.resume' | translate}}"></a>
+                <a class="fa fa-fw fa-pause" ng-click="pauseGame(game)" ng-if="game.started && game.active"
+                   title="{{'game.actions.pause' | translate}}"></a>
+                <a class="fa fa-fw fa-play-circle" ng-click="resumeGame(game)"
+                   ng-if="game.started && !game.active && !game.ended"
+                   title="{{'game.actions.resume' | translate}}"></a>
 
-            <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"
-               title="{{'game.actions.lock' | translate}}"></a>
-            <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"
-               title="{{'game.actions.start' | translate}}"></a>
+                <a class="fa fa-fw fa-lock" ng-click="lockGame(game)" ng-if="!game.started"
+                   title="{{'game.actions.lock' | translate}}"></a>
+                <a class="fa fa-fw fa-play" ng-click="startGame(game)" ng-if="!game.started"
+                   title="{{'game.actions.start' | translate}}"></a>
 
-            <a class="fa fa-fw fa-stop" ng-click="stopGame(game)" ng-if="game.started && !game.ended"
-               title="{{'game.actions.stop' | translate}}"></a>
-            <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"
-               title="{{'game.actions.remove' | translate}}"></a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot ng-show="adminGames.length > 10">
-    <tr>
-        <td colspan="5" class="text-center">
-            <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
-        </td>
-    </tr>
-    </tfoot>
-</table>
+                <a class="fa fa-fw fa-stop" ng-click="stopGame(game)" ng-if="game.started && !game.ended"
+                   title="{{'game.actions.stop' | translate}}"></a>
+                <a class="fa fa-fw fa-trash-o" ng-click="removeGame(game)" ng-if="!game.started || game.ended"
+                   title="{{'game.actions.remove' | translate}}"></a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot ng-show="adminGames.length > 10">
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" data-st-items-by-page="10" data-st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

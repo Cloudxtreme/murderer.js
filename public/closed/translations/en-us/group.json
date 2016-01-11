@@ -1,6 +1,9 @@
 {
   "group": {
-    "title": "Group",
+    "title": {
+      "singular": "Group",
+      "plural": "Groups"
+    },
     "selectGroup": "Select a group..."
   }
 }

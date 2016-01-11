@@ -1,62 +1,64 @@
-#create-game {
-  .flex-50 {
-    margin: 0 5px 10px 5px;
-  }
-}
+#acp-games {
+  .game-list {
+    .game-active, .game-name, .game-participants {
+      float: left;
+    }
+    .game-active {
+      width: 10%;
+      input {
+        position: relative;
+        top: 2px;
+      }
+    }
+    .game-name {
+      font-size: 1.1rem;
+      line-height: 1.1 * @line-height-computed;
+      font-weight: bold;
+      width: 45%;
+    }
+    .game-participants {
+      text-align: right;
+      width: 45%;
+    }
 
-.game-list {
-  .game-active, .game-name, .game-participants {
-    float: left;
-  }
-  .game-active {
-    width: 10%;
-    input {
-      position: relative;
-      top: 2px;
+    .game-ring {
+      padding: 0 15px;
     }
   }
-  .game-name {
-    font-size: 1.1rem;
-    line-height: 1.1 * @line-height-computed;
-    font-weight: bold;
-    width: 45%;
-  }
-  .game-participants {
-    text-align: right;
-    width: 45%;
-  }
 
-  .game-ring {
-    padding: 0 15px;
-  }
-}
-
-.ring-details {
-  .game-ring-preview-active {
-    > div {
-      float: left;
-      padding: 3px 15px;
-      text-transform: uppercase;
-
+  .ring-details {
+    .game-ring-preview-active {
       > div {
         float: left;
+        padding: 3px 15px;
+        text-transform: uppercase;
+
+        > div {
+          float: left;
+        }
+      }
+    }
+
+    .inactive-user {
+      color: fade(@text-color, 40%);
+      font-size: 0.9rem;
+      line-height: 0.9 * @line-height-computed;
+      padding: 3px 5px;
+    }
+
+    .game-ring-preview-kills {
+      > div {
+        float: left;
+        padding: 3px 15px;
+        text-align: center;
+        text-transform: uppercase;
       }
     }
   }
+}
 
-  .inactive-user {
-    color: fade(@text-color, 40%);
-    font-size: 0.9rem;
-    line-height: 0.9 * @line-height-computed;
-    padding: 3px 5px;
-  }
-
-  .game-ring-preview-kills {
-    > div {
-      float: left;
-      padding: 3px 15px;
-      text-align: center;
-      text-transform: uppercase;
-    }
+#create-game {
+  .flex-50 {
+    margin: 0 5px 10px 5px;
   }
 }

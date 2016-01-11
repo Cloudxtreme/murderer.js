@@ -1,14 +1,17 @@
 {
   "user": {
-    "titlePlural": "Users",
+    "title": {
+      "singular": "User",
+      "plural": "Users"
+    },
     "name": "Name",
     "email": "Email",
     "active": "Active",
     "inactive": "Inactive",
+    "remove": "Delete user",
     "admin": {
       "set": "Add admin privileges",
       "unset": "Remove admin privileges"
-    },
-    "remove": "Delete user"
+    }
   }
 }
