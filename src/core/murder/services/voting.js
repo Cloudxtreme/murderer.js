@@ -33,7 +33,7 @@ function upVote(scope, murderId) {
         return controller
             .qUpdateById(scope, murderId, query)
             .then(function (data) {
-              if (!data.nModified) { return Q.reject("Update failed."); }
+              if (data.hasOwnProperty("nModified") && !data.nModified) { return Q.reject("Update failed."); }
               return votes;
             });
       });
