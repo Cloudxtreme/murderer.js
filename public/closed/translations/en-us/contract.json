@@ -1,31 +1,20 @@
 {
   "contract": {
-    "header": "Ring #{{ring}}",
-    "title": "<em>{{project}}</em> &ndash; Node.js implementation of '{{game}}'",
-    "wanted": "Wanted",
-    "message": "Message",
-    "recipient": "Contract for",
-    "end": "The game ends on",
     "filterGame": "Select game to filter...",
     "compact": "Compact mode",
     "contractsOnly": "Contracts only",
     "activeOnly": "Hide rings not taking part",
     "collapse": "Collapse all contracts",
+    "header": "Ring #{{ring}}",
     "accomplished": "Accomplished",
-    "token": {
-      "title": "Token",
-      "description": "Token to hand over your murderer"
-    },
-    "notPresent": {
-      "running": "Active, you're not taking part.",
-      "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived, you were not taking part.",
-      "resolved": "Forfeited, you were not taking part."
-    },
-    "present": {
-      "survived": "You have survived.",
-      "resolved": "Forfeited.",
-      "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived.",
-      "dead": "Active, you're dead."
+    "wanted": "Wanted",
+    "message": "Message",
+    "token": "Token",
+    "body": {
+      "title": "<em>{{project}}</em> &ndash; Node.js implementation of '{{game}}'",
+      "recipient": "Contract for",
+      "end": "The game ends on",
+      "token": "Token to hand over your murderer"
     }
   }
 }

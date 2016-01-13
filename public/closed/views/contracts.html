@@ -1,102 +1,105 @@
-<form class="form print-hide">
-    <!--suppress HtmlFormInputWithoutLabel -->
-    <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter" ng-show="allGames.length > 1"
-            ng-options="game._id as game.name for game in allGames">
-        <option value="" translate>contract.filterGame</option>
-    </select>
+<div id="contracts">
+    <form class="form print-hide">
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <select id="game-filter" class="form-control margin-top-0" ng-model="gameFilter" ng-show="allGames.length > 1"
+                ng-options="game._id as game.name for game in allGames">
+            <option value="" translate>contract.filterGame</option>
+        </select>
 
-    <div class="flexbox">
-        <label class="flex-50 text-center control-label" ng-click="collapsed = !collapsed;">
-            <i class="fa fa-fw" ng-class="'fa-caret-' + (collapsed ? 'down' : 'up')"></i>
-            {{'contract.collapse' | translate}}
-        </label>
-        <label class="flex-50 text-center control-label">
-            <input type="checkbox" class="form-checkbox" ng-model="compact"/>
-            {{'contract.compact' | translate}}
-        </label>
-        <label class="flex-50 text-center control-label">
-            <input type="checkbox" class="form-checkbox" ng-model="contractsOnly"/>
-            {{'contract.contractsOnly' | translate}}
-        </label>
-        <div class="flex-50 text-center">
-            <label class="control-label" ng-class="{disabled: contractsOnly}">
-                <input type="checkbox" class="form-checkbox" ng-model="activeOnly" ng-disabled="contractsOnly"/>
-                {{'contract.activeOnly' | translate}}
+        <div class="flexbox">
+            <label class="flex-50 text-center control-label" ng-click="collapsed = !collapsed;">
+                <i class="fa fa-fw" ng-class="'fa-caret-' + (collapsed ? 'down' : 'up')"></i>
+                {{'contract.collapse' | translate}}
             </label>
-        </div>
-    </div>
-</form>
-
-<div ng-repeat="game in games" data-game-id="{{game._id}}" class="game-contracts"
-     ng-class="{inactive: !game.active, compact: compact}">
-    <div ng-repeat="contract in game.contracts" data-ring-id="{{contract.ringId}}"
-         ng-init="data = {ring: $index + 1, game: game, details: contract}">
-        <div ng-if="!contractsOnly && !activeOnly && !contract.present" class="not-present">
-            <div ng-if="!contract.resolved" class="ring-status">
-                <div class="not-resolved">
-                    <i class="fa fa-fw fa-cog"></i><br/>
-                    <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                    <span ng-bind-html="'contract.notPresent.running' | translate:data | html"></span>
-                </div>
-            </div>
-
-            <div ng-if="contract.resolved" class="resolved">
-                <div ng-if="contract.survivor != null" data-survivor-id="{{contract.survivor._id}}" class="ring-status">
-                    <div class="survivor">
-                        <i class="fa fa-fw fa-user"></i><br/>
-                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                        <span ng-bind-html="'contract.notPresent.survivor' | translate:data | html"></span>
-                    </div>
-                </div>
-
-                <div ng-if="contract.survivor == null" class="ring-status">
-                    <div class="no-survivor">
-                        <i class="fa fa-fw fa-bomb"></i><br/>
-                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                        <span ng-bind-html="'contract.notPresent.resolved' | translate:data | html"></span>
-                    </div>
-                </div>
+            <label class="flex-50 text-center control-label">
+                <input type="checkbox" class="form-checkbox" ng-model="compact"/>
+                {{'contract.compact' | translate}}
+            </label>
+            <label class="flex-50 text-center control-label">
+                <input type="checkbox" class="form-checkbox" ng-model="contractsOnly"/>
+                {{'contract.contractsOnly' | translate}}
+            </label>
+            <div class="flex-50 text-center">
+                <label class="control-label" ng-class="{disabled: contractsOnly}">
+                    <input type="checkbox" class="form-checkbox" ng-model="activeOnly" ng-disabled="contractsOnly"/>
+                    {{'contract.activeOnly' | translate}}
+                </label>
             </div>
         </div>
+    </form>
 
-        <div ng-if="contract.present" class="present">
-            <div ng-if="!contractsOnly && contract.resolved" class="resolved">
-                <div ng-if="contract.survived" data-survivor-id="{{identity._id}}" class="ring-status">
-                    <div class="survived">
-                        <i class="fa fa-fw fa-trophy"></i><br/>
+    <div ng-repeat="game in games" data-game-id="{{game._id}}" class="game-contracts"
+         ng-class="{inactive: !game.active, compact: compact}">
+        <div ng-repeat="contract in game.contracts" data-ring-id="{{contract.ringId}}"
+             ng-init="data = {ring: $index + 1, game: game, details: contract}">
+            <div ng-if="!contractsOnly && !activeOnly && !contract.present" class="not-present">
+                <div ng-if="!contract.resolved" class="ring-status">
+                    <div class="not-resolved">
+                        <i class="fa fa-fw fa-cog"></i><br/>
                         <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                        <span ng-bind-html="'contract.present.survived' | translate:data | html"></span>
+                        <span ng-bind-html="'game.ringState.notPresent.running' | translate:data | html"></span>
                     </div>
                 </div>
-                <div ng-if="!contract.survived" class="not-survived">
-                    <div ng-if="contract.survivor == null" class="ring-status">
-                        <div class="no-survivor">
-                            <i class="fa fa-fw fa-bomb"></i><br/>
-                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                            <span ng-bind-html="'contract.present.resolved' | translate:data | html"></span>
-                        </div>
-                    </div>
+
+                <div ng-if="contract.resolved" class="resolved">
                     <div ng-if="contract.survivor != null" data-survivor-id="{{contract.survivor._id}}"
                          class="ring-status">
                         <div class="survivor">
                             <i class="fa fa-fw fa-user"></i><br/>
                             <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                            <span ng-bind-html="'contract.present.survivor' | translate:data | html"></span>
+                            <span ng-bind-html="'game.ringState.notPresent.survivor' | translate:data | html"></span>
+                        </div>
+                    </div>
+
+                    <div ng-if="contract.survivor == null" class="ring-status">
+                        <div class="no-survivor">
+                            <i class="fa fa-fw fa-bomb"></i><br/>
+                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
+                            <span ng-bind-html="'game.ringState.notPresent.resolved' | translate:data | html"></span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div ng-if="!contract.resolved" class="not-resolved">
-                <div ng-if="!contractsOnly && contract.dead" class="ring-status">
-                    <div class="dead">
-                        <i class="fa fa-fw fa-spoon"></i><br/>
-                        <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
-                        <span ng-bind-html="'contract.present.dead' | translate:data | html"></span>
+
+            <div ng-if="contract.present" class="present">
+                <div ng-if="!contractsOnly && contract.resolved" class="resolved">
+                    <div ng-if="contract.survived" data-survivor-id="{{identity._id}}" class="ring-status">
+                        <div class="survived">
+                            <i class="fa fa-fw fa-trophy"></i><br/>
+                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
+                            <span ng-bind-html="'game.ringState.present.survived' | translate:data | html"></span>
+                        </div>
+                    </div>
+                    <div ng-if="!contract.survived" class="not-survived">
+                        <div ng-if="contract.survivor == null" class="ring-status">
+                            <div class="no-survivor">
+                                <i class="fa fa-fw fa-bomb"></i><br/>
+                                <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
+                                <span ng-bind-html="'game.ringState.present.resolved' | translate:data | html"></span>
+                            </div>
+                        </div>
+                        <div ng-if="contract.survivor != null" data-survivor-id="{{contract.survivor._id}}"
+                             class="ring-status">
+                            <div class="survivor">
+                                <i class="fa fa-fw fa-user"></i><br/>
+                                <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
+                                <span ng-bind-html="'game.ringState.present.survivor' | translate:data | html"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div ng-if="!contract.dead" class="contract not-dead" contract="data" data-print-layout="!compact"
-                     data-collapse-overwrite="collapsed">
-                    <!-- Only in this case an actual contract is shown -->
+                <div ng-if="!contract.resolved" class="not-resolved">
+                    <div ng-if="!contractsOnly && contract.dead" class="ring-status">
+                        <div class="dead">
+                            <i class="fa fa-fw fa-spoon"></i><br/>
+                            <b class="text-mono">{{game.name}} - Ring #{{data.ring}}</b><br/>
+                            <span ng-bind-html="'game.ringState.present.dead' | translate:data | html"></span>
+                        </div>
+                    </div>
+                    <div ng-if="!contract.dead" class="contract not-dead" contract="data" data-print-layout="!compact"
+                         data-collapse-overwrite="collapsed">
+                        <!-- Only in this case an actual contract is shown -->
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,21 +1,19 @@
 {
   "game": {
     "title": {
-      "plural": "Games",
-      "one": "Game"
+      "singular": "Game",
+      "plural": "Games"
     },
     "join": "Join Game",
     "leave": "Leave Game",
-    "paused": "The game is paused.",
     "user": {
       "name": "Alias",
       "message": "Quote message"
     },
-    "mission": {
+    "kill": {
       "title": "Attempt a murder within <strong data-game-id=\"{{game.id}}\">{{game.name}}</strong> - Ring <span class=\"text-mono\">#{{ring}}</span>",
-      "token": "Token",
-      "submit": "Track kill",
-      "message": "Cause of Death"
+      "message": "Cause of Death",
+      "submit": "Track kill"
     },
     "suicide": {
       "title": "Commit suicide",
@@ -23,6 +21,19 @@
       "message": "Last words",
       "password": "Confirm with your password",
       "warning": "You won't be able to rejoin the game <strong data-game-id=\"{{id}}\">{{name}}</strong>."
+    },
+    "ringState": {
+      "notPresent": {
+        "running": "Active, you're not taking part.",
+        "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived, you were not taking part.",
+        "resolved": "Forfeited, you were not taking part."
+      },
+      "present": {
+        "survived": "You have survived.",
+        "resolved": "Forfeited.",
+        "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> has survived.",
+        "dead": "Active, you're dead."
+      }
     }
   }
 }

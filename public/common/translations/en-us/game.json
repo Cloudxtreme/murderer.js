@@ -12,6 +12,9 @@
     "locked": "Private game",
     "unlocked": "Public game",
     "usersAlive": "users alive",
+    "author": {
+      "alt": "Author: {{username}}"
+    },
     "details": {
       "participants": "participants",
       "rings": "rings",
@@ -19,9 +22,6 @@
       "initialLives": "initial lives",
       "start": "Game start",
       "end": "Game end"
-    },
-    "author": {
-      "alt": "Author: {{username}}"
     },
     "state": {
       "title": "State",

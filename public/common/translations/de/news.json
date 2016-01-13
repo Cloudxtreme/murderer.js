@@ -1,9 +1,0 @@
-{
-  "news": {
-    "title": "Neuigkeiten",
-    "kill": "<i class=\"fa fa-fw fa-gavel\"></i> <span class=\"murderer\" data-user-id=\"{{murderer._id}}\">{{murderer.username}}</span> hat <span class=\"victim\" data-user-id=\"{{victim._id}}\">{{victim.username}}</span> ermordet",
-    "suicide": "<i class=\"fa fa-fw fa-bomb\"></i> <span class=\"victim\" data-user-id=\"{{victim._id}}\">{{victim.username}}</span> hat Selbstmord begangen",
-    "admin": "Nachricht von <strong data-user-id=\"{{author._id}}\">{{author.username}}</strong>",
-    "server": "<strong>Server Nachricht</strong>"
-  }
-}

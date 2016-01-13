@@ -1,12 +1,12 @@
 <form name="suicideForm" class="form no-margin" id="suicide" ng-submit="confirm()">
 
-    <div class="modal-header" ng-bind-html="'game.mission.title' | translate:{ring: ringIdx, game: game} | html"></div>
+    <div class="modal-header" ng-bind-html="'game.kill.title' | translate:{ring: ringIdx, game: game} | html"></div>
 
     <div class="modal-body">
-        <label for="token" translate>game.mission.token</label>
+        <label for="token" translate>contract.token</label>
         <input type="text" id="token" name="token" class="form-control" ng-model="data.token"
                ng-valid="isHex(data.token)" ng-minlength="tokenLength" ng-maxlength="tokenLength" required/>
-        <label for="message" translate>game.mission.message</label>
+        <label for="message" translate>game.kill.message</label>
         <input type="text" id="message" name="message" class="form-control" ng-model="data.message" required/>
     </div>
 
@@ -18,7 +18,7 @@
                 </button>
             </div>
             <div class="flex-50 margin-bottom-0">
-                <input type="submit" class="form-btn form-btn-block" ng-value="'game.mission.submit' | translate"
+                <input type="submit" class="form-btn form-btn-block" ng-value="'game.kill.submit' | translate"
                        ng-disabled="suicideForm.$invalid"/>
             </div>
         </div>

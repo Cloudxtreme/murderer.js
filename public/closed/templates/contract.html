@@ -6,7 +6,7 @@
         - {{'contract.header' | translate:{ring: contract.ring} }}
     </div>
     <div class="fa-fw" ng-if="!contract.game.active">
-        <i class="fa fa-fw fa-pause text-warning paused" title="{{'game.paused' | translate}}"></i>
+        <i class="fa fa-fw fa-pause text-warning paused" title="{{'game.state.paused' | translate}}"></i>
     </div>
     <div ng-if="contract.game.active">
         <button type="button" class="form-btn accomplished" ng-click="attemptTokenKill()">
@@ -19,7 +19,7 @@
 
 <div ng-if="!hide && printLayout" class="print-page">
     <div class="contract-target">
-        <h3 ng-bind-html="'contract.title' | translate:project | html"></h3>
+        <h3 ng-bind-html="'contract.body.title' | translate:project | html"></h3>
 
         <h1 class="wanted">
             <i class="fa fa-fw fa-crosshairs"></i>
@@ -46,7 +46,7 @@
             <div class="flex-50 text-mono">{{contract.game.name}} - {{'game.ring' | translate}} #{{contract.ring}}</div>
 
             <div class="flex-50">
-                <label translate>contract.token.description</label><br/>
+                <label translate>contract.body.token</label><br/>
                 &dagger;<strong class="text-mono token token-hover" ng-bind="contract.details.token"></strong>&dagger;
             </div>
         </div>
@@ -57,7 +57,7 @@
             <div class="flexbox">
                 <div class="flex-50 flexbox flexbox-vertical">
                     <div>
-                        <h3 translate>contract.recipient</h3>
+                        <h3 translate>contract.body.recipient</h3>
 
                         <h2><span class="recipient">
                             <span ng-if="contract.game.multiGroup">{{alias.group.name}} &ndash;</span>
@@ -69,7 +69,7 @@
                         </h4>
 
                         <small class="text-mono">
-                            {{'contract.end' | translate}} <span moment="contract.game.schedule.end"></span>
+                            {{'contract.body.end' | translate}} <span moment="contract.game.schedule.end"></span>
                         </small>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 <div class="contract-compact" ng-if="!hide && !printLayout">
     <div class="print-block hidden">
         <div class="flexbox">
-            <div class="flex-50 text-right" translate>game.title.one</div>
+            <div class="flex-50 text-right" translate>game.title.singular</div>
             <div class="flex-50 text-left text-mono">
                 <span class="target" ng-bind="contract.game.name"></span>
             </div>
@@ -112,7 +112,7 @@
         </div>
     </div>
     <div class="flexbox">
-        <div class="flex-50 text-right" translate>contract.token.title</div>
+        <div class="flex-50 text-right" translate>contract.token</div>
         <div class="flex-50 text-left text-mono token-hover">
             <span class="target" ng-bind="contract.details.token"></span>
         </div>
