@@ -1,0 +1,9 @@
+{
+  "group": {
+    "title": {
+      "singular": "Gruppe",
+      "plural": "Gruppen"
+    },
+    "selectGroup": "Gruppe auswählen..."
+  }
+}

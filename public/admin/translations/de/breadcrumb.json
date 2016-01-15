@@ -1,0 +1,16 @@
+{
+  "breadcrumb/": {
+    "acp": "Admin CP",
+    "acp/": {
+      "adminGames": "Spiele",
+      "games/": {
+        "*": "<span class=\"text-mono\">{{part.substring(part.length-8).toUpperCase()}}</span>",
+        "*/": {
+          "contracts": "Aufträge"
+        }
+      },
+      "groups": "Gruppen",
+      "users": "Benutzer"
+    }
+  }
+}

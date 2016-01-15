@@ -1,0 +1,13 @@
+{
+  "news": {
+    "title": "Neuigkeiten",
+    "triggered": "Ausgelöst durch {{username}}",
+    "instance": {
+      "kill": "<span class=\"murderer\" data-user-id=\"{{murderer.user}}\">{{murderer.name}}</span> hat <span class=\"victim\" data-user-id=\"{{victim.user}}\">{{victim.name}}</span> ermordet",
+      "suicide": "<span class=\"victim\" data-user-id=\"{{murderer.user}}\">{{murderer.name}}</span> hat Selbstmord begangen"
+    },
+    "murder": {
+      "upVotes": "{{amount}} Benutzer {{amount == 1 ? 'hat' : 'haben'}} hierfür gestimmt"
+    }
+  }
+}

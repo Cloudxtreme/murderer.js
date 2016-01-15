@@ -1,0 +1,14 @@
+{
+  "breadcrumb": "Hauptseite",
+  "breadcrumb/": {
+    "cookie-policy": "Cookie-Richtlinie",
+    "privacy-policy": "Datenschutzerklärung",
+    "legal-info": "Impressum",
+    "login": "Login",
+    "games": "Spiele",
+    "games/": {
+      "*": "<span class=\"text-mono\">{{part.substring(part.length-8).toUpperCase()}}</span>"
+    },
+    "news": "Neuigkeiten"
+  }
+}

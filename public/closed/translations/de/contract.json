@@ -1,0 +1,20 @@
+{
+  "contract": {
+    "filterGame": "Spiel zum Filtern auswählen...",
+    "compact": "Kompakte Ansicht",
+    "contractsOnly": "Nur Aufträge",
+    "activeOnly": "Ringe ohne Anwesenheit verbergen",
+    "collapse": "Alle Aufträge öffnen/schließen",
+    "header": "Ring #{{ring}}",
+    "accomplished": "Abgeschlossen",
+    "wanted": "Gesucht",
+    "message": "Nachricht",
+    "token": "Token",
+    "body": {
+      "title": "<em>{{project}}</em> &ndash; Node.js Implementation vom '{{game}}'",
+      "recipient": "Auftrag für",
+      "end": "Das Spiel endet am",
+      "token": "Token für deinen Mörder"
+    }
+  }
+}

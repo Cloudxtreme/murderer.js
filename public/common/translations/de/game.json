@@ -1,0 +1,34 @@
+{
+  "game": {
+    "name": "Name",
+    "ring": "Ring",
+    "rings": "Ringe",
+    "participants": "Teilnehmer",
+    "noneFound": "Es wurde kein Spiel gefunden. Versuchen Sie es später erneut.",
+    "news": "Neuigkeiten",
+    "score": "Bestenliste",
+    "table": "Details",
+    "stats": "Statistik",
+    "locked": "Privates Spiel",
+    "unlocked": "Öffentliches Spiel",
+    "usersAlive": "Benutzer verbleibend",
+    "author": {
+      "alt": "Autor: {{username}}"
+    },
+    "details": {
+      "participants": "Teilnehmer",
+      "rings": "Ringe",
+      "initialRings": "initiale Ringe",
+      "initialLives": "initiale Leben",
+      "start": "Spielstart",
+      "end": "Spielende"
+    },
+    "state": {
+      "title": "Status",
+      "stopped": "Spiel ist beendet",
+      "running": "Spiel ist aktiv",
+      "paused": "Spiel ist angehalten",
+      "initial": "Spiel ist noch nicht gestartet"
+    }
+  }
+}

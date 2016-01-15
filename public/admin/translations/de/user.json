@@ -1,0 +1,17 @@
+{
+  "user": {
+    "title": {
+      "singular": "Benutzer",
+      "plural": "Benutzer"
+    },
+    "name": "Name",
+    "email": "Email",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "remove": "Benutzer entfernen",
+    "admin": {
+      "set": "Admin-Rechte geben",
+      "unset": "Admin-Rechte entziehen"
+    }
+  }
+}

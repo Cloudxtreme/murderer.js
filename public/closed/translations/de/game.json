@@ -1,0 +1,39 @@
+{
+  "game": {
+    "title": {
+      "singular": "Spiel",
+      "plural": "Spiele"
+    },
+    "join": "Spiel beitreten",
+    "leave": "Spiel verlassen",
+    "user": {
+      "name": "Alias",
+      "message": "Nachricht"
+    },
+    "kill": {
+      "title": "Einen Mord in <strong data-game-id=\"{{game.id}}\">{{game.name}}</strong> - Ring <span class=\"text-mono\">#{{ring}}</span> begehen",
+      "message": "Todesursache",
+      "submit": "Mord eintragen"
+    },
+    "suicide": {
+      "title": "Selbstmord begehen",
+      "attempt": "Selbstmord",
+      "message": "Letzte Worte",
+      "password": "Passwort zur Bestätigen",
+      "warning": "Du kannst dem Spiel <strong data-game-id=\"{{id}}\">{{name}}</strong> nicht wieder beitreten."
+    },
+    "ringState": {
+      "notPresent": {
+        "running": "Aktiv, du nimmst nicht Teil.",
+        "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> hat überlebt, du hast nicht teilgenommen.",
+        "resolved": "Aufgegeben, du hast nicht teilgenommen."
+      },
+      "present": {
+        "survived": "Du hast überlebt.",
+        "resolved": "Aufgegeben.",
+        "survivor": "<strong class=\"text-upper text-mono\" data-user-id=\"{{details.survivor._id}}\">{{details.survivor.name}}</strong> hat überlebt.",
+        "dead": "Aktiv, du bist tot."
+      }
+    }
+  }
+}

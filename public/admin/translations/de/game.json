@@ -1,0 +1,44 @@
+{
+  "game": {
+    "description": "Beschreibung",
+    "descriptionNote": "<a href=\"//daringfireball.net/projects/markdown/syntax\">Markdown</a> syntax",
+    "data": "Daten",
+    "passwords": "Passwörter",
+    "passwordsNote": "getrennt durch <code>,</code>",
+    "actions": {
+      "plain": "Zur Spiel-Ansicht",
+      "contracts": "Zur Auftragsansicht",
+      "edit": "Spiel bearbeiten",
+      "pause": "Spiel pausieren",
+      "resume": "Spiel fortsetzen",
+      "lock": "Spiel schließen (Spiel pausiert starten)",
+      "start": "Spiel starten",
+      "stop": "Spiel beenden",
+      "remove": "Spiel entfernen"
+    },
+    "create": {
+      "title": "Neues Spiel",
+      "submit": "Spiel erstellen",
+      "invalid": {
+        "groups": {
+          "required": "Es wird mindestens eine Gruppe benötigt."
+        }
+      }
+    },
+    "limit": {
+      "inviteOnly": "Privates Spiel (invite-only)",
+      "participants": "Maximale Teilnehmer",
+      "invitedParticipants": "Maximale Teilnehmer (für Eingeladene)",
+      "empty": "Leer lassen für kein Limit"
+    },
+    "startMeta": {
+      "rings": "Anzahl an Ringen",
+      "lives": "Anzahl der initialen Leben pro Teilnehmer"
+    },
+    "schedule": {
+      "start": "Automatischer Spielstart",
+      "end": "Automatisches Spielende",
+      "empty": "Leer lassen zum deaktivieren"
+    }
+  }
+}

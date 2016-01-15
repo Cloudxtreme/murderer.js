@@ -1,0 +1,14 @@
+{
+  "group": {
+    "name": "Name",
+    "description": "Beschreibung",
+    "edit": "Gruppe bearbeiten",
+    "undo": "Änderungen zurücksetzen",
+    "save": "Änderungen speichern",
+    "remove": "Gruppe entfernen",
+    "create": {
+      "title": "Neue Gruppe",
+      "submit": "Gruppe erstellen"
+    }
+  }
+}
